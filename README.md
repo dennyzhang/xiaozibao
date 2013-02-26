@@ -1,5 +1,10 @@
 xiaozibao - 小字报
 =========
+## Demo
+| Num | Name                                   | Comment                                                                      |
+|:----|----------------------------------------|------------------------------------------------------------------------------|
+|   1 | Build your own magzine                 | http://denny.youwen.im/                                                      |
+|   2 | Dig weibo/twitter for your taste       | http://weibo.com/xue321video                                                 |
 
 ## Installation
 | Num | Name                                   | Comment                                                                      |
