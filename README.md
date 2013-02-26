@@ -5,7 +5,7 @@ xiaozibao
 ## Installation
 | Num | Name                                   | Comment                                                                      |
 |:----|----------------------------------------|------------------------------------------------------------------------------|
-|   1 | checkout git hub                       |                                                                              |
+|   1 | checkout git hub                       | https://github.com/DennyZhang/xiaozibao                                      |
 |   2 | 设置环境变量                           | $XZB_HOME为github的checkout目录                                              |
 |   3 | 安装lnmp                               | http://lnmp.org/install.html                                                 |
 |   4 | 安装mysql                              | sudo apt-get install mysql-server mysql-client libmysqlclient-dev            |
