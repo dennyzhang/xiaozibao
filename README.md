@@ -46,6 +46,7 @@ xiaozibao - 小字报
 
 ## Management运维
 - 内部工具
+
 | Name                           | Comment                                      |
 |:--------------------------------|----------------------------------------------|
 | 添加用户                       | 添加dns二级域名, 并调用xzb_create_user.sh -h |
@@ -55,12 +56,14 @@ xiaozibao - 小字报
 | 从markdown文件生成html文件     | $XZB_HOME/code/misc/markdown_to_html.sh      |
 
 - 常见DB操作
+
 | Name                | Comment                                                                         |
 |:---------------------|---------------------------------------------------------------------------------|
 | 重新初始化db schema | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/db_schema.sql |
 | 更新文章投放策略    | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/update_db.sql |
 
 - web测试
+
 | Name           | Link                                                                       |
 |:----------------|----------------------------------------------------------------------------|
 | get_post       | http://127.0.0.1:8081/api_get_post?postid=ffa72494d91aeb2e1153b64ac7fb961f |
