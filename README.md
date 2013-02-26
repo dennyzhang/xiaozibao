@@ -1,7 +1,6 @@
-xiaozibao
+xiaozibao - 小字报
 =========
 
-# 小字报
 ## Installation
 | Num | Name                                   | Comment                                                                      |
 |:----|----------------------------------------|------------------------------------------------------------------------------|
@@ -19,11 +18,17 @@ xiaozibao
 
 ### 创建mysql的db和user
 >  mysql -u root -p
+>
 >   CREATE DATABASE xzb CHARACTER SET utf8 COLLATE utf8_general_ci;
+>
 >   CREATE USER user_2013;
+>
 >   SET PASSWORD FOR user_2013 = PASSWORD("ilovechina");
+>
 >   GRANT ALL PRIVILEGES ON xzb.# TO "user_2013"@"localhost" IDENTIFIED BY "ilovechina";
+>
 >   FLUSH PRIVILEGES;
+>
 >   EXIT;
 
 ### 把python的defaultencoding设置为utf-8
@@ -32,7 +37,9 @@ xiaozibao
 >  sudo vim /usr/lib/python2.7/site.py
 >  
 >  import sys
+>
 >  import os
+>
 >  sys.setdefaultencoding('utf-8')
 >
 >  python -c 'import sys; print sys.getdefaultencoding()'
@@ -40,7 +47,7 @@ xiaozibao
 ## Management运维
 - 内部工具
 | Name                           | Comment                                      |
-|--------------------------------|----------------------------------------------|
+|:--------------------------------|----------------------------------------------|
 | 添加用户                       | 添加dns二级域名, 并调用xzb_create_user.sh -h |
 | 更新某个category的所有文章     | xzb_update_category.sh -h                    |
 | 更新某些用户文章               | xzb_update_all_user.sh -h                    |
@@ -49,13 +56,13 @@ xiaozibao
 
 - 常见DB操作
 | Name                | Comment                                                                         |
-|---------------------|---------------------------------------------------------------------------------|
+|:---------------------|---------------------------------------------------------------------------------|
 | 重新初始化db schema | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/db_schema.sql |
 | 更新文章投放策略    | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/update_db.sql |
 
 - web测试
 | Name           | Link                                                                       |
-|----------------|----------------------------------------------------------------------------|
+|:----------------|----------------------------------------------------------------------------|
 | get_post       | http://127.0.0.1:8081/api_get_post?postid=ffa72494d91aeb2e1153b64ac7fb961f |
 | list_user_post | http://127.0.0.1:8081/api_list_user_post?userid=denny&date=2013-01-24      |
 | list_user_post | http://127.0.0.1:8081/api_list_user_post?userid=denny                      |
@@ -68,8 +75,6 @@ xiaozibao
 |   3 | 文件夹中含有_webcrawler_字符串的，表示该文件夹数据为网络爬虫抓取来的 |                                                            |
 |   4 | 文件夹中含有_done_字符串的，表示该文件夹数据为已投放                 |                                                            |
 |   5 | 文件夹中含有_raw_字符串的，表示该文件夹数据为未确认数据              | 调用xzb_update_category.sh,该数据的meta data不会被自动更新 |
-
-## FAQ
 
 ## 数据规范
 
