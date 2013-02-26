@@ -1,0 +1,7 @@
+snake_worker-curl#10#host_domain-1#4;/tmp/test1.php
+snake_worker-crontab#20#host_domain-1#1;/tmp/test2.php
+snake_worker-shell#d1#1;/tmp/test3.php
+snake_worker-crontab#host_domain-1#1;/tmp/test4.php
+snake_worker-php_loop#10#host_domain-1#2;/tmp/test5.php
+snake_worker-php_job#10#host_domain-1#2;/tmp/test6.php
+snake_worker-curl#10#host_domain-1#1;/tmp/test7.php

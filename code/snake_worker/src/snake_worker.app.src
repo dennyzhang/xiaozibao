@@ -1,0 +1,13 @@
+{application, snake_worker,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  mnesia
+                 ]},
+  {mod, { snake_worker_app, []}},
+  {env, []}
+ ]}.

@@ -1,0 +1,1 @@
+-define(snake_worker_vsn, "svn").

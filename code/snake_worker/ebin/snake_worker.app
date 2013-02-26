@@ -1,0 +1,11 @@
+{application,snake_worker,
+             [{description,[]},
+              {vsn,"1"},
+              {registered,[]},
+              {applications,[kernel,stdlib,mnesia]},
+              {mod,{snake_worker_app,[]}},
+              {env,[]},
+              {modules,[curl_queue_listener,curl_worker,debug_loader,
+                        shell_queue_listener,shell_worker,snake_utility,
+                        snake_worker,snake_worker_app,snake_worker_mgmt,
+                        snake_worker_sup,snake_worker_thrift]}]}.

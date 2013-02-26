@@ -1,0 +1,107 @@
+/* app css stylesheet */
+
+/* ---------------------------------- */
+
+/* @Variables */
+
+@bg-color: #fefcf8;
+
+/* ---------------------------------- */
+
+/* @Mixins */
+
+/* @Mixins */
+
+.center-block (@margin: 0) {
+    display: block;
+    margin: @margin auto;
+    padding: 0;
+}
+
+.sprite (@left: 0, @top: 0, @width: 0, @height: 0) {
+    width: @width;
+    height: @height;
+    background-image: url('css-sprite.png');
+    background-position: @left @top;
+    background-repeat: no-repeat;
+}
+
+// CSS image replacement
+// -------------------------
+// Source: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757
+// Source: https://github.com/twitter/bootstrap/blob/master/less/mixins.less
+.hide-text () {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.ellipsis (@w-space: normal) {
+  white-space: @w-space;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// User select
+// For selecting text on the page
+.user-select (@select) {
+  -webkit-user-select: @select;
+     -moz-user-select: @select;
+      -ms-user-select: @select;
+       -o-user-select: @select;
+          user-select: @select;
+}
+
+.capitalize () {
+  text-transform: capitalize;
+}
+
+._spacer (@height: 1em) {
+	height: @height;
+}
+
+/* ---------------------------------- */
+
+/* @Sprites */
+
+/* ---------------------------------- */
+
+/* @Global */
+
+body {
+  .center-block;
+  min-width: 960px;
+  font-family: 'Helvetica Neue', 'Hiragino Sans GB', Helvetica, STHeiti, Microsoft YaHei, SimHei, Arial, sans-serif;
+  // font-family: Helvetica,STheiti,微软雅黑,黑体,Arial,Tahoma,sans-serif,serif;
+  .user-select(auto);
+}
+
+#user-list {
+  .capitalize ();
+}
+
+.spacer {
+	._spacer ();
+}
+
+.nav-tabs-fixed-top {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  margin-bottom: 0;
+}
+
+.article-list {
+
+}
+
+.modal-header {
+  .capitalize ();
+}
+
+.breadcrumb {
+  .capitalize ();
+}

@@ -1,0 +1,41 @@
+/* app css stylesheet */
+/* ---------------------------------- */
+/* @Variables */
+/* ---------------------------------- */
+/* @Mixins */
+/* @Mixins */
+/* ---------------------------------- */
+/* @Sprites */
+/* ---------------------------------- */
+/* @Global */
+body {
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  min-width: 960px;
+  font-family: 'Helvetica Neue', 'Hiragino Sans GB', Helvetica, STHeiti, Microsoft YaHei, SimHei, Arial, sans-serif;
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  -o-user-select: auto;
+  user-select: auto;
+}
+#user-list {
+  text-transform: capitalize;
+}
+.spacer {
+  height: 1em;
+}
+.nav-tabs-fixed-top {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  margin-bottom: 0;
+}
+.modal-header {
+  text-transform: capitalize;
+}
+.breadcrumb {
+  text-transform: capitalize;
+}

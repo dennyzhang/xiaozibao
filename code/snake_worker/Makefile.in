@@ -1,0 +1,54 @@
+CC      := @CC@
+CFLAGS  := @CFLAGS@ @DEFS@ LD_SHARED       := @LD_SHARED@
+
+DESTDIR :=
+prefix := @prefix@
+exec_prefix := @exec_prefix@
+ecae_user := @user@
+bindir := @bindir@
+libexecdir := @libexecdir@
+sysconfdir := @sysconfdir@
+libdir := @libdir@
+includedir := @includedir@
+mandir := @mandir@
+datarootdir = @datarootdir@
+datadir = @datadir@
+INSTALL := @INSTALL@
+ERTS_VSN := @ERLANG_ERTS_VER@
+SNAKE_WORKER_VSN := svn
+REBAR := ./rebar
+
+.PHONY: all deps doc test clean release start
+
+all: deps version 
+	$(REBAR) compile
+
+version:
+	@echo "-define(snake_worker_vsn, \"${SNAKE_WORKER_VSN}\")." | tee include/vsn.hrl
+
+deps:
+	$(REBAR) get-deps
+
+doc:
+	$(REBAR) doc skip_deps=true
+
+test:
+	$(REBAR) eunit skip_deps=true
+
+clean:
+	$(REBAR) clean
+
+dialyzer: all test
+	dialyzer --src src/*.erl deps/*/src/*.erl
+
+release: all
+	$(REBAR) generate
+
+install:
+	$(INSTALL) -d ${DESTDIR}@prefix@ ${DESTDIR}@bindir@
+	cp -r rel/snake_worker ${DESTDIR}@prefix@
+	$(INSTALL) -d scripts ${DESTDIR}@prefix@/snake_worker/scripts
+	cp -rf scripts/* ${DESTDIR}@prefix@/snake_worker/scripts/
+	chmod -R +x ${DESTDIR}@prefix@/snake_worker/scripts/*
+	$(INSTALL) snake_workerd ${DESTDIR}@bindir@
+	$(INSTALL) snake_workerctl ${DESTDIR}@bindir@

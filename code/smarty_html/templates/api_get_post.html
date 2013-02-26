@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="HandheldFriendly" content="true" />
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="keywords" content="Keywords here" />
+  <meta name="description" content="Description here" />
+  <title>小字报</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="resource/bootstrap-responsive.css"/> -->
+  <link rel="stylesheet" href="resource/normalize.css"/>
+  <link rel="stylesheet" href="resource/app.css"/>
+</head>
+<body>
+  <nav>
+
+  </nav>
+
+  <article id="article-content">
+    <hgroup name="top">
+      <h1>{{post.title}}</h1>
+      <h2>{{post.summary}}</h2>
+    </hgroup>
+    <section>
+      {{post.content}}
+    </section>
+  </article>
+
+  <footer>
+    <a href="#top">
+      <p class="stamp-wan">全文完<p>
+    </a>
+  </footer>
+</body>
+</html>

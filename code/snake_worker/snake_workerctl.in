@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -- $(getopt n:c: "$@")
+while [ $# -gt 0 ]
+do
+    case "$1" in
+    -n) SNAKE_WORKER_HOST="$2"; shift;;
+    -c) SNAKE_WORKER_COOKIE="$2"; shift;;
+    --) shift; break;;
+    *)  break;;
+    esac
+    shift
+done
+
+[ "X$SNAKE_WORKER_HOST" = "X" ] && SNAKE_WORKER_HOST=snake_worker@`hostname -s`
+[ "X$SNAKE_WORKER_COOKIE" = "X" ] && SNAKE_WORKER_COOKIE=snake_worker
+export SNAKE_WORKER_HOST SNAKE_WORKER_COOKIE
+
+exec @prefix@/snake_worker/erts-@ERLANG_ERTS_VER@/bin/erl \
+    -sname "snake_workerctl$$" \
+    -hidden \
+    -s snake_worker_command \
+    -noinput \
+    -setcookie "$SNAKE_WORKER_COOKIE" \
+    -extra "$@"

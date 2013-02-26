@@ -1,0 +1,22 @@
+<ul class="breadcrumb">
+  <li>{{userName}}'s recent articles</li>
+</ul>
+<section id="article-list">
+  <table ng-repeat="deliver in delivers" class="table">
+    <caption class="well well-small">{{deliver.date}}</caption>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>category</th>
+        <th>title</th>
+      </tr>
+	</thead>
+    <tbody>
+      <tr ng-repeat="article in deliver.articles">
+        <td><span class="label label-info">{{article.id}}</span></td>
+        <td>{{article.category}}</td>
+        <td>{{article.title}}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

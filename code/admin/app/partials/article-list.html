@@ -1,0 +1,13 @@
+<div class="modal-header">{{articleList.category}}</div>
+<div class="modal-body">
+	<div class="article-list">
+		<ul class="nav nav-list">
+			<li ng-repeat="article in articles" ng-click="articleList.select(article.id, $index)" ng-class="{active: currentSelected == $index}"><a href="#">{{article.title}}</a></li>
+		</ul>
+	</div>
+	<p>Enter a value to pass to <code>close</code> as the result: <input ng-model="result" /></p>
+</div>
+<div class="modal-footer">
+	<button ng-click="articleList.change()" class="btn btn-success" >Deliver this article</button>
+	<button ng-click="articleList.close()" class="btn btn-danger" >Close</button>
+</div>

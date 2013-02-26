@@ -1,0 +1,210 @@
+/* app css stylesheet */
+
+/* ---------------------------------- */
+
+/* @Variables */
+
+@bg-color: #fefcf8;
+@red-bar-color: #c01825;
+@white-color: #fff;
+@link-color: #000;
+@summary-color: #898989;
+@splitter-color: #dfdfdf;
+
+/* ---------------------------------- */
+
+/* @Mixins */
+
+.center-block (@margin: 0) {
+    display: block;
+    margin: @margin auto;
+    padding: 0;
+}
+
+.sprite (@left: 0, @top: 0, @width: 0, @height: 0) {
+    width: @width;
+    height: @height;
+    background-image: url('css-sprite.png');
+    background-position: @left @top;
+    background-repeat: no-repeat;
+}
+
+// CSS image replacement
+// -------------------------
+// Source: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757
+// Source: https://github.com/twitter/bootstrap/blob/master/less/mixins.less
+.hide-text () {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.ellipsis (@w-space: normal) {
+  white-space: @w-space;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// User select
+// For selecting text on the page
+.user-select (@select) {
+  -webkit-user-select: @select;
+     -moz-user-select: @select;
+      -ms-user-select: @select;
+       -o-user-select: @select;
+          user-select: @select;
+}
+
+/* ---------------------------------- */
+
+/* @Sprites */
+
+.sprite-logo {
+
+}
+
+/* ---------------------------------- */
+
+/* @Global */
+
+body {
+  .center-block;
+  background-color: @bg-color;
+  font-family: 'Helvetica Neue', 'Hiragino Sans GB', Helvetica, STHeiti, Microsoft YaHei, SimHei, Arial, sans-serif;
+  // font-family: Helvetica,STheiti,微软雅黑,黑体,Arial,Tahoma,sans-serif,serif;
+  font-size: 62.5%;
+  .user-select(none);
+}
+
+a {
+  text-decoration: none;
+  color: @link-color;
+}
+
+header {
+  text-align: center;
+
+  h1 {
+    .sprite (0px, 0px, 121px, 35px);
+    .hide-text;
+    font-size: 3.6em;
+    .center-block(1em);
+  }
+}
+
+#red-bar {
+  padding: 1.2em 2em;
+  background-color: @red-bar-color;
+  color: @white-color;
+  font-size: 1.4em;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+#article-list {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    height: 100%;
+    zoom: 1;
+    border-bottom: 0.1em solid @splitter-color;
+
+    a {
+      display: block;
+      zoom: 1;
+      padding: 4.5em 3.3em;
+      text-align: center;
+
+      p {
+        .center-block;
+        line-height: 2em;
+      }
+      p.title {
+        margin: 0 25px;
+        font-weight: 700;
+        font-size: 2.1em;
+        .ellipsis (nowrap);
+      }
+      p.summary {
+        height: 3.6em;
+        margin-top: 1em;
+        font-size: 1.7em;
+        line-height: 180%;
+        color: @summary-color;
+        .ellipsis ();
+      }
+    }
+  }
+}
+
+#article-content {
+  .center-block;
+  padding: 0 1.6em;
+
+  hgroup {
+
+    h1 {
+      margin-top: 2.2em;
+      font-size: 2.8em;
+      text-align: center;
+    }
+    h2 {
+      // height: 4.5em;
+      margin: 2.2em 0.3em;
+      font-size: 2.2em;
+      font-weight: 300;
+      line-height: 150%;
+      color: @summary-color;
+      text-align: center;
+      .ellipsis ();
+    }
+  }
+
+  section {
+
+    font-size: 1.7em;
+    line-height: 1.8em;
+
+    ul, ol {
+      list-style-position: inside;
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style-type: disc;
+    }
+  }
+}
+
+footer {
+  text-align: center;
+
+  p {
+    .center-block;
+  }
+  p.stamp-bao {
+    .center-block (30px);
+    font-size: 1.4em;
+    .sprite (0, -40px, 33px, 33px);
+    .hide-text;
+  }
+  p.version {
+    .center-block (1em);
+    font-size: 1.4em;
+    color: @splitter-color;
+  }
+
+  p.stamp-wan {
+    .center-block (30px);
+    font-size: 1.4em;
+    .sprite (0, -78px, 33px, 33px);
+    .hide-text;   
+  }
+}

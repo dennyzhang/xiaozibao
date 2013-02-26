@@ -1,0 +1,2 @@
+#!/bin/sh
+exec @prefix@/snake_worker/bin/snake_worker $@
