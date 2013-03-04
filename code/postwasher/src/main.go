@@ -20,7 +20,7 @@ func main() {
                 //postwasher.Do_wash_file(root_dir+"webcrawler_data/joke_笑话/weibo_魂淡是怎样练成的/魂淡是怎样练成的的微博_http:__weibo.com_u_3002847684?page=13.data")
                 //postwasher.Do_wash_file(root_dir+"webcrawler_data/joke_笑话/test.data")
 		//postwasher.Do_wash_file(root_dir+"data/parent_赡养父母/done/你是什么时候真的感觉父母老了，当时的记忆是怎样的？.data")
-		postwasher.Do_wash_file(root_dir+"webcrawler_data/colin_weibo/WinoZino的微博_http:__weibo.com_u_2026679671?page=2.data")
+		postwasher.Do_wash_file(root_dir+"webcrawler_data/colin_weibo/BrandonSun的微博_http:__weibo.com_brandonsun?page=1.data")
 		fmt.Printf("\n======done======\n")
         }
 }

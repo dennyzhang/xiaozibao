@@ -5,14 +5,14 @@
 %%% Description :
 %%%
 %%% Created : <2012-04-26>
-%%% Updated: Time-stamp: <2013-02-26 15:25:59>
+%%% Updated: Time-stamp: <2013-03-05 01:13:29>
 %%%-------------------------------------------------------------------
 -module(shell_worker).
 
 -include("defined.hrl").
 -define(SHELL_TIMEOUT, 30000).
 -define(MIN_SLEEP, 2).
--define(RANDOM_SLEEP, 180).
+-define(RANDOM_SLEEP, 120).
 -compile(export_all).
 
 spawn_worker(Worker_state) ->

@@ -6,7 +6,7 @@
 ## Description : 
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-02-25 23:19:31>
+## Updated: Time-stamp: <2013-03-05 00:28:35>
 ##-------------------------------------------------------------------
 
 # Sample crontab configuration
@@ -30,6 +30,8 @@ function parse_god_reply() {
     IFS=$SAVEIFS
 }
 
-#parse_god_reply "webcrawler_data/colin_weibo"
 parse_god_reply "webcrawler_data/easy_weibo"
+parse_god_reply "webcrawler_data/colin_weibo"
+parse_god_reply "webcrawler_data/sophia_weibo"
+parse_god_reply "webcrawler_data/allen_weibo"
 ## File : xzb_fetch_url.sh ends

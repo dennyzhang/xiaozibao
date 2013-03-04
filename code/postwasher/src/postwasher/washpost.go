@@ -52,6 +52,7 @@ var blacklist []string = []string{
         "元芳 你怎么看", "笑喷",
 	"求好心人扩散", "获得链接",
         "链接在评论", "泪奔了", "推荐关注", " 关注我 ",
+	"观注神回复",
         "http:\\\\/\\\\/",
         //" http ",
 }
@@ -82,6 +83,7 @@ func print_entry(entry Entry) bool {
 }
 
 func common_wash(content string) string {
+	//content = regexp.MustCompile("\n").ReplaceAllString(content, " ")
 	content = regexp.MustCompile("【[^】]*】").ReplaceAllString(content, " ")
 	content = regexp.MustCompile("@[^@ ]* ").ReplaceAllString(content, " ")
 	content = regexp.MustCompile("@[^@ ]*$").ReplaceAllString(content, " ")
@@ -158,11 +160,31 @@ func score_entry_weibo_hot(entry Entry) Entry {
 }
 
 func score_entry_forwardlist(entry Entry) Entry {
+	// make sure the post is hot enough
 	MIN_FORWARD_LIST := 4
 	if len(entry.Forward_list) < MIN_FORWARD_LIST {
                 entry.Score = 0.0
 	}
+	entry = score_entry_forwardlist_repetition(entry)
         return entry
+}
+
+func score_entry_forwardlist_repetition(entry Entry) Entry {
+	// make sure forward list have repetitions
+	MIN_FORWARD_REPEITION_LENGTH := 15
+	for i, forward1 := range entry.Forward_list {
+		// skip too lengthy forward comment
+		if (len(forward1) > 0  && (len(forward1) < MIN_FORWARD_REPEITION_LENGTH)) {
+			for j, forward2 := range entry.Forward_list {
+				if (forward1 == forward2 && i != j) {
+					//fmt.Print(entry.Forward_list, "\n", "forward1:", forward1, ".\n", forward2, ".\n\\n")
+					return entry
+				}
+			}
+		}
+	}
+	entry.Score = 0.0
+	return entry
 }
 
 func score_entry(entry Entry) Entry {
