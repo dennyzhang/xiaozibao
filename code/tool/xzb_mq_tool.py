@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-14>
-## Updated: Time-stamp: <2013-02-26 15:23:15>
+## Updated: Time-stamp: <2013-03-26 16:05:14>
 ##-------------------------------------------------------------------
 import pika
 import sys

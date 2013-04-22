@@ -5,7 +5,7 @@
 %%% Description :
 %%%
 %%% Created : <2012-04-26>
-%%% Updated: Time-stamp: <2013-03-05 01:13:29>
+%%% Updated: Time-stamp: <2013-03-07 23:56:52>
 %%%-------------------------------------------------------------------
 -module(shell_worker).
 
@@ -13,6 +13,7 @@
 -define(SHELL_TIMEOUT, 30000).
 -define(MIN_SLEEP, 2).
 -define(RANDOM_SLEEP, 120).
+-define(WEIBO_RANDOM_SLEEP, 60).
 -compile(export_all).
 
 spawn_worker(Worker_state) ->
@@ -24,7 +25,12 @@ start_worker(Worker_state) ->
     process_flag(trap_exit, true),
     Shell_command = Worker_state#worker_state.task_id,
     random:seed(erlang:now()),
-    Random_sleep = random:uniform(?RANDOM_SLEEP) + ?MIN_SLEEP,
+    Random_sleep =
+        case string:str(Shell_command, "--fetch_url http://weibo.com") of
+            -1 -> random:uniform(?RANDOM_SLEEP) + ?MIN_SLEEP;
+            _ -> random:uniform(?WEIBO_RANDOM_SLEEP) + ?MIN_SLEEP
+        end,
+    
     error_logger:info_msg("[~s:~p] Randm Sleep for ~p seconds, before run command: ~s~n",
                           [Worker_state#worker_state.listener_name, ?LINE, Random_sleep, Shell_command]),
     timer:sleep(Random_sleep*1000),
