@@ -11,15 +11,14 @@ xiaozibao - 小字报
 |:----------------------------------------|------------------------------------------------------------------------------|
 | checkout git hub                       | https://github.com/DennyZhang/xiaozibao                                      |
 | 安装mysql-server                       |                                                                              |
-| 安装puppet client, 并同步              | Follow instruction of puppet/README.md     |
+| 安装google go                          | http://blog.ec-ae.com/?p=7867#sec-1-1                                          |
+| 安装puppet client, 并同步              | Follow instruction of puppet/README.md                                       |
 | reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
-| 安装mysql                              | sudo apt-get install mysql-server mysql-client libmysqlclient-dev            |
+| 安装mysql                              | sudo apt-get install mysql-client libmysqlclient-dev            |
 | 安装rabbitmq相关工具                   | sudo apt-get install rabbitmq-server                                         |
 | 创建mysql的db和user                    |                                                                              |
-| 把python的defaultencoding设置为utf-8   | http://gpiot.com/python-set-character-encoding-to-utf-8-for-deploy-cms/      |
 | 启动前台                               | cd $XZB_HOME/code/webserver; python ./server.py                        |
 | 安装内部自动化工具集, 名字都以xzb_开头 | cd $XZB_HOME/code/tool;sudo make install                                     |
-| 安装google go                        |                                                                              |
 
 ### 创建mysql的db和user
 >  mysql -u root -p

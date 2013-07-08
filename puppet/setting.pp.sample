@@ -1,7 +1,6 @@
 import "utility.pp"
 
 ## Manual change below configuration
-# configuration samples:
 # $mysql_root_username="root" 
 # $mysql_root_password="password"
 # $os_root_username="root"
