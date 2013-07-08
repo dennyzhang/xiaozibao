@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2013-02-12 00:58:13>
+## Updated: Time-stamp: <2013-07-08 14:47:51>
 ##-------------------------------------------------------------------
 DB_HOST="127.0.0.1"
 DB_USERNAME="user_2013"
@@ -24,7 +24,7 @@ function log()
 function ensure_variable_isset() {
     # TODO support sudo, without source
     if [ -z "$XZB_HOME" ]; then
-        echo "Error: Global variable($XZB_HOME) is not set, which is normally github's checkout path."
+        echo "Error: Global variable(XZB_HOME) is not set, which is normally github's checkout path."
         echo "       Please make necessary changes to /etc/profile, then reboot."
         exit 1
     fi

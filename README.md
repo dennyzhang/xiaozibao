@@ -10,18 +10,16 @@ xiaozibao - 小字报
 | Num | Name                                   | Comment                                                                      |
 |:----|----------------------------------------|------------------------------------------------------------------------------|
 |   1 | checkout git hub                       | https://github.com/DennyZhang/xiaozibao                                      |
-|   2 | 设置环境变量                           | $XZB_HOME为github的checkout目录                                              |
-|   3 | 安装lnmp                               | http://lnmp.org/install.html                                                 |
-|   4 | 安装mysql                              | sudo apt-get install mysql-server mysql-client libmysqlclient-dev            |
-|   5 | 安装辅助工具                           | sudo apt-get install markdown inotify-tools; sudo pip install markdown jinja |
-|   6 | 安装flask                              | sudo easy_install flask; sudo easy_install mysql-python                      |
-|   7 | 安装rabbitmq相关工具                   | sudo pip install pika; sudo apt-get install rabbitmq-server                  |
-
-   8 | 创建mysql的db和user                    |                                                                              |
-|   9 | 把python的defaultencoding设置为utf-8   | http://gpiot.com/python-set-character-encoding-to-utf-8-for-deploy-cms/      |
-|  10 | 启动前台                               | cd $XZB_HOME/code/bcode/webserver; python ./server.py                        |
-|  11 | 安装内部自动化工具集, 名字都以xzb_开头 | cd $XZB_HOME/code/tool;sudo make install                                     |
-|   12 | 安装google go                        |                                                                              |
+|   2 | 设置环境变量                           | $XZB_HOME为github的checkout目录。将其加到类似/etc/profile或.bashrc文件里，并重启机器|
+|   3 | 安装mysql                              | sudo apt-get install mysql-server mysql-client libmysqlclient-dev            |
+|   4 | 安装辅助工具                           | sudo pip install markdown jinja; sudo easy_install mysql-python              |
+|   5 | 安装flask                              | sudo pip install flask;                                                      |
+|   6 | 安装rabbitmq相关工具                   | sudo pip install pika; sudo apt-get install rabbitmq-server                  |
+|   7 | 创建mysql的db和user                    |                                                                              |
+|   8 | 把python的defaultencoding设置为utf-8   | http://gpiot.com/python-set-character-encoding-to-utf-8-for-deploy-cms/      |
+|  9  | 启动前台                               | cd $XZB_HOME/code/webserver; python ./server.py                        |
+|  10 | 安装内部自动化工具集, 名字都以xzb_开头 | cd $XZB_HOME/code/tool;sudo make install                                     |
+|  11 | 安装google go                        |                                                                              |
 
 ### 创建mysql的db和user
 >  mysql -u root -p
