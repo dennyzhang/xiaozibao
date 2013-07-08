@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-02-21 14:52:02>
+## Updated: Time-stamp: <2013-07-08 18:34:00>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
@@ -58,7 +58,7 @@ function fetch_child() {
 
 function fetch_spouse() {
     log "generate url fetch tasks of spouse"
-    # fetch_zhihu "spouse_伴侣/webcrawler_raw_zhihu_两性关系" "19556421" "1 2 3 4 5 6 7 8 9 10"
+    fetch_zhihu "spouse_伴侣/webcrawler_raw_zhihu_两性关系" "19556421" "1 2 3 4 5 6 7 8 9 10"
     # fetch_zhihu "spouse_伴侣/webcrawler_raw_zhihu_两性关系" "19556421" "11 12 13 14 15 16"
     # fetch_zhihu "spouse_伴侣/webcrawler_raw_zhihu_两性关系" "19556421" "$(generate_seq 17 27)"
     # fetch_zhihu "spouse_伴侣/webcrawler_raw_zhihu_两性关系" "19556421" "$(generate_seq 28 38)"

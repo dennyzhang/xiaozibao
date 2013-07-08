@@ -1,4 +1,24 @@
-nohup.out
+code/snake_worker/rel/snake_worker/erts-5.9.3.1/
+code/snake_worker/rel/snake_worker/lib/appmon-2.1.14.1/
+code/snake_worker/rel/snake_worker/lib/asn1-1.8/
+code/snake_worker/rel/snake_worker/lib/compiler-4.8.2/
+code/snake_worker/rel/snake_worker/lib/crypto-2.2/
+code/snake_worker/rel/snake_worker/lib/erts-5.9.3.1/
+code/snake_worker/rel/snake_worker/lib/et-1.4.4.2/
+code/snake_worker/rel/snake_worker/lib/gs-1.5.15.1/
+code/snake_worker/rel/snake_worker/lib/inets-5.9.2/
+code/snake_worker/rel/snake_worker/lib/kernel-2.15.3/
+code/snake_worker/rel/snake_worker/lib/mnesia-4.7.1/
+code/snake_worker/rel/snake_worker/lib/observer-1.2/
+code/snake_worker/rel/snake_worker/lib/public_key-0.17/
+code/snake_worker/rel/snake_worker/lib/runtime_tools-1.8.9/
+code/snake_worker/rel/snake_worker/lib/sasl-2.2.1/
+code/snake_worker/rel/snake_worker/lib/ssl-5.1.2/
+code/snake_worker/rel/snake_worker/lib/stdlib-1.18.3/
+code/snake_worker/rel/snake_worker/lib/syntax_tools-1.6.9/
+code/snake_worker/rel/snake_worker/lib/tools-2.6.8/
+code/snake_worker/rel/snake_worker/lib/webtool-0.8.9.1/
+
 code/snake_worker/rel/snake_worker/erts-5.10.1/
 code/snake_worker/rel/snake_worker/lib/asn1-2.0.1/
 code/snake_worker/rel/snake_worker/lib/compiler-4.9.1/
@@ -23,3 +43,7 @@ webcrawler_data/
 
 *.pyc
 setting.pp
+denny_tasklist.txt
+
+
+nohup.out
