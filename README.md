@@ -11,7 +11,7 @@ xiaozibao - 小字报
 |:----------------------------------------|------------------------------------------------------------------------------|
 | checkout git hub                       | https://github.com/DennyZhang/xiaozibao                                      |
 | 安装mysql-server                       |                                                                              |
-| 安装puppet client, 并同步              | cd $XZB_HOME/puppet; 对setting.pp做必要修改; sudo puppet apply ./setup.pp     |
+| 安装puppet client, 并同步              | Follow instruction of puppet/README.md     |
 | reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
 | 安装mysql                              | sudo apt-get install mysql-server mysql-client libmysqlclient-dev            |
 | 安装rabbitmq相关工具                   | sudo apt-get install rabbitmq-server                                         |

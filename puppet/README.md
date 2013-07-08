@@ -1,0 +1,3 @@
+- cp setting.pp.sample to setting.pp
+- make necessary change to setting.pp
+- sudo puppet apply ./setup.pp

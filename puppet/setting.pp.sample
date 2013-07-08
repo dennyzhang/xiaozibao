@@ -1,0 +1,17 @@
+import "utility.pp"
+
+## Manual change below configuration
+# configuration samples:
+# $mysql_root_username="root" 
+# $mysql_root_password="password"
+# $os_root_username="root"
+# $os_root_groupname="wheel"
+# $HOME="/Users/mac"
+# $XZB_HOME="${HOME}/backup/essential/Dropbox/private_data/code/xiaozibao"
+
+$mysql_root_username="" 
+$mysql_root_password=""
+$os_root_username=""
+$os_root_groupname=""
+$HOME=""
+$XZB_HOME=""
