@@ -1,36 +1,93 @@
-MobileRobot  -- (移动互联网的Startup) 
-
-- Team: Liki, Denny, youyou
-
+xiaozibao - 小字报
 =========
+## Demo
+| Num | Name                                   | Comment                                                                      |
+|:----|----------------------------------------|------------------------------------------------------------------------------|
+|   1 | Build your own magzine                 | http://denny.youwen.im/                                                      |
+|   2 | Dig weibo/twitter for your taste       | http://weibo.com/xue321video                                                 |
 
-## Project List
-| Num | Name                    | Comment                                          | Demo                          |
-|:----|-------------------------|--------------------------------------------------|-------------------------------|
-|   1 | 所有项目入口           | https://github.com/pomelo422/MobileRobot         |                               |
-|   2 | 小字报                   | https://github.com/DennyZhang/xiaozibao          |                             |
-|   3 | 微信公众号平台           | https://github.com/pomelo422/wechat.io           | http://www.wechat.io          | 
-|   4 | 莴苣iOS                 | https://github.com/pomelo422/lettuce             | http://woojuu.cc              |
-|   5 | 莴苣weixin              | https://github.com/pomelo422/wechat.woojuu.cc    | http://woojuu.cc/wechat       | 
+## Installation
+| Num | Name                                   | Comment                                                                      |
+|:----|----------------------------------------|------------------------------------------------------------------------------|
+|   1 | checkout git hub                       | https://github.com/DennyZhang/xiaozibao                                      |
+|   2 | 设置环境变量                           | $XZB_HOME为github的checkout目录                                              |
+|   3 | 安装lnmp                               | http://lnmp.org/install.html                                                 |
+|   4 | 安装mysql                              | sudo apt-get install mysql-server mysql-client libmysqlclient-dev            |
+|   5 | 安装辅助工具                           | sudo apt-get install markdown inotify-tools; sudo pip install markdown jinja |
+|   6 | 安装flask                              | sudo easy_install flask; sudo easy_install mysql-python                      |
+|   7 | 安装rabbitmq相关工具                   | sudo pip install pika; sudo apt-get install rabbitmq-server                  |
 
-## Management Tools and Methodology
-| Num | Name            | Comment                                                             |
-|:----|-----------------|---------------------------------------------------------------------|
-|   1 | 工具集          | SOHO的工作方法; Github(代码管理); 微信(沟通, 群号: MobileRobot)       |
-|   2 | 例会            | Daily 3 minutes sync: 自我回顾昨天的进展，今天的计划，有什么需要注意的问题 |
+   8 | 创建mysql的db和user                    |                                                                              |
+|   9 | 把python的defaultencoding设置为utf-8   | http://gpiot.com/python-set-character-encoding-to-utf-8-for-deploy-cms/      |
+|  10 | 启动前台                               | cd $XZB_HOME/code/bcode/webserver; python ./server.py                        |
+|  11 | 安装内部自动化工具集, 名字都以xzb_开头 | cd $XZB_HOME/code/tool;sudo make install                                     |
+|   12 | 安装google go                        |                                                                              |
 
-## Lab Environment
-- 目前所有程序部署在linode一台虚拟机上: 173.255.227.47
+### 创建mysql的db和user
+>  mysql -u root -p
+>
+>   CREATE DATABASE xzb CHARACTER SET utf8 COLLATE utf8_general_ci;
+>
+>   CREATE USER user_2013;
+>
+>   SET PASSWORD FOR user_2013 = PASSWORD("ilovechina");
+>
+>   GRANT ALL PRIVILEGES ON xzb.* TO "user_2013"@"localhost" IDENTIFIED BY "ilovechina";
+>
+>   FLUSH PRIVILEGES;
+>
+>   EXIT;
 
-| Num | Name                  | Comment                                                                      |
-|:----|-----------------------|------------------------------------------------------------------------------|
-|   1 | 莴苣weixin            | /home/wwwroot/wechat.woojuu.cc                                               |
-|   2 | 莴苣weixin测试账号    | /home/wwwroot/wechat-test.woojuu.cc                                           |
-|   2 | 微信公众号平台        | /home/wwwroot/wechat.io                                                       |
+### 把python的defaultencoding设置为utf-8
+>  http://gpiot.com/python-set-character-encoding-to-utf-8-for-deploy-cms/
+>  
+>  sudo vim /usr/lib/python2.7/site.py
+>  
+>  import sys
+>
+>  import os
+>
+>  sys.setdefaultencoding('utf-8')
+>
+>  python -c 'import sys; print sys.getdefaultencoding()'
 
-## Bibliography
-| Num | Name             | Comment                        |
-|:----|------------------|--------------------------------|
-|   1 | git资料          | http://blog.ec-ae.com/?p=8410  |
-|   2 | objectC资料      | http://blog.ec-ae.com/?p=8133  |
-|   3 | mac资料          | http://blog.ec-ae.com/?p=7882  |
+## Management运维
+- 内部工具
+
+| Name                           | Comment                                      |
+|:--------------------------------|----------------------------------------------|
+| 添加用户                       | 添加dns二级域名, 并调用xzb_create_user.sh -h |
+| 更新某个category的所有文章     | xzb_update_category.sh -h                    |
+| 更新某些用户文章               | xzb_update_all_user.sh -h                    |
+| 对抓取到的数据做预处理的格式化 | xzb_format_posts.sh -h                       |
+| 从markdown文件生成html文件     | $XZB_HOME/code/misc/markdown_to_html.sh      |
+
+- 常见DB操作
+
+| Name                | Comment                                                                         |
+|:---------------------|---------------------------------------------------------------------------------|
+| 重新初始化db schema | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/db_schema.sql |
+| 更新文章投放策略    | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/update_db.sql |
+
+- web测试
+
+| Name           | Link                                                                       |
+|:----------------|----------------------------------------------------------------------------|
+| get_post       | http://127.0.0.1:8081/api_get_post?postid=ffa72494d91aeb2e1153b64ac7fb961f |
+| list_user_post | http://127.0.0.1:8081/api_list_user_post?userid=denny&date=2013-01-24      |
+| list_user_post | http://127.0.0.1:8081/api_list_user_post?userid=denny                      |
+
+## Limitation
+| Num | Name                                                                 | Comment                                                    |
+|:-----|----------------------------------------------------------------------|------------------------------------------------------------|
+|   1 | #.data头部，每一行代表则一个k:v的元数据属性                          | 该行第一个:为键值对的分隔符                                |
+|   2 | #.data中meta data与data是以一行特殊的字符串来分隔                    | --text follows this line--                                 |
+|   3 | 文件夹中含有_webcrawler_字符串的，表示该文件夹数据为网络爬虫抓取来的 |                                                            |
+|   4 | 文件夹中含有_done_字符串的，表示该文件夹数据为已投放                 |                                                            |
+|   5 | 文件夹中含有_raw_字符串的，表示该文件夹数据为未确认数据              | 调用xzb_update_category.sh,该数据的meta data不会被自动更新 |
+
+## 数据规范
+
+- 标题: 5字 < 长度 < 10个汉字字 (如果是英文的话，则是限额为原有基础的三倍)
+- 摘要: 15字 < 长度 < 34个汉字字 (如果是英文的话，则是限额为原有基础的三倍)
+- 文章: 200字 < 长度 < 2000 字
