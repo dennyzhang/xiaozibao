@@ -10,9 +10,9 @@ xiaozibao - 小字报
 | Name                                   | Comment                                                                      |
 |:----------------------------------------|------------------------------------------------------------------------------|
 | checkout git hub                       | https://github.com/DennyZhang/xiaozibao                                      |
-| 设置环境变量                           | $XZB_HOME为github的checkout目录。将其加到类似/etc/profile或.bashrc文件里，并重启机器|
 | 安装mysql-server                       |                                                                              |
-| 安装puppet client, 并同步              | cd $XZB_HOME/puppet; 对setting.pp做必要修改; sudo puppet apply ./setup.pp|
+| 安装puppet client, 并同步              | cd $XZB_HOME/puppet; 对setting.pp做必要修改; sudo puppet apply ./setup.pp     |
+| reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
 | 安装mysql                              | sudo apt-get install mysql-server mysql-client libmysqlclient-dev            |
 | 安装rabbitmq相关工具                   | sudo apt-get install rabbitmq-server                                         |
 | 创建mysql的db和user                    |                                                                              |
@@ -36,27 +36,16 @@ xiaozibao - 小字报
 >
 >   EXIT;
 
-### 把python的defaultencoding设置为utf-8
->  http://gpiot.com/python-set-character-encoding-to-utf-8-for-deploy-cms/
->  
->  sudo vim /usr/lib/python2.7/site.py
->  
->  import sys
->
->  import os
->
->  sys.setdefaultencoding('utf-8')
->
->  python -c 'import sys; print sys.getdefaultencoding()'
-
 ## Management运维
 - 常见DB操作
+
 | Name                | Comment                                                                         |
 |:---------------------|---------------------------------------------------------------------------------|
 | 重新初始化db schema | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/db_schema.sql |
 | 更新文章投放策略    | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/update_db.sql |
 
 - 内部工具
+
 | Name                           | Comment                                      |
 |:--------------------------------|----------------------------------------------|
 | 添加用户                       | 添加dns二级域名, 并调用xzb_create_user.sh -h |
@@ -66,6 +55,7 @@ xiaozibao - 小字报
 | 从markdown文件生成html文件     | $XZB_HOME/code/misc/markdown_to_html.sh      |
 
 - web测试
+
 | Name           | Link                                                                       |
 |:----------------|----------------------------------------------------------------------------|
 | get_post       | http://127.0.0.1:8081/api_get_post?postid=ffa72494d91aeb2e1153b64ac7fb961f |
