@@ -40,6 +40,7 @@ code/snake_worker/rel/snake_worker/lib/tools-2.6.10/
 code/snake_worker/rel/snake_worker/lib/webtool-0.8.9.2/
 code/snake_worker/rel/snake_worker/lib/wx-1.0/
 webcrawler_data/
+code/snake_worker/rel/snake_worker/
 
 *.pyc
 setting.pp
