@@ -9,12 +9,13 @@ xiaozibao - 小字报
 ## Installation
 | Name                                   | Comment                                                                      |
 |:----------------------------------------|------------------------------------------------------------------------------|
-| checkout git hub                       | https://github.com/DennyZhang/xiaozibao                                      |
+| checkout github                       | https://github.com/DennyZhang/xiaozibao                                       |
 | install mysql-server                   |                                                                              |
-| install mysql client packages          | sudo apt-get install mysql-client libmysqlclient-dev            |
-| install google go                      | http://blog.ec-ae.com/?p=7867#sec-1-1                                          |
+| install mysql client packages          | sudo apt-get install mysql-client libmysqlclient-dev                         |
+| install google go                      | http://blog.ec-ae.com/?p=7867#sec-1-1                                        |
 | install rabbitmq                       | sudo apt-get install rabbitmq-server                                         |
-| install and enforce puppet             | Follow instruction of puppet/README.md                                       |
+| install puppet                         | http://blog.ec-ae.com/?p=2824#sec-1                                          |
+| enforce puppet                         | Follow instruction of puppet/README.md                                       |
 | reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
 | 启动前台                                | cd $XZB_HOME/code/webserver; python ./server.py                        |
 
