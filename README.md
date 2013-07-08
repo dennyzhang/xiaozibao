@@ -10,30 +10,13 @@ xiaozibao - 小字报
 | Name                                   | Comment                                                                      |
 |:----------------------------------------|------------------------------------------------------------------------------|
 | checkout git hub                       | https://github.com/DennyZhang/xiaozibao                                      |
-| 安装mysql-server                       |                                                                              |
-| 安装google go                          | http://blog.ec-ae.com/?p=7867#sec-1-1                                          |
-| 安装puppet client, 并同步              | Follow instruction of puppet/README.md                                       |
+| install mysql-server                   |                                                                              |
+| install mysql client packages          | sudo apt-get install mysql-client libmysqlclient-dev            |
+| install google go                      | http://blog.ec-ae.com/?p=7867#sec-1-1                                          |
+| install rabbitmq                       | sudo apt-get install rabbitmq-server                                         |
+| install and enforce puppet             | Follow instruction of puppet/README.md                                       |
 | reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
-| 安装mysql                              | sudo apt-get install mysql-client libmysqlclient-dev            |
-| 安装rabbitmq相关工具                   | sudo apt-get install rabbitmq-server                                         |
-| 创建mysql的db和user                    |                                                                              |
-| 启动前台                               | cd $XZB_HOME/code/webserver; python ./server.py                        |
-| 安装内部自动化工具集, 名字都以xzb_开头 | cd $XZB_HOME/code/tool;sudo make install                                     |
-
-### 创建mysql的db和user
->  mysql -u root -p
->
->   CREATE DATABASE xzb CHARACTER SET utf8 COLLATE utf8_general_ci;
->
->   CREATE USER user_2013;
->
->   SET PASSWORD FOR user_2013 = PASSWORD("ilovechina");
->
->   GRANT ALL PRIVILEGES ON xzb.* TO "user_2013"@"localhost" IDENTIFIED BY "ilovechina";
->
->   FLUSH PRIVILEGES;
->
->   EXIT;
+| 启动前台                                | cd $XZB_HOME/code/webserver; python ./server.py                        |
 
 ## Management运维
 - 常见DB操作

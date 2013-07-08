@@ -13,7 +13,7 @@ class install_mac_package {
     [
      "pip"
      ]:
-       provider => pip,
+       provider => mac,
        ensure => installed;
   }
 }

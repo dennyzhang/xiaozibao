@@ -14,4 +14,9 @@ class config_os {
   update_option_in_ini{ "$HOME/.bashrc":
     key => "XZB_HOME", value => $XZB_HOME, extra_str => "export ",
   }
+  exec {
+    "install_xzb_tools":
+      command => "cd $XZB_HOME/code/tool/; make install",
+      path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
+  }
 }

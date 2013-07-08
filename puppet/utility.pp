@@ -12,6 +12,6 @@ define update_option_in_ini ($key, $value, $extra_str="") {
     command => "grep \"${key}=\" ${name} && sed -ie 's/.*${key}=.*//' ${name} || echo \"\n${extra_str}${key}=\\\"${value}\\\"\" | tee -a ${name}",
     # verbose output for such a complicated operation
     logoutput => true,
-    path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin"
+    path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
   }
 }
