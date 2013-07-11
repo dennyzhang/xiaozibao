@@ -60,3 +60,8 @@ Your personal magzine, adjusted by your taste.
 - 标题: 5字 < 长度 < 10个汉字字 (如果是英文的话，则是限额为原有基础的三倍)
 - 摘要: 15字 < 长度 < 34个汉字字 (如果是英文的话，则是限额为原有基础的三倍)
 - 文章: 200字 < 长度 < 2000 字
+
+## useful commands
+git push && git checkout master && git merge denny && git pull && git push && git checkout denny
+
+sudo snake_workerd stop; (cd $XZB_HOME/code/webcrawl_article/snake_worker && rm -rf rel/snake_worker && make release && sudo make install && sudo snake_workerd start)

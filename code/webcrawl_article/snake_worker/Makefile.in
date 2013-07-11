@@ -47,8 +47,8 @@ release: all
 install:
 	$(INSTALL) -d ${DESTDIR}@prefix@ ${DESTDIR}@bindir@
 	cp -r rel/snake_worker ${DESTDIR}@prefix@
-	$(INSTALL) -d scripts ${DESTDIR}@prefix@/snake_worker/scripts
-	cp -rf scripts/* ${DESTDIR}@prefix@/snake_worker/scripts/
-	chmod -R +x ${DESTDIR}@prefix@/snake_worker/scripts/*
+	$(INSTALL) -d scripts ${DESTDIR}@prefix@/xiaozibao/snake_worker/scripts
+	cp -rf scripts/* ${DESTDIR}@prefix@/xiaozibao/snake_worker/scripts/
+	chmod -R +x ${DESTDIR}@prefix@/xiaozibao/snake_worker/scripts/*
 	$(INSTALL) snake_workerd ${DESTDIR}@bindir@
 	$(INSTALL) snake_workerctl ${DESTDIR}@bindir@
