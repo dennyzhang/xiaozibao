@@ -1,0 +1,1 @@
+each file fetch_*.sh is a batch of webcrawler tasks.

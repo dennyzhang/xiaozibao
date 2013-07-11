@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-14>
-## Updated: Time-stamp: <2013-03-26 16:05:14>
+## Updated: Time-stamp: <2013-07-11 15:07:08>
 ##-------------------------------------------------------------------
 import pika
 import sys
@@ -57,7 +57,7 @@ def callback(ch, method, properties, body):
     print " [x] Done"
     ch.basic_ack(delivery_tag = method.delivery_tag)
 
-# xzb_mq_tool.py insert sudo xzb_fetch_url.sh --fetch_url http://haowenz.com/a/bl/2013/2608.html --dst_dir webcrawler_raw_haowenz
+# xzb_mq_tool.py insert sudo xzb_fetch_url.sh -f http://haowenz.com/a/bl/2013/2608.html -d webcrawler_raw_haowenz
 # xzb_mq_tool.py get snake_worker-shell#1#d1#haowenz.com
 if __name__ == "__main__":
     if sys.argv[1] == "insert":

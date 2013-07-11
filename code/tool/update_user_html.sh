@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2013-02-08 23:59:52>
+## Updated: Time-stamp: <2013-07-11 16:13:45>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -25,12 +25,12 @@ function update_user_html() {
     fi
 
     # copy resource file
-    /bin/cp -r $XZB_HOME/code/smarty_html/templates/resource $user_dir
+    /bin/cp -r $XZB_HOME/code/show_article/smarty_html/templates/resource $user_dir
 
     # update main page
     python_script="import jinja_html; jinja_html.generate_list_user_post(\"$userid\", \"$date\", \"$index_html\")"
 
-    command="(cd $XZB_HOME/code/smarty_html; python -c '${python_script}')"
+    command="(cd $XZB_HOME/code/show_article/smarty_html; python -c '${python_script}')"
     eval $command
     if [ $? -ne 0 ]; then
         log "[$BIN_NAME.sh] Generate $index_html failed."
@@ -41,7 +41,7 @@ function update_user_html() {
 
     # update posts page
     python_script="import jinja_html; jinja_html.generate_user_all_posts(\"$userid\", \"$date\", \"$user_dir\")"
-    command="(cd $XZB_HOME/code/smarty_html; python -c '${python_script}')"
+    command="(cd $XZB_HOME/code/show_article/smarty_html; python -c '${python_script}')"
     eval $command
     if [ $? -ne 0 ]; then
         log "[$BIN_NAME.sh] Generate html files of user posts failed."

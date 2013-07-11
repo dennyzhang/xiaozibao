@@ -114,7 +114,10 @@ func zhihucom_1(url string) []Task {
 
         content = webcrawler.Filter(content,"<body", "</body>")
 
-	link_pattern :=  "<a class=\"question_link\" href=\"/question/([^\"]*)\""
+	//fmt.Print(content)
+
+	link_pattern :=  "<a class=\"question_link\" .*href=\"/question/([^\"]*)\""
+	// TODO: assertion if pattern match fail
         match_strings := regexp.MustCompile(link_pattern).FindAllStringSubmatch(content, -1)
         for i := range match_strings {
 		record_string := match_strings[i]

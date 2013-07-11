@@ -6,37 +6,37 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-02-16 16:48:18>
+## Updated: Time-stamp: <2013-07-11 16:11:26>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
-# export GOPATH=$XZB_HOME/code/webcrawler; cd $GOPATH; for((i=1; i< 51; i++)); do { go run ./src/main.go "http://www.zhihu.com/topic/19551627/top-answers?page=$i"; sleep 600;}; done
+# export GOPATH=$XZB_HOME/code/webcrawl_article/webcrawler; cd $GOPATH; for((i=1; i< 51; i++)); do { go run ./src/main.go "http://www.zhihu.com/topic/19551627/top-answers?page=$i"; sleep 600;}; done
 
 function update_internetmonitor() {
     log "update_internetmonitor"
 
-    sudo xzb_fetch_url.sh --fetch_url http://www.pm2d5.com/city/nanchang.html --dst_dir internetmonitor/webcrawler_raw_pm;
+    sudo xzb_fetch_url.sh -f http://www.pm2d5.com/city/nanchang.html -d internetmonitor/webcrawler_raw_pm;
 
-    sudo xzb_fetch_url.sh --fetch_url http://www.baidu.com/s?wd=上海+天气 --dst_dir internetmonitor/webcrawler_raw_baidu;
-    sudo xzb_fetch_url.sh --fetch_url http://www.baidu.com/s?wd=昆明+天气 --dst_dir internetmonitor/webcrawler_raw_baidu;
-    sudo xzb_fetch_url.sh --fetch_url http://www.baidu.com/s?wd=南京+天气 --dst_dir internetmonitor/webcrawler_raw_baidu;
-    sudo xzb_fetch_url.sh --fetch_url http://www.baidu.com/s?wd=台州+天气 --dst_dir internetmonitor/webcrawler_raw_baidu;
-    sudo xzb_fetch_url.sh --fetch_url http://www.baidu.com/s?wd=南昌+天气 --dst_dir internetmonitor/webcrawler_raw_baidu;
-    sudo xzb_fetch_url.sh --fetch_url http://www.baidu.com/s?wd=长沙+天气 --dst_dir internetmonitor/webcrawler_raw_baidu;
+    sudo xzb_fetch_url.sh -f http://www.baidu.com/s?wd=上海+天气 -d internetmonitor/webcrawler_raw_baidu;
+    sudo xzb_fetch_url.sh -f http://www.baidu.com/s?wd=昆明+天气 -d internetmonitor/webcrawler_raw_baidu;
+    sudo xzb_fetch_url.sh -f http://www.baidu.com/s?wd=南京+天气 -d internetmonitor/webcrawler_raw_baidu;
+    sudo xzb_fetch_url.sh -f http://www.baidu.com/s?wd=台州+天气 -d internetmonitor/webcrawler_raw_baidu;
+    sudo xzb_fetch_url.sh -f http://www.baidu.com/s?wd=南昌+天气 -d internetmonitor/webcrawler_raw_baidu;
+    sudo xzb_fetch_url.sh -f http://www.baidu.com/s?wd=长沙+天气 -d internetmonitor/webcrawler_raw_baidu;
 
-    sudo xzb_fetch_url.sh --fetch_url http://www.pm2d5.com/city/changsha.html --dst_dir internetmonitor/webcrawler_raw_pm;
-    sudo xzb_fetch_url.sh --fetch_url http://www.pm2d5.com/city/shanghai.html --dst_dir internetmonitor/webcrawler_raw_pm;
-    sudo xzb_fetch_url.sh --fetch_url http://www.pm2d5.com/city/kunming.html --dst_dir internetmonitor/webcrawler_raw_pm;
-    sudo xzb_fetch_url.sh --fetch_url http://www.pm2d5.com/city/taizhou.html --dst_dir internetmonitor/webcrawler_raw_pm;
-    sudo xzb_fetch_url.sh --fetch_url http://www.pm2d5.com/city/nanjing.html --dst_dir internetmonitor/webcrawler_raw_pm;
-    sudo xzb_fetch_url.sh --fetch_url http://www.pm2d5.com/city/nanchang.html --dst_dir internetmonitor/webcrawler_raw_pm;
+    sudo xzb_fetch_url.sh -f http://www.pm2d5.com/city/changsha.html -d internetmonitor/webcrawler_raw_pm;
+    sudo xzb_fetch_url.sh -f http://www.pm2d5.com/city/shanghai.html -d internetmonitor/webcrawler_raw_pm;
+    sudo xzb_fetch_url.sh -f http://www.pm2d5.com/city/kunming.html -d internetmonitor/webcrawler_raw_pm;
+    sudo xzb_fetch_url.sh -f http://www.pm2d5.com/city/taizhou.html -d internetmonitor/webcrawler_raw_pm;
+    sudo xzb_fetch_url.sh -f http://www.pm2d5.com/city/nanjing.html -d internetmonitor/webcrawler_raw_pm;
+    sudo xzb_fetch_url.sh -f http://www.pm2d5.com/city/nanchang.html -d internetmonitor/webcrawler_raw_pm;
 
-    #sudo xzb_fetch_url.sh --fetch_url http://stock.stcn.com/sh/600362/ --dst_dir internetmonitor/webcrawler_raw_stock;
+    #sudo xzb_fetch_url.sh -f http://stock.stcn.com/sh/600362/ -d internetmonitor/webcrawler_raw_stock;
 
-    sudo xzb_fetch_url.sh --fetch_url http://www.google.com/finance?q=nvidia --dst_dir internetmonitor/webcrawler_raw_stock;
-    sudo xzb_fetch_url.sh --fetch_url http://www.google.com/finance?q=intel --dst_dir internetmonitor/webcrawler_raw_stock;
-    sudo xzb_fetch_url.sh --fetch_url http://www.google.com/finance?q=marvell --dst_dir internetmonitor/webcrawler_raw_stock;
-    sudo xzb_fetch_url.sh --fetch_url http://www.google.com/finance?q=amd --dst_dir internetmonitor/webcrawler_raw_stock;
+    sudo xzb_fetch_url.sh -f http://www.google.com/finance?q=nvidia -d internetmonitor/webcrawler_raw_stock;
+    sudo xzb_fetch_url.sh -f http://www.google.com/finance?q=intel -d internetmonitor/webcrawler_raw_stock;
+    sudo xzb_fetch_url.sh -f http://www.google.com/finance?q=marvell -d internetmonitor/webcrawler_raw_stock;
+    sudo xzb_fetch_url.sh -f http://www.google.com/finance?q=amd -d internetmonitor/webcrawler_raw_stock;
 }
 
 function combine_internetmonitor() {

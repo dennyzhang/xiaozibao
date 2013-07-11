@@ -6,10 +6,11 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-02-19 13:37:47>
+## Updated: Time-stamp: <2013-07-11 16:14:34>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
+SLEEP_SECONDS=3
 ######################### platform websites ############################
 
 function fetch_douban() {
@@ -19,10 +20,11 @@ function fetch_douban() {
     lists=($id_list)
     for id in ${lists[*]}; do
         for url in `generate_command "http://www.douban.com/group/$topic_id/discussion?start=$id&type=essence" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir $dst_dir --fetch_url $url"
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
             $command
         done;
     done;
+    sleep $SLEEP_SECONDS
 }
 
 function fetch_douban_discussion() {
@@ -32,10 +34,11 @@ function fetch_douban_discussion() {
     lists=($id_list)
     for id in ${lists[*]}; do
         for url in `generate_command "http://www.douban.com/group/$topic_id/discussion?start=$id" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir $dst_dir --fetch_url $url"
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
             $command
         done;
     done;
+    sleep $SLEEP_SECONDS
 }
 
 function fetch_zhihu() {
@@ -45,10 +48,11 @@ function fetch_zhihu() {
     lists=($id_list)
     for id in ${lists[*]}; do
         for url in `generate_command "http://www.zhihu.com/topic/$topic_id/top-answers?page=$id" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir $dst_dir --fetch_url $url"
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
             $command
         done;
     done;
+    sleep $SLEEP_SECONDS
 }
 
 function fetch_weibo_direct_user() {
@@ -58,9 +62,10 @@ function fetch_weibo_direct_user() {
     lists=($id_list)
     for id in ${lists[*]}; do
         url="http://weibo.com/$userid?page=$id"
-        command="xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir $dst_dir --fetch_url $url"
+        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
         $command
     done;
+    sleep $SLEEP_SECONDS
 }
 
 function fetch_weibo() {
@@ -70,9 +75,10 @@ function fetch_weibo() {
     lists=($id_list)
     for id in ${lists[*]}; do
         url="http://weibo.com/u/$userid?page=$id"
-        command="xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir $dst_dir --fetch_url $url"
+        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
         $command
     done;
+    sleep $SLEEP_SECONDS
 }
 
 function fetch_weibo_search() {
@@ -82,9 +88,10 @@ function fetch_weibo_search() {
     lists=($id_list)
     for id in ${lists[*]}; do
         url="http://s.weibo.com/weibo/$topic_id&page=$id"
-        command="xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir $dst_dir --fetch_url $url"
+        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
         $command
     done;
+    sleep $SLEEP_SECONDS
 }
 
 ########################################################################
@@ -96,10 +103,11 @@ function fetch_haowenz() {
     lists=($id_list)
     for id in ${lists[*]}; do
         for url in `generate_command "http://haowenz.com/a/bl/list_4_$id.html" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir $dst_dir --fetch_url $url"
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
             $command
         done;
     done;
+    sleep $SLEEP_SECONDS
 }
 
 ########################################################################
@@ -115,7 +123,7 @@ function generate_seq() {
 
 function generate_command() {
     generator_url=${1?}
-    export GOPATH=$XZB_HOME/code/webcrawler
+    export GOPATH=$XZB_HOME/code/webcrawl_article/webcrawler
     cd $GOPATH
     go run ./src/main.go --fetch_url $generator_url --shall_generator
 }

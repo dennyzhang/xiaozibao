@@ -44,7 +44,6 @@ code/snake_worker/rel/snake_worker/
 
 *.pyc
 setting.pp
-denny_tasklist.txt
-
+fetch_denny_weibo.sh
 
 nohup.out

@@ -6,7 +6,7 @@
 ## Description : Install crontab to automatically update users' post
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-02-24 21:26:57>
+## Updated: Time-stamp: <2013-07-11 16:14:09>
 ##-------------------------------------------------------------------
 
 # Sample crontab configuration
@@ -19,7 +19,7 @@ VERSION=0.1
 function fetch_url() {
     url=${1?}
     dst_dir=${2?}
-    export GOPATH=$XZB_HOME/code/webcrawler
+    export GOPATH=$XZB_HOME/code/webcrawl_article/webcrawler
     cd $GOPATH
     go run ./src/main.go --fetch_url $url --dst_dir $dst_dir
 }
@@ -29,13 +29,13 @@ help()
     cat <<EOF
 Usage: ${BIN_NAME}.sh [OPTION]
 
-Sample: sudo ${BIN_NAME}.sh --fetch_url http://haowenz.com/a/bl/2013/2608.html --dst_dir webcrawler_raw_haowenz
+Sample: sudo ${BIN_NAME}.sh -f http://haowenz.com/a/bl/2013/2608.html -d webcrawler_raw_haowenz
 
 ${BIN_NAME} is a shell script to fetch url
 
 Mandatory arguments:
- --url                 url to fetch
- --dst_dir             location to store the webpage
+ --fetch_url|-f        url to fetch
+ --dst_dir|-d          location to store the webpage
 
 Optional arguments:
  --refreshportal       whether refreshportal
@@ -47,15 +47,20 @@ EOF
 
 ensure_variable_isset
 
-#default value
-ARGS=`getopt -a -o hv -l fetch_url:,version,dst_dir:,help -- "$@"`
+# getopt of mac is BSD version, which has compatible issue for gnu getopt
+if [ `uname` = "Darwin" ]; then
+    ARGS=`getopt hvd:f: "$@"`
+else
+    ARGS=`getopt -a -o hvd:f: -l fetch_url:,version,dst_dir:,help -- "$@"`
+fi;
+
 [ $? -ne 0 ] && help
 eval set -- "${ARGS}"
 
 while true
 do
     case "$1" in
-        --fetch_url)
+        --fetch_url|-f)
             fetch_url="$2"
             shift
             ;;
@@ -69,7 +74,7 @@ do
             shift
             exit 0
             ;;
-        --dst_dir)
+        --dst_dir|-d)
             dst_dir="$2"
             shift
             ;;

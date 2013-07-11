@@ -1,0 +1,1 @@
+awk -F'	' '{print $6"="$7}' ./cookies.txt

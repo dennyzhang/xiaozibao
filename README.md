@@ -1,5 +1,7 @@
 xiaozibao - 小字报
 =========
+Your personal magzine, adjusted by your taste. 
+
 ## Demo
 | Num | Name                                   | Comment                                                                      |
 |:----|----------------------------------------|------------------------------------------------------------------------------|
@@ -9,15 +11,16 @@ xiaozibao - 小字报
 ## Installation
 | Name                                   | Comment                                                                      |
 |:----------------------------------------|------------------------------------------------------------------------------|
-| checkout github                       | https://github.com/DennyZhang/xiaozibao                                       |
+| checkout github                        | https://github.com/DennyZhang/xiaozibao                                       |
 | install mysql-server                   |                                                                              |
 | install mysql client packages          | sudo apt-get install mysql-client libmysqlclient-dev                         |
 | install google go                      | http://blog.ec-ae.com/?p=7867#sec-1-1                                        |
 | install rabbitmq                       | sudo apt-get install rabbitmq-server                                         |
+| install erlang                         |                                                                              |
 | install puppet                         | http://blog.ec-ae.com/?p=2824#sec-1                                          |
 | enforce puppet                         | Follow instruction of puppet/README.md                                       |
 | reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
-| 启动前台                                | cd $XZB_HOME/code/webserver; python ./server.py                        |
+| 启动前台                                | cd $XZB_HOME/code/show_article/webserver && python ./server.py                        |
 
 ## Management运维
 - 常见DB操作
@@ -35,7 +38,6 @@ xiaozibao - 小字报
 | 更新某个category的所有文章     | xzb_update_category.sh -h                    |
 | 更新某些用户文章               | xzb_update_all_user.sh -h                    |
 | 对抓取到的数据做预处理的格式化 | xzb_format_posts.sh -h                       |
-| 从markdown文件生成html文件     | $XZB_HOME/code/misc/markdown_to_html.sh      |
 
 - web测试
 

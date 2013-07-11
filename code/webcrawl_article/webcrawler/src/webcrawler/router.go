@@ -193,7 +193,7 @@ func errorHandler(err error) {
 }
 
 func setCookie(url string, req *http.Request ) bool {
-	cookie_dir := os.Getenv("XZB_HOME") + "/code/webcrawler/cookie/"
+	cookie_dir := os.Getenv("XZB_HOME") + "/code/webcrawl_article/webcrawler/cookie/"
 	list := strings.Split(url, "/")
 	cookie_file := cookie_dir + list[2]
         bytes, err := ioutil.ReadFile(cookie_file)

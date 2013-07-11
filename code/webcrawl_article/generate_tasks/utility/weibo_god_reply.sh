@@ -6,7 +6,7 @@
 ## Description : 
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-03-11 00:40:31>
+## Updated: Time-stamp: <2013-07-11 16:14:53>
 ##-------------------------------------------------------------------
 
 # Sample crontab configuration
@@ -18,7 +18,7 @@ VERSION=0.1
 MAX_WORKER=2
 function parse_god_reply() {
     dir=${1?}
-    export GOPATH=$XZB_HOME/code/postwasher
+    export GOPATH=$XZB_HOME/code/filter_article/postwasher
     cd $GOPATH
 
     SAVEIFS=$IFS

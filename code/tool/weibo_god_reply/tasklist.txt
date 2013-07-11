@@ -1,2 +1,0 @@
-xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir joyce_weibo --expires_url http://weibo.com/jessicahebj?page=1
-xzb_mq_tool.py insert xzb_fetch_url.sh --dst_dir joyce_weibo --expires_url http://weibo.com/vevayspace?page=1
