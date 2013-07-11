@@ -19,4 +19,16 @@ class config_os {
       command => "cd $XZB_HOME/code/tool/; make install",
       path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
   }
+
+  case $operatingsystem {
+    'Darwin':{
+      exec {
+        "link_md5":
+          command => "which md5 && ln -s `which md5` /usr/bin/md5sum",
+          user=>"root",
+          unless => "test -f /usr/bin/md5sum",
+          path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
+      }
+    }
+  }
 }
