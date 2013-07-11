@@ -8,21 +8,30 @@ Your personal magzine, adjusted by your taste.
 |   1 | Build your own magzine                 | http://denny.youwen.im/                                                      |
 |   2 | Dig weibo/twitter for your taste       | http://weibo.com/xue321video                                                 |
 
-## Installation
+## Installation (verified on mac and ubuntu)
 | Name                                   | Comment                                                                      |
 |:----------------------------------------|------------------------------------------------------------------------------|
-| checkout github                        | https://github.com/DennyZhang/xiaozibao                                       |
-| install mysql-server                   |                                                                              |
-| install mysql client packages          | sudo apt-get install mysql-client libmysqlclient-dev                         |
-| install google go                      | http://blog.ec-ae.com/?p=7867#sec-1-1                                        |
-| install rabbitmq                       | sudo apt-get install rabbitmq-server                                         |
-| install erlang                         |                                                                              |
-| install puppet                         | http://blog.ec-ae.com/?p=2824#sec-1                                          |
-| enforce puppet                         | Follow instruction of puppet/README.md                                       |
-| reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
-| 启动前台                                | cd $XZB_HOME/code/show_article/webserver && python ./server.py                        |
+| Checkout github                        | https://github.com/DennyZhang/xiaozibao                                       |
+| Install mysql-server                   |                                                                              |
+| Install mysql client packages          | sudo apt-get install mysql-client libmysqlclient-dev                         |
+| Install google go                      | http://blog.ec-ae.com/?p=7867#sec-1-1                                        |
+| Install rabbitmq                       | sudo apt-get install rabbitmq-server                                         |
+| Install erlang                         |                                                                              |
+| Install puppet                         | http://blog.ec-ae.com/?p=2824#sec-1                                          |
+| Enforce puppet                         | Follow instruction of puppet/README.md                                       |
+| Reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
+| Start webserver to exhibit posts       | cd $XZB_HOME/code/show_article/webserver && python ./server.py              |
+| Helloworld test                        | curl http://127.0.0.1:9080/api_get_post?id=3aaae1a35a73722372e1b49343c2c3dc |
 
-## Management运维
+## Management
+- Web Test
+
+| Name           | Link                                                                       |
+|:----------------|----------------------------------------------------------------------------|
+| get_post       | http://127.0.0.1:9080/api_get_post?id=3aaae1a35a73722372e1b49343c2c3dc |
+| list_user_post | http://127.0.0.1:9080/api_list_user_post?userid=denny&date=2013-01-24      |
+| list_user_post | http://127.0.0.1:9080/api_list_user_post?userid=denny                      |
+
 - 常见DB操作
 
 | Name                | Comment                                                                         |
@@ -39,14 +48,6 @@ Your personal magzine, adjusted by your taste.
 | 更新某些用户文章               | xzb_update_all_user.sh -h                    |
 | 对抓取到的数据做预处理的格式化 | xzb_format_posts.sh -h                       |
 
-- web测试
-
-| Name           | Link                                                                       |
-|:----------------|----------------------------------------------------------------------------|
-| get_post       | http://127.0.0.1:9080/api_get_post?id=3aaae1a35a73722372e1b49343c2c3dc |
-| list_user_post | http://127.0.0.1:9080/api_list_user_post?userid=denny&date=2013-01-24      |
-| list_user_post | http://127.0.0.1:9080/api_list_user_post?userid=denny                      |
-
 ## Limitation
 | Num | Name                                                                 | Comment                                                    |
 |:-----|----------------------------------------------------------------------|------------------------------------------------------------|
@@ -62,6 +63,6 @@ Your personal magzine, adjusted by your taste.
 - 文章: 200字 < 长度 < 2000 字
 
 ## useful commands
-git push && git checkout master && git merge denny && git pull && git push && git checkout denny
+- git push && git checkout master && git merge denny && git pull && git push && git checkout denny
 
 sudo snake_workerd stop; (cd $XZB_HOME/code/webcrawl_article/snake_worker && rm -rf rel/snake_worker && make release && sudo make install && sudo snake_workerd start)

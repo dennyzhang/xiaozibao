@@ -88,3 +88,5 @@ INSERT INTO user_group(groupid, userid) SELECT groupid_v, userid from users;
 END //
 DELIMITER ;
 -- ###########################################################################################
+-- add some sample posts
+REPLACE INTO posts(id, category, title) VALUES ("3aaae1a35a73722372e1b49343c2c3dc", "idea_创意", "有 1000 万资金，该怎么去经营一个互联网创业项目？");

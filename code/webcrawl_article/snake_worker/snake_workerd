@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/local//snake_worker/bin/snake_worker $@
+exec /usr/local/xiaozibao/snake_worker/bin/snake_worker $@

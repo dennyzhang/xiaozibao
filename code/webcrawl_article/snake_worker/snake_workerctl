@@ -16,7 +16,7 @@ done
 [ "X$SNAKE_WORKER_COOKIE" = "X" ] && SNAKE_WORKER_COOKIE=snake_worker
 export SNAKE_WORKER_HOST SNAKE_WORKER_COOKIE
 
-exec /usr/local//snake_worker/erts-@ERLANG_ERTS_VER@/bin/erl \
+exec /usr/local/xiaozibao/snake_worker/erts-@ERLANG_ERTS_VER@/bin/erl \
     -sname "snake_workerctl$$" \
     -hidden \
     -s snake_worker_command \
