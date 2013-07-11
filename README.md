@@ -13,13 +13,12 @@ Your personal magzine, adjusted by your taste.
 |:----------------------------------------|------------------------------------------------------------------------------|
 | Checkout github                        | https://github.com/DennyZhang/xiaozibao                                       |
 | Install mysql-server                   |                                                                              |
-| Install mysql client packages          | sudo apt-get install mysql-client libmysqlclient-dev                         |
+| Install mysql-client libmysqlclient-dev|                                                                              |
+| Install rabbitmq-server                |                                                                              |
 | Install google go                      | http://blog.ec-ae.com/?p=7867#sec-1-1                                        |
-| Install rabbitmq                       | sudo apt-get install rabbitmq-server                                         |
-| Install erlang                         |                                                                              |
 | Install puppet                         | http://blog.ec-ae.com/?p=2824#sec-1                                          |
-| Enforce puppet                         | Follow instruction of puppet/README.md                                       |
-| Reboot server                          | Since puppet will update /etc/profile, we need a reboot to take effect       |
+| Enforce puppet                         | https://github.com/DennyZhang/xiaozibao/blob/master/puppet/README.md         |
+| Reboot server                          | Take effect for the change of /etc/profile by puppet                         |
 | Start webserver to exhibit posts       | cd $XZB_HOME/code/show_article/webserver && python ./server.py              |
 | Helloworld test                        | curl http://127.0.0.1:9080/api_get_post?id=3aaae1a35a73722372e1b49343c2c3dc |
 
