@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2013-07-11 16:13:45>
+## Updated: Time-stamp: <2013-07-11 17:46:01>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 

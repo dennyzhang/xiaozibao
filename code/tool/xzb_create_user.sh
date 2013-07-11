@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-02>
-## Updated: Time-stamp: <2013-02-24 21:27:26>
+## Updated: Time-stamp: <2013-07-11 17:43:17>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -21,7 +21,7 @@ function add_user() {
         cp /usr/local/nginx/conf/vhost/dennytest.$domain.conf /usr/local/nginx/conf/vhost/$name.$domain.conf && \
             command="s/dennytest/$name/g" && \
             mysql -uuser_2013 -pilovechina xzb -e "REPLACE INTO users(userid) VALUES ('$name');" && \
-            sed -i "$command" /usr/local/nginx/conf/vhost/$name.$domain.conf && \
+            sed -ie "$command" /usr/local/nginx/conf/vhost/$name.$domain.conf && \
             mkdir -p /home/wwwroot/$name.$domain;
 
             # update portal page

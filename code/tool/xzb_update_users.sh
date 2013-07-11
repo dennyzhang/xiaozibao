@@ -6,7 +6,7 @@
 ## Description : Install crontab to automatically update users' post
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-02-24 21:27:16>
+## Updated: Time-stamp: <2013-07-11 17:45:25>
 ##-------------------------------------------------------------------
 
 # Sample crontab configuration
@@ -24,7 +24,7 @@ function refresh_portal() {
     lists=($user_list)
     for user in ${lists[*]}; do
         index_php="/home/wwwroot/$user.$domain/index.php"
-        sudo sed -i "s/^\$htmlFile =.*/\$htmlFile = file(\"$date.html\");/g" "$index_php"
+        sudo sed -ie "s/^\$htmlFile =.*/\$htmlFile = file(\"$date.html\");/g" "$index_php"
     done;
 }
 

@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2013-02-19 22:49:40>
+## Updated: Time-stamp: <2013-07-11 17:33:22>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -15,13 +15,13 @@ VERSION=0.1
 
 function check_lengthy_post() {
     log "Check lengthy posts"
-    cd $XZB_HOME/data; find . -type f -and -name "*.data" -and -size +4k -exec ls -lth "{}" \; | grep -v done
+    cd $XZB_HOME/webcrawler_data; find . -type f -and -name "*.data" -and -size +4k -exec ls -lth "{}" \; | grep -v done
 }
 
 function check_short_post() {
     log "Check too short posts"
     # find . -type f -and -name "*.data" -and -size -1024c -exec rm -rf "{}" \;
-    cd $XZB_HOME/data; find . -type f -and -name "*.data" -and -size -1024c -exec ls -lth "{}" \; | grep -v done
+    cd $XZB_HOME/webcrawler_data; find . -type f -and -name "*.data" -and -size -1024c -exec ls -lth "{}" \; | grep -v done
 }
 
 function auto_repair() {

@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2013-02-16 15:53:24>
+## Updated: Time-stamp: <2013-07-11 17:45:42>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -17,11 +17,11 @@ function update_category_list() {
     category_list=${1?}
     lists=($category_list)
     for category_name in ${lists[*]}; do
-        log "[$BIN_NAME.sh] Generate metadata files for $XZB_HOME/data/$category_name"
-        update_meta_skeleton "$XZB_HOME/data/$category_name"
+        log "[$BIN_NAME.sh] Generate metadata files for $XZB_HOME/webcrawler_data/$category_name"
+        update_meta_skeleton "$XZB_HOME/webcrawler_data/$category_name"
 
         log "[$BIN_NAME.sh] Generate sql file for $directory."
-        sql_output=$(generate_category_sql "$XZB_HOME/data/$category_name")
+        sql_output=$(generate_category_sql "$XZB_HOME/webcrawler_data/$category_name")
         if [ $? -ne 0 ]; then
             log "[$BIN_NAME.sh] Generate sql file failed."
             exit 1
@@ -34,7 +34,7 @@ function update_category_list() {
         fi;
     done;
 }
-# sample: sh ./post_sql_generation.sh /home/denny/backup/essential/Dropbox/private_data/xiaozibao/data/lifehack
+# sample: sh ./post_sql_generation.sh /home/denny/backup/essential/Dropbox/private_data/xiaozibao/webcrawler_data/lifehack
 function generate_category_sql() {
     directory=${1?"base web page directory is required for sql generation"}
     category=`basename $directory`
@@ -61,7 +61,7 @@ function update_meta_skeleton() {
         short_file=`basename "$file"`
         title=${short_file%.data}
         md5=$(echo -n "$category/$title"| md5sum | awk -F' ' '{print $1}')
-        sed -i "s/^id:.*/id: $md5/" "$file"
+        sed -ie "s/^id:.*/id: $md5/" "$file"
     done
     IFS=$SAVEIFS
 }
@@ -71,7 +71,7 @@ help()
 cat <<EOF
 Usage: ${BIN_NAME}.sh [OPTION]
 
-Sample: sudo ${BIN_NAME}.sh --categorylist "lifehack joke"
+Sample: sudo ${BIN_NAME}.sh -c "lifehack joke"
 
 +-------------------------------+   +-----------------------------------+     +----------------------------+
 |                               |   |                                   |     |                            |
@@ -83,7 +83,7 @@ ${BIN_NAME} is a shell script to update maintain posts information to mysql.
 
 Optional arguments:
   -c, --categorylist       category name, which is directory name under
-                           $XZB_HOME/data, like lifehack, lifehack, etc.
+                           $XZB_HOME/webcrawler_data, like lifehack, lifehack, etc.
                            Default value is all distinct category in posts table of mysql
   -h, --help               display this help
   -v, --version            output version information
@@ -93,7 +93,12 @@ EOF
 
 ensure_variable_isset
 
-ARGS=`getopt -a -o c:vh -l categorylist:,version,help -- "$@"`
+if [ `uname` = "Darwin" ]; then
+    ARGS=`getopt c:vh "$@"`
+else
+    ARGS=`getopt -a -o c:vh -l categorylist:,version,help -- "$@"`
+fi;
+
 [ $? -ne 0 ] && help
 eval set -- "${ARGS}"
 
@@ -125,6 +130,8 @@ done
 if [ -z "$category_list" ]; then
     category_list=$(category_in_fs)
 fi
+
+ensure_is_root
 
 update_category_list "$category_list"
 

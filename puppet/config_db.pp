@@ -34,6 +34,7 @@ class config_db {
       command=>"mysql -u${mysql_root_username} ${mysql_root_password} < $XZB_HOME/puppet/files/db_schema.sql || mv /usr/local/xiaozibao/db_schema.sql",
       user=>"root",
       subscribe => File["/usr/local/xiaozibao/db_schema.sql"],
-      path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
+      path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/",
+      refreshonly => true;
   }
 }

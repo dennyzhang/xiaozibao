@@ -43,7 +43,7 @@ Your personal magzine, adjusted by your taste.
 
 | Name           | Link                                                                       |
 |:----------------|----------------------------------------------------------------------------|
-| get_post       | http://127.0.0.1:8081/api_get_post?postid=ffa72494d91aeb2e1153b64ac7fb961f |
+| get_post       | http://127.0.0.1:8081/api_get_post?id=3aaae1a35a73722372e1b49343c2c3dc |
 | list_user_post | http://127.0.0.1:8081/api_list_user_post?userid=denny&date=2013-01-24      |
 | list_user_post | http://127.0.0.1:8081/api_list_user_post?userid=denny                      |
 

@@ -228,7 +228,7 @@ func wash_joke(data_str string) string {
         for i:= range entries {
                 print_entry(entries[i])
         }
-        //export_joke(entries, "/home/denny/backup/essential/Dropbox/private_data/xiaozibao/data/joke_笑话/", "最幽默排行榜的微博_http:__weibo.com_612072220_")
+        //export_joke(entries, "/home/denny/backup/essential/Dropbox/private_data/xiaozibao/webcrawler_data/joke_笑话/", "最幽默排行榜的微博_http:__weibo.com_612072220_")
         //fmt.Print(entries)
 
         return data_str
@@ -252,7 +252,7 @@ func wash_weibo_god_reply(data_str string) string {
         for i:= range entries {
                 print_entry(entries[i])
         }
-        //export_joke(entries, "/home/denny/backup/essential/Dropbox/private_data/xiaozibao/data/joke_笑话/", "最幽默排行榜的微博_http:__weibo.com_612072220_")
+        //export_joke(entries, "/home/denny/backup/essential/Dropbox/private_data/xiaozibao/webcrawler_data/joke_笑话/", "最幽默排行榜的微博_http:__weibo.com_612072220_")
         //fmt.Print(entries)
 
         return data_str

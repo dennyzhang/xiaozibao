@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-02-16 15:45:19>
+## Updated: Time-stamp: <2013-07-11 18:03:19>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 import os
@@ -18,7 +18,7 @@ DB_PWD="ilovechina"
 DB_NAME="xzb"
 FLASK_SERVER_PORT="8081"
 
-DATA_BASEDIR = os.getcwd()+"/../../data"
+DATA_BASEDIR = os.getcwd()+"/../../../webcrawler_data"
 
 DATA_SEPARATOR="--text follows this line--"
 ##########################################################

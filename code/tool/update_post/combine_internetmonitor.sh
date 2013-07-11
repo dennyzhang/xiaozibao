@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-07-11 16:11:26>
+## Updated: Time-stamp: <2013-07-11 17:43:35>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
@@ -84,10 +84,10 @@ function combine_internetmonitor_colin() {
     cat "./internetmonitor/webcrawler_raw_stock/江西铜业 股票.data" >> "$dst_di$dst_dir/internetmonitor/$userid's Internet Monitor.data"
     echo -e "\n" >> "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
 
-    sed -i 's/id:.*//g' "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
-    sed -i 's/source:.*//g' "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
-    sed -i 's/summary:.*//g' "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
-    sed -i 's/.*text follows this line.*//g' "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
+    sed -ie 's/id:.*//g' "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
+    sed -ie 's/source:.*//g' "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
+    sed -ie 's/summary:.*//g' "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
+    sed -ie 's/.*text follows this line.*//g' "$dst_dir/internetmonitor/$userid's Internet Monitor.data"
 }
 
 update_internetmonitor

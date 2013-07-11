@@ -6,12 +6,12 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-02-12 00:37:42>
+## Updated: Time-stamp: <2013-07-11 17:32:44>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
 function update_haowenz() {
-    cd $XZB_HOME/data/joke/webcrawler_raw_haowenz
+    cd $XZB_HOME/webcrawler_data/joke/webcrawler_raw_haowenz
     SAVEIFS=$IFS
     IFS=$(echo -en "\n\b")
     files=`find . -name '*_raw*' -prune -o -name '*.data' -print`
