@@ -4,7 +4,7 @@ class config_os {
   file {
     # workaround to config python's defaultencoding as utf-8
     # http://gpiot.com/python-set-character-encoding-to-utf-8-for-deploy-cms/
-    "/usr/lib/python2.7/site.py":
+    "/usr/lib/python$python_version/site.py":
       mode => 0644, owner => $os_root_username, group=> $os_root_groupname,
       content => template("$XZB_HOME/puppet/templates/site.py");
   }
@@ -16,7 +16,8 @@ class config_os {
   }
   exec {
     "install_xzb_tools":
-      command => "cd $XZB_HOME/code/tool/; make install",
+      command => "make install",
+      cwd => "$XZB_HOME/code/tool",
       path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
   }
 
