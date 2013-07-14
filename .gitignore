@@ -42,6 +42,7 @@ code/webcrawl_article/snake_worker/rel/webcrawl_article/snake_worker/lib/wx-1.0/
 code/webcrawl_article/snake_worker/rel/webcrawl_article/snake_worker/
 code/webcrawl_article/snake_worker/rel/snake_worker/
 webcrawler_data/
+webcrawl_article/snake_worker/deps/
 
 *.pyc
 setting.pp
