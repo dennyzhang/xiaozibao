@@ -1,0 +1,201 @@
+id: 6a116d3c4a084d8cf5f92ed2b7ec0b0c
+
+source: http://www.zhihu.com/question/20044220
+
+summary: 
+
+title: 
+
+status: 
+
+--text follows this line--
+Facebook 刚刚准备上市，对于应届毕业生来说，此时加入是一个合适的时机吗？
+
+我是一个IT技术人员，对一般公司的发展过程不是很清楚。Facebook此时应该是处于扩张阶段，对人才的需求会比较旺盛。不过对于一家已经有相当规模的大公司而言，此时加入已是否难以成为其核心人员，只能做一些边缘的业务。相比较之下，去一家刚刚起步的创业公司工作，从长远来看是否更有价值？
+
+- 覃超 ， Facebook工程师. 前Googler. CMUer (…
+
+这个要看对什么毕业生来说. 美国大学教育比较提倡entrepreneurship,所以Facebook上市之后,其光环在美国名校的最牛那批毕业生里面会下降,相比之下,他们更加愿意去开创自己的start-up,或者加入新兴公司(比如tumblr, pinterest等). Facebook会慢慢沦落到和Google, 微软, Oracle, Cisco一样的地位. 成为收养中等或者中等偏上水平毕业生的摇篮(或者说是温床). 对于国内就很可能相反: 首先不得不承认,无论本科还是硕士毕业生,很少人有人对stock或者equity有概念,一般来说只要薪水和奖金高就可以了.国内的人更加着眼于眼前,因为那是可以每个月拿到手的白花花的银子.所以他们一般觉得(另外父母也赞同)去成熟和正规的大公司,比如Google, 微软这种500强公司更好(Top20最最好). 不上市的,反而觉得不稳定,不靠谱. 同样, 外企的确对中国人的需求很有研究,所以他们在国内的分部基本上只给少量股票,比如之前Google中国给40股,微软中国给125或者200多股. 另外,问题另一部分 "此时加入已是否难以成为其核心人员"? 这个观点我同意, 公司大了肯定如此. 我记得开复说过公司的前100个人一般会自己成为一个圈子,他们觉得自己是核心,而后来的人往上爬的路肯定要漫长很多. 公司小的时候,一个人可以做公司马上就需要或者对公司有很大impact的事情,而人多了之后,每个人负责的事情就被细分,最后变得每个人觉得自我实现比较有限. 当然好处就是公司有正规的career developing track,有正式入职和项目培训,而且有更多的牛人来你周围鼓励和鞭策你. 同时,在项目进行细分了之后,你通过努力,照样可以成为整个项目某个部分的核心或者你所在的小team的核心,这样也是一件颇有成就感的东西! 下面是自己的一些题外话和小感慨: 我记得之前看过一个同事的blog,他是07年加入公司. 他回忆当年第一天进入Facebook的场景,那时公司Headquarter还在Palo Alto downtown,一个办公室的小区域里面,挤了好几个人.然后他第一天入职,参加HR简单的介绍后,在IT desk领了一个笔记本,就马上被带到座位上开始做事. 没有所谓的training,也没有为期6周的bootcamp,当年的用户数仅为60million, 还没有可以盈利的business model, 公司一直在烧钱,没钱的时候就去外面找投资,他们有时觉得公司快要关门了,谁都没想过user base有可能达到850million.那时的生活没有现在这么光鲜靓丽,也没有这么多媒体关注,但是整个公司都热情很高,而且大家坐得近,彼此都认识,氛围超级融洽. 有时想到这些,我就感触很深. 可惜我自己毕业太晚,加入公司才一年多几个月,感受不到公司100人左右一起打天下的气氛.我想他们当年肯定更加地艰苦,或者更加觉得前途未卜,但是就是有一腔热情,觉得自己做的东西让整个世界变得more open and connected, 于是就坚持着自己的信仰,走到现在. 这就是为什么他们能拿千分之几或者万分之几股票的原因. (就如同当年party,在井冈山上面开始闹革命和解放前叛变的人最后得到的荣誉肯定是不一样的). 另外,我没想到这个问题受到这样的关注,于是我询问了我的同事,然后贴出我提到的他的那篇日志. 从他的日志里面,可以看到Facebook早期打江山时候的艰辛,也希望这篇文章能给正在创业的朋友(比如知乎:)带来激励. 文章里面我最喜欢的一句话是:"I've had 8 different desks in the last 4 years, 5 buildings, 4 managers, 2 cells phones and probably the most import thing, I've gotten to work with the most amazing people on some of the hardest problems around.". --------------同事blog---------------- As my 4 year anniversary has arrived, I'm in awe of where we've come in such a short time. 4 years ago we just crossed 60 million active users and we were in a constant fight to improve performance for the users. We were constantly working to keep our memcache servers from falling over, cpu on the web tier was an even more precious resource, and we were overall scrambling to buy new servers and data center space. We had a saying back then, every time we hire a new engineer, the site got slower. It was so bad, that most of the time we had no idea what was causing regressions, other than home.php was slower by 100ms, memcache gets increase by N, db queries were up, etc etc. We had a very coarse view of what changed to slow everything down. 2008 we finally got phprof and were able to get a detailed view of our performance regressions, Tony, Marc K and I spent considerable amounts of time trying to scale the cache tier to handle the ever growing demands on it. I moved offices 3 times in 2008 and I was lucky enough to help the first wave of n00bs go through bootcamp. I don’t think people fully understand how hard it was to start as a n00b in 2007. When I started, I was met by my mentor, handed a laptop and that was it. I had no idea what to do, where to look and it was quite intimidating to be the new person having no idea who to ask for help. Our on-boarding of new engineers is so amazing, I'm extremely proud of what we've done to make it easier to bring in our wonderful new talent. I could go on and on about the various things that happened over the last 4 years and I'm constantly amazed at how quickly we've adapted and executed to create this great company, while still maintaining our amazing culture. It's been the greatest ride of my life so far and I'm looking forward to the next challenges that await me. I honestly can not believe how much the company has changed and how much I've gotten to be a part of that. I've had 8 different desks in the last 4 years, 5 buildings, 4 managers, 2 cells phones and probably the most import thing, I've gotten to work with the most amazing people on some of the hardest problems around. As I embark on the next phase of my career, I hope many of you realize what a special place Facebook is and how lucky we are to work at a place that has so much impact on people lives and the world. We've changed governments, reunited families and countless other stories and we should be extremely proud of that. I never imagined we'd be in this position in the world, but I'm very proud of us and I can't wait to see what's next. So after all this reflection, I'll see you all in MPK next week, in our awesome new digs, and for those of you who thought this was a farewell letter, sorry, but you're freaking crazy for thinking I'd leave and entertain those thoughts just because I've been here for 4 years. Do you know how many people have come up to me in the last few weeks asking if I was going to stick around because they knew I was coming up on 4 years here? I'm actually honored that my co-workers are worried about me leaving, but seriously people, I bleed blue, and I even turn blue sometimes after swimming in the bay, but I'm not going anywhere, because I believe it's hip to stay, not leave. Here's to the next 4 years! -------------------------------- 很多时候,在被硅谷神话震撼的同时,在不经意之间会有失落,毕竟再好是人家的,不是自己的祖国.在自己内心深处,最希望看到的,肯定还是在不久的未来,能出现我们自己的本土公司,它像硅谷的明星企业一样,提供对员工人性化的福利和待遇,拥有自己独特而有朝气的企业文化,具备全球性的巨大影响力,能在世界的舞台上面和西方列强平起平坐. 所以, to conclude my conclusion (--Allen: http:// v.youku.com/v_show/id_X MTQzMzAwMDky.html ), 千言万语化作一句: "与同胞共勉"
+
+9 个回答被折叠
+
+（ 为什么？ ）
+
+关注
+
+设置
+
+人关注该问题
+
+相关问题
+
+知乎上有哪些可以帮助到应届毕业生求职的问题？ 1 个回答
+
+有何建议給即将步入职场的应届毕业生？ 45 个回答
+
+对于应届毕业生，你有什么建议？应届毕业生求职需要注意哪些问题？ 11 个回答
+
+应届硕士毕业生想在风险投资领域工作，需要提前做好哪些准备？ 9 个回答
+
+应届毕业生迟迟找不到工作，是否因为自视太高？怎样调整找工作的心态？ 69 个回答
+
+分享问题
+
+微博
+
+站内私信
+
+微博分享
+
+站内信分享
+
+新浪微博
+
+腾讯微博
+
+还可以输入 140字
+
+取消
+发布
+
+收件人：
+
+内容：
+
+取消
+发送
+
+问题状态
+
+最近活动于 昨天 08:39
+
+查看问题日志
+
+被浏览 6188 次，相关话题关注者 263577 人
+
+知乎阅读
+
+知乎指南
+
+建议反馈
+
+使用帮助
+问题反馈
+功能建议
+
+请填写你的反馈内容
+请选择反馈种类：
+
+知乎协议
+
+© 2013 知乎
+
+知乎是一个真诚、友善、认真、互助的社区
+我们希望每一个疑惑都有解答，好的问题更容易得到好答案 如何提一个好问题？
+
+提问应遵循真实、客观、简洁、明确、规范的原则
+1、提问应尽可能简洁明了，避免「请问」「有谁知道」「谢谢！」等与问题本身无关的附加语。
+2、应避免使用「为神马」「童鞋」「肿么办」等网络用语。
+3、基于个人判断或传言的问题，在提问时应在补充说明里详细说明原由
+4、避免太宽泛问题，如调查性的问题容易变成每个人都可以发表观点，但对其他人没有价值。
+
+知乎禁止这些提问
+1、和已有问题完全重复的问题， 为避免重复，提问前可以先进行搜索
+2、招聘 / 求职、交易 / 合作、寻人 / 征友、召集 / 赠送、求码类内容
+3、投票类问题。例如：你支持方舟子还是韩寒？
+4、作业或其他希望代为完成个人任务类的内容，以及针对个人具体病情的求医问药类问题
+完整的提问建议可查看 知乎的提问规范有哪些？
+
+提问前请先搜索
+
+x
+
+x
+
+问题说明（可选）：
+
+话题越精准，越容易让领域专业人士看到你的问题
+
+选择话题：
+
+匿名
+
+分享到
+
+取消
+发布
+查看问题
+
+var DZMT = DZMT || [];
+
+DZMT.push(['form_key', "80808944-1034042574079065581750049761964104091462805750152"]);
+DZMT.push([ 'current_user', ["\u5f20\u5dcd", "zhang-wei-85-27", "http://p4.zhimg.com/66/6b/666b0abfc_s.jpg", "40b072c12a14f097e86a754c73e7aea8", "emacs, IT", 0, 0, 1, "markfilebat@126.com", "http://www.126.com", 1, false] ]);
+
+DZMT.push(['env', ["zhihu.com", "comet.zhihu.com", false, false ]]);
+
+DZMT.push(["current_question", [197732,0,0,null,0,0,0,0,false,true,true,20044220,0,[],[],"normal"] ]);
+DZMT.push(["draft", [] ]);
+DZMT.push(["user_answer_source", "" ]);
+
+ZH.main();
+ZH.ill();
+
+ZH.entrySQ();
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-20961733-1']);
+_gaq.push(['_setDomainName', '.zhihu.com']);
+// (NEW) SEO: add new search engines
+_gaq.push(['_addOrganic', 'baidu', 'word']);
+_gaq.push(['_addOrganic', 'baidu', 'wd']);
+_gaq.push(['_addOrganic', 'sogou', 'query']);
+_gaq.push(['_addOrganic', 'so.360.cn', 'q']);
+_gaq.push(['_addOrganic', 'so.com', 'q']);
+_gaq.push(['_addOrganic', 'soso', 'w']);
+_gaq.push(['_addOrganic', 'google', 'q']);
+// (NEW) SEO: exclude direct search terms
+_gaq.push(['_addIgnoredOrganic', '知乎']);
+_gaq.push(['_addIgnoredOrganic', '知乎网']);
+_gaq.push(['_addIgnoredOrganic', 'zhihu']);
+_gaq.push(['_addIgnoredOrganic', 'zhihu.com']);
+_gaq.push(['_addIgnoredOrganic', 'www.zhihu.com']);
+
+var user_attr = [ '1', '0', '0', '-', '2' ]
+// slot 1
+_gaq.push(['_setVar', user_attr.join('')]);
+_gaq.push(['_setCustomVar', 1, 'user_attr', user_attr.join(''), 3]);
+
+// slot 2
+_gaq.push(['_setCustomVar', 2, 'registration_date', 20120216, 1]);
+var current_user_created = 1329357952000
+
+// slot 3
+var qc1_match = document.cookie.match(/q_c1=(\w+)\|(\w+)\|(\d+)/);
+var uutime = 9000000000000; // year 2255
+if (qc1_match) {
+uutime = +qc1_match[3];
+}
+var entry_date = Math.min(uutime, current_user_created, 1373595304000)
+_gaq.push(['_setCustomVar', 3, 'entry_date', moment(entry_date).format('YYYYMMDD'), 1]);
+_gaq.push(['_setCustomVar', 4, 'abtest_group', "------------------------------", 3]);
+_gaq.push(['_trackPageview']);
+
+var _zao = _zao || { uid: 0 };
+
+_zao.uid = '40b072c12a14f097e86a754c73e7aea8';
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+var za = document.createElement('script'); za.type = 'text/javascript'; za.async = true;
+za.src = 'http://static.analytics.zhihu.com/static/za.js?v=4';
+s.parentNode.insertBefore(za, s);
+})();
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','__ga');
+__ga('create', 'UA-20961733-3', {'cookieDomain': 'zhihu.com'});
+__ga('send', 'pageview');

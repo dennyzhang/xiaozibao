@@ -8,7 +8,7 @@ Your personal magzine, adjusted by your taste.
 |   1 | Build your own magzine                 | http://denny.youwen.im/                                                      |
 |   2 | Dig weibo/twitter for your taste       | http://weibo.com/xue321video                                                 |
 
-## Installation (verified on mac and ubuntu)
+## Installation (verified on mac Darwin12.4, ubuntu10.4, centos5.6)
 | Name                                   | Comment                                                                      |
 |:----------------------------------------|------------------------------------------------------------------------------|
 | Checkout github                        | https://github.com/DennyZhang/xiaozibao                                       |
