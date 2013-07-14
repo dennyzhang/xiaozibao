@@ -4,9 +4,9 @@ class config_db {
   $db_name = "xzb"
   exec {
     createdb:
-      command=>"mysql -u${mysql_root_username} ${mysql_root_password} < $XZB_HOME/puppet/files/install_db.sql",
+      command=>"mysql -u${mysql_root_username} -p${mysql_root_password} < $XZB_HOME/puppet/files/install_db.sql",
       user=>"root",
-      unless => "mysql -u${mysql_root_username} ${mysql_root_password} -e \"show databases\" mysql | grep $db_name",
+      unless => "mysql -u${mysql_root_username} -p${mysql_root_password} -e \"show databases\" mysql | grep $db_name",
       path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
   }
 
@@ -31,7 +31,7 @@ class config_db {
   
   exec {
     updateschema:
-      command=>"mysql -u${mysql_root_username} ${mysql_root_password} < $XZB_HOME/puppet/files/db_schema.sql || mv /usr/local/xiaozibao/db_schema.sql",
+      command=>"mysql -u${mysql_root_username} -p${mysql_root_password} < $XZB_HOME/puppet/files/db_schema.sql || mv /usr/local/xiaozibao/db_schema.sql",
       user=>"root",
       subscribe => File["/usr/local/xiaozibao/db_schema.sql"],
       path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/",
