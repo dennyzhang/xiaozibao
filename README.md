@@ -2,7 +2,7 @@ xiaozibao - 小字报
 =========
 Your personal magzine, adjusted by your taste. 
 
-![](design.png)
+![](design.jpg)
 
 ## Demo
 | Num | Name                                   | Comment                                                                      |
