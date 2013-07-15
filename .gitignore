@@ -1,3 +1,4 @@
+*.beam
 *.pyc
 nohup.out
 .DS_Store
@@ -50,3 +51,7 @@ code/webcrawl_article/snake_worker/rel/webcrawl_article/snake_worker/
 code/webcrawl_article/snake_worker/rel/snake_worker/
 webcrawler_data/
 webcrawl_article/snake_worker/deps/
+
+code/show_article/ios_client/Podfile.lock
+code/show_article/ios_client/Pods/Manifest.lock
+code/show_article/ios_client/MasterDetail.xcworkspace/xcuserdata/

@@ -16,6 +16,7 @@ Your personal magzine, adjusted by your taste.
 | Install mysql-client libmysqlclient-dev|                                                                              |
 | Install rabbitmq-server                |                                                                              |
 | Install google go                      | http://blog.ec-ae.com/?p=7867#sec-1-1                                        |
+| Install erlang                         | sudo apt-get install erlang / yum install erlang / brew install erlang
 | Install puppet                         | http://blog.ec-ae.com/?p=2824#sec-1                                          |
 | Enforce puppet                         | https://github.com/DennyZhang/xiaozibao/blob/master/puppet/README.md         |
 | Reboot server                          | Take effect for the change of /etc/profile by puppet                         |
