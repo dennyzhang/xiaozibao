@@ -1,20 +1,26 @@
 xiaozibao - 小字报
 =========
-Your personal magzine, adjusted by your taste. 
+Monitor the whole internet, to build your personal magzine adjusted by your taste. 
 
 ![](design.jpg)
 ![](ios1.png)
 ![](ios2.png)
 ![](ios3.png)
 
-## Demo
-| Num | Name                                   | Comment                                                                      |
-|:----|----------------------------------------|------------------------------------------------------------------------------|
-|   1 | Build your own magzine                 | http://denny.youwen.im/                                                      |
-|   2 | Dig weibo/twitter for your taste       | http://weibo.com/xue321video                                                 |
+## Join us for free. Why?
+- We see the project help to minimize the gap of information age: read less for more
+- We see lots of powerful languages in this project: Python, erlang, golang, objectC, anjularjs, bash,etc.
+- We see lots of popluar weapons in this project: puppet, hudson, tsung, zabbix, etc
+- We see the project is at the early stage
+
+We need you, the project need you!
+
+## How to involve?
+Drop an email to me, markfilebat@126.com
 
 ## Installation
 - verified on mac Darwin12.4, ubuntu10.4, centos5.6
+
 | Name                                   | Comment                                                                      |
 |:----------------------------------------|------------------------------------------------------------------------------|
 | Checkout github                        | https://github.com/DennyZhang/xiaozibao                                       |
