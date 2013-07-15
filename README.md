@@ -6,13 +6,13 @@ Monitor the whole internet, to build your personal magzine adjusted by your tast
 ![](ios1.png)  ![](ios3.png)
 
 ## Join us for free. Why?
-- We see the project help to minimize the gap of information age: read less for more
-- We see the project is at the early stage
+- We see the project target to minimize the gap of information age: read less for more
+- We see the project is at the early stage.
 - We see lots of powerful languages here: Python, erlang, golang, objectC, anjularjs, bash,etc.
 - We see lots of popluar weapons here: puppet, hudson, tsung, zabbix, etc
 
 ## How to involve?
-Drop an email to me, markfilebat@126.com
+Drop me an email: markfilebat@126.com, to join the mail group.
 
 ## Installation
 - verified on mac Darwin12.4, ubuntu10.4, centos5.6
@@ -40,13 +40,6 @@ Drop an email to me, markfilebat@126.com
 | list_user_post | http://127.0.0.1:9080/api_list_user_post?userid=denny&date=2013-01-24      |
 | list_user_post | http://127.0.0.1:9080/api_list_user_post?userid=denny                      |
 
-- 常见DB操作
-
-| Name                | Comment                                                                         |
-|:---------------------|---------------------------------------------------------------------------------|
-| 重新初始化db schema | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/db_schema.sql |
-| 更新文章投放策略    | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/update_db.sql |
-
 - 内部工具
 
 | Name                           | Comment                                      |
@@ -55,6 +48,7 @@ Drop an email to me, markfilebat@126.com
 | 更新某个category的所有文章     | xzb_update_category.sh -h                    |
 | 更新某些用户文章               | xzb_update_all_user.sh -h                    |
 | 对抓取到的数据做预处理的格式化 | xzb_format_posts.sh -h                       |
+| 更新文章投放策略    | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/update_db.sql |
 
 ## Limitation
 | Num | Name                                                                 | Comment                                                    |
