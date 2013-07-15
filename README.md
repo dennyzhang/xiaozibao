@@ -2,6 +2,8 @@ xiaozibao - 小字报
 =========
 Your personal magzine, adjusted by your taste. 
 
+[[design.jpg]]
+
 ## Demo
 | Num | Name                                   | Comment                                                                      |
 |:----|----------------------------------------|------------------------------------------------------------------------------|
