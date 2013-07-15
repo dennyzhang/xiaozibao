@@ -57,6 +57,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.navigationItem.title = @"Creative Ideas";
+
     
     UIBarButtonItem *hideButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideArticle:)];    
     self.navigationItem.leftBarButtonItem = hideButton;

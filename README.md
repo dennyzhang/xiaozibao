@@ -3,6 +3,9 @@ xiaozibao - 小字报
 Your personal magzine, adjusted by your taste. 
 
 ![](design.jpg)
+![](ios1.png)
+![](ios2.png)
+![](ios3.png)
 
 ## Demo
 | Num | Name                                   | Comment                                                                      |
