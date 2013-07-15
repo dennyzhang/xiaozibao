@@ -94,11 +94,13 @@
 
 - (void) initLocationManager
 {
+    /*
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
     [locationManager startUpdatingLocation];
+     */
 }
 
 - (void)locationManager:(CLLocationManager *)manager
