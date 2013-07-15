@@ -8,8 +8,8 @@ Monitor the whole internet, to build your personal magzine adjusted by your tast
 ## Join us for free. Why?
 - We see the project target to minimize the gap of information age: read less for more
 - We see the project is at the early stage.
-- We see lots of powerful languages here: Python, erlang, golang, objectC, anjularjs, bash,etc.
-- We see lots of popluar weapons here: puppet, hudson, tsung, zabbix, etc
+- We see lots of powerful languages here: Python, Erlang, Golang, Objectc, Anjularjs, Bash,etc.
+- We see lots of popluar weapons here: Puppet, Jenkins, Tsung, Zabbix, etc
 
 ## How to involve?
 Drop me an email: markfilebat@126.com, to join the mail group.
