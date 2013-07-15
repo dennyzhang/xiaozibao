@@ -6,7 +6,7 @@ class config_db {
     $password=""
   }
   else {
-    $password="-p{mysql_root_password}"
+    $password="-p${mysql_root_password}"
   }
   exec {
     createdb:
