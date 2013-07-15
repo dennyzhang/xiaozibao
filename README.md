@@ -4,7 +4,6 @@ Monitor the whole internet, to build your personal magzine adjusted by your tast
 
 ![](design.jpg)
 ![](ios1.png)
-![](ios2.png)
 ![](ios3.png)
 
 ## Join us for free. Why?
@@ -12,8 +11,6 @@ Monitor the whole internet, to build your personal magzine adjusted by your tast
 - We see lots of powerful languages in this project: Python, erlang, golang, objectC, anjularjs, bash,etc.
 - We see lots of popluar weapons in this project: puppet, hudson, tsung, zabbix, etc
 - We see the project is at the early stage
-
-We need you, the project need you!
 
 ## How to involve?
 Drop an email to me, markfilebat@126.com
