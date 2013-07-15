@@ -3,10 +3,10 @@ import "setting.pp"
 class config_db {
   $db_name = "xzb"
   if $mysql_root_password == "" {
-    $passowrd=""
+    $password=""
   }
   else {
-    $passowrd="-p{mysql_root_password}"
+    $password="-p{mysql_root_password}"
   }
   exec {
     createdb:
