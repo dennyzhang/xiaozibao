@@ -3,7 +3,7 @@ xiaozibao - 小字报
 Monitor the whole internet, to build your personal magzine adjusted by your taste. 
 
 ![](design.jpg)
-![](ios1.png)
+![](ios1.png)  
 ![](ios3.png)
 
 ## Join us for free. Why?
