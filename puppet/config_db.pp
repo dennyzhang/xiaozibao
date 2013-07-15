@@ -2,11 +2,17 @@ import "setting.pp"
 
 class config_db {
   $db_name = "xzb"
+  if $mysql_root_password == "" {
+    $passowrd=""
+  }
+  else {
+    $passowrd="-p{mysql_root_password}"
+  }
   exec {
     createdb:
-      command=>"mysql --default-character-set utf8 -u${mysql_root_username} -p${mysql_root_password} < $XZB_HOME/puppet/files/install_db.sql",
+      command=>"mysql --default-character-set utf8 -u${mysql_root_username} ${password} < $XZB_HOME/puppet/files/install_db.sql",
       user=>"root",
-      unless => "mysql --default-character-set utf8 -u${mysql_root_username} -p${mysql_root_password} -e \"show databases\" mysql | grep $db_name",
+      unless => "mysql --default-character-set utf8 -u${mysql_root_username} ${password} -e \"show databases\" mysql | grep $db_name",
       path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
   }
 
@@ -31,7 +37,7 @@ class config_db {
   
   exec {
     updateschema:
-      command=>"mysql -u${mysql_root_username} -p${mysql_root_password} < $XZB_HOME/puppet/files/db_schema.sql || mv /usr/local/xiaozibao/db_schema.sql",
+      command=>"mysql -u${mysql_root_username} ${password} < $XZB_HOME/puppet/files/db_schema.sql || mv /usr/local/xiaozibao/db_schema.sql",
       user=>"root",
       subscribe => File["/usr/local/xiaozibao/db_schema.sql"],
       path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/",
