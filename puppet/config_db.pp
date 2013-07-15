@@ -4,9 +4,9 @@ class config_db {
   $db_name = "xzb"
   exec {
     createdb:
-      command=>"mysql -u${mysql_root_username} -p${mysql_root_password} < $XZB_HOME/puppet/files/install_db.sql",
+      command=>"mysql --default-character-set utf8 -u${mysql_root_username} -p${mysql_root_password} < $XZB_HOME/puppet/files/install_db.sql",
       user=>"root",
-      unless => "mysql -u${mysql_root_username} -p${mysql_root_password} -e \"show databases\" mysql | grep $db_name",
+      unless => "mysql --default-character-set utf8 -u${mysql_root_username} -p${mysql_root_password} -e \"show databases\" mysql | grep $db_name",
       path => "/bin:/sbin:/usr/bin:/usr/sbin:/bin:/usr/local/bin/"
   }
 
