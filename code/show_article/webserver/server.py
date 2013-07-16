@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-02-02 13:12:37>
+## Updated: Time-stamp: <2013-07-16 20:26:38>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -20,6 +20,12 @@ from util import smarty_remove_extra_comma
 
 import config
 import data
+
+import sys
+default_encoding = 'utf-8'
+if sys.getdefaultencoding() != default_encoding:
+    reload(sys)
+    sys.setdefaultencoding(default_encoding)
 
 app = Flask(__name__)
 
