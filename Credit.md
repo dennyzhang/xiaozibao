@@ -2,7 +2,7 @@ Thanks to
 =========
 | Name    | Email         |    Contribution              |
 |:--------|---------------|------------------| 
-|markfilebat    |mar...lebat@126.com   |   Design and implment the intial version             |
+|markfilebat    |mar...lebat@126.com   |   Design and implment the initial version             |
 |ming    |min...hang.china@gmail.com   |                |
 |you    |you....li78@gmail.com   |                |
 |anfernee    |anf...ee.gui@gmail.com   |                |
