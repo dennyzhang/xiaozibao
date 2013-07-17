@@ -12,8 +12,6 @@
 |ning    |nin...ou.cn@gmail.com   |                |
 |sjembn    |sje...@gmail.com   |                |
 |zou    |zou...ing7500@163.com   |                |
-|gu     |guz.....iao@gmail.com   |                |
-|bentz  |lv......@gmail.com      |                |
 
 # TODO Items
 | Item    | Summary         |    Contributor              |
