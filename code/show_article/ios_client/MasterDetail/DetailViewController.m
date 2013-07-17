@@ -30,7 +30,7 @@
 
     if (self.masterPopoverController != nil) {
         [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
+    }
 }
 
 - (void)configureView
@@ -38,7 +38,7 @@
     // Update the user interface for the detail item.
 
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self getTopicContent:[self.detailItem description]];
+        self.detailUITextView.text = [self getTopicContent:[self.detailItem description]];
     }
 }
 
@@ -47,14 +47,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
-    self.title = @"Content";
     
-    UIBarButtonItem *addToFavoriteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(addToFavorite:)];
+    self.detailUITextView.editable = false;
+    self.detailUITextView.selectable = false;
     
-    [self.navigationItem setRightBarButtonItem:addToFavoriteButton animated:YES];
-
-    //self.navigationItem.leftBarButtonItem.title = @"Back";
-
     // swipe right
     UISwipeGestureRecognizer *swipeGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeGesture:)];
     [self.view addGestureRecognizer:swipeGesture];
@@ -63,34 +59,28 @@
     UISwipeGestureRecognizer *swipeLeftGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
     swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeLeftGesture];
+}
 
+- (void)handleSwipeGesture:(UISwipeGestureRecognizer *)recognizer {
+    [self configureView];
+}
+
+- (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)recognizer {
+    if (self.detailItem) {
+        self.detailUITextView.text = [self getTopicReply:[self.detailItem description]];
+    }
 }
 
 - (NSString*)getTopicContent:(NSString*)content {
     NSRange range = [content rangeOfString:@"\n-"];
     NSString *substring = [[content substringToIndex:NSMaxRange(range)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
-    return [@"Swipe right to see more\n\n" stringByAppendingString:substring];
+    return substring;
 }
 
 - (NSString*)getTopicReply:(NSString*)content {
     NSRange range = [content rangeOfString:@"\n-"];
     NSString *substring = [[content substringFromIndex:NSMaxRange(range)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     return substring;
-}
-
-- (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)recognizer {
-    if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self getTopicContent:[self.detailItem description]];
-    }
-}
-
-
-- (void)handleSwipeGesture:(UISwipeGestureRecognizer *)recognizer {
-    NSString* content = [self.detailItem description];
-    NSRange range = [content rangeOfString:@"\n-"];
-    NSString *substring = [[content substringFromIndex:NSMaxRange(range)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    self.detailDescriptionLabel.text = substring;
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,11 +112,6 @@
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
-}
-
-- (IBAction)tapAction:(id)sender
-{
-    NSLog(@"tapAction");
-}
+}    
 
 @end
