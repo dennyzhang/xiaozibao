@@ -19,7 +19,6 @@
 
 @implementation MasterViewController
 @synthesize locationManager;
-@synthesize searchBar;
 
 - (void)fetchJson:(NSMutableArray*) listObject
               urlStr:(NSString*)urlStr
@@ -57,13 +56,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.title = @"Creative Ideas";
+    self.navigationItem.title = @"Ideas";
     
-    UIBarButtonItem *hideButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideArticle:)];    
-    self.navigationItem.leftBarButtonItem = hideButton;
+    // UIBarButtonItem *hideButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideArticle:)];    
+    // self.navigationItem.leftBarButtonItem = hideButton;
 
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(settingArticle:)];
     self.navigationItem.rightBarButtonItem = settingButton;
+
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     _objects = [[NSMutableArray alloc] init];
 
@@ -125,8 +125,6 @@
     NSLog(@" Current Longitude : %@",longt);
     //longLabel.text = longt;
 
-    searchBar.text = [@"经度: " stringByAppendingString:longt];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,22 +133,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)hideArticle:(id)sender
+- (void)settingArticle:(id)sender
 {
-        //NSBundle
-   // NSIndexPath *indexPath = [NSIndexPath indexPathForRow:9 inSection:0];
-  //  NSArray *arr = [NSArray arrayWithObject:indexPath];
-//    [self.tableView deleteRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
-
-    
-    //NSArray* arr = [NSArray arrayWithObject:self.tableView.indexPathForSelectedRow];
-    //[self.tableView deleteRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
-/*
-    for (int i=0; i<_objects.count; i++) {
-        cell = [self.tableView deleteRowsAtIndexPaths];
-        cell.textLabel.textColor = [UIColor grayColor];
-    }
- */
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *plistPath = [bundle pathForResource:@"statedictionary" ofType:@"plist"];
 
@@ -164,11 +148,6 @@
 
     [locationManager startUpdatingLocation];
     NSLog(@"%1f", locationManager.location.coordinate.longitude);
-    
-}
-
-- (void)settingArticle:(id)sender
-{
 
 }
 

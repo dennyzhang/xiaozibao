@@ -15,7 +15,6 @@
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, retain) CLLocationManager *locationManager;  
-@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 
 - (void)fetchJson:(NSMutableArray*) listObject urlStr:(NSString*)urlStr;
 

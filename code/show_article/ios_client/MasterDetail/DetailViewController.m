@@ -47,6 +47,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+
+    self.title = @"";
     
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
