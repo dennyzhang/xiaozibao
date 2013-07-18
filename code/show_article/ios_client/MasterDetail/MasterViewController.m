@@ -25,8 +25,8 @@
 {
     //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
 
-    //NSString *urlPrefix=@"http://173.255.227.47:9080/";
-    NSString *urlPrefix=@"http://127.0.0.1:9080/";
+    NSString *urlPrefix=@"http://173.255.227.47:9080/";
+    //NSString *urlPrefix=@"http://127.0.0.1:9080/";
     NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea"];
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
