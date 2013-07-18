@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-16 20:26:38>
+## Updated: Time-stamp: <2013-07-18 21:59:01>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -57,6 +57,18 @@ def list_user_post():
     posts = data.list_user_post(userid, date)
     content = render_template('list_user_post.json', posts=posts)
     content = smarty_remove_extra_comma(content)
+    resp = make_response(content, 200)
+    resp.headers['Content-type'] = 'application/json; charset=utf-8'
+    return resp
+
+@app.route("/api_list_user_topic", methods=['GET'])
+def list_user_topic():
+    # TODO defensive code
+    userid = request.args.get('userid', '')
+    # posts = data.list_user_post(userid, date)
+    # content = render_template('list_user_topic.json', posts=posts)
+    # content = smarty_remove_extra_comma(content)
+    content = "{\"id\":[\"807c44f8b4e0220347ce77cb4743c5a2\",\"3aaae1a35a73722372e1b49343c2c3dc\",\"10e49b2ec7d1c681798258b736426a04\",\"ad65676e3fc3266dfa40044656ce4fe0\",\"2399537bd81f5bf3a1e42c8ce7e99d73\",\"3bd6fafe612ddfdcf37b4046a2540130\",\"bc30c50697ee1c394b9395383b527bc5\",\"b5516af3b90d6e0256d48655b0cdfc74\",\"773ee95b47cd8c50119078d5f5b4fc2a\",\"d2a28a975f870ffe15327d48bc458fc1\",\"de8857f350191c79bcc5791ff4248c57\",]}"
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp

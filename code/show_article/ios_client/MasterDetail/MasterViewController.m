@@ -20,6 +20,40 @@
 @implementation MasterViewController
 @synthesize locationManager;
 
+- (void)fetchArticleList:(NSString*) userid
+              topic:(NSString*)topic
+{
+    //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
+
+    //NSString *urlPrefix=@"http://173.255.227.47:9080/";
+    NSString *urlPrefix=@"http://127.0.0.1:9080/";
+    NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea"];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+
+        NSMutableArray *idMArray;
+        NSArray *idList = [JSON valueForKeyPath:@"id"];
+        idMArray = [idMArray initWithArray:idList];
+        
+        NSUInteger i, count = [idList count];
+        for(i=0; i<count; i++) {
+            NSLog(@"%@", [[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]);
+            [self fetchJson:_objects urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]];
+        }
+    
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"%@", error);
+        NSLog(@"%@", urlStr);
+        NSLog(@"error");
+    }];
+    
+    [operation start];
+
+}
+
+
 - (void)fetchJson:(NSMutableArray*) listObject
               urlStr:(NSString*)urlStr
 {
@@ -67,30 +101,8 @@
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     _objects = [[NSMutableArray alloc] init];
 
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=807c44f8b4e0220347ce77cb4743c5a2"];
-    
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=3aaae1a35a73722372e1b49343c2c3dc"];
-    
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=10e49b2ec7d1c681798258b736426a04"];
-    
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=ad65676e3fc3266dfa40044656ce4fe0"];
-    
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=2399537bd81f5bf3a1e42c8ce7e99d73"];    
-
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=3bd6fafe612ddfdcf37b4046a2540130"];    
-
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=bc30c50697ee1c394b9395383b527bc5"];
-    
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=b5516af3b90d6e0256d48655b0cdfc74"];
-
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=773ee95b47cd8c50119078d5f5b4fc2a"];    
-
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=d2a28a975f870ffe15327d48bc458fc1"];    
-
-    [self fetchJson:_objects urlStr:@"http://173.255.227.47:9080/api_get_post?id=de8857f350191c79bcc5791ff4248c57"];    
-
+    [self fetchArticleList:@"denny" topic:@"topic"]; // TODO
     [self initLocationManager];
-    
 }
 
 - (void) initLocationManager
