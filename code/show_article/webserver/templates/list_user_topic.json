@@ -1,2 +1,4 @@
-[{% for post in posts %}
-{"id":"{{ post.id }}","category":"{{ post.category }}","title":"{{ post.title }}","summary":"{{ post.summary }}"},{% endfor %}]
+{"id":[
+    {% for item in id_list %}
+"{{item[0]}}",
+{% endfor %}]}
