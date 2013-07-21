@@ -17,13 +17,16 @@
 
   char *errMsg;
   const char *dbpath = [dbPath UTF8String];
-
+  NSLog(@"initDB");
   const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT)";
+  //const char *sql_stmt = "drop table posts";
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
       if (sqlite3_exec(postsDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
         {
           ret = NO;
+          NSLog(@"err for initDB");
+          NSLog(@"%s", errMsg);
         }
 
       ret = YES;
@@ -104,6 +107,7 @@
         {
           while (sqlite3_step(statement) == SQLITE_ROW)
             {
+              NSLog(@"load posts here");
               NSString *content = [[NSString alloc] initWithUTF8String:
                                                       (const char *) sqlite3_column_text(statement, 0)];
               [objects insertObject:content atIndex:0];

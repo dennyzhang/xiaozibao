@@ -40,12 +40,10 @@
 
   NSFileManager *filemgr = [NSFileManager defaultManager];
 
-  if ([filemgr fileExistsAtPath: databasePath ] == NO)
-    {
-      if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
-        NSLog(@"Error: Failed to open/create database");
-      }
-    }
+  //if ([filemgr fileExistsAtPath: databasePath ] == NO)
+  if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
+    NSLog(@"Error: Failed to open/create database");
+  }
 }
 
 - (void)fetchArticleList:(NSString*) userid
@@ -56,7 +54,7 @@
   //NSString *urlPrefix=@"http://173.255.227.47:9080/";
   //NSString *urlPrefix=@"http://127.0.0.1:9080/";
   NSString *urlPrefix=@"http://192.168.100.101:9080/";
-  NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&start_num=0&count=10"];
+  NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&start_num=10&count=20"];
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
@@ -101,8 +99,8 @@
                           title:title content:content] == NO) {
         NSLog([NSString stringWithFormat: @"Error: insert posts. id:%@, title:%@", postId, title]);
       }
-      [listObject insertObject:[JSON valueForKeyPath:@"content"] atIndex:0];
-     
+      [listObject insertObject:content atIndex:0];
+
       NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
       [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
