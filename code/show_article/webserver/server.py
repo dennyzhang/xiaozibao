@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-21 17:15:36>
+## Updated: Time-stamp: <2013-07-21 19:48:25>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -34,7 +34,7 @@ def index():
 	return "您持续感兴趣的，就是要采编的!"
 
 ################# public backend api ###########################
-## sample: http://127.0.0.1:8081/api_get_post?id=ffa72494d91aeb2e1153b64ac7fb961f
+## sample: http://127.0.0.1:9080/api_get_post?id=0fa410a29c294cf498c768b0cebc99c0
 @app.route("/api_get_post", methods=['GET'])
 def get_post():
 	# TODO defensive code

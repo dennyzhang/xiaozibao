@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>  
 
+#import "/usr/include/sqlite3.h"
+
+#import "PostsSqlite.h"
+
 @class DetailViewController;
 
 @interface MasterViewController : UITableViewController

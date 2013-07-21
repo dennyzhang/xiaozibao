@@ -23,6 +23,8 @@
 		04E89402179130C500E9573C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DE179130C400E9573C /* UIKit.framework */; };
 		04E8940A179130C500E9573C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04E89408179130C500E9573C /* InfoPlist.strings */; };
 		04E8940C179130C500E9573C /* MasterDetailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8940B179130C500E9573C /* MasterDetailTests.m */; };
+		04FA8F28179BE08200D28058 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
+		04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8F2C179BE20300D28058 /* PostsSqlite.m */; };
 		A3BAF243AB424F91BB24A1A9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 378BAE4C686E4AD08BCF4EFC /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,9 @@
 		04E89407179130C500E9573C /* MasterDetailTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MasterDetailTests-Info.plist"; sourceTree = "<group>"; };
 		04E89409179130C500E9573C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		04E8940B179130C500E9573C /* MasterDetailTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterDetailTests.m; sourceTree = "<group>"; };
+		04FA8F27179BE08200D28058 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		04FA8F2B179BE1F800D28058 /* PostsSqlite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostsSqlite.h; sourceTree = "<group>"; };
+		04FA8F2C179BE20300D28058 /* PostsSqlite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostsSqlite.m; sourceTree = "<group>"; };
 		378BAE4C686E4AD08BCF4EFC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE556945BD3D45F797C729C0 /* Pods/Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -68,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FA8F28179BE08200D28058 /* libsqlite3.dylib in Frameworks */,
 				04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */,
 				04E893DF179130C400E9573C /* UIKit.framework in Frameworks */,
 				04E893DB179130C400E9573C /* Foundation.framework in Frameworks */,
@@ -111,6 +117,7 @@
 		04E893D9179130C400E9573C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04FA8F27179BE08200D28058 /* libsqlite3.dylib */,
 				04E893DA179130C400E9573C /* Foundation.framework */,
 				04E893DC179130C400E9573C /* CoreGraphics.framework */,
 				04E893DE179130C400E9573C /* UIKit.framework */,
@@ -126,6 +133,8 @@
 				04E893E9179130C400E9573C /* AppDelegate.h */,
 				04E893EA179130C400E9573C /* AppDelegate.m */,
 				04E893EC179130C400E9573C /* Main_iPhone.storyboard */,
+				04FA8F2C179BE20300D28058 /* PostsSqlite.m */,
+				04FA8F2B179BE1F800D28058 /* PostsSqlite.h */,
 				04E893EF179130C400E9573C /* Main_iPad.storyboard */,
 				04E893F2179130C400E9573C /* MasterViewController.h */,
 				04E893F3179130C400E9573C /* MasterViewController.m */,
@@ -302,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */,
 				04E893EB179130C400E9573C /* AppDelegate.m in Sources */,
 				04E893F4179130C400E9573C /* MasterViewController.m in Sources */,
 				04E893E7179130C400E9573C /* main.m in Sources */,
