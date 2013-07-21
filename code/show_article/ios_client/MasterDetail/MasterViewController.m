@@ -56,7 +56,7 @@
   //NSString *urlPrefix=@"http://173.255.227.47:9080/";
   //NSString *urlPrefix=@"http://127.0.0.1:9080/";
   NSString *urlPrefix=@"http://192.168.100.101:9080/";
-  NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&offset=0&count=5"];
+  NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&start_num=0&count=10"];
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
@@ -77,7 +77,6 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
       NSLog(@"%@", error);
       NSLog(@"%@", urlStr);
-      NSLog(@"error");
     }];
 
   [operation start];
@@ -92,7 +91,6 @@
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
   AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-      [listObject insertObject:[JSON valueForKeyPath:@"content"] atIndex:0];
       NSString* content = [JSON valueForKeyPath:@"content"];
       NSString* postId = [JSON valueForKeyPath:@"id"];
       NSString* title = [JSON valueForKeyPath:@"title"];
@@ -103,6 +101,8 @@
                           title:title content:content] == NO) {
         NSLog([NSString stringWithFormat: @"Error: insert posts. id:%@, title:%@", postId, title]);
       }
+      [listObject insertObject:[JSON valueForKeyPath:@"content"] atIndex:0];
+     
       NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
       [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
@@ -138,8 +138,9 @@
 
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
   _objects = [[NSMutableArray alloc] init];
-
   [self openSqlite];
+
+  [PostsSqlite loadPosts:postsDB dbPath:databasePath objects:_objects tableview:self.tableView];
   [self fetchArticleList:@"denny" topic:@"topic"]; // TODO
   [self initLocationManager];
 }

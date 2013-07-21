@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-21 17:15:25>
+## Updated: Time-stamp: <2013-07-21 21:14:32>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
@@ -65,12 +65,16 @@ def list_user_post(userid, date):
 
 	return user_posts + group_posts
 
-def list_user_topic(userid, topic, offset, count):
+def list_user_topic(userid, topic, start_num, count):
 	conn = MySQLdb.connect(config.DB_HOST, config.DB_USERNAME, config.DB_PWD, \
 			config.DB_NAME, charset='utf8', port=3306)
 	cursor = conn.cursor()
-	sql_format = "select id from posts where category = '%s' limit %d offset %d;"
-	sql = sql_format % (topic, count, offset)
+	if count>0 :
+		sql_format = "select id from posts where category = '%s' and num > %d order by num asc limit %d;"
+		sql = sql_format % (topic, start_num, count)
+	else:
+		sql_format = "select id from posts where category = '%s' and num < %d order by num desc limit %d;"
+		sql = sql_format % (topic, start_num, -count)
 	print sql
 	cursor.execute(sql)
 	out = cursor.fetchall()

@@ -28,4 +28,8 @@
            title:(NSString *)title
          content:(NSString *)content;
 
++ (bool)loadPosts: (sqlite3 *)postsDB
+           dbPath:(NSString *) dbPath
+          objects:(NSMutableArray *) objects
+        tableview:(UITableView *)tableview;
 @end

@@ -18,7 +18,8 @@ CREATE TABLE if not exists user_group(
 );
 
 CREATE TABLE if not exists posts (
-       id CHAR(40) NOT NULL PRIMARY KEY,
+       num int primary key AUTO_INCREMENT,
+       id CHAR(40) NOT NULL unique,
        category VARCHAR(50) NOT NULL,
        title VARCHAR(200) NOT NULL,
        memo VARCHAR(100)

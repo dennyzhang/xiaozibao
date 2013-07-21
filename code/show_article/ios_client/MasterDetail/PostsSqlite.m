@@ -87,4 +87,34 @@
   sqlite3_close(postsDB);
   return ret;
 }
+
+// TODO: refine later
++ (bool)loadPosts: (sqlite3 *)postsDB
+           dbPath:(NSString *) dbPath
+          objects:(NSMutableArray *) objects
+        tableview:(UITableView *)tableview
+{
+  const char *dbpath = [dbPath UTF8String];
+  sqlite3_stmt *statement;
+  NSString *querySQL = @"SELECT content FROM POSTS order by id desc limit 10";
+  const char *query_stmt = [querySQL UTF8String];
+  if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
+    {
+      if (sqlite3_prepare_v2(postsDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+          while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+              NSString *content = [[NSString alloc] initWithUTF8String:
+                                                      (const char *) sqlite3_column_text(statement, 0)];
+              [objects insertObject:content atIndex:0];
+              NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+              [tableview insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+        }
+      sqlite3_finalize(statement);
+      sqlite3_close(postsDB);
+    }
+  return NO;
+}
+
 @end
