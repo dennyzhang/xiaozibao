@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-21 17:06:04>
+## Updated: Time-stamp: <2013-07-21 17:15:36>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -61,7 +61,7 @@ def list_user_post():
 	resp.headers['Content-type'] = 'application/json; charset=utf-8'
 	return resp
 
-## http://127.0.0.1:9080/api_list_user_topic?uid=denny&topic=idea_创意&offset=0&count=10
+## http://127.0.0.1:9080/api_list_user_topic?uid=denny&topic=idea_startup&offset=0&count=10
 @app.route("/api_list_user_topic", methods=['GET'])
 def list_user_topic():
 	# TODO defensive code
