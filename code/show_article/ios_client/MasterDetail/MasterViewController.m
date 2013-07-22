@@ -54,7 +54,7 @@
   //NSString *urlPrefix=@"http://173.255.227.47:9080/";
   //NSString *urlPrefix=@"http://127.0.0.1:9080/";
   NSString *urlPrefix=@"http://192.168.100.101:9080/";
-  NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&start_num=10&count=20"];
+  NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&start_num=10&count=10"];
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
@@ -132,7 +132,7 @@
   // self.navigationItem.leftBarButtonItem = hideButton;
 
   UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(settingArticle:)];
-  self.navigationItem.rightBarButtonItem = settingButton;
+  self.navigationItem.leftBarButtonItem = settingButton;
 
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
   _objects = [[NSMutableArray alloc] init];
