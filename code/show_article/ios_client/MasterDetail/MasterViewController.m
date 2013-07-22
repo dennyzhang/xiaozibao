@@ -76,9 +76,10 @@
 
       NSUInteger i, count = [idList count];
       for(i=0; i<count; i++) {
-        if ([PostsSqlite isExists:postsDB dbPath:databasePath postId:idList[i]] == NO) {
-          NSLog(@"%@", [[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]);
-          [self fetchJson:_objects urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]];
+        if ([PostsSqlite isExists:postsDB dbPath:databasePath postId:idList[i]] == NO && 
+              [self containId:_objects postId:idList[i]] == NO) {
+           NSLog(@"%@", [[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]);
+           [self fetchJson:_objects urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]];
         }
       }
 
@@ -88,6 +89,15 @@
     }];
 
   [operation start];
+}
+
+- (bool)containId:(NSMutableArray*) objects
+           postId:(NSString*)postId
+{
+    NSLog(@"%@", postId);
+   NSLog(@"%@", [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"postid == %@", 
+                                                      postId]]);
+   return NO;
 }
 
 - (void)fetchJson:(NSMutableArray*) listObject

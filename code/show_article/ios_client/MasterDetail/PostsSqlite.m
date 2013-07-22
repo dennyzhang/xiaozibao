@@ -32,6 +32,7 @@
 
       ret = YES;
     }
+  sqlite3_close(postsDB);
   return ret;
 }
 
@@ -80,8 +81,10 @@
     {
       sqlite3_prepare_v2(postsDB, insert_stmt, -1, &statement, NULL);
 
-      if (sqlite3_step(statement) != SQLITE_DONE)
+      if (sqlite3_step(statement) != SQLITE_DONE) {
+        NSLog(@"%@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)]);
         ret = NO;
+      }
       else
         ret = YES;
     }
