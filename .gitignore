@@ -56,3 +56,4 @@ code/show_article/ios_client/Podfile.lock
 code/show_article/ios_client/Pods/Manifest.lock
 code/show_article/ios_client/MasterDetail.xcworkspace/xcuserdata/
 code/webcrawl_article/snake_worker/deps/
+erl_crash.dump

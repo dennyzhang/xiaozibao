@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-07-22 09:44:49>
+## Updated: Time-stamp: <2013-07-22 11:15:31>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
@@ -106,6 +106,15 @@ function fetch_haowenz() {
             command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
             $command
         done;
+    done;
+    sleep $SLEEP_SECONDS
+}
+
+function fetch_techcrunch() {
+    dst_dir=${1?}
+    for url in `generate_command "http://techcrunch.com/mobile" | grep ^http`; do
+        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
+        $command
     done;
     sleep $SLEEP_SECONDS
 }

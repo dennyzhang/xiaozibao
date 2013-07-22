@@ -2,7 +2,7 @@ package taskgenerator
 
 import (
 	"regexp"
-	// "fmt"
+	"fmt"
 	)
 
 type Task struct {
@@ -37,6 +37,11 @@ func determinate_generator(url string) Stringy {
 
 func Generate_task(url string) []Task {
 	task_generator := determinate_generator(url)
-	task_list := task_generator(url)
+	task_list := make([]Task, 0)
+	if (task_generator == nil) {
+		fmt.Print("Error: fail to find generator for url: " + url + "\n")
+	} else {
+		task_list = task_generator(url)
+	}
         return task_list
 }

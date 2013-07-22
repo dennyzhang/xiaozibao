@@ -1,4 +1,4 @@
-xiaozibao - 小字报
+xiaozibao - FAQ
 =========
 # Limitation to be removed
 - When add a new mq channel, we need to restart snake_worker.

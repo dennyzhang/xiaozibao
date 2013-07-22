@@ -12,6 +12,7 @@ var generator = map[string] Stringy {
 	"^http://haowenz.com/a/[a-z]+/.*": haowenzcom_1,
 	"^http://svbtle.com/$": svbtlecom_1,
 	"^http://techcrunch.com/$": techcrunch_1,
+	"^http://techcrunch.com/.*$": techcrunch_2,
 	"^http://news.ycombinator.com/$": newsycombinator_1,
 	// RSS feed
 	"^http://www.36kr.com/feed$": func(url string) []Task { return generator_rss(url,
@@ -71,6 +72,26 @@ func svbtlecom_1(url string) []Task {
 }
 
 func techcrunch_1(url string) []Task {
+	fmt.Print("here: " + url + "\n")
+	tasks := make([]Task, 0)
+        _, content := webcrawler.Webcrawler(url)
+
+        content = webcrawler.Filter(content,"<body", "</body>")
+        content = webcrawler.Filter(content,"posted", "Privacy Policy")
+
+	link_pattern :=  "<h2 class=\"headline\">\n[	 ]*<a href=\"([^\"]*)\""
+        match_strings := regexp.MustCompile(link_pattern).FindAllStringSubmatch(content, -1)
+        for i := range match_strings {
+		record_string := match_strings[i]
+		tasks = append(tasks, Task{record_string[1]})
+        }
+
+	//fmt.Print(tasks)
+
+        return tasks
+}
+
+func techcrunch_2(url string) []Task {
 	fmt.Print("here: " + url + "\n")
 	tasks := make([]Task, 0)
         _, content := webcrawler.Webcrawler(url)
