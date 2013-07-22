@@ -16,6 +16,10 @@
   NSMutableArray *_objects;
   sqlite3 *postsDB;
   NSString *databasePath;
+
+  //NSString *urlPrefix=@"http://173.255.227.47:9080/";
+  //NSString *urlPrefix=@"http://127.0.0.1:9080/";
+  NSString *urlPrefix;
 }
 @end
 
@@ -48,13 +52,18 @@
 
 - (void)fetchArticleList:(NSString*) userid
                    topic:(NSString*)topic
+                   start_num:(NSInteger*)start_num
+                   count:(NSInteger*)count
 {
   //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
 
-  //NSString *urlPrefix=@"http://173.255.227.47:9080/";
-  //NSString *urlPrefix=@"http://127.0.0.1:9080/";
-  NSString *urlPrefix=@"http://192.168.100.101:9080/";
-  NSString *urlStr= [urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&start_num=10&count=10"];
+  //urlPrefix=@"http://173.255.227.47:9080/";
+  //urlPrefix=@"http://127.0.0.1:9080/";
+  urlPrefix=@"http://192.168.100.106:9080/";
+
+  NSString *urlStr= [NSString stringWithFormat: @"%@api_list_user_topic?uid=%@&topic=%@&start_num=%d&count=%d",
+                              urlPrefix, userid, topic, start_num, count];
+  //[urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&start_num=10&count=10"];
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
@@ -139,7 +148,7 @@
   [self openSqlite];
 
   [PostsSqlite loadPosts:postsDB dbPath:databasePath objects:_objects tableview:self.tableView];
-  [self fetchArticleList:@"denny" topic:@"topic"]; // TODO
+  [self fetchArticleList:@"denny" topic:@"idea_startup" start_num:10 count:10]; // TODO
   [self initLocationManager];
 }
 
@@ -236,6 +245,22 @@
   } else if (editingStyle == UITableViewCellEditingStyleInsert) {
     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
   }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // when reach the top
+    if (scrollView.contentOffset.y == 0)
+    {
+        NSLog(@"top is reached");
+      [self fetchArticleList:@"denny" topic:@"idea_startup" start_num:0 count:10]; // TODO
+    }
+
+    // when reaching the bottom
+    if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
+    {
+        NSLog(@"bottom is reached");
+      [self fetchArticleList:@"denny" topic:@"idea_startup" start_num:30 count:10]; // TODO
+    }
 }
 
 /*

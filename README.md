@@ -1,6 +1,8 @@
 xiaozibao - 小字报
 =========
-Monitor the whole internet, to build your personal magzine adjusted by your taste. 
+- Monitor the whole internet, to build your personal magzine adjusted by your taste.
+- Subscribe to topic, instead of RSS; Read less for more.
+
 ![](misc/design.jpg)
 ![](misc/ios1.png)  ![](misc/ios3.png)
 

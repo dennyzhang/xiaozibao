@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Pods-SWRevealViewController.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,12 +22,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>503DC2E54E794413BBA00B15</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B424402258C64F03A5183502</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>DB2E2C7ED71C4B24B114676F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>DC92A26ABAC94CA0971E5C45</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC05F29E45714426B94843B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
