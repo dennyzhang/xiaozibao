@@ -63,3 +63,7 @@ Drop me an email: markfilebat@126.com, to join the mail group.
 - 标题: 5字 < 长度 < 10个汉字字 (如果是英文的话，则是限额为原有基础的三倍)
 - 摘要: 15字 < 长度 < 34个汉字字 (如果是英文的话，则是限额为原有基础的三倍)
 - 文章: 200字 < 长度 < 2000 字
+
+## Misc
+- mac start rabbitmq server
+sudo /usr/local/sbin/rabbitmq-server start

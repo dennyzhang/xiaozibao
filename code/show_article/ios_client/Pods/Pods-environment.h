@@ -12,3 +12,9 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking 1
 
+// SWRevealViewController
+#define COCOAPODS_POD_AVAILABLE_SWRevealViewController
+#define COCOAPODS_VERSION_MAJOR_SWRevealViewController 1
+#define COCOAPODS_VERSION_MINOR_SWRevealViewController 0
+#define COCOAPODS_VERSION_PATCH_SWRevealViewController 2
+

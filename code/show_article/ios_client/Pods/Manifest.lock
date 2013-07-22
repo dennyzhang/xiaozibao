@@ -1,10 +1,13 @@
 PODS:
   - AFNetworking (1.3.1)
+  - SWRevealViewController (1.0.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 1.3)
+  - SWRevealViewController
 
 SPEC CHECKSUMS:
   AFNetworking: 9ec8aafb9269236a7630bd8d9838ce2ba30fa2a0
+  SWRevealViewController: 5681a8a4a62d73caec1ce8784fc2817fb7ad3f34
 
 COCOAPODS: 0.22.1
