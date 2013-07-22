@@ -11,6 +11,7 @@
 #import "DetailViewController.h"
 
 #import "AFJSONRequestOperation.h"
+#import "Posts.h"
 
 @interface MasterViewController () {
   NSMutableArray *_objects;
@@ -42,7 +43,7 @@
                    initWithString: [docsDir stringByAppendingPathComponent:
                                               @"posts.db"]];
 
-  NSFileManager *filemgr = [NSFileManager defaultManager];
+  //NSFileManager *filemgr = [NSFileManager defaultManager];
 
   //if ([filemgr fileExistsAtPath: databasePath ] == NO)
   if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
@@ -98,18 +99,20 @@
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
   AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-      NSString* content = [JSON valueForKeyPath:@"content"];
-      NSString* postId = [JSON valueForKeyPath:@"id"];
-      NSString* title = [JSON valueForKeyPath:@"title"];
-      NSString* category = [JSON valueForKeyPath:@"category"];
+      Posts* post = [[Posts alloc] init];
+      [post setPostid:[JSON valueForKeyPath:@"id"]];
+      [post setTitle:[JSON valueForKeyPath:@"title"]];
+      [post setSummary:[JSON valueForKeyPath:@"summary"]];
+      [post setCategory:[JSON valueForKeyPath:@"category"]];
+      [post setContent:[JSON valueForKeyPath:@"content"]];
 
       if ([PostsSqlite savePost:postsDB dbPath:databasePath
-                         postId:postId category:category
-                          title:title content:content] == NO) {
-        NSLog([NSString stringWithFormat: @"Error: insert posts. id:%@, title:%@", postId, title]);
+                         postId:post.postid summary:post.summary category:post.category
+                          title:post.title content:post.content] == NO) {
+        NSLog([NSString stringWithFormat: @"Error: insert posts. id:%@, title:%@", post.postid, post.title]);
       }
-      [listObject insertObject:content atIndex:0];
 
+      [listObject insertObject:post atIndex:0];
       NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
       [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
@@ -199,8 +202,6 @@
 
   NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
 
-  NSLog(@"%@", dict);
-
   CLLocationManager *locationManager = [[CLLocationManager alloc] init];
   locationManager.delegate = self;
   locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -226,8 +227,8 @@
 {
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-  NSDate *object = _objects[indexPath.row];
-  cell.textLabel.text = [object description];
+  Posts *post = _objects[indexPath.row];
+  cell.textLabel.text = post.title;
   return cell;
 }
 
@@ -283,13 +284,12 @@ return YES;
 {
   if ([[segue identifier] isEqualToString:@"showDetail"]) {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    NSString *data = _objects[indexPath.row];
+    Posts *post = _objects[indexPath.row];
 
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.textLabel.textColor = [UIColor grayColor];
 
-    //NSLog(@"%@", data);
-    [[segue destinationViewController] setDetailItem:data];
+    [[segue destinationViewController] setDetailItem:post];
   }
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "Posts.h"
 
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -16,14 +17,14 @@
 @end
 
 @implementation DetailViewController
+@synthesize detailItem;
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(id)newDetailItem
+- (void)setDetailItem:(Posts*)newDetailItem
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-        
+    if (detailItem != newDetailItem) {
+        detailItem = newDetailItem;
         // Update the view.
         [self configureView];
     }
@@ -38,7 +39,7 @@
     // Update the user interface for the detail item.
 
     if (self.detailItem) {
-        self.detailUITextView.text = [self getTopicContent:[self.detailItem description]];
+        self.detailUITextView.text = [self getTopicContent:self.detailItem.content];
     }
 }
 
@@ -69,7 +70,7 @@
 
 - (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)recognizer {
     if (self.detailItem) {
-        self.detailUITextView.text = [self getTopicReply:[self.detailItem description]];
+       self.detailUITextView.text = [self getTopicReply:self.detailItem.content];
     }
 }
 

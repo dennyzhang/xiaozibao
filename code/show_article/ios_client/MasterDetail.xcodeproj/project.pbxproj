@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		049B22F7179D7D3000F82187 /* Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 049B22F6179D7D2800F82187 /* Posts.m */; };
 		04E893DB179130C400E9573C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DA179130C400E9573C /* Foundation.framework */; };
 		04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DC179130C400E9573C /* CoreGraphics.framework */; };
 		04E893DF179130C400E9573C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DE179130C400E9573C /* UIKit.framework */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		049B22F5179D7D2800F82187 /* Posts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Posts.h; sourceTree = "<group>"; };
+		049B22F6179D7D2800F82187 /* Posts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Posts.m; sourceTree = "<group>"; };
 		04E893D7179130C400E9573C /* MasterDetail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterDetail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E893DA179130C400E9573C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E893DC179130C400E9573C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -133,6 +136,8 @@
 				04E893E9179130C400E9573C /* AppDelegate.h */,
 				04E893EA179130C400E9573C /* AppDelegate.m */,
 				04E893EC179130C400E9573C /* Main_iPhone.storyboard */,
+				049B22F5179D7D2800F82187 /* Posts.h */,
+				049B22F6179D7D2800F82187 /* Posts.m */,
 				04FA8F2C179BE20300D28058 /* PostsSqlite.m */,
 				04FA8F2B179BE1F800D28058 /* PostsSqlite.h */,
 				04E893EF179130C400E9573C /* Main_iPad.storyboard */,
@@ -311,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049B22F7179D7D3000F82187 /* Posts.m in Sources */,
 				04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */,
 				04E893EB179130C400E9573C /* AppDelegate.m in Sources */,
 				04E893F4179130C400E9573C /* MasterViewController.m in Sources */,

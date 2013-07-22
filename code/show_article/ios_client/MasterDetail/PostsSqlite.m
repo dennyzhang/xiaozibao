@@ -7,6 +7,7 @@
 //
 
 #import "PostsSqlite.h"
+#import "Posts.h"
 
 @implementation PostsSqlite
 
@@ -18,7 +19,7 @@
   char *errMsg;
   const char *dbpath = [dbPath UTF8String];
   NSLog(@"initDB");
-  const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT)";
+  const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT)";
   //const char *sql_stmt = "drop table posts";
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
@@ -61,6 +62,7 @@
 + (bool)savePost: (sqlite3 *)postsDB
           dbPath:(NSString *) dbPath
           postId:(NSString *)postId
+          summary:(NSString *)summary
         category:(NSString *)category
            title:(NSString *)title
          content:(NSString *)content
@@ -69,9 +71,10 @@
   const char *dbpath = [dbPath UTF8String];
   NSLog([NSString stringWithFormat: @"savePost. id:%@, title:%@", postId, title]);
   sqlite3_stmt *statement;
-  NSString *insertSQL = [NSString stringWithFormat:
-                                    @"INSERT INTO POSTS (POSTID, CATEGORY, TITLE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\")",
-                                  postId, category, title, content];
+  NSString *insertSQL = [NSString
+                          stringWithFormat:
+                            @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
+                          postId, category, summary, title, content];
   const char *insert_stmt = [insertSQL UTF8String];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
@@ -99,7 +102,7 @@
 {
   const char *dbpath = [dbPath UTF8String];
   sqlite3_stmt *statement;
-  NSString *querySQL = @"SELECT content FROM POSTS order by id desc limit 10";
+  NSString *querySQL = @"SELECT postid, summary, category, title, content FROM POSTS order by id desc limit 10";
   const char *query_stmt = [querySQL UTF8String];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
@@ -108,9 +111,22 @@
           while (sqlite3_step(statement) == SQLITE_ROW)
             {
               NSLog(@"load posts here");
-              NSString *content = [[NSString alloc] initWithUTF8String:
-                                                      (const char *) sqlite3_column_text(statement, 0)];
-              [objects insertObject:content atIndex:0];
+
+              Posts* post = [[Posts alloc] init];
+              NSString* postid = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
+              NSString* summary = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
+              NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
+              NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
+              NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
+
+              [post setPostid:postid];
+              [post setSummary:summary];
+              [post setCategory:category];
+              [post setTitle:title];
+              [post setContent:content];
+
+              [objects insertObject:post atIndex:0];
+
               NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
               [tableview insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             }
