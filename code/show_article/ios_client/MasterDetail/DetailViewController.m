@@ -14,7 +14,9 @@
 - (void)configureView;
 - (NSString*)getTopicContent:(NSString*)content;
 - (NSString*)getTopicReply:(NSString*)content;
+
 @end
+
 
 @implementation DetailViewController
 @synthesize detailItem;
@@ -48,7 +50,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
-
+    
     self.title = @"";
     
     self.detailUITextView.editable = false;

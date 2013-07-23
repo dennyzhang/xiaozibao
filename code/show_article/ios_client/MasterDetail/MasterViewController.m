@@ -20,16 +20,20 @@
   NSString *urlPrefix;
   NSString *username;
   NSString *topic;
+  
 }
+
 @end
 
 @implementation MasterViewController
+
 @synthesize locationManager;
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
 
+    
    username = @"denny";
    topic = @"us_america";
    //topic = @"idea_startup";
@@ -42,10 +46,12 @@
 
   UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                      initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                          target:self
-                                                          action:@selector(settingArticle:)];
-  self.navigationItem.leftBarButtonItem = settingButton;
+                                                          target:self.revealViewController
+                                                          action:@selector(revealToggle:)];
+   self.navigationItem.leftBarButtonItem = settingButton;
 
+    //[self.navigationController.navigationBar addGestureRecognizer: self.revealViewController.panGestureRecognizer];
+    
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
   _objects = [[NSMutableArray alloc] init];
   [self openSqlite];
@@ -91,8 +97,8 @@
 
   //urlPrefix=@"http://173.255.227.47:9080/";
   //urlPrefix=@"http://127.0.0.1:9080/";
-  //urlPrefix=@"http://192.168.100.106:9080/";
-  urlPrefix=@"http://192.168.51.131:9080/";
+  urlPrefix=@"http://192.168.100.106:9080/";
+  //urlPrefix=@"http://192.168.51.131:9080/";
 
   NSString *urlStr= [NSString stringWithFormat: @"%@api_list_user_topic?uid=%@&topic=%@&start_num=%d&count=%d",
                               urlPrefix, userid, topic, start_num, count];
