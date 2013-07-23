@@ -7,12 +7,51 @@
 //
 
 #import "MenuViewController.h"
+#import "MasterViewController.h"
 
-@interface MenuViewController ()
-
+@interface MenuViewController () {
+  NSMutableArray *_objects;
+}
 @end
 
 @implementation MenuViewController
+
+
+- (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
+{
+    NSLog(@"prepareForSegue");
+    // configure the destination view controller:
+    if ( [segue.destinationViewController isKindOfClass: [MasterViewController class]] &&
+        [sender isKindOfClass:[UITableViewCell class]] )
+    {
+        UITableViewCell* c = sender;
+        MasterViewController* dstViewController = segue.destinationViewController;
+        [dstViewController init_data:@"denny" topic:c.textLabel.text]; // TODO
+
+        [dstViewController view];
+    }
+    
+    // configure the segue.
+    // in this case we dont swap out the front view controller, which is a UINavigationController.
+    // but we could..
+    if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] )
+    {
+        SWRevealViewControllerSegue* rvcs = (SWRevealViewControllerSegue*) segue;
+        
+        SWRevealViewController* rvc = self.revealViewController;
+        NSAssert( rvc != nil, @"oops! must have a revealViewController" );
+        
+        NSAssert( [rvc.frontViewController isKindOfClass: [UINavigationController class]], @"oops!  for this segue we want a permanent navigation controller in the front!" );
+        
+        rvcs.performBlock = ^(SWRevealViewControllerSegue* rvc_segue, UIViewController* svc, UIViewController* dvc) {
+            
+            UINavigationController* nc = (UINavigationController*)rvc.frontViewController;
+            [nc setViewControllers: @[ dvc ] animated: YES ];
+            
+            [rvc setFrontViewPosition: FrontViewPositionLeft animated: YES];
+        };
+    }
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,6 +71,19 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    _objects = [[NSMutableArray alloc] init];
+    [self load_topic_list];
+    NSLog(@"load menuview");
+}
+
+- (void)load_topic_list
+{
+  [_objects insertObject:@"idea_startup" atIndex:0];
+  [_objects insertObject:@"us_america" atIndex:1];
+  [_objects insertObject:@"personal_finance" atIndex:2];
+  [_objects insertObject:@"personal_productivity" atIndex:3];
+  [_objects insertObject:@"coder_questions" atIndex:4];
+  [_objects insertObject:@"weibo_godreply" atIndex:5];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,16 +96,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+   return _objects.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,7 +112,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    
+    cell.textLabel.text = _objects[indexPath.row];    
     return cell;
 }
 

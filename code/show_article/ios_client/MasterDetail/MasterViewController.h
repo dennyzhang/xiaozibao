@@ -20,4 +20,9 @@
 @property (strong, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, retain) CLLocationManager *locationManager;  
 
+@property (nonatomic, retain) NSString* topic;
+@property (nonatomic, retain) NSString* username;
+
+- (void) init_data:(NSString*)username
+             topic:(NSString*)topic;
 @end

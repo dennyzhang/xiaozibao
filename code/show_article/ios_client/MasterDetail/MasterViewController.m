@@ -18,49 +18,57 @@
   sqlite3 *postsDB;
   NSString *databasePath;
   NSString *urlPrefix;
-  NSString *username;
-  NSString *topic;
-  
+  NSUserDefaults *userDefaults;
 }
 
 @end
 
 @implementation MasterViewController
 
-@synthesize locationManager;
+@synthesize locationManager, topic, username;
 
 - (void)viewDidLoad
 {
+  NSLog(@"masterview load");
   [super viewDidLoad];
 
-    
-   username = @"denny";
-   topic = @"us_america";
-   //topic = @"idea_startup";
-
-  // Do any additional setup after loading the view, typically from a nib.
-  self.navigationItem.title = @"Ideas";
-
-  // UIBarButtonItem *hideButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideArticle:)];
-  // self.navigationItem.leftBarButtonItem = hideButton;
-
+  userDefaults = [NSUserDefaults standardUserDefaults];
+ 
   UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                      initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                                           target:self.revealViewController
                                                           action:@selector(revealToggle:)];
-   self.navigationItem.leftBarButtonItem = settingButton;
+  self.navigationItem.leftBarButtonItem = settingButton;
 
-    //[self.navigationController.navigationBar addGestureRecognizer: self.revealViewController.panGestureRecognizer];
-    
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+
+  if (self.topic == nil) {
+      NSLog(@"here");
+      [self init_data:@"denny" topic:@"idea_startup"];
+  }
+}
+
+- (void) init_data:(NSString*)username
+             topic:(NSString*)topic
+{
+  self.username=username;
+  self.topic=topic;
+
+  NSLog(@"username:%@, topic:%@", self.username, self.topic);
+
+  self.navigationItem.title = self.topic;
+
   _objects = [[NSMutableArray alloc] init];
+
   [self openSqlite];
 
-  [PostsSqlite loadPosts:postsDB dbPath:databasePath objects:_objects tableview:self.tableView];
+  [PostsSqlite loadPosts:postsDB dbPath:databasePath topic:self.topic
+                 objects:_objects tableview:self.tableView];
+
   [self fetchArticleList:username topic:topic
                start_num:10 count:10
               shouldAppendHead:YES]; // TODO
-  [self initLocationManager];
+
 }
 
 - (void)openSqlite

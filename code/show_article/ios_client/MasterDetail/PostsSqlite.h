@@ -32,6 +32,7 @@
 
 + (bool)loadPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
+            topic:(NSString *)topic
           objects:(NSMutableArray *) objects
         tableview:(UITableView *)tableview;
 @end

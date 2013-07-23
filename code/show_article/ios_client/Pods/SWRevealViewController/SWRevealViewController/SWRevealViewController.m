@@ -599,7 +599,6 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
 
 - (void)revealToggle:(id)sender
 {    
-  NSLog(@"===== revealToggle here");
     [self revealToggleAnimated:YES];
 }
 

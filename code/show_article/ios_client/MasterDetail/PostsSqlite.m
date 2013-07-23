@@ -116,13 +116,14 @@ NSLock *lock;
 // TODO: refine later
 + (bool)loadPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
+            topic:(NSString *)topic
           objects:(NSMutableArray *) objects
         tableview:(UITableView *)tableview
 {
   bool ret = NO;
   const char *dbpath = [dbPath UTF8String];
   sqlite3_stmt *statement;
-  NSString *querySQL = @"SELECT postid, summary, category, title, content FROM POSTS order by id desc limit 10";
+  NSString *querySQL = [NSString stringWithFormat: @"SELECT postid, summary, category, title, content FROM POSTS where topic =\"%@\" order by id desc limit 10", topic];
   const char *query_stmt = [querySQL UTF8String];
   [lock lock];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
