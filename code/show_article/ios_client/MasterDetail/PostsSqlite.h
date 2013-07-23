@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "/usr/include/sqlite3.h"
+#import "Posts.h"
 
 @interface PostsSqlite : NSObject {
     sqlite3 *postsDB;
@@ -17,7 +18,7 @@
 + (bool)initDB: (sqlite3 *)postsDB
         dbPath:(NSString *) dbPath;
 
-+ (bool)isExists: (sqlite3 *)postsDB
++ (Posts*)getPost: (sqlite3 *)postsDB
           dbPath:(NSString *) dbPath
           postId:(NSString *)postId;
 

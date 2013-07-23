@@ -17,9 +17,6 @@
   NSMutableArray *_objects;
   sqlite3 *postsDB;
   NSString *databasePath;
-
-  //NSString *urlPrefix=@"http://173.255.227.47:9080/";
-  //NSString *urlPrefix=@"http://127.0.0.1:9080/";
   NSString *urlPrefix;
 }
 @end
@@ -55,12 +52,14 @@
                    topic:(NSString*)topic
                    start_num:(NSInteger*)start_num
                    count:(NSInteger*)count
+        shouldAppendHead:(bool)shouldAppendHead
 {
   //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
 
   //urlPrefix=@"http://173.255.227.47:9080/";
   //urlPrefix=@"http://127.0.0.1:9080/";
-  urlPrefix=@"http://192.168.100.106:9080/";
+  //urlPrefix=@"http://192.168.100.106:9080/";
+  urlPrefix=@"http://192.168.51.131:9080/";
 
   NSString *urlStr= [NSString stringWithFormat: @"%@api_list_user_topic?uid=%@&topic=%@&start_num=%d&count=%d",
                               urlPrefix, userid, topic, start_num, count];
@@ -73,19 +72,33 @@
       NSMutableArray *idMArray;
       NSArray *idList = [JSON valueForKeyPath:@"id"];
       idMArray = [idMArray initWithArray:idList];
-
+      Posts *post = nil;
       NSUInteger i, count = [idList count];
+      // bypass sqlite lock problem
       for(i=0; i<count; i++) {
-        if ([PostsSqlite isExists:postsDB dbPath:databasePath postId:idList[i]] == NO && 
-              [self containId:_objects postId:idList[i]] == NO) {
-           NSLog(@"%@", [[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]);
-           [self fetchJson:_objects urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]];
+        if ([self containId:_objects postId:idList[i]] == NO) {
+            post = [PostsSqlite getPost:postsDB dbPath:databasePath postId:idList[i]];
+            if (post == nil) {
+                 NSLog(@"%@", [[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]);
+                 [self fetchJson:_objects
+                        urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]
+                shouldAppendHead:shouldAppendHead];
+            }
+            else {
+                   NSLog(@"add to array, %@", post.postid);
+                   int index = 0;
+                   if (shouldAppendHead != YES){
+                     index = [_objects count];
+                   }
+                   [_objects insertObject:post atIndex:index];
+                   NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                   [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
         }
       }
 
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-      NSLog(@"%@", error);
-      NSLog(@"%@", urlStr);
+      NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
     }];
 
   [operation start];
@@ -94,19 +107,28 @@
 - (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId
 {
-    NSLog(@"%@", postId);
-   NSLog(@"%@", [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"postid == %@", 
-                                                      postId]]);
-   return NO;
+   bool ret = NO;
+   NSUInteger i, count = [objects count];
+   Posts* post;
+   for(i=0; i<count; i++) {
+       post = objects[i];
+       if ([post.postid isEqualToString:postId] == 1) {
+          ret = YES;
+          break;
+       }
+   }
+   return ret;
 }
 
 - (void)fetchJson:(NSMutableArray*) listObject
            urlStr:(NSString*)urlStr
+           shouldAppendHead:(bool)shouldAppendHead
 {
   //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
 
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
+  //NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 
   AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
       Posts* post = [[Posts alloc] init];
@@ -122,17 +144,21 @@
         NSLog([NSString stringWithFormat: @"Error: insert posts. id:%@, title:%@", post.postid, post.title]);
       }
 
-      [listObject insertObject:post atIndex:0];
-      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+      int index = 0;
+      if (shouldAppendHead != YES){
+        index = [listObject count];
+      }
+      [listObject insertObject:post atIndex:index];
+      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
       [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-      NSLog(@"%@", error);
-      NSLog(@"%@", urlStr);
-      NSLog(@"error");
+      NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
     }];
-
+    
   [operation start];
+  //  [operation setSuccessCallbackQueue:backgroundQueue];
+  //[[myAFAPIClient sharedClient].operationQueue addOperation:operation];
 }
 
 - (void)awakeFromNib
@@ -147,13 +173,17 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+
   // Do any additional setup after loading the view, typically from a nib.
   self.navigationItem.title = @"Ideas";
 
   // UIBarButtonItem *hideButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideArticle:)];
   // self.navigationItem.leftBarButtonItem = hideButton;
 
-  UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(settingArticle:)];
+  UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
+                                     initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                          target:self
+                                                          action:@selector(settingArticle:)];
   self.navigationItem.leftBarButtonItem = settingButton;
 
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
@@ -161,7 +191,9 @@
   [self openSqlite];
 
   [PostsSqlite loadPosts:postsDB dbPath:databasePath objects:_objects tableview:self.tableView];
-  [self fetchArticleList:@"denny" topic:@"idea_startup" start_num:10 count:10]; // TODO
+  [self fetchArticleList:@"denny" topic:@"idea_startup"
+               start_num:10 count:10
+              shouldAppendHead:YES]; // TODO
   [self initLocationManager];
 }
 
@@ -263,14 +295,18 @@
     if (scrollView.contentOffset.y == 0)
     {
         NSLog(@"top is reached");
-      [self fetchArticleList:@"denny" topic:@"idea_startup" start_num:0 count:10]; // TODO
+       [self fetchArticleList:@"denny" topic:@"idea_startup"
+                    start_num:0 count:10
+             shouldAppendHead:YES]; // TODO
     }
 
     // when reaching the bottom
     if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
     {
         NSLog(@"bottom is reached");
-      [self fetchArticleList:@"denny" topic:@"idea_startup" start_num:30 count:10]; // TODO
+       [self fetchArticleList:@"denny" topic:@"idea_startup"
+                    start_num:30 count:10
+             shouldAppendHead:NO]; // TODO
     }
 }
 

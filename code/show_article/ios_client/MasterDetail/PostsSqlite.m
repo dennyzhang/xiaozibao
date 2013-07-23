@@ -7,9 +7,9 @@
 //
 
 #import "PostsSqlite.h"
-#import "Posts.h"
 
 @implementation PostsSqlite
+NSLock *lock;
 
 + (bool)initDB: (sqlite3 *)postsDB
         dbPath:(NSString *) dbPath
@@ -19,7 +19,7 @@
   char *errMsg;
   const char *dbpath = [dbPath UTF8String];
   NSLog(@"initDB");
-  const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT)";
+  const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT)";
   //const char *sql_stmt = "drop table posts";
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
@@ -36,28 +36,41 @@
   return ret;
 }
 
-+ (bool)isExists: (sqlite3 *)postsDB
++ (Posts*)getPost: (sqlite3 *)postsDB
           dbPath:(NSString *) dbPath
           postId:(NSString *)postId
 {
+  Posts* ret = nil;
   const char *dbpath = [dbPath UTF8String];
   sqlite3_stmt *statement;
-  NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID FROM POSTS WHERE POSTID=\"%@\"", postId];
+  NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT FROM POSTS WHERE POSTID=\"%@\"", postId];
   const char *query_stmt = [querySQL UTF8String];
+  [lock lock];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
       if (sqlite3_prepare_v2(postsDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
           if (sqlite3_step(statement) == SQLITE_ROW)
             {
-              NSLog([NSString stringWithFormat: @"Post exists. id:%@.", postId]);
-              return YES;
+              ret = [[Posts alloc] init];
+              NSString* postid = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
+              NSString* summary = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
+              NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
+              NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
+              NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
+
+              [ret setPostid:postid];
+              [ret setSummary:summary];
+              [ret setCategory:category];
+              [ret setTitle:title];
+              [ret setContent:content];
             }
         }
       sqlite3_finalize(statement);
       sqlite3_close(postsDB);
     }
-  return NO;
+  [lock unlock];
+  return ret;
 }
 
 + (bool)savePost: (sqlite3 *)postsDB
@@ -77,6 +90,8 @@
                             @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
                           postId, category, summary, title, content];
   const char *insert_stmt = [insertSQL UTF8String];
+    
+  [lock lock];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
       sqlite3_prepare_v2(postsDB, insert_stmt, -1, &statement, NULL);
@@ -94,6 +109,7 @@
 
   sqlite3_finalize(statement);
   sqlite3_close(postsDB);
+  [lock unlock];
   return ret;
 }
 
@@ -103,10 +119,12 @@
           objects:(NSMutableArray *) objects
         tableview:(UITableView *)tableview
 {
+  bool ret = NO;
   const char *dbpath = [dbPath UTF8String];
   sqlite3_stmt *statement;
   NSString *querySQL = @"SELECT postid, summary, category, title, content FROM POSTS order by id desc limit 10";
   const char *query_stmt = [querySQL UTF8String];
+  [lock lock];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
       if (sqlite3_prepare_v2(postsDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
@@ -132,12 +150,14 @@
 
               NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
               [tableview insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+              ret = YES;
             }
         }
       sqlite3_finalize(statement);
       sqlite3_close(postsDB);
     }
-  return NO;
+  [lock unlock];
+  return ret;
 }
 
 @end

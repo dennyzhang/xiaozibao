@@ -20,6 +20,4 @@
 @property (strong, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, retain) CLLocationManager *locationManager;  
 
-- (void)fetchJson:(NSMutableArray*) listObject urlStr:(NSString*)urlStr;
-
 @end
