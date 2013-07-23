@@ -18,11 +18,44 @@
   sqlite3 *postsDB;
   NSString *databasePath;
   NSString *urlPrefix;
+  NSString *username;
+  NSString *topic;
 }
 @end
 
 @implementation MasterViewController
 @synthesize locationManager;
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+   username = @"denny";
+   topic = @"us_america";
+   //topic = @"idea_startup";
+
+  // Do any additional setup after loading the view, typically from a nib.
+  self.navigationItem.title = @"Ideas";
+
+  // UIBarButtonItem *hideButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideArticle:)];
+  // self.navigationItem.leftBarButtonItem = hideButton;
+
+  UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
+                                     initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                          target:self
+                                                          action:@selector(settingArticle:)];
+  self.navigationItem.leftBarButtonItem = settingButton;
+
+  self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+  _objects = [[NSMutableArray alloc] init];
+  [self openSqlite];
+
+  [PostsSqlite loadPosts:postsDB dbPath:databasePath objects:_objects tableview:self.tableView];
+  [self fetchArticleList:username topic:topic
+               start_num:10 count:10
+              shouldAppendHead:YES]; // TODO
+  [self initLocationManager];
+}
 
 - (void)openSqlite
 {
@@ -63,7 +96,6 @@
 
   NSString *urlStr= [NSString stringWithFormat: @"%@api_list_user_topic?uid=%@&topic=%@&start_num=%d&count=%d",
                               urlPrefix, userid, topic, start_num, count];
-  //[urlPrefix stringByAppendingString:@"api_list_user_topic?uid=denny&topic=idea_startup&start_num=10&count=10"];
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
@@ -170,33 +202,6 @@
   [super awakeFromNib];
 }
 
-- (void)viewDidLoad
-{
-  [super viewDidLoad];
-
-  // Do any additional setup after loading the view, typically from a nib.
-  self.navigationItem.title = @"Ideas";
-
-  // UIBarButtonItem *hideButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hideArticle:)];
-  // self.navigationItem.leftBarButtonItem = hideButton;
-
-  UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
-                                     initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                          target:self
-                                                          action:@selector(settingArticle:)];
-  self.navigationItem.leftBarButtonItem = settingButton;
-
-  self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-  _objects = [[NSMutableArray alloc] init];
-  [self openSqlite];
-
-  [PostsSqlite loadPosts:postsDB dbPath:databasePath objects:_objects tableview:self.tableView];
-  [self fetchArticleList:@"denny" topic:@"idea_startup"
-               start_num:10 count:10
-              shouldAppendHead:YES]; // TODO
-  [self initLocationManager];
-}
-
 - (void) initLocationManager
 {
   /*
@@ -295,7 +300,7 @@
     if (scrollView.contentOffset.y == 0)
     {
         NSLog(@"top is reached");
-       [self fetchArticleList:@"denny" topic:@"idea_startup"
+       [self fetchArticleList:username topic:topic
                     start_num:0 count:10
              shouldAppendHead:YES]; // TODO
     }
@@ -304,7 +309,7 @@
     if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
     {
         NSLog(@"bottom is reached");
-       [self fetchArticleList:@"denny" topic:@"idea_startup"
+       [self fetchArticleList:username topic:topic
                     start_num:30 count:10
              shouldAppendHead:NO]; // TODO
     }

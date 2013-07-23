@@ -1,8 +1,10 @@
 sudo xzb_update_category.sh -c idea_startup
 
-/Users/mac/Library/Application Support/iPhone Simulator/7.0/Applications/3DDF0FA1-D528-45EC-8B6B-F84E2C31FC9B/Documents
+cd "/Users/mac/Library/Application Support/iPhone Simulator/7.0/Applications/3DDF0FA1-D528-45EC-8B6B-F84E2C31FC9B/Documents"
 
 http://127.0.0.1:9080/api_list_user_topic?uid=denny&topic=idea_startup&start_num=0&count=10
+http://127.0.0.1:9080/api_list_user_topic?uid=denny&topic=us_america&start_num=0&count=10
+
 http://192.168.100.101:9080/api_get_post?id=00a2239ca5933d6b49d5322e72fffdc5
  --8<-------------------------- separator ------------------------>8--
 
