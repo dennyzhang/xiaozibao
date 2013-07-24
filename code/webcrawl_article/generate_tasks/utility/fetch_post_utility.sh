@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-07-22 11:15:31>
+## Updated: Time-stamp: <2013-07-24 10:20:49>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
@@ -115,6 +115,20 @@ function fetch_techcrunch() {
     for url in `generate_command "http://techcrunch.com/mobile" | grep ^http`; do
         command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
         $command
+    done;
+    sleep $SLEEP_SECONDS
+}
+
+function fetch_stackexchange() {
+    dst_dir=${1?}
+    topic_id=${2?}
+    id_list=${3?}
+    lists=($id_list)
+    for id in ${lists[*]}; do
+        for url in `generate_command "http://$topic_id.stackexchange.com/questions?page=$id&sort=votes" | grep ^http`; do
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
+            $command
+        done;
     done;
     sleep $SLEEP_SECONDS
 }

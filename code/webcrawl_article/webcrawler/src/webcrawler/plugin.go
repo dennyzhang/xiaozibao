@@ -14,6 +14,32 @@ var fetcher = map[string] Stringy {
         "^http://www.zhihu.com/question/[0-9]+$": Url_zhihu_1,
 	"http://www.zhihu.com/question/19604574": Url_zhihu_3,
         "^http://www.quora.com/.+$": Url_quora_1,
+	"^http://.*stackexchange.com/questions/[0-9]+/.*": func(url string) Post_data {
+		return common_webcrawler(url, "personal_finance/money_stackexchange_com_personal_finance", []Action {
+			Action {Filter, "content", "Tell me more", "improve this answer"},
+			Action {Filter, "content", "     \n \n \n \n", "  share  |"},
+			Action {Replace, "content", "\n +up vote ", ""},
+			Action {Replace, "content", "\n +down vote ", ""},
+			Action {Replace, "content", "\n *favorite *", ""},
+			Action {Replace, "content", "(?m)^ +oldest *$", ""},
+			Action {Replace, "content", "(?m)^ +votes *$", ""},
+			Action {Replace, "content", "(?m)^ +answered  .*$", ""},
+			Action {Replace, "content", "(?m)^ +edited  .*$", ""},
+			Action {Replace, "content", "(?m)^          +.*$", ""},
+			Action {Replace, "content", "(?m)^ +[0-9]+ *$", ""},
+			Action {Replace, "content", "(?m)^ +show +[0-9]+ +more comment.*$", ""},
+			Action {Replace, "content", " ^ +", " "},
+			Action {Replace, "content", " ", ""},
+			// Action {Filter, "content", "^", " Crunchbase"},
+			Action {Replace, "content", "(?m) +$", ""},
+                        Action {Replace, "content", "(?m)\n\n+", "\n"},
+                        Action {Replace, "content", "(?m)$", " "},
+			Action {Replace, "content", "\n +share +\\| +improve this answer +\n", "\n\n- "},
+			Action {Replace, "content", "\n +share +\\| +improve this question +\n", "\n\n- "},
+                        Action {Replace, "content", "  +", "  "},
+			// Action {Replace, "title", "(?m)[ ]+\\|[ ]+TechCrunch$", ""},
+		})
+	},
 	"^http://techcrunch.com/.+/$": func(url string) Post_data {
 		return common_webcrawler(url, "entrepreneur/webcrawler_raw_techcrunch", []Action {
 			Action {Filter, "content", "posted", "Tags: "},

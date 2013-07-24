@@ -83,7 +83,8 @@
   [_objects insertObject:@"personal_finance" atIndex:2];
   [_objects insertObject:@"personal_productivity" atIndex:3];
   [_objects insertObject:@"coder_questions" atIndex:4];
-  [_objects insertObject:@"weibo_godreply" atIndex:5];
+  [_objects insertObject:@"health_sport" atIndex:5];
+  [_objects insertObject:@"weibo_godreply" atIndex:6];
 }
 
 - (void)didReceiveMemoryWarning

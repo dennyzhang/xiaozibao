@@ -285,6 +285,7 @@ func common_webcrawler(url string, category string, actions []Action) Post_data 
         }
 	title = post_wash_title(title)
 	content = post_wash_content(content)
+	//fmt.Print(content)
         return Post_data{title, "", content, url, category}
 }
 
