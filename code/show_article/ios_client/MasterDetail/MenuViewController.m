@@ -78,13 +78,13 @@
 
 - (void)load_topic_list
 {
+  [_objects insertObject:@"weibo_godreply" atIndex:0];
+  [_objects insertObject:@"us_america" atIndex:0];
+  [_objects insertObject:@"health_sport" atIndex:0];
+  [_objects insertObject:@"coder_questions" atIndex:0];
+  [_objects insertObject:@"personal_finance" atIndex:0];
+  [_objects insertObject:@"personal_productivity" atIndex:0];
   [_objects insertObject:@"idea_startup" atIndex:0];
-  [_objects insertObject:@"us_america" atIndex:1];
-  [_objects insertObject:@"personal_finance" atIndex:2];
-  [_objects insertObject:@"personal_productivity" atIndex:3];
-  [_objects insertObject:@"coder_questions" atIndex:4];
-  [_objects insertObject:@"health_sport" atIndex:5];
-  [_objects insertObject:@"weibo_godreply" atIndex:6];
 }
 
 - (void)didReceiveMemoryWarning

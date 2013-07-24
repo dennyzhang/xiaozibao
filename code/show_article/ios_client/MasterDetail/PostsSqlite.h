@@ -35,4 +35,9 @@
             topic:(NSString *)topic
           objects:(NSMutableArray *) objects
         tableview:(UITableView *)tableview;
+
++ (bool)addPostReadCount: (sqlite3 *)postsDB
+                  dbPath:(NSString *) dbPath
+                  postId:(NSString *)postId
+                   topic:(NSString *)topic;
 @end

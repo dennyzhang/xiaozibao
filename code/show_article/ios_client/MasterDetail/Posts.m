@@ -9,7 +9,7 @@
 #import "Posts.h"
 
 @implementation Posts
-@synthesize postid, title, summary, category, content;
+@synthesize postid, title, summary, category, content, readcount;
 
 - (id)init
 {
@@ -21,6 +21,7 @@
     summary=@"";
     category=@"";
     content=@"";
+    readcount=[NSNumber numberWithInt:0];
   }
   return self;
 }

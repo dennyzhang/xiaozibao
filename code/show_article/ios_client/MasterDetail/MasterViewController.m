@@ -19,6 +19,9 @@
   NSString *databasePath;
   NSString *urlPrefix;
   NSUserDefaults *userDefaults;
+  NSNumber *bottom_num;
+  NSNumber *page_count;
+
 }
 
 @end
@@ -50,6 +53,9 @@
 - (void) init_data:(NSString*)username
              topic:(NSString*)topic
 {
+  self.bottom_num = [NSNumber numberWithInt:20];
+  self.page_count = [NSNumber numberWithInt:10];
+
   self.username=username;
   self.topic=topic;
 
@@ -65,7 +71,8 @@
                  objects:_objects tableview:self.tableView];
 
   [self fetchArticleList:username topic:topic
-               start_num:10 count:10
+               start_num:[NSNumber numberWithInt: 10]
+                   count:self.page_count
               shouldAppendHead:YES]; // TODO
 
 }
@@ -96,8 +103,8 @@
 
 - (void)fetchArticleList:(NSString*) userid
                    topic:(NSString*)topic
-                   start_num:(NSInteger*)start_num
-                   count:(NSInteger*)count
+                   start_num:(NSNumber*)start_num
+                   count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
 {
   //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
@@ -108,7 +115,7 @@
   //urlPrefix=@"http://192.168.51.131:9080/";
 
   NSString *urlStr= [NSString stringWithFormat: @"%@api_list_user_topic?uid=%@&topic=%@&start_num=%d&count=%d",
-                              urlPrefix, userid, topic, start_num, count];
+                              urlPrefix, userid, topic, [start_num intValue], [count intValue]];
   NSLog(@"fetchArticleList, url:%@", urlStr);
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -136,11 +143,13 @@
                    if (shouldAppendHead != YES){
                      index = [_objects count];
                    }
-                   [_objects insertObject:post atIndex:index];
-                   NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                   [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                   [self addToTableView:index marray:_objects object:post];
             }
         }
+      }
+      if (shouldAppendHead == NO) {
+        self.bottom_num = [NSNumber numberWithInt: [self.page_count intValue] + [self.bottom_num intValue]];
+        //NSLog(@"should change here");
       }
 
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -148,6 +157,18 @@
     }];
 
   [operation start];
+}
+
+- (bool)addToTableView:(int)index
+                marray:(NSMutableArray *)marray
+                object:(Posts*)object
+{
+  bool ret = YES;
+  [marray insertObject:object atIndex:index];
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+  [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+  return ret;
 }
 
 - (bool)containId:(NSMutableArray*) objects
@@ -194,9 +215,7 @@
       if (shouldAppendHead != YES){
         index = [listObject count];
       }
-      [listObject insertObject:post atIndex:index];
-      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-      [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+      [self addToTableView:index marray:listObject object:post];
 
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
       NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
@@ -289,7 +308,16 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
   Posts *post = _objects[indexPath.row];
+  NSLog(@"postid:%@, title:%@, readcount:%@", post.postid, post.title, post.readcount);
+
   cell.textLabel.text = post.title;
+  if ([post.readcount intValue] !=0) {
+      cell.textLabel.textColor = [UIColor grayColor];
+  }
+  else {
+      cell.textLabel.textColor = [UIColor blackColor];
+  }
+
   return cell;
 }
 
@@ -315,7 +343,8 @@
     {
         NSLog(@"top is reached");
        [self fetchArticleList:username topic:topic
-                    start_num:0 count:10
+                    start_num:[NSNumber numberWithInt:0]
+                        count:self.page_count
              shouldAppendHead:YES]; // TODO
     }
 
@@ -324,7 +353,7 @@
     {
         NSLog(@"bottom is reached");
        [self fetchArticleList:username topic:topic
-                    start_num:30 count:10
+                    start_num:self.bottom_num count:self.page_count
              shouldAppendHead:NO]; // TODO
     }
 }
@@ -353,6 +382,10 @@ return YES;
 
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.textLabel.textColor = [UIColor grayColor];
+
+    post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
+    [PostsSqlite addPostReadCount:postsDB dbPath:databasePath
+                           postId:post.postid topic:post.category];
 
     [[segue destinationViewController] setDetailItem:post];
   }

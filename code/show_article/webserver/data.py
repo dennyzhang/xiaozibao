@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-21 21:14:32>
+## Updated: Time-stamp: <2013-07-24 20:45:07>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
@@ -69,14 +69,11 @@ def list_user_topic(userid, topic, start_num, count):
 	conn = MySQLdb.connect(config.DB_HOST, config.DB_USERNAME, config.DB_PWD, \
 			config.DB_NAME, charset='utf8', port=3306)
 	cursor = conn.cursor()
-	if count>0 :
-		sql_format = "select id from posts where category = '%s' and num > %d order by num asc limit %d;"
-		sql = sql_format % (topic, start_num, count)
-	else:
-		sql_format = "select id from posts where category = '%s' and num < %d order by num desc limit %d;"
-		sql = sql_format % (topic, start_num, -count)
+	sql_format = "select id from posts where category = '%s' order by num desc limit %d offset %d;"
+	sql = sql_format % (topic, count, start_num)
 	print sql
 	cursor.execute(sql)
 	out = cursor.fetchall()
+	cursor.close()
 	return out
 ## File : data.py

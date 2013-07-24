@@ -22,6 +22,8 @@
 
 @property (nonatomic, retain) NSString* topic;
 @property (nonatomic, retain) NSString* username;
+@property (atomic, retain) NSNumber* bottom_num;
+@property (atomic, retain) NSNumber* page_count;
 
 - (void) init_data:(NSString*)username
              topic:(NSString*)topic;

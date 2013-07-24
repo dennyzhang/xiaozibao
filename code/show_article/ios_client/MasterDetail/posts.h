@@ -15,4 +15,5 @@
 @property (nonatomic, retain) NSString* summary;
 @property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSString* content;
+@property (nonatomic, retain) NSNumber* readcount;
 @end

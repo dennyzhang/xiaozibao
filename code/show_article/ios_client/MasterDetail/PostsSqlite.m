@@ -19,7 +19,7 @@ NSLock *lock;
   char *errMsg;
   const char *dbpath = [dbPath UTF8String];
   NSLog(@"initDB");
-  const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT)";
+  const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, READCOUNT INT DEFAULT 0)";
   //const char *sql_stmt = "drop table posts";
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
@@ -43,7 +43,7 @@ NSLock *lock;
   Posts* ret = nil;
   const char *dbpath = [dbPath UTF8String];
   sqlite3_stmt *statement;
-  NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT FROM POSTS WHERE POSTID=\"%@\"", postId];
+  NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, READCOUNT FROM POSTS WHERE POSTID=\"%@\"", postId];
   const char *query_stmt = [querySQL UTF8String];
   [lock lock];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
@@ -58,12 +58,18 @@ NSLock *lock;
               NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
               NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
               NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
+              NSString* readCountStr = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
+
+              NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+              [f setNumberStyle:NSNumberFormatterDecimalStyle];
+              NSNumber* readcount = [f numberFromString:readCountStr];
 
               [ret setPostid:postid];
               [ret setSummary:summary];
               [ret setCategory:category];
               [ret setTitle:title];
               [ret setContent:content];
+              [ret setReadcount:readcount];
             }
         }
       sqlite3_finalize(statement);
@@ -124,7 +130,7 @@ NSLock *lock;
   bool ret = NO;
   const char *dbpath = [dbPath UTF8String];
   sqlite3_stmt *statement;
-  NSString *querySQL = [NSString stringWithFormat: @"SELECT postid, summary, category, title, content FROM POSTS where category =\"%@\" order by id desc limit 10", topic];
+  NSString *querySQL = [NSString stringWithFormat: @"SELECT postid, summary, category, title, content, readcount FROM POSTS where category =\"%@\" order by id desc limit 10", topic];
   const char *query_stmt = [querySQL UTF8String];
   [lock lock];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
@@ -139,12 +145,18 @@ NSLock *lock;
               NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
               NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
               NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
+              NSString* readCountStr = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
+
+              NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+              [f setNumberStyle:NSNumberFormatterDecimalStyle];
+              NSNumber* readcount = [f numberFromString:readCountStr];
 
               [post setPostid:postid];
               [post setSummary:summary];
               [post setCategory:category];
               [post setTitle:title];
               [post setContent:content];
+              [post setReadcount:readcount];
 
               [objects insertObject:post atIndex:0];
 
@@ -160,4 +172,40 @@ NSLock *lock;
   return ret;
 }
 
++ (bool)addPostReadCount: (sqlite3 *)postsDB
+                  dbPath:(NSString *) dbPath
+                  postId:(NSString *)postId
+                   topic:(NSString *)topic
+{
+  bool ret;
+  const char *dbpath = [dbPath UTF8String];
+  NSLog(@"addPostReadCount. id:%@, topic:%@", postId, topic);
+  sqlite3_stmt *statement;
+  NSString *updateSql = [NSString
+                          stringWithFormat:
+                            @"UPDATE POSTS SET readcount=readcount+1 WHERE postid=\"%@\" and category=\"%@\"",
+                          postId, topic];
+  const char *sql_stmt = [updateSql UTF8String];
+    
+  [lock lock];
+  if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
+    {
+      sqlite3_prepare_v2(postsDB, sql_stmt, -1, &statement, NULL);
+
+      if (sqlite3_step(statement) != SQLITE_DONE) {
+        NSLog(@"%@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)]);
+        ret = NO;
+      }
+      else
+        ret = YES;
+    }
+  else {
+    ret = NO;
+  }
+
+  sqlite3_finalize(statement);
+  sqlite3_close(postsDB);
+  [lock unlock];
+  return ret;
+}
 @end
