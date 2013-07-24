@@ -120,10 +120,11 @@ NSLock *lock;
           objects:(NSMutableArray *) objects
         tableview:(UITableView *)tableview
 {
+  NSLog(@"loadposts, topic:%@",topic);
   bool ret = NO;
   const char *dbpath = [dbPath UTF8String];
   sqlite3_stmt *statement;
-  NSString *querySQL = [NSString stringWithFormat: @"SELECT postid, summary, category, title, content FROM POSTS where topic =\"%@\" order by id desc limit 10", topic];
+  NSString *querySQL = [NSString stringWithFormat: @"SELECT postid, summary, category, title, content FROM POSTS where category =\"%@\" order by id desc limit 10", topic];
   const char *query_stmt = [querySQL UTF8String];
   [lock lock];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
@@ -132,8 +133,6 @@ NSLock *lock;
         {
           while (sqlite3_step(statement) == SQLITE_ROW)
             {
-              NSLog(@"load posts here");
-
               Posts* post = [[Posts alloc] init];
               NSString* postid = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
               NSString* summary = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];

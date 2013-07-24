@@ -43,7 +43,6 @@
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 
   if (self.topic == nil) {
-      NSLog(@"here");
       [self init_data:@"denny" topic:@"idea_startup"];
   }
 }
@@ -105,11 +104,12 @@
 
   //urlPrefix=@"http://173.255.227.47:9080/";
   //urlPrefix=@"http://127.0.0.1:9080/";
-  //urlPrefix=@"http://192.168.100.106:9080/";
-  urlPrefix=@"http://192.168.51.131:9080/";
+  urlPrefix=@"http://192.168.100.106:9080/";
+  //urlPrefix=@"http://192.168.51.131:9080/";
 
   NSString *urlStr= [NSString stringWithFormat: @"%@api_list_user_topic?uid=%@&topic=%@&start_num=%d&count=%d",
                               urlPrefix, userid, topic, start_num, count];
+  NSLog(@"fetchArticleList, url:%@", urlStr);
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
