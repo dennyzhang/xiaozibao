@@ -89,14 +89,14 @@ NSLock *lock;
 {
   bool ret;
   const char *dbpath = [dbPath UTF8String];
-  NSLog([NSString stringWithFormat: @"savePost. id:%@, title:%@", postId, title]);
-  sqlite3_stmt *statement;
+  NSLog(@"savePost. id:%@, title:%@", postId, title);
+  sqlite3_stmt *statement = NULL;
   NSString *insertSQL = [NSString
                           stringWithFormat:
                             @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
                           postId, category, summary, title, content];
   const char *insert_stmt = [insertSQL UTF8String];
-    
+
   [lock lock];
   if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
@@ -180,7 +180,7 @@ NSLock *lock;
   bool ret;
   const char *dbpath = [dbPath UTF8String];
   NSLog(@"addPostReadCount. id:%@, topic:%@", postId, topic);
-  sqlite3_stmt *statement;
+  sqlite3_stmt *statement = NULL;
   NSString *updateSql = [NSString
                           stringWithFormat:
                             @"UPDATE POSTS SET readcount=readcount+1 WHERE postid=\"%@\" and category=\"%@\"",

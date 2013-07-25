@@ -26,7 +26,7 @@
     {
         UITableViewCell* c = sender;
         MasterViewController* dstViewController = segue.destinationViewController;
-        [dstViewController init_data:@"denny" topic:c.textLabel.text]; // TODO
+        [dstViewController init_data:@"denny" topic_t:c.textLabel.text]; // TODO
 
         [dstViewController view];
     }
@@ -73,7 +73,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     _objects = [[NSMutableArray alloc] init];
     [self load_topic_list];
-    NSLog(@"load menuview");
 }
 
 - (void)load_topic_list

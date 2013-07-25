@@ -2,6 +2,7 @@ package main
 
 import ("os"
         "fmt"
+	"syscall"
 	"strings"
         "io/ioutil"
 	"taskgenerator"
@@ -108,8 +109,11 @@ func store_result(post webcrawler.Post_data) bool {
 
 	fname := dir + "/" + escpae_fname(post.Title)
 
+	oldMask := syscall.Umask(0)
 	os.MkdirAll(dir, 0777)
         write_data(fname+".data", post)
+        syscall.Umask(oldMask)
+
 	return true
 }
 

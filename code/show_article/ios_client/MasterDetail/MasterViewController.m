@@ -28,11 +28,10 @@
 
 @implementation MasterViewController
 
-@synthesize locationManager, topic, username;
+@synthesize locationManager, topic, username, bottom_num, page_count;
 
 - (void)viewDidLoad
 {
-  NSLog(@"masterview load");
   [super viewDidLoad];
 
   userDefaults = [NSUserDefaults standardUserDefaults];
@@ -46,20 +45,18 @@
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 
   if (self.topic == nil) {
-      [self init_data:@"denny" topic:@"idea_startup"];
+      [self init_data:@"denny" topic_t:@"idea_startup"];
   }
 }
 
-- (void) init_data:(NSString*)username
-             topic:(NSString*)topic
+- (void) init_data:(NSString*)username_t
+             topic_t:(NSString*)topic_t
 {
   self.bottom_num = [NSNumber numberWithInt:20];
   self.page_count = [NSNumber numberWithInt:10];
 
-  self.username=username;
-  self.topic=topic;
-
-  NSLog(@"username:%@, topic:%@", self.username, self.topic);
+  self.username=username_t;
+  self.topic=topic_t;
 
   self.navigationItem.title = self.topic;
 
@@ -70,7 +67,7 @@
   [PostsSqlite loadPosts:postsDB dbPath:databasePath topic:self.topic
                  objects:_objects tableview:self.tableView];
 
-  [self fetchArticleList:username topic:topic
+  [self fetchArticleList:username topic_t:topic_t
                start_num:[NSNumber numberWithInt: 10]
                    count:self.page_count
               shouldAppendHead:YES]; // TODO
@@ -102,20 +99,20 @@
 }
 
 - (void)fetchArticleList:(NSString*) userid
-                   topic:(NSString*)topic
+                   topic_t:(NSString*)topic_t
                    start_num:(NSNumber*)start_num
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
 {
   //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
 
-  //urlPrefix=@"http://173.255.227.47:9080/";
+  urlPrefix=@"http://173.255.227.47:9080/";
   //urlPrefix=@"http://127.0.0.1:9080/";
-  urlPrefix=@"http://192.168.100.106:9080/";
+  //urlPrefix=@"http://192.168.100.106:9080/";
   //urlPrefix=@"http://192.168.51.131:9080/";
 
   NSString *urlStr= [NSString stringWithFormat: @"%@api_list_user_topic?uid=%@&topic=%@&start_num=%d&count=%d",
-                              urlPrefix, userid, topic, [start_num intValue], [count intValue]];
+                              urlPrefix, userid, topic_t, [start_num intValue], [count intValue]];
   NSLog(@"fetchArticleList, url:%@", urlStr);
   NSURL *url = [NSURL URLWithString:urlStr];
   NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -138,7 +135,6 @@
                 shouldAppendHead:shouldAppendHead];
             }
             else {
-                   NSLog(@"add to array, %@", post.postid);
                    int index = 0;
                    if (shouldAppendHead != YES){
                      index = [_objects count];
@@ -208,7 +204,7 @@
       if ([PostsSqlite savePost:postsDB dbPath:databasePath
                          postId:post.postid summary:post.summary category:post.category
                           title:post.title content:post.content] == NO) {
-        NSLog([NSString stringWithFormat: @"Error: insert posts. id:%@, title:%@", post.postid, post.title]);
+        NSLog(@"Error: insert posts. id:%@, title:%@", post.postid, post.title);
       }
 
       int index = 0;
@@ -277,6 +273,7 @@
 
 - (void)settingArticle:(id)sender
 {
+    /*
   NSBundle *bundle = [NSBundle mainBundle];
   NSString *plistPath = [bundle pathForResource:@"statedictionary" ofType:@"plist"];
 
@@ -288,7 +285,7 @@
 
   [locationManager startUpdatingLocation];
   NSLog(@"%1f", locationManager.location.coordinate.longitude);
-
+     */
 }
 
 #pragma mark - Table View
@@ -308,7 +305,6 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
   Posts *post = _objects[indexPath.row];
-  NSLog(@"postid:%@, title:%@, readcount:%@", post.postid, post.title, post.readcount);
 
   cell.textLabel.text = post.title;
   if ([post.readcount intValue] !=0) {
@@ -342,7 +338,7 @@
     if (scrollView.contentOffset.y == 0)
     {
         NSLog(@"top is reached");
-       [self fetchArticleList:username topic:topic
+       [self fetchArticleList:username topic_t:self.topic
                     start_num:[NSNumber numberWithInt:0]
                         count:self.page_count
              shouldAppendHead:YES]; // TODO
@@ -352,7 +348,7 @@
     if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
     {
         NSLog(@"bottom is reached");
-       [self fetchArticleList:username topic:topic
+       [self fetchArticleList:username topic_t:self.topic
                     start_num:self.bottom_num count:self.page_count
              shouldAppendHead:NO]; // TODO
     }
