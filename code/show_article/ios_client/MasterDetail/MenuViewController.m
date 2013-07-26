@@ -25,10 +25,14 @@
         [sender isKindOfClass:[UITableViewCell class]] )
     {
         UITableViewCell* c = sender;
-        MasterViewController* dstViewController = segue.destinationViewController;
-        [dstViewController init_data:@"denny" topic_t:c.textLabel.text]; // TODO
-
-        [dstViewController view];
+        if (c.textLabel.textColor != [UIColor grayColor]) {
+          MasterViewController* dstViewController = segue.destinationViewController;
+          [dstViewController init_data:@"denny" topic_t:c.textLabel.text]; // TODO
+          [dstViewController view];
+        }
+        else {
+          return;
+        }
     }
     
     // configure the segue.
@@ -97,22 +101,51 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-   return _objects.count;
+  if (section == 0) {
+    return _objects.count;
+  }
+  else {
+    return 3;
+  }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+  if (section == 0) {
+    return @"Topics";
+  }
+  else {
+    return @"Setting";
+  }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    cell.textLabel.text = _objects[indexPath.row];    
+
+    if (indexPath.section == 0) {
+      cell.textLabel.text = _objects[indexPath.row];
+    }
+    else {
+      if (indexPath.row == 0) {
+          cell.textLabel.text = @"Auto hide red posts";
+          cell.textLabel.textColor = [UIColor grayColor];
+      }
+      if (indexPath.row == 1) {
+        cell.textLabel.text = @"Filter English posts";
+        cell.textLabel.textColor = [UIColor grayColor];
+      }
+      if (indexPath.row == 2) {
+        cell.textLabel.text = @"Clean cache";
+        cell.textLabel.textColor = [UIColor grayColor];
+      }
+    }
     return cell;
 }
 
