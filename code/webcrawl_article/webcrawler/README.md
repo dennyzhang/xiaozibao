@@ -14,3 +14,5 @@ go run ./src/main.go --fetch_url "http://techcrunch.com/mobile" --shall_generato
 go run ./src/main.go --fetch_url "http://money.stackexchange.com/questions?sort=votes" --shall_generator --dst_dir "money.stackexchange_com_personal_finance"
 
 go run ./src/main.go --fetch_url "http://money.stackexchange.com/questions/1625/best-way-to-start-investing-for-a-young-person-just-starting-their-career" --dst_dir "personal_finance/money_stackexchange_com_personal_finance"
+
+go run ./src/main.go --fetch_url "http://www.geekpreneur.com/tweet-about-a-client-get-sued"

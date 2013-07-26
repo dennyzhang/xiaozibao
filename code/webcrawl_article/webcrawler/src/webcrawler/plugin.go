@@ -14,6 +14,24 @@ var fetcher = map[string] Stringy {
         "^http://www.zhihu.com/question/[0-9]+$": Url_zhihu_1,
 	"http://www.zhihu.com/question/19604574": Url_zhihu_3,
         "^http://www.quora.com/.+$": Url_quora_1,
+	"^http://zenhabits.net/.+$": func(url string) Post_data {
+		return common_webcrawler(url, "personal_productivity/zenhabits_net", []Action {
+			Action {Filter, "content", "zenhabits  :  breathe", "      Posted : "},
+			Action {Replace, "content", " By  ", "- "},
+		})
+        },
+
+	"^http://www.geekpreneur.com/.+$": func(url string) Post_data {
+		return common_webcrawler(url, "personal_finance/geekpreneur_com", []Action {
+			Action {Filter, "content", "  archives", " Related posts:"},
+			Action {Filter, "content", "  subscribe", "  Tweet"},
+			Action {Replace, "content", "Posted by ", "- "},
+			Action {Replace, "content", "(?m) +Tweet *$", ""},
+			Action {Replace, "content", " ", " "},
+			Action {Replace, "content", "(?m)^ !function.*", ""},
+		})
+        },
+
 	"^http://.*stackexchange.com/questions/[0-9]+/.*": func(url string) Post_data {
 		return common_webcrawler(url, "personal_finance/money_stackexchange_com_personal_finance", []Action {
 			Action {Filter, "content", "Tell me more", "improve this answer"},
@@ -40,6 +58,7 @@ var fetcher = map[string] Stringy {
 			// Action {Replace, "title", "(?m)[ ]+\\|[ ]+TechCrunch$", ""},
 		})
 	},
+
 	"^http://techcrunch.com/.+/$": func(url string) Post_data {
 		return common_webcrawler(url, "entrepreneur/webcrawler_raw_techcrunch", []Action {
 			Action {Filter, "content", "posted", "Tags: "},

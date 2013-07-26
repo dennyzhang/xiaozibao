@@ -261,9 +261,9 @@ func post_wash_title(title string) string {
 }
 
 func post_wash_content(content string) string {
-	content = regexp.MustCompile("^ +").ReplaceAllString(content, "")
-	content = regexp.MustCompile(" +$").ReplaceAllString(content, "")
-	content = regexp.MustCompile("\n+$").ReplaceAllString(content, "")
+	content = regexp.MustCompile("(?m) +$").ReplaceAllString(content, "")
+	content = regexp.MustCompile("(?m)\n\n+").ReplaceAllString(content, "\n\n")
+	content = regexp.MustCompile("  +").ReplaceAllString(content, "  ")
 	return content
 }
 

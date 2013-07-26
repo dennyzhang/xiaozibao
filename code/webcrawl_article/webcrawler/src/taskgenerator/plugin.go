@@ -15,17 +15,25 @@ var generator = map[string] Stringy {
 	"^http://techcrunch.com/.*$": techcrunch_2,
 	"^http://news.ycombinator.com/$": newsycombinator_1,
 	"^http://.*.stackexchange.com/[^\\/]*$": stackexchange_1,
-	// RSS feed
-	"^http://www.36kr.com/feed$": func(url string) []Task { return generator_rss(url,
+
+	"^http://zenhabits.net/archives/$": func(url string) []Task { return generator_simple(url,
+			"<a href=\"(http://zenhabits.net/[^\"]+)\">") },
+
+	"^http://www.36kr.com/feed$": func(url string) []Task { return generator_simple(url,
 			"<link>(http://www.36kr.com/p/[0-9]*.html)</link>") },
+
+	"^http://www.geekpreneur.com/page/.*$": func(url string) []Task { return generator_simple(url,
+			"<span class=\"title\"><a href=\"(http://www.geekpreneur.com/[^\"]+)\" ")},
+
 }
 
-func generator_rss(url string, link_pattern string) []Task {
+func generator_simple(url string, link_pattern string) []Task {
 	tasks := make([]Task, 0)
         _, content := webcrawler.Webcrawler(url)
 	//fmt.Print(content)
 
         match_strings := regexp.MustCompile(link_pattern).FindAllStringSubmatch(content, -1)
+	//fmt.Print(match_strings)
         for i := range match_strings {
 		record_string := match_strings[i]
 		tasks = append(tasks, Task{record_string[1]})
