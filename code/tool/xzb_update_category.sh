@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2013-07-11 17:45:42>
+## Updated: Time-stamp: <2013-07-26 17:11:30>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -62,6 +62,7 @@ function update_meta_skeleton() {
         title=${short_file%.data}
         md5=$(echo -n "$category/$title"| md5sum | awk -F' ' '{print $1}')
         sed -ie "s/^id:.*/id: $md5/" "$file"
+        rm "${file}e" # workaround for mac' sed compatible issue
     done
     IFS=$SAVEIFS
 }

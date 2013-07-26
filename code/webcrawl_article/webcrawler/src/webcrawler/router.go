@@ -264,6 +264,7 @@ func post_wash_content(content string) string {
 	content = regexp.MustCompile("(?m) +$").ReplaceAllString(content, "")
 	content = regexp.MustCompile("(?m)\n\n+").ReplaceAllString(content, "\n\n")
 	content = regexp.MustCompile("  +").ReplaceAllString(content, "  ")
+	content = regexp.MustCompile(" ").ReplaceAllString(content, " ")
 	return content
 }
 
@@ -274,7 +275,7 @@ func common_webcrawler(url string, category string, actions []Action) Post_data 
 	content = strip_html_tag(content)
 
 	//fmt.Printf(content)
-
+	
         for i := range actions {
                 action := actions[i]
                 if action.object == "content" {

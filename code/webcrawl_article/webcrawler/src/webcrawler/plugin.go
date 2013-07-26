@@ -32,6 +32,16 @@ var fetcher = map[string] Stringy {
 		})
         },
 
+
+	"^http://www.zreading.cn/archives/[0-9]+.html$": func(url string) Post_data {
+		return common_webcrawler(url, "personal_productivity/zreading_cn", []Action {
+			Action {Filter, "content", "style.backgroundColor=color\n}", "分享到："},
+			Action {Filter, "content", "  \n \n \n \n \n", "/*300*250"},
+			Action {Replace, "content", "(?m)\\|字体: 小 . 中 . 大.*", ""},
+			Action {Replace, "content", "(?m)^  作者: ", "- "},
+		})
+        },
+
 	"^http://.*stackexchange.com/questions/[0-9]+/.*": func(url string) Post_data {
 		return common_webcrawler(url, "personal_finance/money_stackexchange_com_personal_finance", []Action {
 			Action {Filter, "content", "Tell me more", "improve this answer"},
@@ -47,7 +57,6 @@ var fetcher = map[string] Stringy {
 			Action {Replace, "content", "(?m)^ +[0-9]+ *$", ""},
 			Action {Replace, "content", "(?m)^ +show +[0-9]+ +more comment.*$", ""},
 			Action {Replace, "content", " ^ +", " "},
-			Action {Replace, "content", " ", ""},
 			// Action {Filter, "content", "^", " Crunchbase"},
 			Action {Replace, "content", "(?m) +$", ""},
                         Action {Replace, "content", "(?m)\n\n+", "\n"},

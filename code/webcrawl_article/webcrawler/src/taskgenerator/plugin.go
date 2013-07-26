@@ -16,6 +16,9 @@ var generator = map[string] Stringy {
 	"^http://news.ycombinator.com/$": newsycombinator_1,
 	"^http://.*.stackexchange.com/[^\\/]*$": stackexchange_1,
 
+	"^http://www.zreading.cn/.*$": func(url string) []Task { return generator_simple(url,
+			"<a href=\"(http://www.zreading.cn/archives/[0-9]+.html)\"")},
+
 	"^http://zenhabits.net/archives/$": func(url string) []Task { return generator_simple(url,
 			"<a href=\"(http://zenhabits.net/[^\"]+)\">") },
 
