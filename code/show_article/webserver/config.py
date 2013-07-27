@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-11 18:18:42>
+## Updated: Time-stamp: <2013-07-27 17:47:35>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 import os
@@ -21,5 +21,6 @@ FLASK_SERVER_PORT="9080"
 DATA_BASEDIR = os.getcwd()+"/../../../webcrawler_data"
 
 DATA_SEPARATOR="--text follows this line--"
+MAX_LENGTH=10000
 ##########################################################
 ## File : config.py

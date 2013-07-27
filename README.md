@@ -4,7 +4,7 @@ xiaozibao - 小字报
 - Subscribe to topic, instead of RSS; Read less for more.
 
 ![](misc/design.jpg)
-![](misc/ios1.png)  ![](misc/ios3.png)
+![](misc/pic1.png)  ![](misc/pic2.png)   ![](misc/pic3.png) ![](misc/pic4.png)
 
 ## Join us for free. Why?
 - We see the project target to minimize the gap of information age: read less for more

@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-21 21:11:58>
+## Updated: Time-stamp: <2013-07-27 17:41:22>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -40,6 +40,7 @@ def get_post():
 	# TODO defensive code
 	id = request.args.get('id', '')
 	post = data.get_post(id)
+	post.content = post.content[0:config.MAX_LENGTH]
 	content = render_template('get_post.json', post=post)
 	content = smarty_remove_extra_comma(content)
 	resp = make_response(content, 200)
