@@ -4,7 +4,8 @@ xiaozibao - 小字报
 - Subscribe to topic, instead of RSS; Read less for more.
 
 ![](misc/design.jpg)
-![](misc/pic1.png)  ![](misc/pic2.png)   ![](misc/pic3.png) ![](misc/pic4.png)
+![](misc/pic1.png)  ![](misc/pic2.png)
+![](misc/pic3.png) ![](misc/pic4.png)
 
 ## Join us for free. Why?
 - We see the project target to minimize the gap of information age: read less for more
@@ -32,8 +33,7 @@ Drop me an email: markfilebat@126.com, to join the mail group.
 | Start webserver                        | cd $XZB_HOME/code/show_article/webserver && python ./server.py              |
 | Helloworld test                        | curl http://127.0.0.1:9080/api_get_post?id=3aaae1a35a73722372e1b49343c2c3dc |
 
-## Documents
-- find . \( -iname \*.md \) -ls
+## Documents: find . \( -iname \*.md \) -ls
 
 ## Management
 - Web Test
