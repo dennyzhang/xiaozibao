@@ -49,13 +49,30 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.detailUITextView.clipsToBounds = NO;
+    self.detailUITextView.scrollIndicatorInsets = UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f);
     [self configureView];
     
+    /*
+    UIButton *favButton = [[UIButton alloc] init];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"btn_loved" ofType:@"jpg"];
+    UIImage *image = [[UIImage alloc] initWithContentsOfFile:filePath];
+    [favButton setImage:image forState:UIControlStateNormal];
+
+    [favButton addTarget:self action:@selector(judgePost:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *collectButton = [[UIBarButtonItem alloc]
+                               initWithCustomView:favButton];
+    
+    */
     UIBarButtonItem *collectButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks
                                       target:self
                                       action:@selector(judgePost:)];
-
+     
+    
    //[collectButton setImage:[UIImage imageNamed:@"btn_loved.png"] forState:UIControlStateNormal];
     //[UIImage imageNamed:@"btn_loved.png"]
 
