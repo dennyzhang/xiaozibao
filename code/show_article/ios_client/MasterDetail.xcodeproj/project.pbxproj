@@ -45,6 +45,7 @@
 		049B22F6179D7D2800F82187 /* Posts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Posts.m; sourceTree = "<group>"; };
 		04A7BDEB179EA84700E9D0BC /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		04A7BDEC179EA84700E9D0BC /* MenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		04D0427E17A360C300593E18 /* btn_loved.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_loved.png; sourceTree = "<group>"; };
 		04E893D7179130C400E9573C /* MasterDetail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterDetail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E893DA179130C400E9573C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E893DC179130C400E9573C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -100,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04D0427D17A360C300593E18 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				04D0427E17A360C300593E18 /* btn_loved.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		04E893CE179130C400E9573C = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +145,7 @@
 		04E893E0179130C400E9573C /* MasterDetail */ = {
 			isa = PBXGroup;
 			children = (
+				04D0427D17A360C300593E18 /* Images */,
 				04E893E9179130C400E9573C /* AppDelegate.h */,
 				04E893EA179130C400E9573C /* AppDelegate.m */,
 				04E893EC179130C400E9573C /* Main_iPhone.storyboard */,

@@ -81,6 +81,7 @@
 
 - (void)load_topic_list
 {
+  [_objects insertObject:@"favorite" atIndex:0];
   [_objects insertObject:@"weibo_godreply" atIndex:0];
   [_objects insertObject:@"us_america" atIndex:0];
   [_objects insertObject:@"health_sport" atIndex:0];
@@ -134,7 +135,7 @@
     }
     else {
       if (indexPath.row == 0) {
-          cell.textLabel.text = @"Auto hide red posts";
+          cell.textLabel.text = @"Auto hide read posts";
           cell.textLabel.textColor = [UIColor grayColor];
       }
       if (indexPath.row == 1) {

@@ -51,6 +51,16 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
+    UIBarButtonItem *collectButton = [[UIBarButtonItem alloc]
+                                      initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks
+                                      target:self
+                                      action:@selector(judgePost:)];
+
+   //[collectButton setImage:[UIImage imageNamed:@"btn_loved.png"] forState:UIControlStateNormal];
+    //[UIImage imageNamed:@"btn_loved.png"]
+
+    self.navigationItem.rightBarButtonItem = collectButton;
+    
     self.title = @"";
     
     self.detailUITextView.editable = false;
@@ -107,7 +117,7 @@
 }
 
 
-- (void)addToFavorite:(id)sender
+- (void)judgePost:(id)sender
 {
     NSLog(@"add to favorite");
 }

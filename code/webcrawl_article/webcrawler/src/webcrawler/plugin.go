@@ -18,6 +18,7 @@ var fetcher = map[string] Stringy {
 		return common_webcrawler(url, "personal_productivity/zenhabits_net", []Action {
 			Action {Filter, "content", "zenhabits  :  breathe", "      Posted : "},
 			Action {Replace, "content", " By  ", "- "},
+			Action {Replace, "content", " Post written by ", "- "},
 		})
         },
 
