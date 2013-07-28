@@ -44,12 +44,12 @@ Drop me an email: markfilebat@126.com, to join the mail group.
 | list_user_post | http://127.0.0.1:9080/api_list_user_post?userid=denny&date=2013-01-24      |
 | list_user_post | http://127.0.0.1:9080/api_list_user_post?userid=denny                      |
 
-- 内部工具
+- Internal tools
 
 | Name                           | Comment                                      |
 |:--------------------------------|----------------------------------------------|
-| 添加用户                       | 添加dns二级域名, 并调用xzb_create_user.sh -h |
-| 更新某个category的所有文章     | xzb_update_category.sh -h                    |
-| 更新某些用户文章               | xzb_update_all_user.sh -h                    |
-| 对抓取到的数据做预处理的格式化 | xzb_format_posts.sh -h                       |
-| 更新文章投放策略               | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/update_db.sql |
+| Add a user                          | Add sub domain, then call xzb_create_user.sh -h |
+| Update posts for categories         | xzb_update_category.sh -h                    |
+| Update posts for users              | xzb_update_all_user.sh -h                    |
+| Format and beautify posts           | xzb_format_posts.sh -h                       |
+| Update the deploy strategy of posts | /usr/bin/mysql -uuser_2013 -pilovechina xzb < $XZB_HOME/code/tool/update_db.sql |
