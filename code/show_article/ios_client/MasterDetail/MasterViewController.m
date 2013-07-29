@@ -106,9 +106,10 @@
 {
   //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
 
-  //urlPrefix=@"http://173.255.227.47:9080/";
+  urlPrefix=@"http://173.255.227.47:9080/";
   //urlPrefix=@"http://127.0.0.1:9080/";
-  urlPrefix=@"http://192.168.100.106:9080/";
+  //urlPrefix=@"http://192.168.100.106:9080/";
+  //urlPrefix=@"http://172.19.0.87:9080/";
   //urlPrefix=@"http://192.168.51.131:9080/";
 
   NSString *urlStr= [NSString stringWithFormat: @"%@api_list_user_topic?uid=%@&topic=%@&start_num=%d&count=%d",
