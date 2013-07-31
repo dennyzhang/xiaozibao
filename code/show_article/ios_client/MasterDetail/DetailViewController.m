@@ -51,8 +51,26 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     self.detailUITextView.clipsToBounds = NO;
-    self.detailUITextView.scrollIndicatorInsets = UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f);
+    //self.detailUITextView.scrollIndicatorInsets = UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f);
+    
+    //self.detailUITextView.contentInset = UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f);
+
     [self configureView];
+    
+    /*
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineHeightMultiple = 50.0f;
+    paragraphStyle.maximumLineHeight = 50.0f;
+    paragraphStyle.minimumLineHeight = 50.0f;
+    
+    NSString *string = self.detailUITextView.text;
+    NSDictionary *ats = @{
+                          NSFontAttributeName : [UIFont fontWithName:@"DIN Medium" size:16.0f],
+                          NSParagraphStyleAttributeName : paragraphStyle,
+                          };
+    
+    self.detailUITextView.attributedText = [[NSAttributedString alloc] initWithString:string attributes:ats];
+     */
     
     /*
     UIButton *favButton = [[UIButton alloc] init];
