@@ -372,6 +372,7 @@ return YES;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSLog(@"segue identifier: %@", [segue identifier]);
   if ([[segue identifier] isEqualToString:@"showDetail"]) {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     Posts *post = _objects[indexPath.row];

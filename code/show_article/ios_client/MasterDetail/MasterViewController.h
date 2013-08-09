@@ -17,7 +17,7 @@
 
 @interface MasterViewController : UITableViewController
 
-@property (strong, nonatomic) DetailViewController *detailViewController;
+@property (retain, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, retain) CLLocationManager *locationManager;  
 
 @property (nonatomic, retain) NSString* topic;

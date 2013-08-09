@@ -31,7 +31,9 @@
         [self configureView];
     }
 
+    NSLog(@"self.masterPopoverController: %@", self.masterPopoverController);
     if (self.masterPopoverController != nil) {
+
         [self.masterPopoverController dismissPopoverAnimated:YES];
     }
 }

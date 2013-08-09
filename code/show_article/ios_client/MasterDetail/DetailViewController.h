@@ -13,6 +13,6 @@
 
 @property (strong, nonatomic) Posts* detailItem;
 
-@property (weak, nonatomic) IBOutlet UITextView *detailUITextView;
+@property (retain, nonatomic) IBOutlet UITextView *detailUITextView;
 
 @end
