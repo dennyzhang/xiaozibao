@@ -125,13 +125,27 @@
 
 - (NSString*)getTopicContent:(NSString*)content {
     NSRange range = [content rangeOfString:@"\n-"];
-    NSString *substring = [[content substringToIndex:NSMaxRange(range)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *substring;
+    if (range.length == 0) {
+        substring = content;
+    }
+    else {
+        substring = [content substringToIndex:NSMaxRange(range)];
+    }
+    substring = [substring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     return substring;
 }
 
 - (NSString*)getTopicReply:(NSString*)content {
     NSRange range = [content rangeOfString:@"\n-"];
-    NSString *substring = [[content substringFromIndex:NSMaxRange(range)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *substring;
+    if (range.length == 0) {
+        substring = @"";
+    }
+    else {
+        substring = [content substringFromIndex:NSMaxRange(range)];
+    }
+    substring = [substring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     return substring;
 }
 

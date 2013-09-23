@@ -58,6 +58,7 @@ NSLock *lock;
               NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
               NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
               NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
+              content = [content stringByReplacingOccurrencesOfString: @"dennyseperator" withString:@"\""];
               NSString* readCountStr = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
 
               NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
@@ -91,6 +92,7 @@ NSLock *lock;
   const char *dbpath = [dbPath UTF8String];
   NSLog(@"savePost. id:%@, title:%@", postId, title);
   sqlite3_stmt *statement = NULL;
+  content = [content stringByReplacingOccurrencesOfString: @"\"" withString:@"dennyseperator"];
   NSString *insertSQL = [NSString
                           stringWithFormat:
                             @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
@@ -104,6 +106,7 @@ NSLock *lock;
 
       if (sqlite3_step(statement) != SQLITE_DONE) {
         NSLog(@"%@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)]);
+        NSLog(@"insertSQL:%@",insertSQL);
         ret = NO;
       }
       else
@@ -146,6 +149,7 @@ NSLock *lock;
               NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
               NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
               NSString* readCountStr = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
+              content = [content stringByReplacingOccurrencesOfString: @"dennyseperator" withString:@"\""];
 
               NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
               [f setNumberStyle:NSNumberFormatterDecimalStyle];
