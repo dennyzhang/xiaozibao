@@ -8,6 +8,9 @@ xiaozibao - FAQ
 - To start snake_worker, we need make sure hostname is localhost.
   sudo snake_workerd start
 
+- Where is erro log of webcrawler
+  /usr/local/xiaozibao/snake_worker/log
+
 - Add a plugin for a new website
   check $XZB_HOME/code/webcrawl_article/webcrawler/README.md to add webcrawler plugin
   add shell scripts in $XZB_HOME/code/webcrawl_article/generate_tasks
