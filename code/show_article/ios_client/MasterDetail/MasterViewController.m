@@ -45,7 +45,7 @@
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 
   if (self.topic == nil) {
-      [self init_data:@"denny" topic_t:@"us_america"];
+      [self init_data:@"denny" topic_t:@"understand_us"];
   }
 }
 
@@ -106,8 +106,8 @@
 {
   //NSURL *url = [NSURL URLWithString:@"http://httpbin.org/ip"];
 
-  urlPrefix=@"http://173.255.227.47:9080/";
-  //urlPrefix=@"http://127.0.0.1:9080/";
+  //urlPrefix=@"http://173.255.227.47:9080/";
+  urlPrefix=@"http://127.0.0.1:9080/";
   //urlPrefix=@"http://192.168.100.106:9080/";
   //urlPrefix=@"http://172.19.0.87:9080/";
   //urlPrefix=@"http://192.168.51.131:9080/";
