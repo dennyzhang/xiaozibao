@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2013-07-26 14:33:22>
+## Updated: Time-stamp: <2013-09-22 21:45:41>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
@@ -48,6 +48,20 @@ function fetch_zhihu() {
     lists=($id_list)
     for id in ${lists[*]}; do
         for url in `generate_command "http://www.zhihu.com/topic/$topic_id/top-answers?page=$id" | grep ^http`; do
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
+            $command
+        done;
+    done;
+    sleep $SLEEP_SECONDS
+}
+
+function fetch_chineseinla() {
+    dst_dir=${1?}
+    topic_id=${2?}
+    id_list=${3?}
+    lists=($id_list)
+    for id in ${lists[*]}; do
+        for url in `generate_command "http://www.chineseinla.com/today_highlight/page_$id.html" | grep ^http`; do
             command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
             $command
         done;
@@ -110,16 +124,6 @@ function fetch_haowenz() {
     sleep $SLEEP_SECONDS
 }
 
-function fetch_single_page() {
-    dst_dir=${1?}
-    url_link=${2?}
-    for url in `generate_command "$2" | grep ^http`; do
-        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-        $command
-    done;
-    sleep $SLEEP_SECONDS
-}
-
 function fetch_stackexchange() {
     dst_dir=${1?}
     topic_id=${2?}
@@ -135,8 +139,16 @@ function fetch_stackexchange() {
 }
 
 ########################################################################
+function fetch_single_page() {
+    dst_dir=${1?}
+    url_link=${2?}
+    for url in `generate_command "$2" | grep ^http`; do
+        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
+        $command
+    done;
+    sleep $SLEEP_SECONDS
+}
 
-######################### private functions ############################
 function generate_seq() {
     start_id=${1?}
     end_id=${2?}

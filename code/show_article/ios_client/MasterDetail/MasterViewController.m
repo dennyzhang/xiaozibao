@@ -45,7 +45,7 @@
   self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 
   if (self.topic == nil) {
-      [self init_data:@"denny" topic_t:@"idea_startup"];
+      [self init_data:@"denny" topic_t:@"us_america"];
   }
 }
 

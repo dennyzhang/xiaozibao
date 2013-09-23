@@ -81,14 +81,14 @@
 
 - (void)load_topic_list
 {
-  [_objects insertObject:@"favorite" atIndex:0];
-  [_objects insertObject:@"weibo_godreply" atIndex:0];
-  [_objects insertObject:@"us_america" atIndex:0];
-  [_objects insertObject:@"health_sport" atIndex:0];
-  [_objects insertObject:@"coder_questions" atIndex:0];
-  [_objects insertObject:@"personal_finance" atIndex:0];
-  [_objects insertObject:@"personal_productivity" atIndex:0];
-  [_objects insertObject:@"idea_startup" atIndex:0];
+    [_objects insertObject:@"favorite" atIndex:0];
+    //  [_objects insertObject:@"weibo_godreply" atIndex:0];
+    [_objects insertObject:@"coder_questions" atIndex:0];
+    [_objects insertObject:@"health_sport" atIndex:0];
+    [_objects insertObject:@"personal_finance" atIndex:0];
+    [_objects insertObject:@"personal_productivity" atIndex:0];
+    [_objects insertObject:@"us_america" atIndex:0];
+    //  [_objects insertObject:@"idea_startup" atIndex:0];
 }
 
 - (void)didReceiveMemoryWarning

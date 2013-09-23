@@ -33,6 +33,17 @@ var fetcher = map[string] Stringy {
 		})
         },
 
+	"^http://www.chineseinla.com/f/page_viewtopic/t_[0-9]+.html$": func(url string) Post_data {
+		return common_webcrawler(url, "understand_us/chineseinla_com", []Action {
+			Action {Filter, "content", "发布于:", "  返回页首"},
+			Action {Replace, "content", "(?m)  返回页首", ""},
+			Action {Replace, "content", "(?m)  您觉得上述讲法有帮助吗\\?", ""},
+			Action {Replace, "content", "(?m)  \\[举报\\]", ""},
+			Action {Replace, "content", "(?m) *[0-9]+ *$", ""},
+			Action {Replace, "content", "(?m)  会陆续更新.*", ""},
+		})
+        },
+
 
 	"^http://www.zreading.cn/archives/[0-9]+.html$": func(url string) Post_data {
 		return common_webcrawler(url, "personal_productivity/zreading_cn", []Action {
