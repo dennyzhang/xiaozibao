@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"html/template"
 )
-
+var debug = false
 type Stringy func(url string) Post_data
 
 type Post_data struct {
@@ -46,6 +46,10 @@ func determinate_worker(url string) Stringy {
                 }
         }
         return default_webcrawler
+}
+
+func Change_debug(debug_t bool) {
+	debug = debug_t
 }
 
 func Apply_crawler(url string) Post_data {
@@ -274,7 +278,9 @@ func common_webcrawler(url string, category string, actions []Action) Post_data 
         content = common_wash_content(content)
 	content = strip_html_tag(content)
 
-	//fmt.Printf(content)
+	if debug == true {
+		fmt.Printf(content)
+	}
 	
         for i := range actions {
                 action := actions[i]

@@ -74,6 +74,7 @@ var dst_dir string = ""
 var shall_generator bool = false
 var fetch_url string = ""
 var data_separator="--text follows this line--"
+var debug = false
 // ########################################################################
 
 // ########################## private functions ###########################
@@ -162,6 +163,9 @@ func parse_opt(args []string) bool {
 			i = i + 1
 		case "--shall_generator":
 			shall_generator = true
+		case "--debug":
+			debug = true
+			webcrawler.Change_debug(debug)
 		default:
 			fmt.Printf("Error: Unknown option for " + args[i])
 		}
