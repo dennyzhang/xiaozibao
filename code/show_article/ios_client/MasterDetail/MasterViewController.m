@@ -11,7 +11,10 @@
 #import "DetailViewController.h"
 
 #import "AFJSONRequestOperation.h"
+#import "Mixpanel.h"
 #import "Posts.h"
+
+#import <CoreFoundation/CFUUID.h>
 
 @interface MasterViewController () {
   NSMutableArray *_objects;
@@ -373,10 +376,22 @@ return YES;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"segue identifier: %@", [segue identifier]);
-  if ([[segue identifier] isEqualToString:@"showDetail"]) {
+    if ([[segue identifier] isEqualToString:@"showDetail"]) {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     Posts *post = _objects[indexPath.row];
 
+    CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+    NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
+        
+    CFRelease(uuidRef);
+        
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        
+    [mixpanel track:@"Article Open" properties:@{
+                                                 @"DeviceId":uuidString,
+                                                 @"Postid": post.postid
+                                                 }];
+        
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.textLabel.textColor = [UIColor grayColor];
 

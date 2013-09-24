@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Pods-Mixpanel.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>Pods-SWRevealViewController.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -27,6 +32,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>761DA775F5144F61B1A424E5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B1C200BC5C8544DCB2B0D6FB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B424402258C64F03A5183502</key>
 		<dict>
 			<key>primary</key>
@@ -38,6 +53,16 @@
 			<true/>
 		</dict>
 		<key>DC92A26ABAC94CA0971E5C45</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F0F788BB317C4477A9DEA763</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6B47BF76BF94F68B8F82967</key>
 		<dict>
 			<key>primary</key>
 			<true/>

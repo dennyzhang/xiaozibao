@@ -138,11 +138,10 @@
     }
     else {
       if (indexPath.row == 0) {
-          cell.textLabel.text = @"Auto hide read posts";
-          cell.textLabel.textColor = [UIColor grayColor];
+        cell.textLabel.text = @"Clean cache";
       }
       if (indexPath.row == 1) {
-        cell.textLabel.text = @"Clean cache";
+        cell.textLabel.text = @"Auto hide read posts";
         cell.textLabel.textColor = [UIColor grayColor];
       }
     }

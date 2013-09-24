@@ -6,15 +6,16 @@
 ## Description :
 ## --
 ## Created : <2013-07-27>
-## Updated: Time-stamp: <2013-07-28 14:54:26>
+## Updated: Time-stamp: <2013-09-24 00:09:39>
 ##-------------------------------------------------------------------
 
 category=${1?}
 dir="$XZB_HOME/webcrawler_data/$category"
 
 cd $dir
+mkdir -p $dir/done_postwasher_raw
 
-for d in `find . -type d -exec ls -d {} \; | grep -v "_raw"`;
+for d in `find . -type d -exec ls -d {} \; | grep -v "_raw" | grep -v '^.$'`;
 do
     for f in $d/*.data;
     do
@@ -30,11 +31,12 @@ do
         # replace " to '
         sed -ie "s/\"/'/g" "$f"
         rm -rf "${f}e"
+
+        # classify too short articles as low quality
+        if [ `wc -c "${f}" | awk -F' ' '{print $1}'` -le 1000 ]; then
+            mv "$f" "./done_postwasher_raw/`basename "$f"`"
+        fi;
     done;
 done;
-
-mkdir -p $dir/done_postwasher_raw
-# classify too short articles as low quality
-find . -size -1k -a -type f -iname "*.data" -print0 | xargs -I{} -0 mv "{}" done_postwasher_raw/"{}"
 
 ## File : postwasher.sh ends
