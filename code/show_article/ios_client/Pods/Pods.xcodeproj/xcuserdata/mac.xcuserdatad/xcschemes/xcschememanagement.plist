@@ -12,7 +12,7 @@
 		<key>Pods-Mixpanel.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>2</integer>
 		</dict>
 		<key>Pods-SWRevealViewController.xcscheme</key>
 		<dict>
@@ -22,52 +22,87 @@
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>4</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>503DC2E54E794413BBA00B15</key>
+		<key>0950A681D8EF41F7996941A6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>761DA775F5144F61B1A424E5</key>
+		<key>1F4B75CC647248DABEA2470B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B1C200BC5C8544DCB2B0D6FB</key>
+		<key>220F166D72DF476E9238DC0F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B424402258C64F03A5183502</key>
+		<key>3ED3663CF46A4A47BBF64360</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DB2E2C7ED71C4B24B114676F</key>
+		<key>55B6B7D0BB7349BBB7215425</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DC92A26ABAC94CA0971E5C45</key>
+		<key>67E4FD69A5334ED0801868C3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F0F788BB317C4477A9DEA763</key>
+		<key>6BF03065EE6F4AE8A2BF9505</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F6B47BF76BF94F68B8F82967</key>
+		<key>6BFA7C64621A4F33AB8A14DF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC05F29E45714426B94843B1</key>
+		<key>6FA2438CCC314390A47E1E96</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>84B58C7B4A81445D8E4657AC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>953882860EEB454592B857FC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B7CB3591617440E6AD6B7C1A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C43F05897A4646A7BE112D59</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F1D3F3D8D9034C93AA13044E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F772D6D2E24E4ACF959ACA29</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F96232B8BC494020BD8152A8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

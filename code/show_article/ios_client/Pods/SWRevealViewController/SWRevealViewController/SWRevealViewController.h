@@ -85,13 +85,13 @@ typedef enum
 // Toogles the current state of the front controller between Left or Right and fully visible
 // Use setFrontViewPosition to set a particular position
 - (void)revealToggleAnimated:(BOOL)animated;
-- (void)rightRevealToggleAnimated:(BOOL)animated;
+- (void)rightRevealToggleAnimated:(BOOL)animated; // <-- simetric implementation of the above for the rightViewController
 
 // The following methods are meant to be directly connected to the action method of a button
 // to perform user triggered postion change of the controller views. This is ussually added to a
 // button on top left or right of the frontViewController
 - (void)revealToggle:(id)sender;
-- (void)rightRevealToggle:(id)sender;
+- (void)rightRevealToggle:(id)sender; // <-- simetric implementation of the above for the rightViewController
 
 // The following method will provide a panGestureRecognizer suitable to be added to any view on the frontController
 // in order to perform usual drag and swipe gestures on the frontViewController to reveal the rear views. This
@@ -101,13 +101,22 @@ typedef enum
 // The following properties are provided for further customization, they are set to default values on initialization,
 // you should not generally have to set them
 
-// Defines how much of the rear view is shown, default is 260.
+// Defines how much of the rear or right view is shown, default is 260. A negative value indicates that the reveal width should be
+// computed by substracting the full front view width, so the revealed frontView width is constant.
 @property (assign, nonatomic) CGFloat rearViewRevealWidth;
-@property (assign, nonatomic) CGFloat rightViewRevealWidth;
+@property (assign, nonatomic) CGFloat rightViewRevealWidth; // <-- simetric implementation of the above for the rightViewController
 
 // Defines how much of an overdraw can occur when dragging further than 'rearViewRevealWidth', default is 60.
 @property (assign, nonatomic) CGFloat rearViewRevealOverdraw;
-@property (assign, nonatomic) CGFloat rightViewRevealOverdraw;
+@property (assign, nonatomic) CGFloat rightViewRevealOverdraw;   // <-- simetric implementation of the above for the rightViewController
+
+// Defines how much displacement is applied to the rear view when animating or dragging the front view, default is 40.
+@property (assign, nonatomic) CGFloat rearViewRevealDisplacement;
+@property (assign, nonatomic) CGFloat rightViewRevealDisplacement;
+
+// Defines a width on the border of the view attached to the panGesturRecognizer where the gesture is allowed,
+// default is 0 which means no restriction.
+@property (assign, nonatomic) CGFloat draggableBorderWidth;
 
 // If YES (the default) the controller will bounce to the Left position when dragging further than 'rearViewRevealWidth'
 @property (assign, nonatomic) BOOL bounceBackOnOverdraw;
@@ -115,7 +124,13 @@ typedef enum
 
 // If YES (default is NO) the controller will allow permanent dragging up to the rightMostPosition
 @property (assign, nonatomic) BOOL stableDragOnOverdraw;
-@property (assign, nonatomic) BOOL stableDragOnLeftOverdraw;
+@property (assign, nonatomic) BOOL stableDragOnLeftOverdraw; // <-- simetric implementation of the above for the rightViewController
+
+// If YES (default is NO) the front view controller will be ofsseted vertically by the height of a navigation bar.
+// Use this on iOS7 when you add an instance of RevealViewController as a child of a UINavigationController (or another SWRevealViewController)
+// and you want the front view controller to be presented below the navigation bar of its UINavigationController grand parent .
+// The rearViewController will still appear full size and blurred behind the navigation bar of its UINavigationController grand parent
+@property (assign, nonatomic) BOOL presentFrontViewHierarchically;
 
 // Velocity required for the controller to toggle its state based on a swipe movement, default is 300
 @property (assign, nonatomic) CGFloat quickFlickVelocity;
@@ -128,6 +143,9 @@ typedef enum
 
 // Defines the radius of the front view's shadow offset default is {0.0f,2.5f}
 @property (assign, nonatomic) CGSize frontViewShadowOffset;
+
+//Defines the front view's shadow opacity, default is 1.0f
+@property (assign, nonatomic) CGFloat frontViewShadowOpacity;
 
 // The class properly handles all the relevant calls to appearance methods on the contained controllers.
 // Moreover you can assign a delegate to let the class inform you on positions and animation activity.
@@ -143,13 +161,27 @@ typedef enum
 
 @optional
 
+// The following delegate methods will be called before and after the front view moves to a position
 - (void)revealController:(SWRevealViewController *)revealController willMoveToPosition:(FrontViewPosition)position;
 - (void)revealController:(SWRevealViewController *)revealController didMoveToPosition:(FrontViewPosition)position;
 
+// This will be called inside the reveal animation, thus you can use it to place your own code that will be animated in sync
 - (void)revealController:(SWRevealViewController *)revealController animateToPosition:(FrontViewPosition)position;
 
+// Implement this to return NO when you want the pan gesture recognizer to be ignored
+- (BOOL)revealControllerPanGestureShouldBegin:(SWRevealViewController *)revealController;
+
+// Called when the gestureRecognizer began and ended
 - (void)revealControllerPanGestureBegan:(SWRevealViewController *)revealController;
 - (void)revealControllerPanGestureEnded:(SWRevealViewController *)revealController;
+
+// The following methods provide a means to track the evolution of the gesture recognizer.
+// The 'location' parameter is the X origin coordinate of the front view as the user drags it
+// The 'progress' parameter is a positive value from 0 to 1 indicating the front view location relative to the
+// rearRevealWidth or rightRevealWidth. 1 is fully revealed, dragging ocurring in the overDraw region will result in values above 1.
+- (void)revealController:(SWRevealViewController *)revealController panGestureBeganFromLocation:(CGFloat)location progress:(CGFloat)progress;
+- (void)revealController:(SWRevealViewController *)revealController panGestureMovedToLocation:(CGFloat)location progress:(CGFloat)progress;
+- (void)revealController:(SWRevealViewController *)revealController panGestureEndedToLocation:(CGFloat)location progress:(CGFloat)progress;
 
 @end
 

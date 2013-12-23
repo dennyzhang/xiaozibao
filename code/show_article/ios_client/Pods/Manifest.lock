@@ -1,7 +1,7 @@
 PODS:
-  - AFNetworking (1.3.1)
-  - Mixpanel (2.0.2)
-  - SWRevealViewController (1.0.2)
+  - AFNetworking (1.3.3)
+  - Mixpanel (2.2.1)
+  - SWRevealViewController (1.0.8)
 
 DEPENDENCIES:
   - AFNetworking (~> 1.3)
@@ -9,8 +9,8 @@ DEPENDENCIES:
   - SWRevealViewController
 
 SPEC CHECKSUMS:
-  AFNetworking: 9ec8aafb9269236a7630bd8d9838ce2ba30fa2a0
-  Mixpanel: 7829ba2cc58d251a4674520109e9bfead76acc98
-  SWRevealViewController: cbaced6f3f9e495aa5ac3f77894c09ac66895dad
+  AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
+  Mixpanel: 488d700d4f769a351bb61afc7d4cabbdeef506e1
+  SWRevealViewController: 5688d9d017e228c9edd92db359f670d8c47ab8e6
 
 COCOAPODS: 0.22.1

@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>  
 
-#import "/usr/include/sqlite3.h"
+//#import "/usr/include/sqlite3.h"
+#import "/usr/local/opt/sqlite/include/sqlite3.h"
 
 #import "PostsSqlite.h"
 

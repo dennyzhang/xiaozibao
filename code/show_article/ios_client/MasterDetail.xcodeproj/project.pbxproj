@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A7BDEC179EA84700E9D0BC /* MenuViewController.m */; };
 		049B22F7179D7D3000F82187 /* Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 049B22F6179D7D2800F82187 /* Posts.m */; };
+		04C2689C1868118E004C46BC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C2689B1868118E004C46BC /* libPods.a */; };
+		04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
 		04E893DB179130C400E9573C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DA179130C400E9573C /* Foundation.framework */; };
 		04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DC179130C400E9573C /* CoreGraphics.framework */; };
 		04E893DF179130C400E9573C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DE179130C400E9573C /* UIKit.framework */; };
@@ -25,9 +27,7 @@
 		04E89402179130C500E9573C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DE179130C400E9573C /* UIKit.framework */; };
 		04E8940A179130C500E9573C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04E89408179130C500E9573C /* InfoPlist.strings */; };
 		04E8940C179130C500E9573C /* MasterDetailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8940B179130C500E9573C /* MasterDetailTests.m */; };
-		04FA8F28179BE08200D28058 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
 		04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8F2C179BE20300D28058 /* PostsSqlite.m */; };
-		A3BAF243AB424F91BB24A1A9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 378BAE4C686E4AD08BCF4EFC /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +45,10 @@
 		049B22F6179D7D2800F82187 /* Posts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Posts.m; sourceTree = "<group>"; };
 		04A7BDEB179EA84700E9D0BC /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		04A7BDEC179EA84700E9D0BC /* MenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		04C24E7E1867FEC500184A3E /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		04C24E811867FF8100184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
+		04C24E831867FFB200184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = "../../../../../../../../../../../Applications/Xcode5-DP2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libsqlite3.dylib"; sourceTree = "<group>"; };
+		04C2689B1868118E004C46BC /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		04D0427E17A360C300593E18 /* btn_loved.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_loved.png; sourceTree = "<group>"; };
 		04E893D7179130C400E9573C /* MasterDetail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterDetail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E893DA179130C400E9573C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -71,7 +75,6 @@
 		04FA8F27179BE08200D28058 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		04FA8F2B179BE1F800D28058 /* PostsSqlite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostsSqlite.h; sourceTree = "<group>"; };
 		04FA8F2C179BE20300D28058 /* PostsSqlite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostsSqlite.m; sourceTree = "<group>"; };
-		378BAE4C686E4AD08BCF4EFC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE556945BD3D45F797C729C0 /* Pods/Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -80,11 +83,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04FA8F28179BE08200D28058 /* libsqlite3.dylib in Frameworks */,
+				04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */,
+				04C2689C1868118E004C46BC /* libPods.a in Frameworks */,
 				04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */,
 				04E893DF179130C400E9573C /* UIKit.framework in Frameworks */,
 				04E893DB179130C400E9573C /* Foundation.framework in Frameworks */,
-				A3BAF243AB424F91BB24A1A9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,12 +135,15 @@
 		04E893D9179130C400E9573C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04C2689B1868118E004C46BC /* libPods.a */,
+				04C24E831867FFB200184A3E /* libsqlite3.dylib */,
+				04C24E811867FF8100184A3E /* libsqlite3.dylib */,
+				04C24E7E1867FEC500184A3E /* libsqlite3.0.dylib */,
 				04FA8F27179BE08200D28058 /* libsqlite3.dylib */,
 				04E893DA179130C400E9573C /* Foundation.framework */,
 				04E893DC179130C400E9573C /* CoreGraphics.framework */,
 				04E893DE179130C400E9573C /* UIKit.framework */,
 				04E893FF179130C400E9573C /* XCTest.framework */,
-				378BAE4C686E4AD08BCF4EFC /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -469,15 +475,28 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CE556945BD3D45F797C729C0 /* Pods/Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Du Liki (Z7D7BBAMC4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: stream liu (P3KM3K6BDW)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MasterDetail/MasterDetail-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Mixpanel\"",
+					"\"${PODS_ROOT}/Headers/SWRevealViewController\"",
+				);
 				INFOPLIST_FILE = "MasterDetail/MasterDetail-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos7.0]" = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib;
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator7.0]" = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "47ABE52A-57E9-4569-BCD6-B19033833752";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s arm64\narm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -486,15 +505,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CE556945BD3D45F797C729C0 /* Pods/Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Du Liki (Z7D7BBAMC4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: stream liu (P3KM3K6BDW)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MasterDetail/MasterDetail-Prefix.pch";
 				INFOPLIST_FILE = "MasterDetail/MasterDetail-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				"LIBRARY_SEARCH_PATHS[arch=*]" = "";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "47ABE52A-57E9-4569-BCD6-B19033833752";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s arm64\narm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
