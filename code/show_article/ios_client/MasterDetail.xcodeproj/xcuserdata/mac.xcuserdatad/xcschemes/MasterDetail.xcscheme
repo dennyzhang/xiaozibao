@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "04E893D6179130C400E9573C"
-               BuildableName = "MasterDetail.app"
+               BuildableName = "TechCore.app"
                BlueprintName = "MasterDetail"
                ReferencedContainer = "container:MasterDetail.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "04E893FD179130C400E9573C"
-               BuildableName = "MasterDetailTests.xctest"
+               BuildableName = "TechCoreTests.xctest"
                BlueprintName = "MasterDetailTests"
                ReferencedContainer = "container:MasterDetail.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "04E893D6179130C400E9573C"
-            BuildableName = "MasterDetail.app"
+            BuildableName = "TechCore.app"
             BlueprintName = "MasterDetail"
             ReferencedContainer = "container:MasterDetail.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "04E893D6179130C400E9573C"
-            BuildableName = "MasterDetail.app"
+            BuildableName = "TechCore.app"
             BlueprintName = "MasterDetail"
             ReferencedContainer = "container:MasterDetail.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "04E893D6179130C400E9573C"
-            BuildableName = "MasterDetail.app"
+            BuildableName = "TechCore.app"
             BlueprintName = "MasterDetail"
             ReferencedContainer = "container:MasterDetail.xcodeproj">
          </BuildableReference>

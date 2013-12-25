@@ -75,7 +75,7 @@
 		04FA8F27179BE08200D28058 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		04FA8F2B179BE1F800D28058 /* PostsSqlite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostsSqlite.h; sourceTree = "<group>"; };
 		04FA8F2C179BE20300D28058 /* PostsSqlite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostsSqlite.m; sourceTree = "<group>"; };
-		CE556945BD3D45F797C729C0 /* Pods/Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		CE556945BD3D45F797C729C0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +119,7 @@
 				04E89405179130C500E9573C /* MasterDetailTests */,
 				04E893D9179130C400E9573C /* Frameworks */,
 				04E893D8179130C400E9573C /* Products */,
-				CE556945BD3D45F797C729C0 /* Pods/Pods.xcconfig */,
+				CE556945BD3D45F797C729C0 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -473,7 +473,7 @@
 		};
 		04E89410179130C500E9573C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE556945BD3D45F797C729C0 /* Pods/Pods.xcconfig */;
+			baseConfigurationReference = CE556945BD3D45F797C729C0 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -493,17 +493,17 @@
 				LIBRARY_SEARCH_PATHS = "";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos7.0]" = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib;
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator7.0]" = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "47ABE52A-57E9-4569-BCD6-B19033833752";
+				PRODUCT_NAME = MasterDetail;
+				PROVISIONING_PROFILE = "0ACE4FE4-DD29-44A5-A27B-D410C14BCE4D";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv7 armv7s arm64\narm64";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		04E89411179130C500E9573C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE556945BD3D45F797C729C0 /* Pods/Pods.xcconfig */;
+			baseConfigurationReference = CE556945BD3D45F797C729C0 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -517,10 +517,10 @@
 				LIBRARY_SEARCH_PATHS = "";
 				"LIBRARY_SEARCH_PATHS[arch=*]" = "";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "47ABE52A-57E9-4569-BCD6-B19033833752";
+				PRODUCT_NAME = MasterDetail;
+				PROVISIONING_PROFILE = "0ACE4FE4-DD29-44A5-A27B-D410C14BCE4D";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv7 armv7s arm64\narm64";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -541,7 +541,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "MasterDetailTests/MasterDetailTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MasterDetailTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -559,7 +559,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MasterDetail/MasterDetail-Prefix.pch";
 				INFOPLIST_FILE = "MasterDetailTests/MasterDetailTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MasterDetailTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

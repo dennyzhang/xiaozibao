@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-11 18:04:48>
+## Updated: Time-stamp: <2013-12-25 00:26:38>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -31,9 +31,8 @@ def get_post_filename(post):
 
 def fill_post_data(post):
     fname = get_post_filename(post) + ".data"
-    f = open(fname, 'r')
-    content = f.read()
-    f.close()
+    with open(fname, 'r') as f:
+        content = f.read()
 
     # TODO: more efficient way
     i = 0

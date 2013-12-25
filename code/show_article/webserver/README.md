@@ -1,1 +1,1 @@
-scp -r ./webcrawler_data/* root@server:/home/markfilebat/xiaozibao/webcrawler_data/
+scp -r ../../../webcrawler_data/* root@server:/home/markfilebat/xiaozibao/webcrawler_data/
