@@ -10,7 +10,7 @@
 #import "MasterViewController.h"
 
 @interface MenuViewController () {
-  NSMutableArray *_objects;
+    NSMutableArray *_objects;
 }
 @end
 
@@ -26,12 +26,12 @@
     {
         UITableViewCell* c = sender;
         if (c.textLabel.textColor != [UIColor grayColor]) {
-          MasterViewController* dstViewController = segue.destinationViewController;
-          [dstViewController init_data:@"denny" topic_t:c.textLabel.text]; // TODO
-          [dstViewController view];
+            MasterViewController* dstViewController = segue.destinationViewController;
+            [dstViewController init_data:@"denny" topic_t:c.textLabel.text]; // TODO
+            [dstViewController view];
         }
         else {
-          return;
+            return;
         }
     }
     
@@ -69,10 +69,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     _objects = [[NSMutableArray alloc] init];
@@ -81,7 +81,6 @@
 
 - (void)load_topic_list
 {
-    [_objects insertObject:@"favorite" atIndex:0];
     [_objects insertObject:@"coder_questions" atIndex:0];
     [_objects insertObject:@"idea_startup" atIndex:0];
     [_objects insertObject:@"health_sport" atIndex:0];
@@ -102,98 +101,128 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-  if (section == 0) {
-    return _objects.count;
-  }
-  else {
-    return 3;
-  }
+    if (section == 0) {
+        return _objects.count;
+    }
+    if (section == 1) {
+        return 2;
+    }
+    if (section == 2) {
+        return 2;
+    }
+    return 0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-  if (section == 0) {
-    return @"Topics";
-  }
-  else {
-    return @"Setting";
-  }
+    if (section == 0) {
+        return @"Channels";
+    }
+    if (section == 1) {
+        return @"Channel Preference";
+    }
+    if (section == 2) {
+        return @"App Setting";
+    }
+    return @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-
     if (indexPath.section == 0) {
-      cell.textLabel.text = _objects[indexPath.row];
+        cell.textLabel.text = _objects[indexPath.row];
     }
-    else {
-      if (indexPath.row == 0) {
-        cell.textLabel.text = @"Clean cache";
-      }
-      if (indexPath.row == 1) {
-        cell.textLabel.text = @"Auto hide read posts";
-        cell.textLabel.textColor = [UIColor grayColor];
-      }
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"Saved posts";
+        }
+        if (indexPath.row == 1) {
+            cell.textLabel.text = @"More Channels";
+        }
+    }
+    if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"Clean cache";
+        }
+        if (indexPath.row == 1) {
+            UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            aSwitch.on = YES;
+            aSwitch.tag = 111;
+            [aSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.textLabel.text = @"Auto hide read posts";
+            cell.accessoryView = aSwitch;
+            
+            //[cell.contentView addSubview:aSwitch];
+            //cell.textLabel.textColor = [UIColor grayColor];
+            
+        }
     }
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) switchChanged:(id)sender {
+    UISwitch* switchControl = sender;
+    if (switchControl.tag == 111) {
+        NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
+    }
 }
 
+/*
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
+
+/*
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
+
+/*
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
+
+/*
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a story board-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ 
  */
 
 @end
