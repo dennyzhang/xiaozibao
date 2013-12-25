@@ -1,7 +1,7 @@
 xiaozibao - iOS client
 =========
 
-## Quite start
+## Instructions for setup local dev environment
 - git clone https://github.com/DennyZhang/xiaozibao.git
 - cd xiaozibao/code/show_article/ios_client
 - pod setup
