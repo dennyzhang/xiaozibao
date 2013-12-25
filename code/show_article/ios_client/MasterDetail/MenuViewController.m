@@ -16,7 +16,6 @@
 
 @implementation MenuViewController
 
-
 - (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
 {
     NSLog(@"prepareForSegue");
@@ -86,8 +85,8 @@
     [_objects insertObject:@"health_sport" atIndex:0];
     [_objects insertObject:@"personal_finance" atIndex:0];
     [_objects insertObject:@"personal_productivity" atIndex:0];
-    [_objects insertObject:@"understand_us" atIndex:0];
     [_objects insertObject:@"us_america" atIndex:0];
+    [_objects insertObject:@"understand_us" atIndex:0];
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,6 +103,11 @@
     return 3;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -116,7 +120,7 @@
     if (section == 2) {
         return 2;
     }
-    return 0;
+    return -1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -129,7 +133,7 @@
     if (section == 2) {
         return @"App Setting";
     }
-    return @"";
+    return @"ERROR tableview:titleForHeaderInSection";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,6 +142,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (indexPath.section == 0) {
         cell.textLabel.text = _objects[indexPath.row];
+        return cell;
     }
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -146,6 +151,7 @@
         if (indexPath.row == 1) {
             cell.textLabel.text = @"More Channels";
         }
+        return cell;
     }
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
@@ -158,11 +164,8 @@
             [aSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
             cell.textLabel.text = @"Auto hide read posts";
             cell.accessoryView = aSwitch;
-            
-            //[cell.contentView addSubview:aSwitch];
-            //cell.textLabel.textColor = [UIColor grayColor];
-            
         }
+        return cell;
     }
     return cell;
 }
@@ -173,56 +176,5 @@
         NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
     }
 }
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a story board-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- 
- */
 
 @end
