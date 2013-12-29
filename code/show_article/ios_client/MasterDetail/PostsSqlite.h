@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 
 //#import "/usr/include/sqlite3.h"
-#import "/usr/local/opt/sqlite/include/sqlite3.h"
+//#import "/usr/local/opt/sqlite/include/sqlite3.h"
+#import "/opt/local/include/sqlite3.h"
 #import "Posts.h"
 
 @interface PostsSqlite : NSObject {
     sqlite3 *postsDB;
 }
+@property (nonatomic, retain) NSString* postDB;
 
 + (bool)initDB: (sqlite3 *)postsDB
         dbPath:(NSString *) dbPath;
@@ -30,6 +32,12 @@
         category:(NSString *)category
            title:(NSString *)title
          content:(NSString *)content;
+
++ (bool)mark: (sqlite3 *)postDB
+      dbPath:(NSString *)dbPath
+      postId:(NSString *)postId
+        mark:(BOOL)mark;
+
 
 + (bool)loadPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath

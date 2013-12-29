@@ -400,7 +400,7 @@ return YES;
     [PostsSqlite addPostReadCount:postsDB dbPath:databasePath
                            postId:post.postid topic:post.category];
 
-    [[segue destinationViewController] setDetailItem:post];
+        [[segue destinationViewController] setDetailItem:post postDB:postsDB dbPath:databasePath];
   }
 }
 

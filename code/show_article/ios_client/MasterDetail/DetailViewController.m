@@ -9,6 +9,8 @@
 #import "DetailViewController.h"
 #import "Posts.h"
 
+#import "PostsSqlite.h"
+
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
@@ -20,13 +22,20 @@
 
 @implementation DetailViewController
 @synthesize detailItem;
+@synthesize postDB;
+@synthesize dbPath;
 
 #pragma mark - Managing the detail item
 
 - (void)setDetailItem:(Posts*)newDetailItem
+               postDB:(sqlite3*)db
+               dbPath:(NSString*)databasePath
 {
     if (detailItem != newDetailItem) {
         detailItem = newDetailItem;
+        postDB = db;
+        dbPath = databasePath;
+        
         // Update the view.
         [self configureView];
     }
@@ -170,6 +179,8 @@
 
 - (void)judgePost:(id)sender
 {
+ 
+    [PostsSqlite mark:postDB dbPath:dbPath postId:detailItem.postid mark:1];
     NSLog(@"add to favorite");
 }
 
