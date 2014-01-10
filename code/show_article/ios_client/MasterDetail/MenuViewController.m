@@ -24,12 +24,18 @@
         [sender isKindOfClass:[UITableViewCell class]] )
     {
         UITableViewCell* c = sender;
+        // if (c.tag == 10) {
+        //     MasterViewController* dstViewController = segue.destinationViewController;
+        //     [dstViewController init_data:@"denny" topic_t:@"health_sport"]; // TODO
+        //     [dstViewController view];
+        //     return;
+        // }
         if (c.textLabel.textColor != [UIColor grayColor]) {
             MasterViewController* dstViewController = segue.destinationViewController;
             [dstViewController init_data:@"denny" topic_t:c.textLabel.text]; // TODO
             [dstViewController view];
         }
-        else {
+        else { // disable actions
             return;
         }
     }
@@ -125,10 +131,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return @"Channels";
+        return @"Topics";
     }
     if (section == 1) {
-        return @"Channel Preference";
+        return @"Topic Preference";
     }
     if (section == 2) {
         return @"App Setting";
@@ -149,7 +155,8 @@
             cell.textLabel.text = @"Saved posts";
         }
         if (indexPath.row == 1) {
-            cell.textLabel.text = @"More Channels";
+            cell.tag = 10; // TODO
+            cell.textLabel.text = @"More Topics";
         }
         return cell;
     }
