@@ -5,11 +5,12 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-01-11 12:31:38>
+## Updated: Time-stamp: <2014-01-11 13:04:14>
 ##-------------------------------------------------------------------
 . utility.sh
-ensure_is_root
+
+ensure_variable_isset "$XZB_HOME" # TODO remove this code duplication
 
 log "install scripts to \$PATH"
-(cd ../tool && make install)
+(cd ../tool && sudo make install)
 ## File : upgrade.sh ends

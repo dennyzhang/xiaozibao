@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-30 00:00:00>
-## Updated: Time-stamp: <2014-01-10 22:23:18>
+## Updated: Time-stamp: <2014-01-11 12:42:42>
 ##-------------------------------------------------------------------
 from jinja2 import Template
 from urllib2 import urlopen
@@ -19,6 +19,12 @@ from markdown import markdown
 from util import log
 from util import is_english_leading
 import config
+
+import sys
+default_encoding = 'utf-8'
+if sys.getdefaultencoding() != default_encoding:
+    reload(sys)
+    sys.setdefaultencoding(default_encoding)
 
 # sample: jinja_html.generate_list_user_post("denny", "2013-01-24", "/tmp/test.html")
 def generate_list_user_post(userid, date, dst_html, host=config.DB_HOST, port=config.FLASK_SERVER_PORT):

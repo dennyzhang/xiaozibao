@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-01-11 11:12:19>
+## Updated: Time-stamp: <2014-01-11 12:58:04>
 ##-------------------------------------------------------------------
 . utility.sh
 function start_rabbitmq ()
@@ -26,8 +26,6 @@ function start_webserver ()
 
     (cd $XZB_HOME/code/show_article/webserver && ./start.sh)
 }
-
-ensure_variable_isset "$XZB_HOME"
 
 start_rabbitmq
 start_snaker

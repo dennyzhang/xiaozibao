@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-10 18:35:25>
+## Updated: Time-stamp: <2014-01-11 12:52:19>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
@@ -40,7 +40,7 @@ def list_user_post(userid, date):
 	else:
 		sql = "select posts.id, posts.category, posts.title " + \
 			"from deliver inner join posts on deliver.id = posts.id " + \
-			"where userid='{0}' and deliver_date='%s' order by deliver_date desc".format(userid, date)
+			"where userid='{0}' and deliver_date='{1}' order by deliver_date desc".format(userid, date)
 	cursor.execute(sql)
 	out = cursor.fetchall()
 	user_posts = POST.lists_to_posts(out)

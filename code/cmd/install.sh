@@ -5,12 +5,16 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-01-11 12:31:52>
+## Updated: Time-stamp: <2014-01-11 13:05:16>
 ##-------------------------------------------------------------------
 . utility.sh
 
-ensure_is_root
+ensure_variable_isset "$XZB_HOME"
+
+log "install html directories"
+[ -d $XZB_HOME/html_data/ ] || mkdir -p $XZB_HOME/html_data
+cp -r $XZB_HOME/code/tool/smarty_html/templates/resource $XZB_HOME/html_data
 
 log "install scripts to \$PATH"
-(cd ../tool && make install)
+(cd ../tool && sudo make install)
 ## File : install.sh ends

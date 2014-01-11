@@ -3,6 +3,8 @@
 nohup.out
 .DS_Store
 
+html_data
+
 setting.pp
 fetch_denny_weibo.sh
 
