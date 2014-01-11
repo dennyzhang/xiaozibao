@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-01-11 11:18:36>
+## Updated: Time-stamp: <2014-01-11 11:22:01>
 ##-------------------------------------------------------------------
 function log()
 {
@@ -17,6 +17,22 @@ function exit_error()
 {
     local msg=${1?}
     log "Error: $msg"; exit -1
+}
+
+function monitor_dir() {
+    log_dir=${1?}
+    tail_num=20
+    if [[ `uname` == "Darwin" ]]; then
+        logcheck_command="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 grep -inH -e 'error' | wc -l"
+        logcheck_detail="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 grep -inH -e 'error' | tail -n $tail_num"
+    else
+        logcheck_command="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 -e grep -inH -e 'error' | wc -l"
+        logcheck_detail="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 -e grep -inH -e 'error' | tail -n $tail_num"
+    fi;
+    if [[ `eval $logcheck_command` -ne 0 ]]; then
+        eval $logcheck_detail
+        false
+    fi
 }
 
 function ensure_variable_isset() {

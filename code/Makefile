@@ -1,17 +1,18 @@
 start:
 	(cd ./cmd && ./start_service.sh)
-install:
-	echo "TODO install"
-upgrade:
-	echo "TODO upgrade"
 
 check:
 	(cd ./cmd && ./health_check.sh)
 
+test:
+	(cd ./webcrawl_article/webcrawler && make test)
+
 jobs:start
 	(cd ./webcrawl_article/generate_tasks && make fetch_all)
 
-test:test_webcrawler
+install:
+	(cd ./cmd && ./install.sh)
 
-test_webcrawler:
-	(cd ./webcrawl_article/webcrawler && make test)
+upgrade:
+	(cd ./cmd && ./upgrade.sh)
+
