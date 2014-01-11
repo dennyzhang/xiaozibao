@@ -5,28 +5,32 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-01-10 17:41:35>
+## Updated: Time-stamp: <2014-01-11 11:12:19>
 ##-------------------------------------------------------------------
 . utility.sh
-# XTRACE=$(set +o | grep xtrace)
-# set -o errexit
-# set -o xtrace
-
 function start_rabbitmq ()
 {
     log "start rabbitmq"
     sudo lsof -i tcp:55672 || nohup sudo rabbitmq-server start &
 }
 
-start_rabbitmq
+function start_snaker ()
+{
+    log "start snaker"
+    sudo snake_workerd ping || sudo snake_workerd start
+}
+
+function start_webserver ()
+{
+    log "start webserver"
+
+    (cd $XZB_HOME/code/show_article/webserver && ./start.sh)
+}
 
 ensure_variable_isset "$XZB_HOME"
-log "start webserver"
 
-(cd $XZB_HOME/code/show_article/webserver && ./start.sh)
-
-
-# Restore xtrace
-# $XTRACE
+start_rabbitmq
+start_snaker
+start_webserver
 
 ## File : start_service.sh ends

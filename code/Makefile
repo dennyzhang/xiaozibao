@@ -4,5 +4,11 @@ install:
 	echo "TODO install"
 upgrade:
 	echo "TODO upgrade"
-test:
-	echo "TODO test"
+
+jobs:start
+	(cd ./webcrawl_article/generate_tasks && make fetch_all)
+
+test:test_webcrawler
+
+test_webcrawler:
+	(cd ./webcrawl_article/webcrawler && make test)
