@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-24 20:45:07>
+## Updated: Time-stamp: <2014-01-10 18:35:25>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
@@ -36,11 +36,11 @@ def list_user_post(userid, date):
 	if date == '':
 		sql = "select posts.id, posts.category, posts.title " + \
 			"from deliver inner join posts on deliver.id = posts.id " + \
-			"where userid='%s' order by deliver_date desc" % (userid)
+			"where userid='{0}' order by deliver_date desc".format(userid)
 	else:
 		sql = "select posts.id, posts.category, posts.title " + \
 			"from deliver inner join posts on deliver.id = posts.id " + \
-			"where userid='%s' and deliver_date='%s' order by deliver_date desc" % (userid, date)
+			"where userid='{0}' and deliver_date='%s' order by deliver_date desc".format(userid, date)
 	cursor.execute(sql)
 	out = cursor.fetchall()
 	user_posts = POST.lists_to_posts(out)
@@ -48,15 +48,15 @@ def list_user_post(userid, date):
 	if date == '':
 		sql = "select posts.id, posts.category, posts.title " + \
 			"from deliver, posts, user_group " +\
-			"where deliver.id = posts.id and user_group.userid='%s' " +\
+			"where deliver.id = posts.id and user_group.userid='{0}' " +\
 			"and user_group.groupid=deliver.userid " +\
-			"order by deliver_date desc; " % (userid)
+			"order by deliver_date desc; ".format(userid)
 
 	else:
 		sql = "select posts.id, posts.category, posts.title " + \
 			"from deliver, posts, user_group " +\
 			"where deliver.id = posts.id and user_group.groupid=deliver.userid and " +\
-			"user_group.userid='%s' and deliver_date='%s' order by deliver_date desc;" % (userid, date)
+			"user_group.userid='{0}' and deliver_date='{1}' order by deliver_date desc;".format(userid, date)
 
 	cursor.execute(sql)
 	out = cursor.fetchall()
