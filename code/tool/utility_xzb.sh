@@ -6,13 +6,13 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2013-07-11 17:32:51>
+## Updated: Time-stamp: <2014-01-10 22:23:12>
 ##-------------------------------------------------------------------
 DB_HOST="127.0.0.1"
 DB_USERNAME="user_2013"
 DB_PWD="ilovechina"
 DB_NAME="xzb"
-FLASK_SERVER_PORT="8081"
+FLASK_SERVER_PORT="9080"
 
 source /etc/profile
 function log()
