@@ -5,12 +5,18 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-01-10 17:32:18>
+## Updated: Time-stamp: <2014-01-11 11:18:36>
 ##-------------------------------------------------------------------
 function log()
 {
     local msg=${1?}
     echo -ne `date +['%Y-%m-%d %H:%M:%S']`" $msg\n"
+}
+
+function exit_error()
+{
+    local msg=${1?}
+    log "Error: $msg"; exit -1
 }
 
 function ensure_variable_isset() {

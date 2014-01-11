@@ -5,6 +5,9 @@ install:
 upgrade:
 	echo "TODO upgrade"
 
+check:
+	(cd ./cmd && ./health_check.sh)
+
 jobs:start
 	(cd ./webcrawl_article/generate_tasks && make fetch_all)
 
