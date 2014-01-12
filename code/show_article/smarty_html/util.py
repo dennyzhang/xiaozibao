@@ -7,8 +7,9 @@
 ## Description :
 ## --
 ## Created : <2013-01-30 00:00:00>
-## Updated: Time-stamp: <2013-02-13 22:40:53>
+## Updated: Time-stamp: <2014-01-11 20:03:16>
 ##-------------------------------------------------------------------
+import os
 import logging
 format = "%(asctime)s %(filename)s:%(lineno)d - %(levelname)s: %(message)s"
 formatter = logging.Formatter(format)
@@ -31,5 +32,9 @@ def is_english_leading(string):
     if ch >= 'a' and ch <= 'z':
         return True
     return False
+
+def get_html_dir():
+    xzb_home=os.getenv("XZB_HOME")
+    return "%s/%s" % (xzb_home, "html_data/")
 
 ## File : util.py
