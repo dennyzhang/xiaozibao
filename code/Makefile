@@ -5,6 +5,8 @@ check:
 	(cd ./cmd && ./health_check.sh)
 
 test:
+	(cd ./show_article/webserver && make test)
+	(cd ./show_article/smarty_html && make test)
 	(cd ./webcrawl_article/webcrawler && make test)
 
 jobs:start

@@ -18,8 +18,8 @@ pythoncheck:
 unitcheck:
 	python ./weixin_unittest.py
 
-shelltest:
-	./tool/test.sh 5000
+test:
+	./tests.sh
 
 logcheck:
 	$(logcheck_command) || ($(logcheck_detail) && false)
