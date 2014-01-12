@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-11 16:30:28>
+## Updated: Time-stamp: <2014-01-11 19:06:44>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -15,7 +15,6 @@ from flask import make_response
 from flask import request
 
 import config
-import data
 
 import sys
 default_encoding = 'utf-8'
@@ -30,25 +29,14 @@ app = Flask(__name__)
 @app.route("/show_post", methods=['GET'])
 def show_post():
     # TODO defensive code
-    id = request.args.get('id', '')
-    post = data.get_post(id)
-    post.content = post.content[0:config.MAX_LENGTH]
-    content = render_template('get_post.json', post=post)
-    content = smarty_remove_extra_comma(content)
+    content = ""
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
 
 @app.route("/show_user_topic", methods=['GET'])
 def show_user_topic():
-    # TODO defensive code
-    userid = request.args.get('userid', '')
-    topic = request.args.get('topic', '')
-    start_num = request.args.get('start_num', 0)
-    count = request.args.get('count', 10)
-    id_list = data.list_user_topic(userid, topic, int(start_num), int(count))
-    print id_list
-    content = render_template('list_user_topic.json', id_list=id_list)
+    content = ""
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
