@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-11 14:57:29>
+## Updated: Time-stamp: <2014-01-12 10:58:09>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -62,17 +62,16 @@ def list_user_post():
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
 
-## http://127.0.0.1:9080/api_list_user_topic?uid=denny&topic=idea_startup&start_num=0&count=10
-@app.route("/api_list_user_topic", methods=['GET'])
-def list_user_topic():
+## http://127.0.0.1:9080/api_list_topic?topic=idea_startup&start_num=0&count=10
+@app.route("/api_list_topic", methods=['GET'])
+def list_topic():
     # TODO defensive code
-    userid = request.args.get('userid', '')
     topic = request.args.get('topic', '')
     start_num = request.args.get('start_num', 0)
     count = request.args.get('count', 10)
-    id_list = data.list_user_topic(userid, topic, int(start_num), int(count))
-    print id_list
-    content = render_template('list_user_topic.json', id_list=id_list)
+    posts = data.list_topic(topic, int(start_num), int(count))
+    content = render_template('list_topic.json', posts=posts)
+    content = smarty_remove_extra_comma(content)
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp

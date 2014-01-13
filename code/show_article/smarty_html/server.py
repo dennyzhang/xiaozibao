@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-11 21:55:27>
+## Updated: Time-stamp: <2014-01-12 11:18:27>
 ##-------------------------------------------------------------------
 import os
 from flask import Flask, request, make_response
@@ -42,12 +42,23 @@ def show_post():
     # return redirect(url_for('static', filename="%s.html" % (id)) + '?' + last_modification)
     return redirect(url_for('get_file', filename="%s.html" % (id)))
 
-@app.route("/show_user_topic", methods=['GET'])
-def show_user_topic():
-    content = ""
-    resp = make_response(content, 200)
-    resp.headers['Content-type'] = 'application/json; charset=utf-8'
-    return resp
+@app.route("/list_topic", methods=['GET'])
+def list_topic():
+    topic = request.args.get('topic', '')
+    start_num = request.args.get('start_num', 0)
+    count = request.args.get('count', 10)
+    url = "http://{0}:{1}/api_list_topic?topic={2}&start_num={3}&count={4}".format(
+        config.WEBSERVER_HOST, config.WEBSERVER_PORT, topic, start_num, count)
+    filepath = "%s-%s-%s.html" % (topic, start_num, count)
+
+    # TODO: improve time performance to cache
+    generate_html(url, "%s/%s" % (util.get_html_dir(), filepath))
+
+    # last_modification = '%d' % os.path.getmtime(filepath)
+    # return redirect(url_for('static', filename="%s.html" % (id)) + '?' + last_modification)
+    return redirect(url_for('get_file', filename=filepath))
+
+############################################################
 
 @app.route("/get_file",methods=['GET'])
 def get_file():

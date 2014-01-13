@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-11 14:47:04>
+## Updated: Time-stamp: <2014-01-12 10:57:49>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
@@ -67,15 +67,16 @@ def list_user_post(userid, date):
 
     return user_posts + group_posts
 
-def list_user_topic(userid, topic, start_num, count):
+def list_topic(topic, start_num, count):
     conn = MySQLdb.connect(config.DB_HOST, config.DB_USERNAME, config.DB_PWD, \
             config.DB_NAME, charset='utf8', port=3306)
     cursor = conn.cursor()
-    sql_format = "select id from posts where category = '%s' order by num desc limit %d offset %d;"
+    sql_format = "select posts.id, posts.category, posts.title from posts where category = '%s' order by num desc limit %d offset %d;"
     sql = sql_format % (topic, count, start_num)
     print sql
     cursor.execute(sql)
     out = cursor.fetchall()
     cursor.close()
-    return out
+    user_posts = POST.lists_to_posts(out)
+    return user_posts
 ## File : data.py

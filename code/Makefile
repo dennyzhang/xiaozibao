@@ -13,7 +13,7 @@ jobs:start
 	(cd ./webcrawl_article/generate_tasks && make fetch_all)
 
 install:
-	(cd ./cmd && ./install.sh)
+	(cd ./cmd && ./installation.sh)
 
 upgrade:
 	(cd ./cmd && ./upgrade.sh)

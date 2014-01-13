@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-30 00:00:00>
-## Updated: Time-stamp: <2014-01-11 16:30:10>
+## Updated: Time-stamp: <2014-01-12 11:06:43>
 ##-------------------------------------------------------------------
 from jinja2 import Template
 from urllib2 import urlopen
@@ -39,11 +39,20 @@ def generate_user_all_posts(userid, date, dst_dir, host=config.DB_HOST, port=con
         url = "http://%s:%s/api_get_post?id=%s" % (host, port, post['id'])
         generate_html(url, "%s/%s.html" % (dst_dir, post['id']), [date])
 
-# sample: jinja_html.generate_html("http://127.0.0.1:9081/api_list_user_post?userid=denny&date=2013-01-24", "/tmp/test.html")
-# sample: jinja_html.generate_html("http://127.0.0.1:9081/api_get_post?id=c83191cbde5b5b465b62003bb1c79d3a", "/tmp/test.html")
+# sample: jinja_html.generate_html("http://127.0.0.1:9080/api_list_user_post?userid=denny&date=2013-01-24", "/tmp/test.html")
+# sample: jinja_html.generate_html("http://127.0.0.1:9080/api_get_post?id=c83191cbde5b5b465b62003bb1c79d3a", "/tmp/test.html")
 def generate_html(url, dst_html, arg_list = []):
+    # TODO
+    if len(arg_list) == 0: 
+        date = '2014-01-12'
+    else:
+        date = arg_list[0]
+
     method = get_http_get_method(url)
-    template_html = "templates/%s.html" % method
+    if method == "api_get_post":
+        template_html = "templates/%s.html" % method
+    else:
+        template_html = "templates/%s.html" % "api_list_post"
     log.info("begin to generate_html from %s to %s with url(%s)" % (template_html, dst_html, url))
     # get http result
     (status, json_obj) = request_json(url)
@@ -60,23 +69,19 @@ def generate_html(url, dst_html, arg_list = []):
 
     template = Template(template_string)
 
-    if method=="api_list_user_post":
+    if method=="api_get_post":
+        json_obj['title'] = beautify_title(json_obj['title'])
+        json_obj['summary'] = beautify_summary(json_obj['summary'])
+        json_obj['content'] = beautify_content(json_obj['content'])
+        output_str = template.render(date=convert_chinese_date(date), \
+                                     issue="000", post=json_obj, version = config.HTML_VERSION)
+
+    else:
         for post in json_obj:
             post['title'] = beautify_title(post['title'])
             post['summary'] = beautify_summary(post['summary'])
-        date="2013-01-01"
-        output_str = template.render(date=convert_chinese_date(arg_list[0]), \
+        output_str = template.render(date=convert_chinese_date(date), \
                                      issue="000", posts=json_obj, version = config.HTML_VERSION)
-    else:
-        if method=="api_get_post":
-            json_obj['title'] = beautify_title(json_obj['title'])
-            json_obj['summary'] = beautify_summary(json_obj['summary'])
-            json_obj['content'] = beautify_content(json_obj['content'])
-            output_str = template.render(date=convert_chinese_date(arg_list[0]), \
-                                         issue="000", post=json_obj, version = config.HTML_VERSION)
-        else:
-            log.error("error: wrong method: %s " % method)
-            return False
 
     # generate html
     (status, value) = write_file(dst_html, output_str)

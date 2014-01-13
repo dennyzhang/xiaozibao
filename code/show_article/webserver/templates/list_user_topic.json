@@ -1,4 +1,0 @@
-{"id":[
-    {% for item in id_list %}
-"{{item[0]}}",
-{% endfor %}]}
