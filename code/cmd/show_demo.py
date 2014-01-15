@@ -7,19 +7,34 @@
 ## Description :
 ## --
 ## Created : <2014-01-14>
-## Updated: Time-stamp: <2014-01-14 17:41:21>
+## Updated: Time-stamp: <2014-01-15 12:03:53>
 ##-------------------------------------------------------------------
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import sys
+import time
 
-def open_url(url):
-    from selenium import webdriver
+def open_url():
     driver = webdriver.Firefox()
-    driver.get(url)
+    if sys.platform == "darwin":
+        key = Keys.COMMAND
+    else:
+        key = Keys.CONTROL
+    url_format="http://127.0.0.1:9081/list_topic?start_num=0&count=10&topic=%s"
+    driver.get(url_format % "idea_startup")
+
+    for category in ["coder_questions", "understand_us", "child_亲子教育"]:
+        #item = driver.find_element_by_id("red-bar")
+        item = driver.find_element_by_tag_name("body")
+        item.send_keys(key + 't')
+        driver.get(url_format % category)
+        time.sleep(0.1)
+    
     # inputElement = driver.find_element_by_id("kw")
     # inputElement.send_keys("sophia")
     # inputElement.submit()
 
 if __name__=='__main__':
-    open_url("http://127.0.0.1:9081/list_topic?topic=idea_startup&start_num=0&count=10")
+    open_url()
 
 ## File : show_demo.py ends
