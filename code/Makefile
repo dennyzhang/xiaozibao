@@ -18,6 +18,9 @@ jobs:start
 install:
 	(cd ./cmd && ./installation.sh)
 
+uninstall:
+	(cd ./cmd && ./uninstallation.sh)
+
 upgrade:
 	(cd ./cmd && ./upgrade.sh)
 
