@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-12-25 00:26:38>
+## Updated: Time-stamp: <2014-01-15 13:04:12>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -29,6 +29,10 @@ def get_post_filename(post):
 
     return ""
 
+def wash_content(content):
+    ret = content[0:config.MAX_LENGTH]
+    return ret
+
 def fill_post_data(post):
     fname = get_post_filename(post) + ".data"
     with open(fname, 'r') as f:
@@ -38,6 +42,7 @@ def fill_post_data(post):
     i = 0
     lines = content.split('\n')
     for line in lines:
+        line = line.replace('\\', '/') # change escape
         i = i + 1
         if line == config.DATA_SEPARATOR:
             break

@@ -7,13 +7,12 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-12 10:57:49>
+## Updated: Time-stamp: <2014-01-15 13:03:30>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
 from util import POST
-from util import fill_post_data
-from util import fill_post_meta
+from util import fill_post_data, fill_post_meta
 
 # sample: data.get_post("ffa72494d91aeb2e1153b64ac7fb961f")
 def get_post(post_id):

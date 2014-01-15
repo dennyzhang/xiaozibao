@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-12 10:58:09>
+## Updated: Time-stamp: <2014-01-15 13:01:35>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -16,7 +16,7 @@ from flask import request
 
 from util import POST
 from util import get_id_by_title
-from util import smarty_remove_extra_comma
+from util import smarty_remove_extra_comma, wash_content
 
 import config
 import data
@@ -40,7 +40,8 @@ def get_post():
     # TODO defensive code
     id = request.args.get('id', '')
     post = data.get_post(id)
-    post.content = post.content[0:config.MAX_LENGTH]
+    post.content = wash_content(post.content)
+    
     content = render_template('get_post.json', post=post)
     content = smarty_remove_extra_comma(content)
     resp = make_response(content, 200)
