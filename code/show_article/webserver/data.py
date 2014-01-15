@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-15 13:03:30>
+## Updated: Time-stamp: <2014-01-15 15:19:33>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
@@ -37,11 +37,11 @@ def list_user_post(userid, date):
     if date == '':
         sql = "select posts.id, posts.category, posts.title " + \
             "from deliver inner join posts on deliver.id = posts.id " + \
-            "where userid='{0}' order by deliver_date desc".format(userid)
+            "where userid='{0}' order by deliver_date, num desc".format(userid)
     else:
         sql = "select posts.id, posts.category, posts.title " + \
             "from deliver inner join posts on deliver.id = posts.id " + \
-            "where userid='{0}' and deliver_date='{1}' order by deliver_date desc".format(userid, date)
+            "where userid='{0}' and deliver_date='{1}' order by deliver_date, num desc".format(userid, date)
     cursor.execute(sql)
     out = cursor.fetchall()
     user_posts = POST.lists_to_posts(out)
@@ -51,13 +51,13 @@ def list_user_post(userid, date):
             "from deliver, posts, user_group " +\
             "where deliver.id = posts.id and user_group.userid='{0}' " +\
             "and user_group.groupid=deliver.userid " +\
-            "order by deliver_date desc; ".format(userid)
+            "order by deliver_date, num desc; ".format(userid)
 
     else:
         sql = "select posts.id, posts.category, posts.title " + \
             "from deliver, posts, user_group " +\
             "where deliver.id = posts.id and user_group.groupid=deliver.userid and " +\
-            "user_group.userid='{0}' and deliver_date='{1}' order by deliver_date desc;".format(userid, date)
+            "user_group.userid='{0}' and deliver_date='{1}' order by deliver_date, num desc;".format(userid, date)
 
     cursor.execute(sql)
     out = cursor.fetchall()
@@ -78,4 +78,5 @@ def list_topic(topic, start_num, count):
     cursor.close()
     user_posts = POST.lists_to_posts(out)
     return user_posts
+
 ## File : data.py
