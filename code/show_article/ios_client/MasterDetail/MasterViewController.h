@@ -10,7 +10,8 @@
 #import <CoreLocation/CoreLocation.h>  
 
 //#import "/usr/include/sqlite3.h"
-#import "/usr/local/opt/sqlite/include/sqlite3.h"
+//#import "/usr/local/opt/sqlite/include/sqlite3.h"
+#import "/opt/local/include/sqlite3.h"
 
 #import "PostsSqlite.h"
 
