@@ -31,7 +31,7 @@
     <ul>
       {% for post in posts %}
       <li>
-        <a href="{{post['id']}}.html">
+        <a href="show_post?id={{post['id']}}">
           <p class="title">{{post['title']}}</p>
           <p class="summary">{{post['summary']}}</p>
         </a>

@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-12 11:18:27>
+## Updated: Time-stamp: <2014-01-15 11:33:40>
 ##-------------------------------------------------------------------
 import os
 from flask import Flask, request, make_response
@@ -25,7 +25,7 @@ if sys.getdefaultencoding() != default_encoding:
     reload(sys)
     sys.setdefaultencoding(default_encoding)
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=util.get_html_dir())
 
 ################# public backend api ###########################
 ## sample: http://127.0.0.1:9081/show_post?id=0fa410a29c294cf498c768b0cebc99c0
@@ -38,9 +38,7 @@ def show_post():
     # TODO: improve time performance to cache
     generate_html(url, filepath, [date])
 
-    # last_modification = '%d' % os.path.getmtime(filepath)
-    # return redirect(url_for('static', filename="%s.html" % (id)) + '?' + last_modification)
-    return redirect(url_for('get_file', filename="%s.html" % (id)))
+    return app.send_static_file("%s.html" %(id))
 
 @app.route("/list_topic", methods=['GET'])
 def list_topic():
@@ -54,9 +52,7 @@ def list_topic():
     # TODO: improve time performance to cache
     generate_html(url, "%s/%s" % (util.get_html_dir(), filepath))
 
-    # last_modification = '%d' % os.path.getmtime(filepath)
-    # return redirect(url_for('static', filename="%s.html" % (id)) + '?' + last_modification)
-    return redirect(url_for('get_file', filename=filepath))
+    return app.send_static_file(filepath)
 
 ############################################################
 
@@ -68,16 +64,7 @@ def get_file():
 # static files: TODO better way
 @app.route("/resource/<filename>",methods=['GET'])
 def get_resource_file(filename):
-    return redirect(url_for('get_file', filename="/resource/"+filename))
-
-@app.route("/css-sprite.png",methods=['GET'])
-def get_resource_file2():
-    return redirect(url_for('get_file', filename="/resource/css-sprite.png"))
-
-@app.route("/favicon.ico",methods=['GET'])
-def get_resource_file3():
-    return redirect(url_for('get_file', filename="/resource/favicon.ico"))
-### TODO better way
+    return app.send_static_file("resource/%s" % filename)
 
 ## bypass cross domain security
 @app.after_request
