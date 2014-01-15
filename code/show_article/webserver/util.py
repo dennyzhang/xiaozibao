@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-15 13:04:12>
+## Updated: Time-stamp: <2014-01-15 15:05:19>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -42,13 +42,13 @@ def fill_post_data(post):
     i = 0
     lines = content.split('\n')
     for line in lines:
-        line = line.replace('\\', '/') # change escape
         i = i + 1
         if line == config.DATA_SEPARATOR:
             break
     content = '\n'.join(lines[i:])
 
     content = content.decode('utf-8')
+    content = content.replace('\\', '/') # change escape
     content = json_escape(content)
     post.content = content
     return True
