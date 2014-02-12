@@ -5,13 +5,13 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-02-12 11:57:55>
+## Updated: Time-stamp: <2014-02-12 12:00:45>
 ##-------------------------------------------------------------------
 source /etc/profile # TODO
 function log()
 {
     local msg=${1?}
-    echo -ne `date +['%Y-%m-%d %H:%M:%S']`" $msg\n"
+    echo -ne "\n"`date +['%Y-%m-%d %H:%M:%S']`" $msg\n"
 }
 
 function exit_error()
@@ -20,25 +20,9 @@ function exit_error()
     log "Error: $msg"; exit -1
 }
 
-function monitor_dir() {
-    log_dir=${1?}
-    tail_num=20
-    if [[ `uname` == "Darwin" ]]; then
-        logcheck_command="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 grep -inH -e 'error' | wc -l"
-        logcheck_detail="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 grep -inH -e 'error' | tail -n $tail_num"
-    else
-        logcheck_command="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 -e grep -inH -e 'error' | wc -l"
-        logcheck_detail="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 -e grep -inH -e 'error' | tail -n $tail_num"
-    fi;
-    if [[ `eval $logcheck_command` -ne 0 ]]; then
-        eval $logcheck_detail
-        false
-    fi
-}
-
 function ensure_variable_isset() {
     var=${1}
-    message=${2:-"parameter name should be given"}
+    message=${2?"parameter name should be given"}
     # TODO support sudo, without source
     if [ -z "$var" ]; then
         echo "Error: Certain variable($message) is not set"
@@ -59,11 +43,15 @@ function request_url_post() {
     data=${2?}
     header=${3:-""}
     if [ `uname` == "Darwin" ]; then
-        data=$(echo "$data" | sed "s/\'/\\\\\"\/g")
+        data=$(echo "$data" | sed "s/\'/\\\\\"/g")
     else
-        data=$(echo "$data" | sed "s/\'/\\\\\"\/g")
+        data=$(echo "$data" | sed "s/'/\\\\\"/g")
     fi;
-    command="curl $header -d \"$data\" \"$url\""
+    if [ "$header" = "" ]; then
+        command="curl -d \"$data\" \"$url\""
+    else
+        command="curl $header -d \"$data\" \"$url\""
+    fi;
     echo -e "\n$command"
     eval "$command"
     if [ $? -ne 0 ]; then
@@ -80,6 +68,20 @@ function request_url_get() {
     if [ $? -ne 0 ]; then
         echo "Error: fail to run $command"; exit -1
     fi
+}
+
+function update_cfg() {
+    cfg_file=${1?}
+    key=${2?}
+    value=${3?}
+    if grep "$key=" $cfg_file ; then
+        # We don't use sed here, because of various sed compatible issues
+        # across macOS, Centos and ubuntu
+        grep -v "$key=" $cfg_file > $cfg_file.tmp && mv $cfg_file.tmp $cfg_file
+    fi
+
+    echo "$key=$value" >> $cfg_file
+
 }
 XTRACE=$(set +o | grep xtrace)
 set -o errexit
