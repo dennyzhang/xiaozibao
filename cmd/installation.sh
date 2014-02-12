@@ -5,11 +5,11 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-12 12:50:33>
+## Updated: Time-stamp: <2014-02-12 13:35:10>
 ##-------------------------------------------------------------------
 . utility.sh
 
-ensure_variable_isset "$XZB_HOME"
+# ensure_variable_isset "$XZB_HOME" # TODO
 
 function install_package ()
 {
@@ -36,7 +36,7 @@ log "install html directories"
 cp -r $XZB_HOME/code/show_article/smarty_html/templates/resource $XZB_HOME/html_data
 
 log "install scripts to \$PATH"
-(cd ../tool && sudo make install)
+(cd $XZB_HOME/code/tool && sudo make install)
 
 log "install python libraries"
 install_pip selenium
