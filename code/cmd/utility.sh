@@ -5,8 +5,9 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-01-11 13:02:55>
+## Updated: Time-stamp: <2014-02-12 11:57:55>
 ##-------------------------------------------------------------------
+source /etc/profile # TODO
 function log()
 {
     local msg=${1?}
