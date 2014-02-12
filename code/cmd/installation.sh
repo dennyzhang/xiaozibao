@@ -5,16 +5,20 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-12 11:51:12>
+## Updated: Time-stamp: <2014-02-12 12:50:33>
 ##-------------------------------------------------------------------
 . utility.sh
 
 ensure_variable_isset "$XZB_HOME"
 
-function install_pip ()
+function install_package ()
 {
-    package=${1?}
-    (pip freeze | grep $package) || sudo pip install selenium
+    log "install package"
+
+    # install golang
+
+    yum_install erlang
+
 }
 
 function update_profile ()
@@ -24,6 +28,7 @@ function update_profile ()
     update_cfg $cfg_file "XZB_HOME" "$(dirname `pwd`)"
 }
 
+install_package
 update_profile
 
 log "install html directories"

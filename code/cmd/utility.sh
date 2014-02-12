@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-02-12 12:00:45>
+## Updated: Time-stamp: <2014-02-12 12:49:00>
 ##-------------------------------------------------------------------
 source /etc/profile # TODO
 function log()
@@ -83,6 +83,21 @@ function update_cfg() {
     echo "$key=$value" >> $cfg_file
 
 }
+
+function install_pip ()
+{
+    package=${1?}
+    echo "pip install package $package"
+    (pip freeze | grep $package) || sudo pip install selenium
+}
+
+function yum_install ()
+{
+    package=${1?}
+    echo "yum install package $package"
+    (rpm -qa | grep $package) || sudo yum install $package
+}
+
 XTRACE=$(set +o | grep xtrace)
 set -o errexit
 set -o xtrace
