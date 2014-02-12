@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-01-14 17:37:00>
+## Updated: Time-stamp: <2014-02-12 11:51:12>
 ##-------------------------------------------------------------------
 . utility.sh
 
@@ -16,6 +16,15 @@ function install_pip ()
     package=${1?}
     (pip freeze | grep $package) || sudo pip install selenium
 }
+
+function update_profile ()
+{
+    cfg_file="/etc/profile"
+    log "update $cfg_file to configure global environments"
+    update_cfg $cfg_file "XZB_HOME" "$(dirname `pwd`)"
+}
+
+update_profile
 
 log "install html directories"
 [ -d $XZB_HOME/html_data/ ] || mkdir -p $XZB_HOME/html_data

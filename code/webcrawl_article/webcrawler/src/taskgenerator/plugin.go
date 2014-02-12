@@ -15,6 +15,7 @@ var generator = map[string] Stringy {
 	"^http://techcrunch.com/.*$": techcrunch_2,
 	"^http://news.ycombinator.com/$": newsycombinator_1,
 	"^http://.*.stackexchange.com/[^\\/]*$": stackexchange_1,
+	"^http://stackoverflow.com/questions/tagged/.*$": stackoverflow_1,
 
 	"^http://www.chineseinla.com/today_highlight.*$": func(url string) []Task { return generator_simple(url,
 			"<dt><a href=\"(http://www.chineseinla.com/f/page_viewtopic/t_[0-9]+.html)\"")},
@@ -93,6 +94,33 @@ func stackexchange_1(url string) []Task {
 
         return tasks
 }
+
+func stackoverflow_1(url string) []Task {
+	//link_pattern_regexp := regexp.MustCompile("http://stackoverflow.com/questions/tagged/.*").FindAllStringSubmatch(url, -1)
+	//link_pattern:=link_pattern_regexp[0][0]
+
+	//fmt.Print(url)
+	tasks := make([]Task, 0)
+        _, content := webcrawler.Webcrawler(url)
+	//fmt.Print(content)
+        content = webcrawler.Filter(content,"Tagged Questions", "<div id=\"footer\"")
+        match_strings := regexp.MustCompile("<a href=\"/questions/[0-9]+.*class=\"question-hyperlink").FindAllStringSubmatch(content, -1)
+	//fmt.Print(match_strings)
+        for i := range match_strings {
+		record_string := match_strings[i][0]
+		//fmt.Print(record_string)
+                url_match_record := regexp.MustCompile("<a href=\"([^\"]*)\"").FindAllStringSubmatch(record_string, -1)
+		//fmt.Print(url_match_record)
+		link := "http://stackoverflow.com"+url_match_record[0][1]
+		//fmt.Print("\nurl:"+link+"\n")
+		tasks = append(tasks, Task{link})
+        }
+
+	//fmt.Print(tasks)
+
+        return tasks
+}
+
 
 func svbtlecom_1(url string) []Task {
 	tasks := make([]Task, 0)

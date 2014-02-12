@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2014-01-15 12:18:20>
+## Updated: Time-stamp: <2014-02-09 18:14:14>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
@@ -42,6 +42,7 @@ function fetch_douban_discussion() {
 }
 
 function fetch_zhihu() {
+    return # TODO skip
     dst_dir=${1?}
     topic_id=${2?}
     id_list=${3?}
@@ -70,6 +71,7 @@ function fetch_chineseinla() {
 }
 
 function fetch_weibo_direct_user() {
+    return # TODO skip
     dst_dir=${1?}
     userid=${2?}
     id_list=${3?}
@@ -83,6 +85,7 @@ function fetch_weibo_direct_user() {
 }
 
 function fetch_weibo() {
+    return # TODO skip
     dst_dir=${1?}
     userid=${2?}
     id_list=${3?}
@@ -96,6 +99,7 @@ function fetch_weibo() {
 }
 
 function fetch_weibo_search() {
+    return # TODO skip
     dst_dir=${1?}
     topic_id=${2?}
     id_list=${3?}
@@ -131,6 +135,20 @@ function fetch_stackexchange() {
     lists=($id_list)
     for id in ${lists[*]}; do
         for url in `generate_command "http://$topic_id.stackexchange.com/questions?page=$id&sort=votes" | grep ^http`; do
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
+            $command
+        done;
+    done;
+    sleep $SLEEP_SECONDS
+}
+
+function fetch_stackoverflow() {
+    dst_dir=${1?}
+    topic_id=${2?}
+    id_list=${3?}
+    lists=($id_list)
+    for id in ${lists[*]}; do
+        for url in `generate_command "http://stackoverflow.com/questions/tagged/$topic_id?page=$id&sort=votes&pagesize=15" | grep ^http`; do
             command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
             $command
         done;
