@@ -1,8 +1,8 @@
 start:
-	(cd ./code/cmd && ./start_service.sh)
+	(cd ./cmd && ./start_service.sh)
 
 check:
-	(cd ./code/cmd && ./health_check.sh)
+	(cd ./cmd && ./health_check.sh)
 
 test:
 	(cd ./code/show_article/webserver && make test)
@@ -10,17 +10,17 @@ test:
 	(cd ./code/webcrawl_article/webcrawler && make test)
 
 demo:
-	(cd ./code/cmd && ./show_demo.sh)
+	(cd ./cmd && ./show_demo.sh)
 
 jobs:start
 	(cd ./code/webcrawl_article/generate_tasks && make fetch_all)
 
 install:
-	(cd ./code/cmd && ./installation.sh)
+	(cd ./cmd && ./installation.sh)
 
 uninstall:
-	(cd ./code/cmd && ./uninstallation.sh)
+	(cd ./cmd && ./uninstallation.sh)
 
 upgrade:
-	(cd ./code/cmd && ./upgrade.sh)
+	(cd ./cmd && ./upgrade.sh)
 
