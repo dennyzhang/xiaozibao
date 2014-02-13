@@ -89,7 +89,6 @@
     [_objects insertObject:@"productivity" atIndex:0];
     [_objects insertObject:@"product" atIndex:0];
     [_objects insertObject:@"general_experience" atIndex:0];
-    [_objects insertObject:@"concept" atIndex:0];
     [_objects insertObject:@"cloudcomputing" atIndex:0];
     [_objects insertObject:@"algorithm" atIndex:0];
 }

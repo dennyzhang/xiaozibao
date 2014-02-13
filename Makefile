@@ -9,6 +9,9 @@ test:
 	(cd ./code/show_article/smarty_html && make test)
 	(cd ./code/webcrawl_article/webcrawler && make test)
 
+update:
+	sudo xzb_update_category.sh
+
 demo:
 	(cd ./cmd && ./show_demo.sh)
 
