@@ -20,3 +20,4 @@ test:
 	go run ./src/main.go --fetch_url "http://www.careercup.com/page?pid=distributed-computing-interview-questions" --shall_generator --dst_dir "cloudcomputing/careercup"
 
 	go run ./src/main.go --fetch_url "http://www.v2ex.com/go/ideas" --shall_generator --dst_dir "product/www.v2ex.com"
+	go run ./src/main.go --fetch_url "http://www.v2ex.com/t/99969#reply3" --dst_dir "product/www.v2ex.com"

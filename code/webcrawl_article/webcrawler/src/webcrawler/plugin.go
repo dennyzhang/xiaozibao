@@ -14,6 +14,13 @@ var fetcher = map[string] Stringy {
         "^http://www.zhihu.com/question/[0-9]+$": Url_zhihu_1,
 	"http://www.zhihu.com/question/19604574": Url_zhihu_3,
         "^http://www.quora.com/.+$": Url_quora_1,
+	"^http://www.v2ex.com/t/[0-9]+.*": func(url string) Post_data {
+		return common_webcrawler(url, []Action {
+			Action {Filter, "content", "  V2EX   ", "  关于"},
+			//Action {Replace, "content", "(?m)^ +[0-9]+", ""}, // TODO
+		})
+	},
+
 	"^http://www.careercup.com/question\\?id=[0-9]+": func(url string) Post_data {
 		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "Interview Question", " Add a Comment"},
@@ -30,6 +37,7 @@ var fetcher = map[string] Stringy {
 
 		})
 	},
+
 	"^http://zenhabits.net/.+$": func(url string) Post_data {
 		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "zenhabits  :  breathe", "      Posted : "},

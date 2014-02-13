@@ -1,6 +1,6 @@
 . /usr/bin/utility_xzb.sh
 . utility/fetch_post_utility.sh
 
-fetch_careercup "general_experience/careercup" "experience-interview-questions" "1 2"
-fetch_stackexchange "general_experience/unix_stackexchange_com" "unix" "1 2 3 4 5 6 7 8 9 10"
-fetch_stackexchange "general_experience/programmers_stackexchange_com" "programmers" "1 2 3 4 5 6 7 8 9 10"
+fetch_page "general_experience/www.careercup.com" "http://www.careercup.com/page?pid=experience-interview-questions&n=" "1 2"
+fetch_page "general_experience/www.stackexchange.com" "http://unix.stackexchange.com/questions?sort=votes&page=" "1 2"
+fetch_page "general_experience/www.stackexchange.com" "http://programmers.stackexchange.com/questions?sort=votes&page=" "1 2"

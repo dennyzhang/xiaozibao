@@ -6,178 +6,31 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2014-02-13 00:53:42>
+## Updated: Time-stamp: <2014-02-13 14:46:32>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
 SLEEP_SECONDS=3
+
 ######################### platform websites ############################
-
-function fetch_douban() {
-    dst_dir=${1?}
-    topic_id=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        for url in `generate_command "http://www.douban.com/group/$topic_id/discussion?start=$id&type=essence" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-            $command
-        done;
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_douban_discussion() {
-    dst_dir=${1?}
-    topic_id=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        for url in `generate_command "http://www.douban.com/group/$topic_id/discussion?start=$id" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-            $command
-        done;
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_zhihu() {
-    return # TODO skip
-    dst_dir=${1?}
-    topic_id=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        for url in `generate_command "http://www.zhihu.com/topic/$topic_id/top-answers?page=$id" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-            $command
-        done;
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_chineseinla() {
-    dst_dir=${1?}
-    topic_id=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        for url in `generate_command "http://www.chineseinla.com/today_highlight/page_$id.html" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-            $command
-        done;
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_weibo_direct_user() {
-    return # TODO skip
-    dst_dir=${1?}
-    userid=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        url="http://weibo.com/$userid?page=$id"
-        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-        $command
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_weibo() {
-    return # TODO skip
-    dst_dir=${1?}
-    userid=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        url="http://weibo.com/u/$userid?page=$id"
-        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-        $command
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_weibo_search() {
-    return # TODO skip
-    dst_dir=${1?}
-    topic_id=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        url="http://s.weibo.com/weibo/$topic_id&page=$id"
-        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-        $command
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-########################################################################
-
-######################### vertical websites ############################
-function fetch_haowenz() {
-    dst_dir=${1?}
-    id_list=${2?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        for url in `generate_command "http://haowenz.com/a/bl/list_4_$id.html" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-            $command
-        done;
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_stackexchange() {
-    dst_dir=${1?}
-    topic_id=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        for url in `generate_command "http://$topic_id.stackexchange.com/questions?page=$id&sort=votes" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-            $command
-        done;
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_stackoverflow() {
-    dst_dir=${1?}
-    topic_id=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        for url in `generate_command "http://stackoverflow.com/questions/tagged/$topic_id?page=$id&sort=votes&pagesize=15" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-            $command
-        done;
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-function fetch_careercup() {
-    dst_dir=${1?}
-    topic_id=${2?}
-    id_list=${3?}
-    lists=($id_list)
-    for id in ${lists[*]}; do
-        for url in `generate_command "http://www.careercup.com/page?pid=$topic_id&n=$id" | grep ^http`; do
-            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-            $command
-        done;
-    done;
-    sleep $SLEEP_SECONDS
-}
-
-########################################################################
-function fetch_single_page() {
+function fetch_page() {
     dst_dir=${1?}
     url_link=${2?}
-    for url in `generate_command "$2" | grep ^http`; do
-        command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
-        $command
-    done;
+    id_list=${3:-""}
+    if [[ -z "$id_list" ]]; then
+        for url in `generate_command "$2" | grep ^http`; do
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
+            $command
+        done;
+    else
+        lists=($id_list)
+        for id in ${lists[*]}; do
+            for url in `generate_command "$2$id" | grep ^http`; do
+                command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
+                $command
+            done;
+        done;
+    fi;
     sleep $SLEEP_SECONDS
 }
 
