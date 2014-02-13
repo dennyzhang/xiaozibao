@@ -22,7 +22,6 @@ type Post_data struct {
 	Summary string
 	Content string
 	Source string
-	Category string
 }
 
 type Action_fun func(src_string string, from_str string, end_str string) string
@@ -251,8 +250,8 @@ func get_html_body(content string) string {
 
 func default_webcrawler(url string) Post_data {
         // TODO: add error here
-        fmt.Printf("Error: can't find webcrawler for " + url + "\n")
-        return common_webcrawler(url, "unknown", []Action{})
+        fmt.Printf("Warning: can't find webcrawler for " + url + "\n")
+        return common_webcrawler(url, []Action{})
 }
 
 func post_wash_title(title string) string {
@@ -272,7 +271,7 @@ func post_wash_content(content string) string {
 	return content
 }
 
-func common_webcrawler(url string, category string, actions []Action) Post_data {
+func common_webcrawler(url string, actions []Action) Post_data {
         title, content := Webcrawler(url)
         content = get_html_body(content)
         content = common_wash_content(content)
@@ -293,10 +292,10 @@ func common_webcrawler(url string, category string, actions []Action) Post_data 
 	title = post_wash_title(title)
 	content = post_wash_content(content)
 	//fmt.Print(content)
-        return Post_data{title, "", content, url, category}
+        return Post_data{title, "", content, url}
 }
 
-func common_webcrawler_not_strip_body(url string, category string, actions []Action) Post_data {
+func common_webcrawler_not_strip_body(url string, actions []Action) Post_data {
         title, content := Webcrawler(url)
         content = common_wash_content(content)
 	content = strip_html_tag(content)
@@ -313,10 +312,10 @@ func common_webcrawler_not_strip_body(url string, category string, actions []Act
         }
 	title = post_wash_title(title)
 	content = post_wash_content(content)
-        return Post_data{title, "", content, url, category}
+        return Post_data{title, "", content, url}
 }
 
-func common_webcrawler_not_strip_body2(url string, category string, actions []Action) Post_data {
+func common_webcrawler_not_strip_body2(url string, actions []Action) Post_data {
         title, content := Webcrawler(url)
 
 	record_strings := ""
@@ -353,10 +352,10 @@ func common_webcrawler_not_strip_body2(url string, category string, actions []Ac
 	title = post_wash_title(title)
 	content = post_wash_content(content)
 
-        return Post_data{title, "", content, url, category}
+        return Post_data{title, "", content, url}
 }
 
-func common_webcrawler_test(url string, category string, actions []Action) Post_data {
+func common_webcrawler_test(url string, actions []Action) Post_data {
         title, content := Webcrawler(url)
         content = get_html_body(content)
 	//fmt.Printf(content)
@@ -375,7 +374,7 @@ func common_webcrawler_test(url string, category string, actions []Action) Post_
         }
 	title = post_wash_title(title)
 	content = post_wash_content(content)
-        return Post_data{title, "", content, url, category}
+        return Post_data{title, "", content, url}
 }
 
 func get_keyword_from_url(url_pattern string, url string) string {

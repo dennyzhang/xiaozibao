@@ -14,8 +14,24 @@ var fetcher = map[string] Stringy {
         "^http://www.zhihu.com/question/[0-9]+$": Url_zhihu_1,
 	"http://www.zhihu.com/question/19604574": Url_zhihu_3,
         "^http://www.quora.com/.+$": Url_quora_1,
+	"^http://www.careercup.com/question\\?id=[0-9]+": func(url string) Post_data {
+		return common_webcrawler(url, []Action {
+			Action {Filter, "content", "Interview Question", " Add a Comment"},
+			Action {Replace, "content", "(?m)^  Comment hidden because of low score. Click to expand.", ""},
+			Action {Replace, "content", "(?m) Reply", ""},
+			Action {Replace, "content", "(?m)^ of  [0-9]+  vote", ""},
+			Action {Replace, "content", "(?m)^Answers", ""},
+			Action {Replace, "content", "(?m)^ Email me when people comment.", ""},
+			Action {Replace, "content", "(?m)^ An error occurred in subscribing you.", ""},
+			Action {Replace, "content", "(?m)^ on .*[0-9]+  Edit  \\|  Flag", ""},
+			Action {Replace, "content", "(?m)^ Loading...", ""},
+			Action {Replace, "content", "(?m)^ *[0-9]+", ""},
+			//Action {Replace, "content", "(?m)^  ", ""}, // TODO
+
+		})
+	},
 	"^http://zenhabits.net/.+$": func(url string) Post_data {
-		return common_webcrawler(url, "personal_productivity/zenhabits_net", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "zenhabits  :  breathe", "      Posted : "},
 			Action {Replace, "content", " By  ", "- "},
 			Action {Replace, "content", " Post written by ", "- "},
@@ -23,7 +39,7 @@ var fetcher = map[string] Stringy {
         },
 
 	"^http://www.geekpreneur.com/.+$": func(url string) Post_data {
-		return common_webcrawler(url, "personal_finance/geekpreneur_com", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "  archives", " Related posts:"},
 			Action {Filter, "content", "  subscribe", "  Tweet"},
 			Action {Replace, "content", "Posted by ", "- "},
@@ -34,7 +50,7 @@ var fetcher = map[string] Stringy {
         },
 
 	"^http://www.chineseinla.com/f/page_viewtopic/t_[0-9]+.html$": func(url string) Post_data {
-		return common_webcrawler(url, "understand_us/chineseinla_com", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "发布于:", "  返回页首"},
 			Action {Replace, "content", "(?m)  返回页首", ""},
 			Action {Replace, "content", "(?m)  您觉得上述讲法有帮助吗\\?", ""},
@@ -46,7 +62,7 @@ var fetcher = map[string] Stringy {
 
 
 	"^http://www.zreading.cn/archives/[0-9]+.html$": func(url string) Post_data {
-		return common_webcrawler(url, "personal_productivity/zreading_cn", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "style.backgroundColor=color\n}", "分享到："},
 			Action {Filter, "content", "  \n \n \n \n \n", "/*300*250"},
 			Action {Replace, "content", "(?m)\\|字体: 小 . 中 . 大.*", ""},
@@ -55,7 +71,7 @@ var fetcher = map[string] Stringy {
         },
 
 	"^http://.*stackexchange.com/questions/[0-9]+/.*": func(url string) Post_data {
-		return common_webcrawler(url, "personal_finance/money_stackexchange_com_personal_finance", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "Tell me more", "improve this answer"},
 			Action {Filter, "content", "     \n \n \n \n", "  share  |"},
 			Action {Replace, "content", "\n +up vote ", ""},
@@ -81,7 +97,7 @@ var fetcher = map[string] Stringy {
 	},
 
 	"^http://stackoverflow.com/questions/[0-9]+/.*": func(url string) Post_data {
-		return common_webcrawler(url, "algorithm/stackoverflow", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "Tell me more", "improve this answer"},
 			Action {Filter, "content", "     \n \n \n \n", "  share  |"},
 			Action {Replace, "content", "\n +up vote ", ""},
@@ -107,7 +123,7 @@ var fetcher = map[string] Stringy {
 	},
 
 	"^http://techcrunch.com/.+/$": func(url string) Post_data {
-		return common_webcrawler(url, "entrepreneur/webcrawler_raw_techcrunch", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "posted", "Tags: "},
 			Action {Filter, "content", " Comments ", " « previous story"},
 			Action {Filter, "content", "^", " Crunchbase"},
@@ -119,7 +135,7 @@ var fetcher = map[string] Stringy {
         },
 
 	"^http://haowenz.com/a/[a-z]+/$": func(url string) Post_data {
-		return common_webcrawler(url, "joke/webcrawler_raw_haowenz", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "当前位置:微小说>耽美微小说>", "查看全篇微小说"},
 			Action {Replace, "content", "\n\n+", "\n"},
 			Action {Replace, "content", "查看全篇微小说", ""},
@@ -132,7 +148,7 @@ var fetcher = map[string] Stringy {
         },
 	"^http://haowenz.com/a/[a-z]+/[0-9]+/[0-9]+.*html$": func(url string) Post_data {
 		//panic("err")
-		return common_webcrawler(url, "joke/webcrawler_raw_haowenz", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Replace, "content", " *", ""},
 			Action {Replace, "content", "　", " "},
 			Action {Filter, "content", "当前位置", "你可能还喜欢以下"},
@@ -153,7 +169,7 @@ var fetcher = map[string] Stringy {
 		})
 	},
 	"^http://www.36kr.com/p/[0-9]+.html$": func(url string) Post_data {
-                return common_webcrawler(url, "entrepreneur/webcrawler_raw_36kr", []Action {
+                return common_webcrawler(url, []Action {
                         Action {Filter, "content", "E-Mail", "文章评论"},
 			Action {Replace, "content", "(?m) +$", ""},
                         Action {Filter, "content", "\n\n\n\n\n", " 新浪微博"},
@@ -169,7 +185,7 @@ var fetcher = map[string] Stringy {
 
 	"^http://stock.stcn.com/sh/[0-9]+/$": func(url string) Post_data{
 		keyword := get_keyword_from_url("http://stock.stcn.com/sh/([0-9]+)", url)
-		return common_webcrawler(url, "lifehack/webcrawler_raw_stock", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", keyword, "净流量"},
 			Action {Replace, "content", "(?m)^ +", ""},
 			Action {Replace, "content", "委比.*\n\n", ""},
@@ -182,7 +198,7 @@ var fetcher = map[string] Stringy {
 
 	"http://www.pm2d5.com/city/.*.html": func(url string) Post_data{
 		keyword := get_keyword_from_url("http://www.pm2d5.com/city/(.*)\\.html", url)
-		return common_webcrawler(url, "lifehack/webcrawler_raw_pm", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "首页", "手机请"},
 			Action {Filter, "content", "各监测站点实时数据", "var caption"},
 			Action {Replace, "content", "(?m)^ +", ""},
@@ -199,7 +215,7 @@ var fetcher = map[string] Stringy {
 
 	"^http://www.google.com/finance\\?q=[a-z]+$": func(url string) Post_data{
 		keyword := get_keyword_from_url("http://www.google.com/finance\\?q=([a-z]+)", url)
-		return common_webcrawler(url, "lifehack/webcrawler_raw_stock", []Action {
+		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "google.finance.renderRelativePerformance", "Currency in USD"},
                         Action {Replace, "content", "(?m) +$", ""},
                         Action {Replace, "content", "\\(\\);\n", ""},
@@ -215,7 +231,7 @@ var fetcher = map[string] Stringy {
 
 	"http://www.baidu.com/s\\?wd=.*\\+天气": func(url string) Post_data{
 		keyword := get_keyword_from_url("http://www.baidu.com/s\\?wd=(.*)\\+天气", url)
-                return common_webcrawler(url, "lifehack/webcrawler_raw_baidu", []Action {
+                return common_webcrawler(url, []Action {
                         Action {Filter, "content", "中国天气网", "更多城市"},
                         Action {Replace, "content", "- 最近访问：", ""},
 			Action {Replace, "content", " +", " "},
@@ -230,7 +246,7 @@ var fetcher = map[string] Stringy {
 }
 
 func Url_zhihu_1(url string)Post_data {
-        post_data := common_webcrawler(url, "lifehack/webcrawler_raw_zhihu", []Action {
+        post_data := common_webcrawler(url, []Action {
                 Action {Filter, "content", " 查看全部 » ", " 添加评论 "},
                 Action {Replace, "content", "(?m) +$", ""},
                 Action {Replace, "content", "(?m)^ +", ""},
@@ -283,7 +299,7 @@ func Url_zhihu_1(url string)Post_data {
 }
 
 func Url_douban_1(url string) Post_data {
-        return common_webcrawler(url, "lifehack/webcrawler_raw_douban", []Action {
+        return common_webcrawler(url, []Action {
                 Action {Filter, "content", "来自:", "(typeof Do ==="},
                 Action {Replace, "content", "^.*\n[0-9 \\-:]+", ""},
                 //Action {Replace, "content", "^.*\n[0-9 :]+\n\n", ""},
@@ -306,7 +322,7 @@ func Url_douban_1(url string) Post_data {
 }
 
 func Tieba_1(url string)Post_data {
-	return common_webcrawler(url, "webcrawler_raw_tieba_笑话", []Action {
+	return common_webcrawler(url, []Action {
                 Action {Filter, "content", " 收藏 ", " 回复"},
                 Action {Replace, "content", " +", " "},
                 Action {Replace, "content", "(?m)^ +", ""},
@@ -316,7 +332,7 @@ func Tieba_1(url string)Post_data {
 
 
 func Url_weibocom_2(url string) Post_data {
-	return common_webcrawler_not_strip_body2(url, "webcrawler_raw_weibo_topic", []Action {
+	return common_webcrawler_not_strip_body2(url, []Action {
                 //Action {Replace, "content", "(?m)^ +转发.*", ""},
                 Action {Replace, "content", "(?m)^ +收藏.*", ""},
                 Action {Replace, "content", "(?m)^ +评论.*", ""},
@@ -334,7 +350,7 @@ func Url_weibocom_2(url string) Post_data {
 }
 
 func Url_weibocom_1(url string)Post_data {
-	return common_webcrawler_not_strip_body(url, "webcrawler_raw_weibo_kaifulee", []Action {
+	return common_webcrawler_not_strip_body(url, []Action {
                 Action {AssertMatch, "title", "新浪微博-随时随地分享身边的新鲜事儿", "weibo访问失败，请确认是否cookie需要更新"},
                 Action {Filter, "content", " 更多标签 ", "我们之间的共同关系"},
                 Action {Replace, "content", "\\\\n", ""},
@@ -365,7 +381,7 @@ func Url_weibocom_1(url string)Post_data {
 }
 
 func Url_zhihu_3(url string)Post_data {
-        post_data := common_webcrawler(url, "lifehack/webcrawler_raw_zhihu", []Action {
+        post_data := common_webcrawler(url, []Action {
                 Action {Filter, "content", " 查看全部 » ", " 添加评论 "},
                 Action {Replace, "content", "(?m) +$", ""},
                 Action {Replace, "content", "(?m)^ +", ""},
@@ -418,7 +434,7 @@ func Url_zhihu_3(url string)Post_data {
 
 
 func Url_quora_1(url string)Post_data {
-        post_data := common_webcrawler_test(url, "lifehack/webcrawler_raw_zhihu", []Action {
+        post_data := common_webcrawler_test(url, []Action {
                 Action {Filter, "content", " Add Question", " About "},
                 Action {Replace, "content", "•   Embed   •", "\n\n"},
                 Action {Replace, "content", " ", ""},

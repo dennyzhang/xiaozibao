@@ -86,13 +86,12 @@
 
 - (void)load_topic_list
 {
-    [_objects insertObject:@"coder_questions" atIndex:0];
-    [_objects insertObject:@"idea_startup" atIndex:0];
-    [_objects insertObject:@"health_sport" atIndex:0];
-    [_objects insertObject:@"personal_finance" atIndex:0];
-    [_objects insertObject:@"personal_productivity" atIndex:0];
-    [_objects insertObject:@"us_america" atIndex:0];
-    [_objects insertObject:@"understand_us" atIndex:0];
+    [_objects insertObject:@"productivity" atIndex:0];
+    [_objects insertObject:@"product" atIndex:0];
+    [_objects insertObject:@"general_experience" atIndex:0];
+    [_objects insertObject:@"concept" atIndex:0];
+    [_objects insertObject:@"cloudcomputing" atIndex:0];
+    [_objects insertObject:@"algorithm" atIndex:0];
 }
 
 - (void)didReceiveMemoryWarning

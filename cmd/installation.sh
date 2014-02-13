@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-12 13:35:10>
+## Updated: Time-stamp: <2014-02-12 13:50:36>
 ##-------------------------------------------------------------------
 . utility.sh
 
@@ -18,6 +18,9 @@ function install_package ()
     # install golang
 
     yum_install erlang
+
+    # install snake
+    which snake_workerd || (cd $XZB_HOME/code/webcrawl_article/snake_worker && rm -rf rel/snake_worker && make release && sudo make install)
 
 }
 

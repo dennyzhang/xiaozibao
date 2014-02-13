@@ -6,7 +6,7 @@
 ## Description :
 ## --
 ## Created : <2013-02-01>
-## Updated: Time-stamp: <2014-02-09 18:14:14>
+## Updated: Time-stamp: <2014-02-13 00:53:42>
 ##-------------------------------------------------------------------
 . /usr/bin/utility_xzb.sh
 
@@ -149,6 +149,20 @@ function fetch_stackoverflow() {
     lists=($id_list)
     for id in ${lists[*]}; do
         for url in `generate_command "http://stackoverflow.com/questions/tagged/$topic_id?page=$id&sort=votes&pagesize=15" | grep ^http`; do
+            command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
+            $command
+        done;
+    done;
+    sleep $SLEEP_SECONDS
+}
+
+function fetch_careercup() {
+    dst_dir=${1?}
+    topic_id=${2?}
+    id_list=${3?}
+    lists=($id_list)
+    for id in ${lists[*]}; do
+        for url in `generate_command "http://www.careercup.com/page?pid=$topic_id&n=$id" | grep ^http`; do
             command="xzb_mq_tool.py insert xzb_fetch_url.sh -d $dst_dir -f $url"
             $command
         done;

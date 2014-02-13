@@ -103,7 +103,7 @@ func escpae_fname(fname string) string {
 func store_result(post webcrawler.Post_data) bool {
 	dir := ""
 	if dst_dir == "" {
-		dir = root_dir + "/" + post.Category
+		panic("Error: dst_dir option is not given")
 	} else {
                 dir = root_dir + "/" + dst_dir
 	}

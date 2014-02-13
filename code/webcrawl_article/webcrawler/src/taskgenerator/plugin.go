@@ -14,6 +14,7 @@ var generator = map[string] Stringy {
 	"^http://techcrunch.com/$": techcrunch_1,
 	"^http://techcrunch.com/.*$": techcrunch_2,
 	"^http://news.ycombinator.com/$": newsycombinator_1,
+	"^http://www.careercup.com/page\\?pid=.*": careercup_1,
 	"^http://.*.stackexchange.com/[^\\/]*$": stackexchange_1,
 	"^http://stackoverflow.com/questions/tagged/.*$": stackoverflow_1,
 
@@ -191,6 +192,24 @@ func newsycombinator_1(url string) []Task {
         for i := range match_strings {
 		record_string := match_strings[i]
 		tasks = append(tasks, Task{record_string[1]})
+        }
+
+	//fmt.Print(tasks)
+
+        return tasks
+}
+
+func careercup_1(url string) []Task {
+	tasks := make([]Task, 0)
+        _, content := webcrawler.Webcrawler(url)
+
+        content = webcrawler.Filter(content,"<body", "</body>")
+
+	link_pattern :=  "<div class=\"votesWrapper votesWrapperQuestion\" id=\"votes([^\"]*)\""
+        match_strings := regexp.MustCompile(link_pattern).FindAllStringSubmatch(content, -1)
+        for i := range match_strings {
+		record_string := match_strings[i]
+		tasks = append(tasks, Task{"http://www.careercup.com/question?id=" + record_string[1]})
         }
 
 	//fmt.Print(tasks)
