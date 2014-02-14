@@ -12,8 +12,6 @@
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
-- (NSString*)getTopicContent:(NSString*)content;
-- (NSString*)getTopicReply:(NSString*)content;
 
 @end
 
@@ -43,7 +41,7 @@
     // Update the user interface for the detail item.
 
     if (self.detailItem) {
-        self.detailUITextView.text = [self getTopicContent:self.detailItem.content];
+        self.detailUITextView.text = self.detailItem.content;
     }
 }
 
@@ -102,7 +100,6 @@
     
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
-    
     // swipe right
     UISwipeGestureRecognizer *swipeGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeGesture:)];
     [self.view addGestureRecognizer:swipeGesture];
@@ -119,34 +116,8 @@
 
 - (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)recognizer {
     if (self.detailItem) {
-       self.detailUITextView.text = [self getTopicReply:self.detailItem.content];
+      self.detailUITextView.text = @"test";
     }
-}
-
-- (NSString*)getTopicContent:(NSString*)content {
-    NSRange range = [content rangeOfString:@"\n-"];
-    NSString *substring;
-    if (range.length == 0) {
-        substring = content;
-    }
-    else {
-        substring = [content substringToIndex:NSMaxRange(range)];
-    }
-    substring = [substring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    return substring;
-}
-
-- (NSString*)getTopicReply:(NSString*)content {
-    NSRange range = [content rangeOfString:@"\n-"];
-    NSString *substring;
-    if (range.length == 0) {
-        substring = @"";
-    }
-    else {
-        substring = [content substringFromIndex:NSMaxRange(range)];
-    }
-    substring = [substring stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    return substring;
 }
 
 - (void)didReceiveMemoryWarning

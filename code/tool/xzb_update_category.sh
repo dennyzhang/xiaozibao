@@ -6,12 +6,13 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2013-07-26 17:11:30>
+## Updated: Time-stamp: <2014-02-14 11:04:36>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
 BIN_NAME="$(basename $0 .sh)"
 VERSION=0.1
+SHOULD_CLEAN_FIRST='t'
 
 function update_category_list() {
     category_list=${1?}
@@ -27,7 +28,12 @@ function update_category_list() {
             exit 1
         else
             sql_file="/tmp/data.sql"
-            echo "$sql_output" > $sql_file
+            if [[ "$SHOULD_CLEAN_FIRST" = "t" ]]; then
+                echo "delete from posts where category='$category_name';" > $sql_file
+                echo "$sql_output" >> $sql_file
+            else
+                echo "$sql_output" > $sql_file
+            fi;
             command="mysql -uuser_2013 -pilovechina xzb < /tmp/data.sql"
             echo "Import sql file($sql_file) to mysql: $command"
             eval $command
