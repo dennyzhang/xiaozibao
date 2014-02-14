@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-12 13:50:36>
+## Updated: Time-stamp: <2014-02-13 20:37:13>
 ##-------------------------------------------------------------------
 . utility.sh
 
@@ -22,6 +22,7 @@ function install_package ()
     # install snake
     which snake_workerd || (cd $XZB_HOME/code/webcrawl_article/snake_worker && rm -rf rel/snake_worker && make release && sudo make install)
 
+    # ln -s /usr/local/bin/snake_workerd /usr/sbin/
 }
 
 function update_profile ()
