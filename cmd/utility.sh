@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-02-12 12:49:00>
+## Updated: Time-stamp: <2014-02-13 17:04:21>
 ##-------------------------------------------------------------------
 source /etc/profile # TODO
 function log()
@@ -82,6 +82,22 @@ function update_cfg() {
 
     echo "$key=$value" >> $cfg_file
 
+}
+
+function monitor_dir() {
+    log_dir=${1?}
+    tail_num=20
+    if [[ `uname` == "Darwin" ]]; then
+        logcheck_command="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 grep -inH -e 'error' | grep -v 'error resolving name' | grep -v 'socket error' | grep -v '110 is broken' | grep -v 'cannot locate host ' | grep -v EX_TEMPFAIL | wc -l"
+        logcheck_detail="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 grep -inH -e 'error' | grep -v 'error resolving name' | grep -v 'socket error' | grep -v '110 is broken' | grep -v 'cannot locate host ' | grep -v EX_TEMPFAIL | tail -n $tail_num"
+    else
+        logcheck_command="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 -e grep -inH -e 'error' | grep -v 'error resolving name' | grep -v 'socket error' | grep -v '110 is broken' | grep -v 'cannot locate host ' | grep -v EX_TEMPFAIL | wc -l"
+        logcheck_detail="find '$log_dir' -name '*.log*' -type f -print0 | xargs -0 -e grep -inH -e 'error' | grep -v 'error resolving name'  | grep -v 'socket error' | grep -v '110 is broken' | grep -v 'cannot locate host ' | grep -v EX_TEMPFAIL | tail -n $tail_num"
+    fi;
+    if [[ `eval $logcheck_command` -ne 0 ]]; then
+        eval $logcheck_detail
+        false
+    fi
 }
 
 function install_pip ()
