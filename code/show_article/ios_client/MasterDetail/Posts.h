@@ -16,4 +16,8 @@
 @property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSString* content;
 @property (nonatomic, retain) NSNumber* readcount;
++ (void) feedbackPost:(NSString*) userid
+               postid:(NSString*) postid
+               comment:(NSString*) comment;
+
 @end

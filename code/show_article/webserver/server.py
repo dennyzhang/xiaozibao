@@ -7,13 +7,14 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-02-14 19:36:57>
+## Updated: Time-stamp: <2014-02-15 00:41:32>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
 from flask import make_response
 from flask import request
 
+from util import log
 from util import POST
 from util import get_id_by_title
 from util import smarty_remove_extra_comma, wash_content
@@ -21,6 +22,7 @@ from util import smarty_remove_extra_comma, wash_content
 import config
 import data
 
+import json
 import sys
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
@@ -77,12 +79,15 @@ def list_topic():
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
 
-@app.route("/api_feedback_post", methods=['GET'])
+@app.route("/api_feedback_post", methods=['POST'])
 def feedback_post():
     # TODO defensive code
-    userid = request.args.get('userid')
-    postid = request.args.get('postid')
-    comment = request.args.get('comment')
+    data = request.form
+    uid = data["uid"]
+    postid = data["postid"]
+    comment = data["comment"]
+
+    handle_feedback(uid, postid, comment)
 
     status="ok"
     errmsg=""
@@ -108,6 +113,16 @@ def after_request(response):
 @app.route("/api_insert_post", methods=['POST'])
 def insert_post():
     return "TODO be implemented"
+
+def handle_feedback(uid, postid, comment):
+    # TODO
+    if comment == "tag voteup":
+        log.info("voteup")
+    elif comment == "tag votedown":
+        log.info("votedown")
+    else:
+        log.info("unknown comment:"+comment)
+
 ################################################################
 
 if __name__ == "__main__":

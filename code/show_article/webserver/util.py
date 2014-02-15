@@ -7,13 +7,35 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-15 15:05:19>
+## Updated: Time-stamp: <2014-02-15 00:36:01>
 ##-------------------------------------------------------------------
 import hashlib
 import config
 import json
 import fnmatch
 import os
+
+from logging.handlers import RotatingFileHandler
+import logging
+import sys
+
+format = "%(asctime)s %(filename)s:%(lineno)d - %(levelname)s: %(message)s"
+formatter = logging.Formatter(format)
+
+log = logging.getLogger('xzb_webserver')
+
+Rthandler = RotatingFileHandler('xzb_webserver.log', maxBytes=5*1024*1024,backupCount=5)
+Rthandler.setLevel(logging.INFO)
+Rthandler.setFormatter(formatter)
+
+consoleHandler = logging.StreamHandler()
+consoleHandler.setLevel(logging.INFO)
+consoleHandler.setFormatter(formatter)
+
+log.setLevel(logging.INFO)
+#log.setLevel(logging.WARNING)
+log.addHandler(consoleHandler)
+log.addHandler(Rthandler)
 
 ## id: md5sum(category + "/" + title)
 # Note: "echo denny | md5cksum" is diffferent from "echo -n denny | md5sum"

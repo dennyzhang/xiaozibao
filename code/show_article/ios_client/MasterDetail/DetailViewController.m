@@ -46,18 +46,20 @@
 
 -(IBAction) VoteUpButton:(id)sender 
 {
-    NSLog(@"Vote Up");
+  // TODO
+  [Posts feedbackPost:@"denny" postid:detailItem.postid comment:@"tag voteup"];
 }
 
 -(IBAction) VoteDownButton:(id)sender 
 {
-    NSLog(@"Vote Down");
+  // TODO
+  [Posts feedbackPost:@"denny" postid:detailItem.postid comment:@"tag votedown"];
 }
 
 -(IBAction) submitButton:(id)sender 
 {
-    self.feedbackUITextField.text = @"here";
-    NSLog(@"Submit Button");
+  // TODO
+   [Posts feedbackPost:@"aba3" postid:detailItem.postid comment:self.feedbackUITextField.text];
 }
 
 - (void)configureView
@@ -73,51 +75,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
+
     self.detailUITextView.clipsToBounds = NO;
-    //self.detailUITextView.scrollIndicatorInsets = UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f);
-    
-    //self.detailUITextView.contentInset = UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f);
 
     [self configureView];
-    
-    /*
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineHeightMultiple = 50.0f;
-    paragraphStyle.maximumLineHeight = 50.0f;
-    paragraphStyle.minimumLineHeight = 50.0f;
-    
-    NSString *string = self.detailUITextView.text;
-    NSDictionary *ats = @{
-                          NSFontAttributeName : [UIFont fontWithName:@"DIN Medium" size:16.0f],
-                          NSParagraphStyleAttributeName : paragraphStyle,
-                          };
-    
-    self.detailUITextView.attributedText = [[NSAttributedString alloc] initWithString:string attributes:ats];
-     */
-    
-    /*
-    UIButton *favButton = [[UIButton alloc] init];
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"btn_loved" ofType:@"jpg"];
-    UIImage *image = [[UIImage alloc] initWithContentsOfFile:filePath];
-    [favButton setImage:image forState:UIControlStateNormal];
 
-    [favButton addTarget:self action:@selector(judgePost:)
-        forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *collectButton = [[UIBarButtonItem alloc]
-                               initWithCustomView:favButton];
-    
-    */
     UIBarButtonItem *collectButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks
                                       target:self
                                       action:@selector(judgePost:)];
-     
-    
-   //[collectButton setImage:[UIImage imageNamed:@"btn_loved.png"] forState:UIControlStateNormal];
-    //[UIImage imageNamed:@"btn_loved.png"]
 
     self.navigationItem.rightBarButtonItem = collectButton;
     
