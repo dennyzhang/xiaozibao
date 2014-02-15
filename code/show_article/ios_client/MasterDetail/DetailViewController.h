@@ -15,4 +15,9 @@
 
 @property (retain, nonatomic) IBOutlet UITextView *detailUITextView;
 
+@property (retain, nonatomic) IBOutlet UIButton *voteupButton;
+@property (retain, nonatomic) IBOutlet UIButton *votedownButton;
+@property (retain, nonatomic) IBOutlet UIButton *votesubmitButton;
+@property (retain, nonatomic) IBOutlet UITextField *feedbackUITextField;
+
 @end

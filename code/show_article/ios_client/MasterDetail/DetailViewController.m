@@ -36,10 +36,35 @@
     }
 }
 
+- (void) hideFeedback:(BOOL)shouldEnable
+{
+    self.votedownButton.hidden = shouldEnable;
+    self.voteupButton.hidden = shouldEnable;
+    self.votesubmitButton.hidden = shouldEnable;
+    self.feedbackUITextField.hidden = shouldEnable;
+}
+
+-(IBAction) VoteUpButton:(id)sender 
+{
+    NSLog(@"Vote Up");
+}
+
+-(IBAction) VoteDownButton:(id)sender 
+{
+    NSLog(@"Vote Down");
+}
+
+-(IBAction) submitButton:(id)sender 
+{
+    self.feedbackUITextField.text = @"here";
+    NSLog(@"Submit Button");
+}
+
 - (void)configureView
 {
     // Update the user interface for the detail item.
-
+    [self hideFeedback:true];
+    
     if (self.detailItem) {
         self.detailUITextView.text = self.detailItem.content;
     }
@@ -116,7 +141,8 @@
 
 - (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)recognizer {
     if (self.detailItem) {
-      self.detailUITextView.text = @"test";
+        [self hideFeedback:false];
+        self.detailUITextView.text = @"";
     }
 }
 
