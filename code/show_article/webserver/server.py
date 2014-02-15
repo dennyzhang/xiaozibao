@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-15 13:01:35>
+## Updated: Time-stamp: <2014-02-14 19:36:57>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -72,6 +72,21 @@ def list_topic():
     count = request.args.get('count', 10)
     posts = data.list_topic(topic, int(start_num), int(count))
     content = render_template('list_topic.json', posts=posts)
+    content = smarty_remove_extra_comma(content)
+    resp = make_response(content, 200)
+    resp.headers['Content-type'] = 'application/json; charset=utf-8'
+    return resp
+
+@app.route("/api_feedback_post", methods=['GET'])
+def feedback_post():
+    # TODO defensive code
+    userid = request.args.get('userid')
+    postid = request.args.get('postid')
+    comment = request.args.get('comment')
+
+    status="ok"
+    errmsg=""
+    content = render_template('feedback_post.json', status=status, errmsg=errmsg)
     content = smarty_remove_extra_comma(content)
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
