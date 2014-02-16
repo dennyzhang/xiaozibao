@@ -26,7 +26,7 @@
     // }
 
    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+   //Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     return YES;
 }

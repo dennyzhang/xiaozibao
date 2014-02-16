@@ -48,18 +48,20 @@
 {
   // TODO
   [Posts feedbackPost:@"denny" postid:detailItem.postid comment:@"tag voteup"];
+  self.voteupButton.hidden = false;
 }
 
 -(IBAction) VoteDownButton:(id)sender 
 {
   // TODO
   [Posts feedbackPost:@"denny" postid:detailItem.postid comment:@"tag votedown"];
+  self.votedownButton.hidden = false;
 }
 
 -(IBAction) submitButton:(id)sender 
 {
   // TODO
-   [Posts feedbackPost:@"aba3" postid:detailItem.postid comment:self.feedbackUITextField.text];
+   [Posts feedbackPost:@"denny" postid:detailItem.postid comment:self.feedbackUITextField.text];
 }
 
 - (void)configureView
