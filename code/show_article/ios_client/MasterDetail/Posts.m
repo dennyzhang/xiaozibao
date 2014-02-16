@@ -43,7 +43,7 @@
   NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                          userid, @"uid", postid, @"postid", comment, @"comment",
                          nil];
-
+  NSLog(@"feedbackPost, url:%@", urlStr);
   AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:url];
   NSURLRequest *request = [client requestWithMethod:@"POST" path:@"api_feedback_post" parameters:params];
 

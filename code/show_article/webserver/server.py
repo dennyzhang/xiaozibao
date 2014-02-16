@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-02-15 00:41:32>
+## Updated: Time-stamp: <2014-02-16 17:58:27>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -117,11 +117,11 @@ def insert_post():
 def handle_feedback(uid, postid, comment):
     # TODO
     if comment == "tag voteup":
-        log.info("voteup")
+        log.info("voteup. postid:" + postid)
     elif comment == "tag votedown":
-        log.info("votedown")
+        log.info("votedown. postid:" + postid)
     else:
-        log.info("unknown comment:"+comment)
+        log.info("unknown comment:%s. postid:%s" % (comment, postid))
 
 ################################################################
 
