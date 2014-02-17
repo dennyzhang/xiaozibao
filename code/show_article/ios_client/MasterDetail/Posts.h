@@ -20,4 +20,7 @@
                postid:(NSString*) postid
                comment:(NSString*) comment;
 
++ (bool)containId:(NSMutableArray*) objects
+           postId:(NSString*)postId;
+
 @end

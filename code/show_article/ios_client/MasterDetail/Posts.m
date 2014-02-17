@@ -10,6 +10,7 @@
 #import "AFHTTPClient.h"
 
 #import "Posts.h"
+#import "constants.h"
 @implementation Posts
 @synthesize postid, title, summary, category, content, readcount;
 
@@ -32,13 +33,7 @@
                postid:(NSString*) postid
               comment:(NSString*) comment
 {
-  //urlPrefix=@"http://173.255.227.47:9080/";
-  //urlPrefix=@"http://127.0.0.1:9080/";
-
-  NSString *urlStr;
-  urlStr=@"http://10.0.0.20:9080/";
-  //urlPrefix=@"http://192.168.1.161:9080/";
-
+  NSString *urlStr=SERVERURL;
   NSURL *url = [NSURL URLWithString:urlStr];
   NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                          userid, @"uid", postid, @"postid", comment, @"comment",
@@ -66,6 +61,22 @@
 
   [operation start];
 
+}
+
++ (bool)containId:(NSMutableArray*) objects
+           postId:(NSString*)postId
+{
+   bool ret = NO;
+   NSUInteger i, count = [objects count];
+   Posts* post;
+   for(i=0; i<count; i++) {
+       post = objects[i];
+       if ([post.postid isEqualToString:postId] == 1) {
+          ret = YES;
+          break;
+       }
+   }
+   return ret;
 }
 
 @end

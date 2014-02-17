@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import "MasterViewController.h"
+#import "constants.h"
 
 @interface MenuViewController () {
     NSMutableArray *_objects;
@@ -24,13 +25,7 @@
         [sender isKindOfClass:[UITableViewCell class]] )
     {
         UITableViewCell* c = sender;
-        // if (c.tag == 10) {
-        //     MasterViewController* dstViewController = segue.destinationViewController;
-        //     [dstViewController init_data:@"denny" topic_t:@"health_sport"]; // TODO
-        //     [dstViewController view];
-        //     return;
-        // }
-        if (c.textLabel.textColor != [UIColor grayColor]) {
+        if (c.textLabel.isEnabled == true) {
             MasterViewController* dstViewController = segue.destinationViewController;
             [dstViewController init_data:@"denny" topic_t:c.textLabel.text]; // TODO
             [dstViewController view];
@@ -43,7 +38,7 @@
     // configure the segue.
     // in this case we dont swap out the front view controller, which is a UINavigationController.
     // but we could..
-    if ( [segue isKindOfClass: [SWRevealViewControllerSegue class]] )
+    if ([segue isKindOfClass: [SWRevealViewControllerSegue class]] )
     {
         SWRevealViewControllerSegue* rvcs = (SWRevealViewControllerSegue*) segue;
         
@@ -100,15 +95,16 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 3;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 40;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -118,10 +114,7 @@
         return _objects.count;
     }
     if (section == 1) {
-        return 2;
-    }
-    if (section == 2) {
-        return 2;
+        return 3;
     }
     return -1;
 }
@@ -131,10 +124,7 @@
         return @"Topics";
     }
     if (section == 1) {
-        return @"Topic Preference";
-    }
-    if (section == 2) {
-        return @"App Setting";
+        return @"Preference";
     }
     return @"ERROR tableview:titleForHeaderInSection";
 }
@@ -152,33 +142,15 @@
             cell.textLabel.text = @"Saved posts";
         }
         if (indexPath.row == 1) {
-            cell.tag = 10; // TODO
-            cell.textLabel.text = @"More Topics";
+            cell.textLabel.text = MORE_TOPICS;
+            cell.textLabel.enabled = false;
         }
-        return cell;
-    }
-    if (indexPath.section == 2) {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = @"Clean cache";
-        }
-        if (indexPath.row == 1) {
-            UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-            aSwitch.on = YES;
-            aSwitch.tag = 111;
-            [aSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
-            cell.textLabel.text = @"Auto hide read posts";
-            cell.accessoryView = aSwitch;
+        if (indexPath.row == 2) {
+            cell.textLabel.text = APP_SETTING;
         }
         return cell;
     }
     return cell;
-}
-
-- (void) switchChanged:(id)sender {
-    UISwitch* switchControl = sender;
-    if (switchControl.tag == 111) {
-        NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
-    }
 }
 
 @end

@@ -26,6 +26,8 @@
 @property (atomic, retain) NSNumber* bottom_num;
 @property (atomic, retain) NSNumber* page_count;
 
+@property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
+
 - (void) init_data:(NSString*)username_t
              topic_t:(NSString*)topic_t;
 @end
