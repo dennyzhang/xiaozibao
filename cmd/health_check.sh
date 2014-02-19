@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-18 22:26:49>
+## Updated: Time-stamp: <2014-02-18 22:43:33>
 ##-------------------------------------------------------------------
 . utility.sh
 source /etc/profile # TODO
@@ -13,7 +13,7 @@ source /etc/profile # TODO
 snake_worker_logdir="/usr/local/xiaozibao/snake_worker/log"
 
 log "Check service running"
-sudo lsof -i tcp:55672 || exit_error "Rabbitmq is not running"
+sudo lsof -i tcp:55672 || sudo lsof -i tcp:5672 || exit_error "Rabbitmq is not running"
 sudo snake_workerd ping || exit_error "snake_workerd is not running"
 
 log "Check web server running"
