@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-18 22:26:38>
+## Updated: Time-stamp: <2014-02-18 23:10:45>
 ##-------------------------------------------------------------------
 . utility.sh
 source /etc/profile # TODO
@@ -15,14 +15,25 @@ function install_package ()
 {
     log "install package"
 
-    # install golang
+    yum_install mysql-server
+    yum_install mysql
+    yum_install MySQL-python
+    pip_install markdown
 
+    # install golang
     # yum_install erlang
 
     # install snake
     which snake_workerd || (cd $XZB_HOME/code/webcrawl_article/snake_worker && rm -rf rel/snake_worker && make release && sudo make install)
 
     # ln -s /usr/local/bin/snake_workerd /usr/sbin/
+}
+
+function init_db ()
+{
+    log "init_db"
+    # TODO
+    # xiaozibao/puppet/files/install_db.sql
 }
 
 function update_profile ()
@@ -45,4 +56,5 @@ log "install scripts to \$PATH"
 log "install python libraries"
 install_pip selenium
 
+init_db
 ## File : installation.sh ends

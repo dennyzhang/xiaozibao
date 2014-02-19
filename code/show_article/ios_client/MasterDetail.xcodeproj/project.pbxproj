@@ -50,6 +50,7 @@
 		04C24E831867FFB200184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = "../../../../../../../../../../../Applications/Xcode5-DP2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libsqlite3.dylib"; sourceTree = "<group>"; };
 		04C2689B1868118E004C46BC /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		04D0427E17A360C300593E18 /* btn_loved.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_loved.png; sourceTree = "<group>"; };
+		04D77FCC18B4636300643F3C /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		04E893D7179130C400E9573C /* MasterDetail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterDetail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E893DA179130C400E9573C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E893DC179130C400E9573C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -151,6 +152,7 @@
 		04E893E0179130C400E9573C /* MasterDetail */ = {
 			isa = PBXGroup;
 			children = (
+				04D77FCC18B4636300643F3C /* constants.h */,
 				04D0427D17A360C300593E18 /* Images */,
 				04E893E9179130C400E9573C /* AppDelegate.h */,
 				04E893EA179130C400E9573C /* AppDelegate.m */,

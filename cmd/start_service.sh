@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-02-18 22:26:55>
+## Updated: Time-stamp: <2014-02-18 23:08:07>
 ##-------------------------------------------------------------------
 . utility.sh
 source /etc/profile # TODO
@@ -13,6 +13,12 @@ function start_rabbitmq ()
 {
     log "start rabbitmq"
     sudo lsof -i tcp:55672 || nohup sudo rabbitmq-server start &
+}
+
+function start_mysqld ()
+{
+    log "start mysqld"
+    sudo ps -ef | grep mysqld || service mysqld start
 }
 
 function start_snaker ()
@@ -36,6 +42,7 @@ function smarty_html ()
 }
 
 start_rabbitmq
+start_mysqld
 start_snaker
 start_webserver
 smarty_html

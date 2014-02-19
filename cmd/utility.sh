@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-02-13 17:04:21>
+## Updated: Time-stamp: <2014-02-18 22:46:01>
 ##-------------------------------------------------------------------
 source /etc/profile # TODO
 function log()
@@ -100,7 +100,7 @@ function monitor_dir() {
     fi
 }
 
-function install_pip ()
+function pip_install ()
 {
     package=${1?}
     echo "pip install package $package"
