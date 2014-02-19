@@ -5,9 +5,10 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-01-11 19:05:41>
+## Updated: Time-stamp: <2014-02-18 22:26:49>
 ##-------------------------------------------------------------------
 . utility.sh
+source /etc/profile # TODO
 
 snake_worker_logdir="/usr/local/xiaozibao/snake_worker/log"
 

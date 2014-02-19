@@ -5,10 +5,10 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-14 11:03:41>
+## Updated: Time-stamp: <2014-02-18 22:26:38>
 ##-------------------------------------------------------------------
 . utility.sh
-
+source /etc/profile # TODO
 # ensure_variable_isset "$XZB_HOME" # TODO
 
 function install_package ()
