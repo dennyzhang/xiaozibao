@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-02-18 22:46:01>
+## Updated: Time-stamp: <2014-02-20 01:01:25>
 ##-------------------------------------------------------------------
 source /etc/profile # TODO
 function log()
@@ -80,7 +80,7 @@ function update_cfg() {
         grep -v "$key=" $cfg_file > $cfg_file.tmp && mv $cfg_file.tmp $cfg_file
     fi
 
-    echo "$key=$value" >> $cfg_file
+    echo "export $key=$value" >> $cfg_file
 
 }
 

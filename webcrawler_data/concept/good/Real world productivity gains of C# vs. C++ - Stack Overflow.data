@@ -1,0 +1,279 @@
+id: 9319cd9c6c1d86e958d545eed2872ae0
+
+source: http://stackoverflow.com/questions/1298719/real-world-productivity-gains-of-c-sharp-vs-c
+
+summary: 
+
+title: 
+
+status: 
+
+--text follows this line--
+  Real world productivity gains of C# vs. C++ [closed]
+  Freeing developers from dealing with memory management has been touted as one of the principal advantages of managed code languages such as C#.  Are there any studies/real-world examples of actual productivity gains of developing commercial applications in C# vs. C++?
+  c#  c++  productivity
+
+-  asked  Aug 19 '09 at 9:19
+  Tony the Pony
+  12.1k  20  93  181
+ Near-duplicate:  stackoverflow.com/questions/1255945 , "We’re projecting that by using C#, we can develop our product faster and at a lower cost due to the increase of productivity over C++,"
+– 
+ Peter Mortensen
+  Aug 19 '09 at 9:55
+ Not quite...  There, I stated our assumption that there is a productivity gain with C#.  Here, I'm looking for actual evidence to back up that assumption.
+– 
+ Tony the Pony
+  Aug 22 '09 at 17:02
+ add comment
+  As it currently stands, this question is not a good fit for our Q&A format. We expect answers to be supported by facts, references,
+or expertise, but this question will likely solicit debate, arguments, polling, or extended discussion. If you feel that this question
+can be improved and possibly reopened,  visit the help center  for guidance. If this question can be reworded to fit the rules in the  help center , please  edit the question .
+17 Answers
+  active
+  accepted
+ To me, the main productivity gain in C# is the .NET framework library and visual studio integration. The fact that intellisense actually works, able to using runtime reflection and having good date/time library really saves me a lot of time.
+
+-  oscarkuo
+  5,541  2  18  46
+ +1 that's pretty much what i was going to say but you beat me to it.
+– 
+ markh44
+  Aug 19 '09 at 9:45
+ +1 that's the main productivity gain by far.
+– 
+ Daniel Daranas
+  Aug 19 '09 at 9:46
+ true. There are corner cases where the GC is a convenient (cyclic references),  but in general, it's not a big deal for a C++ programmer who knows what he's doing. Of course it's probably a big productivity booster for new programmers though, in easing the learning curve.
+– 
+ jalf
+  Aug 19 '09 at 10:32
+ I agree with jalf, though I'd use the term "poorly skilled" in place of "new".
+– 
+ gbjbaanb
+  Aug 19 '09 at 11:00
+ I agree as well. In fact, when I first started coding in C#, I actually felt like I was being bad. Not thinking about memory is a cardinal sin, right? I spent more time testing just to be sure that I wasn't making a mess of things. Those feelings eventually passed, and I got back up to normal productivity. I still love C++ best of all though. C# brings a lot to the table simply for the fact that it's packed with tons of extra goodies, but the language itself is nothing special. Not bad, but not groundbreaking either.
+– 
+ Casey K.
+  Aug 20 '09 at 0:01
+ On the other hand, I have benefited from C#'s other useful features.  Things like events, the ability to alter my code in the debugger, using Designer (when it works) to set up a GUI, and "it just works" interoperation with native libraries (P/Invoke) or C++ code (C++/CLR) have made my life much easier.
+
+-  Eric
+  4,053  9  29
+ -You can also alter C++ code in the Visual Studio debugger.
+– 
+ Cornelius Scarabeus
+  Sep 27 '13 at 8:50
+ Interoperation with native code isn't without its problems, and rather a case against using C# if you are relying on a lot of C++ code/libraries. As for GUI, Qt is quite a good, mature frame-work, which also comes with a designer tool.
+– 
+ Cornelius Scarabeus
+  Sep 27 '13 at 8:56
+ add comment
+
+-  Pete Davis
+  633  4  9
+ add comment
+ I've seen similar questions all over stackoverflow. Many people end up comparing the C++ language with C# language bundled with the .NET framework, which is clearly nonsensical. It's an easy mistake to make, since the two are often bundled together.
+ I'd also agree with Eric - automatic memory management isn't that big a deal for experienced programmers.
+
+-  Thomi
+  5,129  3  34  84
+ IMO, Qt made C++ into a new language
+– 
+ Lawand
+  Sep 13 '09 at 21:56
+ yep - I'm hooked on Qt.
+– 
+ Thomi
+  Sep 14 '09 at 7:57
+ +1 I totally agree. However, I think having a big standard library is a big plus indeed.
+– 
+ Dimitri C.
+  Sep 30 '09 at 9:42
+ Yes, I totally agree, but I think it's important not to confuse the library with the language.
+– 
+ Thomi
+  Sep 30 '09 at 10:40
+ I've been a Qt programmer on Linux but in Windows world .NET is the KING.
+– 
+ NET3
+  Nov 10 '12 at 22:05
+ It just gives you suddenly so much extra time when you don't have to worry about who's responsible for allocating and freeing memory withing a class, then between classes in a module, then between modules, then between applications, then how to implement this strategy in a consistent manner, then how to communicate it to all developers in a team or external contributors. You get lots of free time to implement useful functionality instead of still staying in the same place after many months trying to debug and clean up things.
+ Having said that I fell inclined to add that having a garbage collector does not excuse a developer from solid understanding of the low level operation of the CLR. An incompetent programmer without knowledge of value and reference types, of stack and heap management can still lay low an application in an innocent ignorance of the operational model.
+
+-  user151323
+ Two years ago, a crack commando C++ programmer was sent to work in a cube farm by a manager for some code that he didn't commit. This man promptly escaped from a maximum security cubicle to the Stackoverflow underground.
+Today, still wanted by the management, he survives as a C# coder that is as productive as a small C++ team.
+If you have a problem, if no one else can help, and if you can find him, maybe you can hire... New in town.
+– 
+ rpg
+  Aug 19 '09 at 10:13
+ So what proportion of your previous projects did you actually spend "worrying about who's responsible for allocating and freeing memory withing a class, then between classes in a module, then between modules, then between applications, then how to implement this strategy in a consistent manner, then how to communicate it to all developers in a team or external contributors."
+– 
+ frankster
+  Aug 19 '09 at 10:37
+ @frankster: A noticeable time portion of those C++ projects where there was > 1 developer. More than one person => many perspectives on how to do it right, people have different background, you have to first "tune" them in, until that happens there are errors and strategy collisions inevitably.
+– 
+ user151323
+  Aug 19 '09 at 10:47
+ add comment
+ So if you compare productivity, also consider these effects. Adding the Boehm garbage collector to C++ might bring it to the same level as C#.
+
+-  Malte Clasen
+  3,729  8  19
+ VisualAssistX works well for C++
+– 
+ Dmitriy
+  Aug 19 '09 at 11:35
+ add comment
+ I don't think memory management was ever an issue in C++, productivity-wise. Any programmer worth his salt has a clear concept of ownership for any object and smart pointers made it effortless to work with shared objects.
+ If I had to choose between automatic garbage collection and deterministic finalization, it would be a hard choice. Both have their advantages. Garbage collection allows for lightning fast heap allocation and solves the problem of heap fragmentation. Deterministic finalization nearly eliminates the risk of unreleased resources and allows for ad-hoc RAII (see ScopeGuard).
+ What makes me more productive in C# is its reflection capabilities. This allows for agile development practices like unit testing and test coverage measurement, which are rather inconvenient to wield in C++. Using dependency injection in C++ is almost impossible, for example, and requires a lot of boilerplate code.
+ I also adopted a higher-level mindset in C#. I'm worrying more about object interactions than about how to best turn an algorithm into code. I can't say whether this is a natural progression or whether its due to .NET, but I feel the simpler programming model allows me to concentrate on algorithmic efficiency and less about implementation details.
+
+-  Cygon
+  3,431  1  21  32
+ I agree with you.  I will say this, C# libraries when found to be buggy are hard equally a time waster.
+– 
+ Eric
+  Aug 19 '09 at 11:42
+ add comment
+ convenient iterating (foreach)
+ standard string type
+ standard string formatting
+ built in conversions string numberic types
+ reflection (no problem to create good object factory)
+ enums that are easy to iterate, convert to string and vice versa
+ built in analogs of boost::function and boost::signal that are easy to write, support and debug
+ convenient lambda that helps to exploit algorithms
+ List is very long.
+
+-  bocco
+  441  6  13
+ std::for_each in C++, std::string in C++.  I'll give you lambda and reflection, though lambda's ae available in boost and C++0X
+– 
+ Glen
+  Aug 19 '09 at 9:35
+ Yes, I know, but I personally have to deal with at least 4 types: CString, BSTR, const char*, std::string :(
+I like Boost as it makes my life easier. But I hate to debug boost::function/signal (due to messy call-stack) and I still cannot write boost::lambda as it looks unnatural to me and pretty hard to modify/support. It is still much easier to write loop or functor in production code.
+– 
+ bocco
+  Aug 19 '09 at 9:51
+ Also in C++11 there is for (auto foo:container) { foo.hi(); }
+– 
+ paulm
+  Jun 11 '13 at 18:39
+ add comment
+
+-  Nemanja Trifunovic
+  16.6k  1  28  53
+ add comment
+Many believe that the reason there are not many .net commercial applications is due to libraries already in C/C++ and not want to recode over to C#. Not true because you can do this using C++/CLI creating a wrapper for the libraries which I do a lot. One of the main reasons is because you don't have much control on memory management. Yes, you can write great code with little bottle-neck but the issue still has to deal with memory. When I free an object from the heap, it is gone and the pointer if a member is set back to 0 (NULL). I don't have to wait for GC generation 2 to get to it when the heap needs room. If C# has a delete keyword for the heap using a lock on it for the object is not moved, then I would be more inclined to dive more into writing libraries in C#. One thing C++ programmer have (but with more responsibility)is allocating and freeing objects knowing they are destroyed. Also, data type, you decide to put on the heap or stack not the .NET ValueType or ReferenceType. Although I know C# does support pointers but only on ValueType (struct, enum) which I have a problem with. I understand the reference variable is the pointer and the CLR keeps it updates when the object's address has changed, but why not lock it to a pointer until done with the pointer which is some cases is needed.
+ Business apps and asp.net goes to C#.net.
+Commercial apps and machine goes to C/C++.
+
+-  robert
+  61  1  1
+ add comment
+and the parameters can always be modified to support any result.
+The comparisons with memory management is most likely based C# vs C or C with classes.
+Most current C++ project uses smart pointers and then memory is as easy as in
+memory managed languages(although a little more syntactically verbose)
+The main productivity gain for C# is not in memory management but in its Visual
+studio integration.
+ I have been in several big projects in both C++ and C# but contrary to most of
+the other posters in this thread, my experience is that once the project has
+matured, C++ has better productivity than C#. This is mainly due to its better
+abstraction abilities, where you can hide more into libraries and remove more
+boilerplate code.
+
+-  Lambda λ
+  419  1  9
+  grimner
+  386  1  5
+ C with classes? You mean C++? C with classes is like saying C# is C with a GC.
+– 
+ paulm
+  Jun 11 '13 at 18:33
+ @paulm: "C with classes" is a term generally used by C++ programmers to refer to a style of code that is essentially plain C code with classes and ignores most of C++' amenities such as strings, containers, smart pointers and RTTI.
+– 
+ Cygon
+  Jan 6 at 13:56
+ Sounds pointless if RAII is the only feature used when C has extensions for this
+– 
+ paulm
+  Jan 6 at 18:21
+ add comment
+
+-  Steve Grahovac
+  51  1  2
+ add comment
+
+-  Motti
+  29.6k  18  91  161
+ add comment
+
+-  Scott Vercuski
+  2,685  5  27  58
+ add comment
+  IDE:
+ Visual Studio for C# is miles above VC++, and in the areas that really count.
+  Intellisense
+  Refactoring
+  Error Messages
+  DLL\Library Handling
+  Headers - Or lack thereof, to be more precise.
+ VC++ also tends to be a hunk of junk, I've had it mysteriously change\lose settings in my projects, causing compilations to explode in my face, luckily, I figured out what happened, but, only in desperation as I searched the project from head to toe looking for answers. (This could be really bad for a big project on a deadline, etc,.)
+ It also has this annoying habit of telling me that my files aren't saved in Windows format.. ? (I've never NOT used Windows, nor have I ever saved these files outside of Visual Studio, if there is something wrong with the file format, it's your fault VS...)
+  Language:
+ As far as the languages themselves are concerned, the gap isn't as wide, but, C# is FAR more productive, and generally better, IMO.
+ I prefer C#'s generics over C++ and it's STL\template equivalents.
+ I can sum this up with one comparison:  std::vector VS. List
+ std::vector is an odd choice for the name of a container class, it just is, List is much easier to understand. (I get where they were coming from, but, I don't like it.)
+ The methods are no better: push_back()
+ Again, I can see where they're coming from, but, no, just, no.
+ List is easy to remember, and to understand, it's a list of T items, and when I want to add something, I use the aptly named "Add" function.
+ C#, for the most part, makes sense, and names things in ways that make their usage apparent. (Common sense for the win?)
+ This is a huge issue across the board for C++, it's naming scheme is outright horrible in many cases, and common sense, no where to be found in just as many.
+ The C# "standard library" wins outright, with C++, you spend a lot of time writing code that should have already been written, and part of the standard\STL years ago, anyone arguing against this point, obviously doesn't own the code they write. (I hear this constantly with C++, just use 3rd party libs, yeah, and then commit to whatever license they force upon you, etc,.)
+ The better the standard lib, the happier I am, because then, I can maintain my own code, and not have to bend to some 3rd party lib makers whims. (Seriously, I hate viral licensing.)
+ The STL just doesn't compare to the .Net frameworks core libraries, so, you have to spend a lot of time going through 3rd party code looking for something that suits your taste, your needs, etc, or write your own, either way, it's time wasted, time, that could have been better spent working on your own application specific code.
+ Another point, that is a side effect of the above, is that you can waste a LOT of time trying out the various libs, getting them to actually compile, and run in some cases can send you on what I call "Lib Runs", where you need X lib to compile Y, but Y lib, requires A, and D, etc, etc,. (Oh, and consider yourself lucky if a lib comes with any worthwhile documentation, if not, that's another few hours wasted trying to figure out how to work the darn thing.)
+ (I admit these issues aren't all C++ specific, but, it gets hit harder than C# does in most cases due to many issues compounding at once.)
+ I heard someone refer to C++ as "Death by a thousand cuts.", and I couldn't agree more, there really isn't some singular thing you can point at, and go, that's the problem, rather, it's thousands of little issues that bring this language down.
+ It pecks at you, slowly eating away your sanity, until you either hate it, or become so numb to it effects that you blindly defend it, as if it's fine, spouting rhetoric like, well, nothings perfect.
+ Yeah, and here's a million bucks, and bullet to the face, what? Nothings perfect, right?
+ My personal favorite, is of course, having them attack my programming skills, which, they've NEVER seen.
+ I obviously MUST be doing it wrong. (Yeah, I'm reading the intellisense wrong, templated gibberish makes perfect sense, what was I thinking, and I'm obviously to blame for it's lack of refactoring tools, and it's definitely my fault that C++ lacks a decent standard library, and it's without a doubt my fault that C++ names it's functions asinine crap like cout, etc,.)
+ Anyways, you wanted a real world example of productivity gains, and here I am, along with many other C# supporters who make the same\similar claims, C# has indeed improved my productivity, quite a bit, actually. :D
+
+-  Smoke
+  39  1
+ a real-world information.
+– 
+ docesam
+  Aug 20 '13 at 8:41
+ Sorry, but -1 for a train-of-thought answer that turns into a rant at about the second paragraph, mixes personal preference with ignorance and ends in a defense against imaginary attacks on your person. It also contains many factual errors. "cout" means "console out," by the way.
+– 
+ Cygon
+  Jan 6 at 14:15
+ add comment
+ Also, C# 3.0 has got LINQ which seems to be an extremely convenient way of accessing data sources such as MS SQL Server, XML , CLR objects, regular arrays Lists Dictionaries etc.
+ From what I've been told C# 4.0 is going to implement additional data sources such as IBM's DB2, Oracle etc.
+ It's also worth saying that C# language itself is being developed more rapidly then C++ is, but the reason for that is pretty obvious.
+ Best regards
+
+-  Maciek
+  4,241  7  30  53
+ considering MS are deprecating OracleClient in .NET 4, I hold no hope that they'll somehow decide to support it or DB2:  reddevnews.com/Articles/2009/06/16/…
+– 
+ gbjbaanb
+  Aug 19 '09 at 11:03
+ Your functionality argument is exactly what I dislike about C#: whereas you can add functionality to C++ through libraries, even to the point of creating DSLs (see LuaBind or Boost.Spirit), in C# the actual language is revised again and again, adding ever more bloat to it.
+– 
+ Cygon
+  Feb 25 '10 at 6:39
+ Everybody is entitled to their opinion I suppose.
+– 
+ Maciek
+  Feb 26 '10 at 9:51
+ add comment

@@ -1,0 +1,252 @@
+id: 25f382424d57166155c338bf189d45d3
+
+source: http://stackoverflow.com/questions/170237/why-is-coding-so-slow
+
+summary: 
+
+title: 
+
+status: 
+
+--text follows this line--
+  Why is coding so slow? [closed]
+  Is it only me, or is coding getting slower and slower, until a product("a project") is finished?
+ This question came to me as I saw the  "Write a program in 30 minutes" :
+ I thought it is impossible to write a  decent  piece of code which runs smoothly.
+ As I am getting older I see on all projects, even simple ones a lot of additional work, to get them into a state where everybody can use them. So you need a lot of error-catching, UI-Design, even texts, so your app can communicate with endusers.
+Back in the old days(around 1985) it was possible to build something usable in some weeks, maybe months. Today You will spend at least a  man-year  for developing an robust application which performs a nontrivial task.
+ Of course, the complexity has increased, but I am just worried about  the scaling of application complexity regarding to development time .
+  productivity  time-management
+
+-  Jon Seigel
+  8,490  3  31  68
+  asked  Oct 4 '08 at 12:15
+  Peter Parker
+  12.8k  2  17  48
+ The good thing is that more work for programmers means a good chance to get a job ;)
+– 
+ OregonGhost
+  Oct 4 '08 at 12:16
+ The problem is that each year the amount of legacy code increases. And everybody knows, legacy code is hard to maintain ;-).
+– 
+ Toon Krijthe
+  Oct 4 '08 at 12:40
+ add comment
+  Many good questions generate some degree of opinion based on expert experience, but answers to this question
+will tend to be almost entirely based on opinions, rather than facts, references, or specific expertise. If this question can be reworded to fit the rules in the  help center , please  edit the question .
+16 Answers
+  active
+ I disagree with all the answers I've seen. Newer languages and improved tools only improve productivity a small amount. The only big jump in productivity I've seen in my career is going from assembler to C. Everything since then is a slight increment. And even with that  leap, we haven't solved the essential complexity of what applications are doing.
+ I think people often confuse the increase in their personal productivity as they go from beginner to accomplished developer with a general increase in productivity. People often go from solving simple problems to being involved in every larger teams and applications, too, so they think applications are generally becoming more complex.
+ People were writing extremely complex applications in the 1950's, too. Most people don't know enough about the history of the industry to realize it.
+
+-  David G
+  3,390  2  18  27
+ while you have some good points, if you compare the tools and libraries of today to those of 1985, the difference is far more than 'accidental'. today: .net, C#, Windows XP, SQL Server; 1985: DOS, C, CTree. Difference: entire app framework, GUI, and database
+– 
+ Steven A. Lowe
+  Oct 4 '08 at 13:38
+ Have you read Brook's essay? Even if all those things you mention make you 3 times more productive, they're still accidental. Also, in 1985 there was Unix and Oracle (and other) databases. Don't just look at PCs.
+– 
+ David G
+  Oct 4 '08 at 14:05
+ let's see, i read brooks 26 years ago, so yes i've read his essay. My understanding of the point of his essay was that the essential complexty of software development is the reason why the process will never be completely automated or 'solved'... see next comment
+– 
+ Steven A. Lowe
+  Oct 4 '08 at 14:45
+ ... and not as a reason to automatically discount the producitivty gains from any tool. Fore example, the windowing Invoice app with drill-down that i wrote in 1985 was done in C on DOS using CTree and Curses and took 3 months. The same app today would take about a week.
+– 
+ Steven A. Lowe
+  Oct 4 '08 at 14:48
+ ok, i re-read brooks to be certain of the terminology you are using. I would assert that the main benefit of modern tools has been to convert  some of  what once was essential complexity into merely accidental complexity. GUIs are a prime example; today i don't have to write one, 20 years ago i did.
+– 
+ Steven A. Lowe
+  Oct 4 '08 at 15:01
+
+-  Steven A. Lowe
+  39.5k  9  91  173
+ Yes that is the point, but the ratio between demand and development speed is getting worse, i think
+– 
+ Peter Parker
+  Oct 4 '08 at 12:28
+ that's good for business!
+– 
+ Steven A. Lowe
+  Oct 4 '08 at 12:31
+ I strongly disagree. See my answer to explain why.
+– 
+ David G
+  Oct 4 '08 at 13:09
+ add comment
+ As for a minimum of 1 man year I think it obviously depends on what you're trying to build.  The key difference today as opposed to the 80's when I started programming is that we can spend more time on the business issues and less time changing the software every single flipping time we needed to add support for yet another type of printer :-)  Hence the business problems we are solving are getting bigger to fill that void.
+
+-  Phil Bennett
+  2,792  1  14  21
+ actually, I'd say  because  we have no end of new frameworks, we don't ever get to be masters of any of them before the rules have changed and we have to learn more stuff all over again.
+– 
+ gbjbaanb
+  Oct 4 '08 at 14:33
+ add comment
+ essentially you say, "you may need more resources, but it will be paid", however, if complexity will continue to increase, you have to have more developers on a project, this  scales not very well  in regards to management, payment etc.
+ If you think this to an end it means:
+Software projects will be more expensive and needs more people to accomplish a task. This also means each person will get less money
+ If you want to see a real live example, look into the games industry:
+projects grew from 1 person games in 80ies to 3-8 person games in 90ies today on an AAA-title are easily >100 people involved. With this amount of people you have more problems for each person inside (maybe except CEOs): less money, more work and responsibility
+ Is this the same for all software industry branches?
+
+-  Peter Parker
+  12.8k  2  17  48
+ games industry not a good example - that's entertainment. This would be like saying movie crews have grown from a director, camera operator, and 8 actors to thousands of actors and artists and CGI programmers and everybody gets less money, when everyone gets more money and they sell more movies
+– 
+ Steven A. Lowe
+  Oct 4 '08 at 13:41
+ add comment
+  Ten years ago, we might have imagined
+  that new programming paradigms would
+  have made programming easier by now.
+  Indeed, the abstractions we've created
+  over the years do allow us to deal
+  with new orders of complexity in
+  software development that we didn't
+  have to deal with ten or fifteen years
+  ago, like GUI programming and network
+  programming. And while these great
+  tools, like modern OO forms-based
+  languages, let us get a lot of work
+  done incredibly quickly, suddenly one
+  day we need to figure out a problem
+  where the abstraction leaked, and it
+  takes 2 weeks. And when you need to
+  hire a programmer to do mostly VB
+  programming, it's not good enough to
+  hire a VB programmer, because they
+  will get completely stuck in tar every
+  time the VB abstraction leaks.
+  The Law of Leaky Abstractions is
+  dragging us down.
+
+-  dpan
+  3,016  2  13  24
+ I agree, but as we "stack" technology over technology, do we create a situation, where it will be more difficult to get rid of the abstraction leaks(they may span more than one level of abstraction)
+– 
+ Peter Parker
+  Oct 4 '08 at 21:11
+ add comment
+ I can only quote directly from my own experience, but most of our applications take only 1-3 person-months. Admittedly, we have built ourselves a very high-level framework which does a lot of the work for us; and we do limit ourselves to web-based business process applications, which means there is lots we can reuse from one to the other.
+ I think by using the right tools, having smart people and doing things the right way, you can develop software faster than in the past. No Silver Bullet is a good essay, but if you re-read it (as I did recently) it doesn't say you can't get an order of magnitude productivity improvement overall - it just tells you not to expect it from a single change or a single new tool.
+
+-  Leigh Caldwell
+  3,979  12  28
+ add comment
+ In the 80s, we made do with a minimum of abstraction to get the job done.
+ Nowadays, a AAA game title uses much more detailed abstractions (programming things like wind, weather, interactive blades of grass), and that requires dedication.
+ So,  the greater the detail of the abstraction you're trying to replicate, the more time you need .
+  This doesn't account for wasteful details (rendering the boogers in your enemy's nose), and for tuning the accuracy of these abstractions (if a guerilla fart is traveling NW at 2 knots, and the wind is blowing SE 13 knots directions, which way should the grass near his ass blow?)
+
+-  Pete Karl II
+  1,225  2  10  20
+ add comment
+ Separate UI from data processing and
+data storing (and each of these
+layers have added complexiety)
+ Use frameworks which alllow us to
+change the database without too much
+extra work,
+ Create automated tests and unit-test
+all the parts of a software
+ Implement patterns everywhere
+ What's more, nowadays we have even more ways of doing exactly the same thing - either by knowing better frameworks / libraries / components or by selecting the best algorithms - and making decisions like this take some time.
+ The time necessary to create / decide and execute all this stuff is quite big, but I want to believe that it is well spent when you are no longer required to start from zero when you can no longer maintain an application, for instance.
+
+-  rshimoda
+  493  8  17
+ add comment
+ With increasing complexity comes a vastly increased time needed to finish a product.
+ Looking at coding aids like coderush I think it would be extremely wrong to say that coding got slower during the years - the opposite is the case.
+
+-  Grimtron
+  2,430  2  12  26
+ You are right, it is not slower, but the project size in numbers of man months is increasing more than the complexity of the problems solved by the application, isn' it?
+– 
+ Peter Parker
+  Oct 4 '08 at 12:21
+ Well that's just because managers insist on hiring worthless programmers...You know who I'm talking about.
+– 
+ FlySwat
+  Oct 4 '08 at 12:28
+ But this really depends on your framework, team, methodology etc. I can see that new technologies demand some extra time to get used to them, but that is not much different from the old times - only that the technologies themselves offer much more flexibility.
+– 
+ Grimtron
+  Oct 4 '08 at 12:29
+ @Grimtron: sorry but I think there is no framework or technology which will allow to produce the same quality of application in half of the time/edveloper. You are right, ther are plenty new technologies out there, however the complexity of your application will also rise.
+– 
+ Peter Parker
+  Oct 4 '08 at 12:44
+ @Peter Parker:"no technology will allow to produce the same quality of application in half of the time/developer".What are you comparing here? Take MFC vs. .NET.I worked with the foundation classes for several years,and I would never go back after focusing on .NET because of the productivity gains.
+– 
+ Grimtron
+  Oct 4 '08 at 15:18
+ add comment
+ High level languages have made rapid development possible. This has counterbalanced the rise in application complexity, so that it still takes a similar amount of time to develop a quality application.
+
+-  Thomas Owens
+  42.5k  44  196  344
+  FlySwat
+  57.7k  36  178  264
+ same amount of time is not same amount of man power.
+Today you are working with more people on a project to finish it in same amount of time.
+– 
+ Peter Parker
+  Oct 4 '08 at 12:18
+ You're working with more people, but you also sell to more people.
+– 
+ Joeri Sebrechts
+  Oct 4 '08 at 12:31
+ add comment
+ Now you must build for somebody who don't need to know anything about the way it works and ensure it will run in an environment with thousand of variables aren't even related to the app purpose.
+ Thanks to modern tech, dev is faster. But needs have change, that's why it feels slower.
+ Writing a static web page and a 'simple' blog engine are just like building a hammer and a hammer factory.
+
+-  e-satis
+  132k  55  177  236
+ add comment
+ We as programmers must spend a lot of time trying to take extremely complex requirements written by analysts who have no idea what we actually "do for a living that takes so much time" and then proceed to attempt to mold those requirements into modules that fit within the unnecessary third-party libraries that we are required to used because some consultant who was hired by another consultant convinced upper-management that it was a good idea to spend a lot of money.
+ wow, that was a bit more harsh than I intended, and please pardon my grammar.
+
+-  Causas
+ add comment
+ Demand has overtaken programming tools so to solve harder and harder problems we have to work more and more. That's why we need better tools.
+
+-  gabr
+  19.8k  5  40  91
+ add comment
+ Programmers are considered notoriously bad at estimating time to completion.  It turns out though that we're not far off if we consider only the coding time -- the problem is all the other crap in our workdays, from useless meetings to, yes, goofing off on the internet.
+
+-  wnoise
+  6,140  14  25
+ add comment
+ Now at the point of this question! Even I'm facing the same, that, I was fast in programming in my school time. And now what's wrong? We're not taking it seriously, Doing pranks during working, Can't understand the problem?, bugs solving & solving & solving...? What's the actual problem that we're stuck in, & will late in programming?
+ With these kind of powerful  IDEs  (like  XCode ,  Visual Studio , or any other) we should be able to make application even faster than we made it before, right? Then why we're late???
+ The errors are more clear and point to the exact line from where it raised. Powerful compiler points in syntax errors or waring during programming time only. With  iOS 5  (for iOS Developers)  ARC  architecture even taking care of  memory-management  which was one of the toughest task before.
+Still we're slow? hmmm. What should be the reasons?
+  Common cases I found :
+ We're starting development without knowing the actual problem (or concept / flow) of app!
+ We don't giving proper deadlines to our superiors (or direct to client) about the completion of application
+ Because of not proper deadline, and to working on deadline application, we make mistakes!!
+ Taking 1st point, after some development of application, client will tell that its not in flow!!
+ Our project will not meet deadline because of lack of research in 1st point.
+ If all goes well, we're not testing the function of app. We depends on testers (if we've) that they should raise some bugs that we'll solve. Isn't it?
+ If we do good test from our side before giving it for testing, it'll less chances of bugs from tester (less bugs will feel you good, and programming will take hike, Of course!!:)).
+ There's always multiple solutions can be available for a problem, R&D (Research & Development) scenario will give you best solution from those !! It'll less your time.
+ Working on flow, is one of the important of these all scenarios, so development should be in flow. If you're developing alone this should be follow.
+ Check for the complex function of your app first. Which need more R&D and you know its not done by you easily. So you should be aware of each function of your application.
+ Developing can be even faster, if you've developed a template. Which can be use in everywhere!
+ Don't do the same code twice !!
+ Following the oops concepts will always lead you to best development (No one following this entirely, even I, but at least taking care is good).
+ Last but not least, a well rest & healthy food will boost up your mind!! Take a good rest always before working !! It'll make you mentally strong for any problem you'll facing during development.
+ These points can't boost you up! Its only on you! But probably less the time & cost of development a bit at some point.
+
+-  Hemang
+  2,750  3  11  37
+ add comment
+  -2

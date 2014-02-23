@@ -1,0 +1,57 @@
+id: 88ab8304b2f4eaa39bcc6eb4493d193d
+
+source: http://www.careercup.com/question?id=4749484005261312
+
+summary: 
+
+title: 
+
+status: 
+
+--text follows this line--
+
+
+  Software Engineer / Developers
+
+s
+
+ Design a parking lot system where you need to provide a token with the parking space number on it to each new entry for the space closest to the entrance.
+When someone leave you need update this  space as empty.
+What data structures will you use to perform the  closest empty space tracking, plus finding what all space a occupied at a give time.
+
+-  duskan  on February 13, 2014 in United States for Sales
+  Edit  |  Report Duplicate  |  Flag
+
+ Apple
+
+ Software Engineer / Developer
+
+ Algorithm
+
+  
+
+  
+
+  
+
+  
+
+ Team:  Sales
+
+ Country:  United States
+
+ Interview Type:  Phone Interview
+
+  More Questions from This Interview
+
+  
+
+  
+
+  
+
+  
+
+ function validate(){return true;}
+
+  Add a Comment
