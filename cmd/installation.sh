@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-18 23:10:45>
+## Updated: Time-stamp: <2014-02-22 23:34:14>
 ##-------------------------------------------------------------------
 . utility.sh
 source /etc/profile # TODO
@@ -15,9 +15,9 @@ function install_package ()
 {
     log "install package"
 
-    yum_install mysql-server
-    yum_install mysql
-    yum_install MySQL-python
+    # yum_install mysql-server
+    # yum_install mysql
+    # yum_install MySQL-python
     pip_install markdown
 
     # install golang
@@ -32,7 +32,7 @@ function install_package ()
 function init_db ()
 {
     log "init_db"
-    # TODO
+    # TODO connect to mysql and execute below sql scripts
     # xiaozibao/puppet/files/install_db.sql
 }
 
