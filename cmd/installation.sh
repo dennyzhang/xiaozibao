@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-22 23:34:14>
+## Updated: Time-stamp: <2014-02-24 20:48:24>
 ##-------------------------------------------------------------------
 . utility.sh
 source /etc/profile # TODO
@@ -54,7 +54,7 @@ log "install scripts to \$PATH"
 (cd $XZB_HOME/code/tool && sudo make install)
 
 log "install python libraries"
-install_pip selenium
+pip_install selenium
 
 init_db
 ## File : installation.sh ends
