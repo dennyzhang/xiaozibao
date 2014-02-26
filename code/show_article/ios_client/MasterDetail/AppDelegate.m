@@ -8,11 +8,11 @@
 
 #import "AppDelegate.h"
 
-#import "Mixpanel.h"
+// #import "Mixpanel.h"
 
 
 @implementation AppDelegate
-#define MIXPANEL_TOKEN @"e0b419ea09d6c01e60cd3747f6a2ad12"
+// #define MIXPANEL_TOKEN @"e0b419ea09d6c01e60cd3747f6a2ad12"
 
 
 
@@ -25,7 +25,7 @@
     //     splitViewController.delegate = (id)navigationController.topViewController;
     // }
 
-   [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+   // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
    //Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     return YES;

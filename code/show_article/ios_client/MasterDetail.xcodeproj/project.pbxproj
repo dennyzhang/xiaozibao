@@ -491,7 +491,6 @@
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/Headers\"",
 					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Mixpanel\"",
 					"\"${PODS_ROOT}/Headers/SWRevealViewController\"",
 				);
 				INFOPLIST_FILE = "MasterDetail/MasterDetail-Info.plist";

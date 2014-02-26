@@ -11,7 +11,7 @@
 #import "DetailViewController.h"
 
 #import "AFJSONRequestOperation.h"
-#import "Mixpanel.h"
+// #import "Mixpanel.h"
 #import "Posts.h"
 
 #import "constants.h"
@@ -383,12 +383,12 @@ if (shouldAppendHead != YES){
 
     CFRelease(uuidRef);
 
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    // Mixpanel *mixpanel = [Mixpanel sharedInstance];
 
-    [mixpanel track:@"Article Open" properties:@{
-        @"DeviceId":uuidString,
-          @"Postid": post.postid
-          }];
+    // [mixpanel track:@"Article Open" properties:@{
+    //     @"DeviceId":uuidString,
+    //       @"Postid": post.postid
+    //       }];
 
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.textLabel.textColor = [UIColor grayColor];

@@ -31,17 +31,6 @@ install_resource()
       ;;
   esac
 }
-install_resource 'Mixpanel/Mixpanel/MPArrowLeft.png'
-install_resource 'Mixpanel/Mixpanel/MPArrowLeft@2x.png'
-install_resource 'Mixpanel/Mixpanel/MPArrowRight.png'
-install_resource 'Mixpanel/Mixpanel/MPArrowRight@2x.png'
-install_resource 'Mixpanel/Mixpanel/MPCheckmark.png'
-install_resource 'Mixpanel/Mixpanel/MPCheckmark@2x.png'
-install_resource 'Mixpanel/Mixpanel/MPDismissKeyboard.png'
-install_resource 'Mixpanel/Mixpanel/MPDismissKeyboard@2x.png'
-install_resource 'Mixpanel/Mixpanel/MPLogo.png'
-install_resource 'Mixpanel/Mixpanel/MPLogo@2x.png'
-install_resource 'Mixpanel/Mixpanel/MPSurvey.storyboard'
 
 rsync -avr --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rm "$RESOURCES_TO_COPY"

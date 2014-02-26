@@ -1,5 +1,4 @@
 platform :ios, '7.0'
 pod 'AFNetworking', '~> 1.3'
 pod 'SWRevealViewController'
-pod 'Mixpanel'
 xcodeproj './MasterDetail.xcodeproj'
