@@ -53,19 +53,10 @@ code/webcrawl_article/snake_worker/rel/webcrawl_article/snake_worker/
 code/webcrawl_article/snake_worker/rel/snake_worker/
 webcrawler_data/
 webcrawl_article/snake_worker/deps/
+code/webcrawl_article/snake_worker/deps/
 
 code/show_article/ios_client/Podfile.lock
 code/show_article/ios_client/Pods/Manifest.lock
-code/show_article/ios_client/MasterDetail.xcworkspace/xcuserdata/
-code/webcrawl_article/snake_worker/deps/
-code/show_article/ios_client/Pods/BuildHeaders/Mixpanel/
-code/show_article/ios_client/Pods/Headers/Mixpanel/
-code/show_article/ios_client/Pods/Mixpanel/
-code/show_article/ios_client/Pods/Pods-Mixpanel-Private.xcconfig
-code/show_article/ios_client/Pods/Pods-Mixpanel-dummy.m
-code/show_article/ios_client/Pods/Pods-Mixpanel-prefix.pch
-code/show_article/ios_client/Pods/Pods-Mixpanel.xcconfig
-code/show_article/ios_client/Pods/Pods.xcodeproj/xcuserdata/mac.xcuserdatad/xcschemes/Pods-Mixpanel.xcscheme
 
 erl_crash.dump
 obsolte
