@@ -55,9 +55,6 @@ webcrawler_data/
 webcrawl_article/snake_worker/deps/
 code/webcrawl_article/snake_worker/deps/
 
-code/show_article/ios_client/Podfile.lock
-code/show_article/ios_client/Pods/Manifest.lock
-
 erl_crash.dump
 obsolte
 raw_to_be_deleted
