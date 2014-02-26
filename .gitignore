@@ -54,6 +54,8 @@ code/webcrawl_article/snake_worker/rel/snake_worker/
 webcrawler_data/
 webcrawl_article/snake_worker/deps/
 code/webcrawl_article/snake_worker/deps/
+code/webcrawl_article/snake_worker/ebin/*.beam
+code/webcrawl_article/snake_worker/rel
 
 erl_crash.dump
 obsolte
