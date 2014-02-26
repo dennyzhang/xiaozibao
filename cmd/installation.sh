@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-24 20:48:24>
+## Updated: Time-stamp: <2014-02-25 21:29:21>
 ##-------------------------------------------------------------------
 . utility.sh
 source /etc/profile # TODO
@@ -43,6 +43,13 @@ function update_profile ()
     update_cfg $cfg_file "XZB_HOME" "$(dirname `pwd`)"
 }
 
+function setup_ios_env ()
+{
+    log "setup ios env in OSX for iPhone development "
+    # TODO follow instruction of xiaozibao/code/show_article/ios_client/README.md
+}
+
+setup_ios_env
 install_package
 update_profile
 
