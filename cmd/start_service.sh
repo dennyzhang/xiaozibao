@@ -5,10 +5,9 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-02-18 23:08:07>
+## Updated: Time-stamp: <2014-03-10 13:29:55>
 ##-------------------------------------------------------------------
 . utility.sh
-source /etc/profile # TODO
 function start_rabbitmq ()
 {
     log "start rabbitmq"

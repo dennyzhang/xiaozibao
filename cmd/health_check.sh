@@ -5,11 +5,9 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-18 23:07:24>
+## Updated: Time-stamp: <2014-03-10 13:29:54>
 ##-------------------------------------------------------------------
 . utility.sh
-source /etc/profile # TODO
-
 snake_worker_logdir="/usr/local/xiaozibao/snake_worker/log"
 
 log "Check service running"

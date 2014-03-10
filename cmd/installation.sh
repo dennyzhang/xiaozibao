@@ -5,10 +5,9 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-25 21:29:21>
+## Updated: Time-stamp: <2014-03-10 13:31:57>
 ##-------------------------------------------------------------------
 . utility.sh
-source /etc/profile # TODO
 # ensure_variable_isset "$XZB_HOME" # TODO
 
 function install_package ()
@@ -19,6 +18,7 @@ function install_package ()
     # yum_install mysql
     # yum_install MySQL-python
     pip_install markdown
+    pip_install MySQL-python
 
     # install golang
     # yum_install erlang
@@ -41,6 +41,7 @@ function update_profile ()
     cfg_file="/etc/profile"
     log "update $cfg_file to configure global environments"
     update_cfg $cfg_file "XZB_HOME" "$(dirname `pwd`)"
+    source /etc/profile
 }
 
 function setup_ios_env ()

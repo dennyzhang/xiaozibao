@@ -5,10 +5,9 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-02-18 22:27:04>
+## Updated: Time-stamp: <2014-03-10 13:29:56>
 ##-------------------------------------------------------------------
 . utility.sh
-source /etc/profile # TODO
 ensure_variable_isset "$XZB_HOME" # TODO remove this code duplication
 
 log "install html directories"
