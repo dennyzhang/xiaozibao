@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-10 13:31:57>
+## Updated: Time-stamp: <2014-03-10 15:19:01>
 ##-------------------------------------------------------------------
 . utility.sh
 # ensure_variable_isset "$XZB_HOME" # TODO
@@ -17,10 +17,11 @@ function install_package ()
     # yum_install mysql-server
     # yum_install mysql
     # yum_install MySQL-python
+    # yum_install python-pip
     pip_install markdown
     pip_install MySQL-python
 
-    # install golang
+    # yum_install golang
     # yum_install erlang
 
     # install snake
@@ -50,9 +51,9 @@ function setup_ios_env ()
     # TODO follow instruction of xiaozibao/code/show_article/ios_client/README.md
 }
 
+update_profile
 setup_ios_env
 install_package
-update_profile
 
 log "install html directories"
 [ -d $XZB_HOME/html_data/ ] || mkdir -p $XZB_HOME/html_data
