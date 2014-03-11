@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-10 13:29:54>
+## Updated: Time-stamp: <2014-03-11 14:38:02>
 ##-------------------------------------------------------------------
 . utility.sh
 snake_worker_logdir="/usr/local/xiaozibao/snake_worker/log"
@@ -15,8 +15,8 @@ sudo lsof -i tcp:55672 || sudo lsof -i tcp:5672 || exit_error "Rabbitmq is not r
 sudo snake_workerd ping || exit_error "snake_workerd is not running"
 
 log "Check web server running"
-sudo lsof -i tcp:9080 || exit_error "webserver is not running"
-sudo lsof -i tcp:9081 || exit_error "smarty_html is not running"
+sudo lsof -i tcp:9080 | grep LISTEN || exit_error "webserver is not running"
+sudo lsof -i tcp:9081 | grep LISTEN || exit_error "smarty_html is not running"
 
 log "Check mysqld running"
 sudo ps -ef | grep mysqld || exit_error "mysqld is not running"

@@ -7,12 +7,19 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-15 15:19:33>
+## Updated: Time-stamp: <2014-03-11 14:43:42>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
 from util import POST
 from util import fill_post_data, fill_post_meta
+from sqlalchemy import create_engine
+
+db = None
+
+def create_db_engine():
+    global db
+    db = create_engine('mysql://user_2013:ilovechina@localhost/xzb')
 
 # sample: data.get_post("ffa72494d91aeb2e1153b64ac7fb961f")
 def get_post(post_id):
@@ -67,15 +74,18 @@ def list_user_post(userid, date):
     return user_posts + group_posts
 
 def list_topic(topic, start_num, count):
-    conn = MySQLdb.connect(config.DB_HOST, config.DB_USERNAME, config.DB_PWD, \
-            config.DB_NAME, charset='utf8', port=3306)
-    cursor = conn.cursor()
+    global db
+    conn = db.connect()
+
+    # conn = MySQLdb.connect(config.DB_HOST, config.DB_USERNAME, config.DB_PWD, \
+    #         config.DB_NAME, charset='utf8', port=3306)
+    # cursor = conn.cursor()
     sql_format = "select posts.id, posts.category, posts.title from posts where category = '%s' order by num desc limit %d offset %d;"
     sql = sql_format % (topic, count, start_num)
     print sql
-    cursor.execute(sql)
+    cursor = conn.execute(sql)
     out = cursor.fetchall()
-    cursor.close()
+    conn.close()
     user_posts = POST.lists_to_posts(out)
     return user_posts
 

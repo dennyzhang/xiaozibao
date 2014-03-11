@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-02-16 17:58:27>
+## Updated: Time-stamp: <2014-03-11 14:40:57>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -126,6 +126,7 @@ def handle_feedback(uid, postid, comment):
 ################################################################
 
 if __name__ == "__main__":
+    data.create_db_engine()
     app.debug = True
     app.run(host="0.0.0.0", port = int(config.FLASK_SERVER_PORT))
 ## File : server.py

@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-03-10 13:29:55>
+## Updated: Time-stamp: <2014-03-11 14:39:36>
 ##-------------------------------------------------------------------
 . utility.sh
 function start_rabbitmq ()
@@ -30,14 +30,14 @@ function start_webserver ()
 {
     log "start webserver"
 
-    (cd $XZB_HOME/code/show_article/webserver && sudo lsof -i tcp:9080 || nohup python ./server.py &)
+    (cd $XZB_HOME/code/show_article/webserver && sudo lsof -i tcp:9080 | grep LISTEN || nohup python ./server.py &)
 }
 
 function smarty_html ()
 {
     log "smarty html"
 
-    (cd $XZB_HOME/code/show_article/smarty_html && sudo lsof -i tcp:9081 || nohup python ./server.py &)
+    (cd $XZB_HOME/code/show_article/smarty_html && sudo lsof -i tcp:9081 | grep LISTEN || nohup python ./server.py &)
 }
 
 start_rabbitmq

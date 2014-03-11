@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-02-20 01:01:25>
+## Updated: Time-stamp: <2014-03-10 15:24:44>
 ##-------------------------------------------------------------------
 source /etc/profile # TODO
 function log()
@@ -104,7 +104,7 @@ function pip_install ()
 {
     package=${1?}
     echo "pip install package $package"
-    (pip freeze | grep $package) || sudo pip install selenium
+    (pip freeze | grep $package) || sudo pip install $package
 }
 
 function yum_install ()

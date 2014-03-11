@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-10 15:19:01>
+## Updated: Time-stamp: <2014-03-11 14:37:10>
 ##-------------------------------------------------------------------
 . utility.sh
 # ensure_variable_isset "$XZB_HOME" # TODO
@@ -18,11 +18,15 @@ function install_package ()
     # yum_install mysql
     # yum_install MySQL-python
     # yum_install python-pip
-    pip_install markdown
-    pip_install MySQL-python
-
     # yum_install golang
     # yum_install erlang
+    # yum_install rabbitmq-server
+
+    pip_install markdown
+    pip_install flask
+    pip_install MySQL-python
+    pip_install pika
+    pip_install Sqlalchemy
 
     # install snake
     which snake_workerd || (cd $XZB_HOME/code/webcrawl_article/snake_worker && rm -rf rel/snake_worker && make release && sudo make install)
