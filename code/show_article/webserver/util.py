@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-02-15 00:36:01>
+## Updated: Time-stamp: <2014-03-11 17:09:25>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -15,6 +15,7 @@ import json
 import fnmatch
 import os
 
+import json
 from logging.handlers import RotatingFileHandler
 import logging
 import sys
@@ -109,10 +110,19 @@ class POST:
     def __init__(self, id, category, title):
         self.id = id
         self.category = category.encode('utf-8')
-        self.title = title.encode('utf-8')
+        self.title = self.escape_string(title.encode('utf-8'))
         self.summary = ""
         self.source = ""
         self.content = ""
+
+    def escape_string(self, string):
+        str1=string.replace('"', '\\"')
+        str2=str1
+        #str2=str1.replace('[', "\\[").replace(']', "\\]")
+        #str3=str2.replace('(', "\\(").replace(')', "\\)")
+        str3=str2
+        str4=str3.replace('{', "\\{").replace('}', "\\}")
+        return str4
 
     def print_obj(self):
         print "id:%s, category:%s, title:%s, summary:%s, content:%s\n" % \

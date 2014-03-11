@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2013-12-29>
-## Updated: Time-stamp: <2014-03-11 14:39:36>
+## Updated: Time-stamp: <2014-03-11 14:46:33>
 ##-------------------------------------------------------------------
 . utility.sh
 function start_rabbitmq ()
@@ -29,20 +29,18 @@ function start_snaker ()
 function start_webserver ()
 {
     log "start webserver"
-
     (cd $XZB_HOME/code/show_article/webserver && sudo lsof -i tcp:9080 | grep LISTEN || nohup python ./server.py &)
 }
 
 function smarty_html ()
 {
     log "smarty html"
-
     (cd $XZB_HOME/code/show_article/smarty_html && sudo lsof -i tcp:9081 | grep LISTEN || nohup python ./server.py &)
 }
 
-start_rabbitmq
 start_mysqld
-start_snaker
 start_webserver
 smarty_html
+start_rabbitmq
+start_snaker
 ## File : start_service.sh ends

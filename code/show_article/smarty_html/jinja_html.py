@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-30 00:00:00>
-## Updated: Time-stamp: <2014-01-15 12:54:52>
+## Updated: Time-stamp: <2014-03-11 17:11:49>
 ##-------------------------------------------------------------------
 from jinja2 import Template
 from urllib2 import urlopen
@@ -151,7 +151,7 @@ def convert_chinese_date(date):
 def request_json(url):
     content = urlopen(url).read() # TODO: defensive coding
     content = content.decode('utf-8') # TODO: more effcient way
-
+    #log.info(content)
     # decode json
     json_obj = json.loads(content) # TODO: defensive coding
     return (True, json_obj)

@@ -1,5 +1,6 @@
 *.beam
 *.pyc
+*.data
 nohup.out
 .DS_Store
 
@@ -51,7 +52,7 @@ code/webcrawl_article/snake_worker/rel/webcrawl_article/snake_worker/lib/webtool
 code/webcrawl_article/snake_worker/rel/webcrawl_article/snake_worker/lib/wx-1.0/
 code/webcrawl_article/snake_worker/rel/webcrawl_article/snake_worker/
 code/webcrawl_article/snake_worker/rel/snake_worker/
-webcrawler_data/
+
 webcrawl_article/snake_worker/deps/
 code/webcrawl_article/snake_worker/deps/
 code/webcrawl_article/snake_worker/ebin/*.beam
