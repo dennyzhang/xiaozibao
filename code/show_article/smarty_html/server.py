@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-15 11:33:40>
+## Updated: Time-stamp: <2014-03-12 17:27:18>
 ##-------------------------------------------------------------------
 import os
 from flask import Flask, request, make_response
@@ -45,8 +45,11 @@ def list_topic():
     topic = request.args.get('topic', '')
     start_num = request.args.get('start_num', 0)
     count = request.args.get('count', 10)
-    url = "http://{0}:{1}/api_list_topic?topic={2}&start_num={3}&count={4}".format(
-        config.WEBSERVER_HOST, config.WEBSERVER_PORT, topic, start_num, count)
+    voteup = request.args.get('voteup', -1)
+    votedown = request.args.get('votedown', -1)
+
+    url = "http://{0}:{1}/api_list_topic?topic={2}&start_num={3}&count={4}&voteup={5}&votedown={6}".format(
+        config.WEBSERVER_HOST, config.WEBSERVER_PORT, topic, start_num, count, voteup, votedown)
     filepath = "%s-%s-%s.html" % (topic, start_num, count)
 
     # TODO: improve time performance to cache

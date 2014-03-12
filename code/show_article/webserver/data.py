@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-11 19:14:46>
+## Updated: Time-stamp: <2014-03-12 17:31:27>
 ##-------------------------------------------------------------------
 import MySQLdb
 import config
@@ -75,12 +75,18 @@ def get_post(post_id):
 
 #     return user_posts + group_posts
 
-def list_topic(topic, start_num, count):
+def list_topic(topic, start_num, count, voteup, votedown):
     global db
     conn = db.connect()
 
-    sql_format = "select posts.id, posts.category, posts.title from posts where category = '%s' order by num desc limit %d offset %d;"
-    sql = sql_format % (topic, count, start_num)
+    extra_where_clause = ""
+    if voteup != -1:
+        extra_where_clause = "and %s voteup = %d" % (extra_where_clause, voteup)
+    if votedown != -1:
+        extra_where_clause = "and %s votedown = %d" % (extra_where_clause, votedown)
+
+    sql_format = "select posts.id, posts.category, posts.title from posts where category = '%s' %s order by num desc limit %d offset %d;"
+    sql = sql_format % (topic, extra_where_clause, count, start_num)
     print sql
     cursor = conn.execute(sql)
     out = cursor.fetchall()

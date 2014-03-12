@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-12 17:08:03>
+## Updated: Time-stamp: <2014-03-12 17:29:26>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -72,7 +72,10 @@ def list_topic():
     topic = request.args.get('topic', '')
     start_num = request.args.get('start_num', 0)
     count = request.args.get('count', 10)
-    posts = data.list_topic(topic, int(start_num), int(count))
+    voteup = request.args.get('voteup', -1)
+    votedown = request.args.get('votedown', -1)
+
+    posts = data.list_topic(topic, int(start_num), int(count), int(voteup), int(votedown))
     content = render_template('list_topic.json', posts=posts)
     content = smarty_remove_extra_comma(content)
     resp = make_response(content, 200)

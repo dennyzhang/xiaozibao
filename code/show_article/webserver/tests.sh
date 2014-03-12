@@ -5,12 +5,13 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-12 11:51:54>
+## Updated: Time-stamp: <2014-03-12 17:25:42>
 ##-------------------------------------------------------------------
 . $XZB_HOME/cmd/utility.sh
 
 request_url_get "http://127.0.0.1:9080/api_list_topic?topic=idea_startup&start_num=0&count=10" -I
 request_url_get "http://127.0.0.1:9080/api_get_post?id=603b7839ca90880485b9895789291e25"
+request_url_get "http://127.0.0.1:9080/api_list_topic?topic=idea_startup&start_num=0&count=10&voteup=0" -I
 
 # request_url_get http://127.0.0.1:9080/api_list_user_post?userid=denny
 # request_url_get http://127.0.0.1:9080/api_list_user_post?userid=denny&date=2013-01-24
