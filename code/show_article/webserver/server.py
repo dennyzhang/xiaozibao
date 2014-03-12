@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-11 14:40:57>
+## Updated: Time-stamp: <2014-03-11 19:15:24>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -53,17 +53,17 @@ def get_post():
 ## sample: http://127.0.0.1:9080/api_list_user_post?userid=denny&date=2013-01-24
 ## sample: http://127.0.0.1:9080/api_list_user_post?userid=denny
 # Note: If date is empty, list all posts deliver to a given user without filtering date
-@app.route("/api_list_user_post", methods=['GET'])
-def list_user_post():
-    # TODO defensive code
-    userid = request.args.get('userid', '')
-    date = request.args.get('date', '')
-    posts = data.list_user_post(userid, date)
-    content = render_template('list_user_post.json', posts=posts)
-    content = smarty_remove_extra_comma(content)
-    resp = make_response(content, 200)
-    resp.headers['Content-type'] = 'application/json; charset=utf-8'
-    return resp
+# @app.route("/api_list_user_post", methods=['GET'])
+# def list_user_post():
+#     # TODO defensive code
+#     userid = request.args.get('userid', '')
+#     date = request.args.get('date', '')
+#     posts = data.list_user_post(userid, date)
+#     content = render_template('list_user_post.json', posts=posts)
+#     content = smarty_remove_extra_comma(content)
+#     resp = make_response(content, 200)
+#     resp.headers['Content-type'] = 'application/json; charset=utf-8'
+#     return resp
 
 ## http://127.0.0.1:9080/api_list_topic?topic=idea_startup&start_num=0&count=10
 @app.route("/api_list_topic", methods=['GET'])
@@ -85,9 +85,10 @@ def feedback_post():
     data = request.form
     uid = data["uid"]
     postid = data["postid"]
+    category = data["category"]
     comment = data["comment"]
 
-    handle_feedback(uid, postid, comment)
+    handle_feedback(uid, category, postid, comment)
 
     status="ok"
     errmsg=""
@@ -114,7 +115,7 @@ def after_request(response):
 def insert_post():
     return "TODO be implemented"
 
-def handle_feedback(uid, postid, comment):
+def handle_feedback(uid, category, postid, comment):
     # TODO
     if comment == "tag voteup":
         log.info("voteup. postid:" + postid)

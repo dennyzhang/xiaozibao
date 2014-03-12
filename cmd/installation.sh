@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-11 14:37:10>
+## Updated: Time-stamp: <2014-03-12 09:21:01>
 ##-------------------------------------------------------------------
 . utility.sh
 # ensure_variable_isset "$XZB_HOME" # TODO
@@ -46,6 +46,9 @@ function update_profile ()
     cfg_file="/etc/profile"
     log "update $cfg_file to configure global environments"
     update_cfg $cfg_file "XZB_HOME" "$(dirname `pwd`)"
+
+    update_cfg $cfg_file "GOPATH" "${XZB_HOME}/code/webcrawl_article/webcrawler"
+
     source /etc/profile
 }
 
