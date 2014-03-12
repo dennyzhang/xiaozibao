@@ -1,0 +1,12 @@
+ul {
+	list-style: none;
+}
+
+li {
+	list-style: none;
+	border-bottom: 1px solid #dedede;
+}
+
+.id {
+	color: #934523;
+}

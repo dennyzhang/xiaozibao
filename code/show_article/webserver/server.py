@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-11 19:15:24>
+## Updated: Time-stamp: <2014-03-12 16:29:36>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -16,7 +16,7 @@ from flask import request
 
 from util import log
 from util import POST
-from util import get_id_by_title
+# from util import get_id_by_title
 from util import smarty_remove_extra_comma, wash_content
 
 import config
@@ -116,11 +116,17 @@ def insert_post():
     return "TODO be implemented"
 
 def handle_feedback(uid, category, postid, comment):
-    # TODO
+    dir_name = "%s/%s" % (config.DATA_BASEDIR, category)
+
     if comment == "tag voteup":
-        log.info("voteup. postid:" + postid)
+        log.info("%s. postid:%s, category:%s." %(comment, postid, category))
+        meta_filename = "%s/%s" % (dir_name, "voteup.meta")
+        open(meta_filename, "ab").write("\n%s" % postid)
+
     elif comment == "tag votedown":
-        log.info("votedown. postid:" + postid)
+        log.info("%s. postid:%s, category:%s." %(comment, postid, category))
+        meta_filename = "%s/%s" % (dir_name, "votedown.meta")
+        open(meta_filename, "ab").write("\n%s" % postid)
     else:
         log.info("unknown comment:%s. postid:%s" % (comment, postid))
 

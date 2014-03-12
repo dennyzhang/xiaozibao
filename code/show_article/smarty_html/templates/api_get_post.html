@@ -15,11 +15,75 @@
   <link rel="stylesheet" href="resource/app.css"/>
 </head>
 <body>
-  <nav>
+<script>
 
+function parseHashBangArgs(queryString) {
+    var params = {}, queries, temp, i, l;
+    if (queryString.indexOf('#') != -1) {
+       queryString = queryString.split("#")[0];
+    }
+    // Split into key/value pairs
+    queries = queryString.split("&");
+ 
+    // Convert the array of strings into an object
+    for ( i = 0, l = queries.length; i < l; i++ ) {
+        temp = queries[i].split('=');
+        params[temp[0]] = temp[1];
+    }
+
+    return params;
+};
+
+  function changeVoteFunction(event) {
+    var a = document.createElement('a');
+    a.href = document.URL;
+    document.getElementById("post_form").action='http://'+a.hostname+':9080/api_feedback_post';
+    params = parseHashBangArgs(a.search);
+
+    document.getElementById("form_category").value=params['category'];
+    document.getElementById("form_id").value=params['?id'];
+
+    if (event.target.id == 'votedown') {
+       document.getElementById("form_comment").value='tag votedown';
+       document.getElementById("votedown").style.backgroundPosition="-80px -78px";
+    }
+    else {
+       document.getElementById("form_comment").value='tag voteup';
+       document.getElementById("voteup").style.backgroundPosition="-80px -78px";
+    }
+
+  var frm = document.getElementById('post_form');
+  if (frm) {
+        frm.submit();
+  }
+
+}
+</script>
+
+  <form action='http://127.0.0.1:9081/api_feedback_post' method='POST' target='hidden-form' id='post_form'>
+    <input type='hidden' name='uid' value='test'/>
+    <input type='hidden' id='form_id' name='postid' value='25b83bb7702ad180532a8d7824f41d16'/>
+    <input type='hidden' id='form_category' name='category' value='algorithm'/>
+    <input type='hidden' id='form_comment' name='comment' value='tag voteup'/>
+    <input type='submit' hidden='true'/>
+  </form>
+  <IFRAME style="display:none" name="hidden-form"></IFRAME>
+
+  <nav>
   </nav>
 
   <article id="article-content">
+
+    <hgroup name="vote">
+        <a href="#top" id='votedown_item' onclick="changeVoteFunction(event)">
+          <p id="votedown" class="votedown1">全文votedown<p>
+        </a>
+
+      <a href="http://www.baidu.com">
+        <p class="voteup1">全文voteup<p>
+      </a>
+    </hgroup>
+
     <hgroup name="top">
       <h1>{{post.title}}</h1>
       <h2>{{post.summary}}</h2>

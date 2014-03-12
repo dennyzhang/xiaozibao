@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-11 17:09:25>
+## Updated: Time-stamp: <2014-03-12 11:52:02>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -38,17 +38,17 @@ log.setLevel(logging.INFO)
 log.addHandler(consoleHandler)
 log.addHandler(Rthandler)
 
-## id: md5sum(category + "/" + title)
-# Note: "echo denny | md5cksum" is diffferent from "echo -n denny | md5sum"
-def get_id_by_title(category, title):
-    d = hashlib.md5()
-    d.update(category+"/"+title)
-    return d.hexdigest()
+# ## id: md5sum(category + "/" + title)
+# # Note: "echo denny | md5cksum" is diffferent from "echo -n denny | md5sum"
+# def get_id_by_title(category, title):
+#     d = hashlib.md5()
+#     d.update(category+"/"+title)
+#     return d.hexdigest()
 
-def get_post_filename(post):
-    for root, dirnames, filenames in os.walk("%s/%s/" % (config.DATA_BASEDIR, post.category)):
-        for filename in fnmatch.filter(filenames, post.title+".data"):
-            return "%s/%s" % (root, post.title)
+def get_post_filename_bytitle(title, category):
+    for root, dirnames, filenames in os.walk("%s/%s/" % (config.DATA_BASEDIR, category)):
+        for filename in fnmatch.filter(filenames, title+".data"):
+            return "%s/%s" % (root, title)
 
     return ""
 
@@ -57,7 +57,7 @@ def wash_content(content):
     return ret
 
 def fill_post_data(post):
-    fname = get_post_filename(post) + ".data"
+    fname = get_post_filename_bytitle(post.title, post.category) + ".data"
     with open(fname, 'r') as f:
         content = f.read()
 
@@ -95,7 +95,7 @@ def get_meta_dict(fname):
 
 def fill_post_meta(post):
     try:
-        fname = get_post_filename(post) + ".data"
+        fname = get_post_filename_bytitle(post.title, post.category) + ".data"
         metadata_dict = get_meta_dict(fname)
         if metadata_dict.has_key("title") and metadata_dict["title"].strip() !="":
             post.title = metadata_dict["title"]
