@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-12 11:52:02>
+## Updated: Time-stamp: <2014-03-12 17:06:50>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -37,6 +37,16 @@ log.setLevel(logging.INFO)
 #log.setLevel(logging.WARNING)
 log.addHandler(consoleHandler)
 log.addHandler(Rthandler)
+
+#  --8<-------------------------- separator ------------------------>8--
+fb_log = logging.getLogger('xzb_feedback')
+
+fb_Rthandler = RotatingFileHandler('xzb_feedback.log', maxBytes=5*1024*1024,backupCount=5)
+fb_Rthandler.setLevel(logging.INFO)
+
+fb_log.setLevel(logging.INFO)
+fb_log.addHandler(consoleHandler)
+fb_log.addHandler(fb_Rthandler)
 
 # ## id: md5sum(category + "/" + title)
 # # Note: "echo denny | md5cksum" is diffferent from "echo -n denny | md5sum"

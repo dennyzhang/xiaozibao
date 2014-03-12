@@ -49,7 +49,7 @@ function parseHashBangArgs(queryString) {
     }
     else {
        document.getElementById("form_comment").value='tag voteup';
-       document.getElementById("voteup").style.backgroundPosition="-80px -78px";
+       document.getElementById("voteup").style.backgroundPosition="-80px -40px";
     }
 
   var frm = document.getElementById('post_form');
@@ -74,15 +74,13 @@ function parseHashBangArgs(queryString) {
 
   <article id="article-content">
 
-    <hgroup name="vote">
-        <a href="#top" id='votedown_item' onclick="changeVoteFunction(event)">
-          <p id="votedown" class="votedown1">全文votedown<p>
-        </a>
+    <a href="#top" id='voteup_item' onclick="changeVoteFunction(event)">
+      <p id='voteup' class="voteup1">全文voteup</p>
+    </a>
 
-      <a href="http://www.baidu.com">
-        <p class="voteup1">全文voteup<p>
-      </a>
-    </hgroup>
+    <a href="#top" id='votedown_item' onclick="changeVoteFunction(event)">
+      <p id='votedown' class="votedown1">全文votedown</p>
+    </a>
 
     <hgroup name="top">
       <h1>{{post.title}}</h1>
@@ -95,8 +93,9 @@ function parseHashBangArgs(queryString) {
 
   <footer>
     <a href="#top">
-      <p class="stamp-wan">全文完<p>
+      <p class="stamp-wan">全文完</p>
     </a>
+
   </footer>
 </body>
 </html>
