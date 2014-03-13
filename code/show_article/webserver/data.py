@@ -7,9 +7,8 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-12 17:31:27>
+## Updated: Time-stamp: <2014-03-12 18:46:40>
 ##-------------------------------------------------------------------
-import MySQLdb
 import config
 from util import POST
 from util import fill_post_data, fill_post_meta
@@ -81,9 +80,9 @@ def list_topic(topic, start_num, count, voteup, votedown):
 
     extra_where_clause = ""
     if voteup != -1:
-        extra_where_clause = "and %s voteup = %d" % (extra_where_clause, voteup)
+        extra_where_clause = "%s and voteup = %d" % (extra_where_clause, voteup)
     if votedown != -1:
-        extra_where_clause = "and %s votedown = %d" % (extra_where_clause, votedown)
+        extra_where_clause = "%s and votedown = %d" % (extra_where_clause, votedown)
 
     sql_format = "select posts.id, posts.category, posts.title from posts where category = '%s' %s order by num desc limit %d offset %d;"
     sql = sql_format % (topic, extra_where_clause, count, start_num)

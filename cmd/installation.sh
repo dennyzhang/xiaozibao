@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-12 09:21:01>
+## Updated: Time-stamp: <2014-03-12 18:45:34>
 ##-------------------------------------------------------------------
 . utility.sh
 # ensure_variable_isset "$XZB_HOME" # TODO
