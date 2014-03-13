@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-12 17:29:26>
+## Updated: Time-stamp: <2014-03-13 00:40:39>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -121,13 +121,6 @@ def insert_post():
 def handle_feedback(uid, category, postid, comment):
     dir_name = "%s/%s" % (config.DATA_BASEDIR, category)
     fb_log.info("%s %s %s" %(postid, category, comment))
-    if comment == "tag voteup":
-        meta_filename = "%s/%s" % (dir_name, "voteup.meta")
-        open(meta_filename, "ab").write("\n%s" % postid)
-
-    elif comment == "tag votedown":
-        meta_filename = "%s/%s" % (dir_name, "votedown.meta")
-        open(meta_filename, "ab").write("\n%s" % postid)
 
 ################################################################
 
