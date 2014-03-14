@@ -7,7 +7,7 @@ check:
 test:
 	(cd ./code/show_article/webserver && make test)
 	(cd ./code/show_article/smarty_html && make test)
-	(cd ./code/webcrawl_article/webcrawler && make test)
+	(source /etc/profile && cd ./code/webcrawl_article/webcrawler && make test)
 
 update:
 	sudo xzb_update_category.sh
