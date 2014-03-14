@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2014-02-14 11:04:36>
+## Updated: Time-stamp: <2014-03-14 09:21:11>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -18,10 +18,7 @@ function update_category_list() {
     category_list=${1?}
     lists=($category_list)
     for category_name in ${lists[*]}; do
-        log "[$BIN_NAME.sh] Generate metadata files for $XZB_HOME/webcrawler_data/$category_name"
-        update_meta_skeleton "$XZB_HOME/webcrawler_data/$category_name"
-
-        log "[$BIN_NAME.sh] Generate sql file for $directory."
+        log "[$BIN_NAME.sh] Generate sql file for $category_name."
         sql_output=$(generate_category_sql "$XZB_HOME/webcrawler_data/$category_name")
         if [ $? -ne 0 ]; then
             log "[$BIN_NAME.sh] Generate sql file failed."
@@ -49,26 +46,10 @@ function generate_category_sql() {
     for file in `find $directory -name '*_raw*' -prune -o -name '*.data' -print`
     do
         short_file=`basename $file`
-        title=${short_file%.data}
-        md5=$(echo -n "$category/$title"| md5sum | awk -F' ' '{print $1}')
+        md5=${short_file%.data}
+        title=$(grep "title: " $file | awk -F'title: ' '{print $2}')
         sql="REPLACE INTO posts(id, category, title) VALUES (\"$md5\", \"$category\", \"$title\");"
         echo $sql
-    done
-    IFS=$SAVEIFS
-}
-
-function update_meta_skeleton() {
-    directory=${1?"base web page directory is required for generating metadata file skeleton"}
-    category=`basename $directory`
-    SAVEIFS=$IFS
-    IFS=$(echo -en "\n\b")
-    for file in `find $directory -name '*_raw*' -prune -o -name '*.data' -print`
-    do
-        short_file=`basename "$file"`
-        title=${short_file%.data}
-        md5=$(echo -n "$category/$title"| md5sum | awk -F' ' '{print $1}')
-        sed -ie "s/^id:.*/id: $md5/" "$file"
-        rm "${file}e" # workaround for mac' sed compatible issue
     done
     IFS=$SAVEIFS
 }
@@ -80,11 +61,11 @@ Usage: ${BIN_NAME}.sh [OPTION]
 
 Sample: sudo ${BIN_NAME}.sh -c "lifehack joke"
 
-+-------------------------------+   +-----------------------------------+     +----------------------------+
-|                               |   |                                   |     |                            |
-| generate meta file if missing +---+ insert posts to mysql, if missing +-----+  update posts' id to mysql |
-|                               |   |                                   |     |                            |
-+-------------------------------+   +-----------------------------------+     +----------------------------+
++-----------------------------------+     +----------------------------+
+|                                   |     |                            |
+| insert posts to mysql, if missing +-----+  update posts' id to mysql |
+|                                   |     |                            |
++-----------------------------------+     +----------------------------+
 
 ${BIN_NAME} is a shell script to update maintain posts information to mysql.
 

@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-12 17:06:50>
+## Updated: Time-stamp: <2014-03-13 10:00:50>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -48,17 +48,10 @@ fb_log.setLevel(logging.INFO)
 fb_log.addHandler(consoleHandler)
 fb_log.addHandler(fb_Rthandler)
 
-# ## id: md5sum(category + "/" + title)
-# # Note: "echo denny | md5cksum" is diffferent from "echo -n denny | md5sum"
-# def get_id_by_title(category, title):
-#     d = hashlib.md5()
-#     d.update(category+"/"+title)
-#     return d.hexdigest()
-
-def get_post_filename_bytitle(title, category):
+def get_post_filename_byid(id, category):
     for root, dirnames, filenames in os.walk("%s/%s/" % (config.DATA_BASEDIR, category)):
-        for filename in fnmatch.filter(filenames, title+".data"):
-            return "%s/%s" % (root, title)
+        for filename in fnmatch.filter(filenames, id+".data"):
+            return "%s/%s" % (root, id)
 
     return ""
 
@@ -67,7 +60,7 @@ def wash_content(content):
     return ret
 
 def fill_post_data(post):
-    fname = get_post_filename_bytitle(post.title, post.category) + ".data"
+    fname = get_post_filename_byid(post.id, post.category) + ".data"
     with open(fname, 'r') as f:
         content = f.read()
 
@@ -105,7 +98,7 @@ def get_meta_dict(fname):
 
 def fill_post_meta(post):
     try:
-        fname = get_post_filename_bytitle(post.title, post.category) + ".data"
+        fname = get_post_filename_byid(post.id, post.category) + ".data"
         metadata_dict = get_meta_dict(fname)
         if metadata_dict.has_key("title") and metadata_dict["title"].strip() !="":
             post.title = metadata_dict["title"]
@@ -120,19 +113,11 @@ class POST:
     def __init__(self, id, category, title):
         self.id = id
         self.category = category.encode('utf-8')
-        self.title = self.escape_string(title.encode('utf-8'))
+        self.title = title.encode('utf-8')
         self.summary = ""
         self.source = ""
         self.content = ""
 
-    def escape_string(self, string):
-        str1=string.replace('"', '\\"')
-        str2=str1
-        #str2=str1.replace('[', "\\[").replace(']', "\\]")
-        #str3=str2.replace('(', "\\(").replace(')', "\\)")
-        str3=str2
-        str4=str3.replace('{', "\\{").replace('}', "\\}")
-        return str4
 
     def print_obj(self):
         print "id:%s, category:%s, title:%s, summary:%s, content:%s\n" % \

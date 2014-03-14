@@ -5,6 +5,10 @@ import ("os"
 	"syscall"
 	"strings"
         "io/ioutil"
+        "crypto/md5"
+	"io"
+	"encoding/hex"
+
 	"taskgenerator"
         "webcrawler"
 )
@@ -97,6 +101,11 @@ func execute_task(tasks []taskgenerator.Task) bool {
 
 func escpae_fname(fname string) string {
 	fname = strings.Replace(fname, "/", "_", -1)
+	fname = strings.Replace(fname, "\"", "'", -1)
+	fname = strings.Replace(fname, "{", "\\{", -1)
+	fname = strings.Replace(fname, "}", "\\}", -1)
+	fname = strings.Replace(fname, "\r", " ", -1)
+	fname = strings.Replace(fname, "	", " ", -1)
 	return fname
 }
 
@@ -107,12 +116,19 @@ func store_result(post webcrawler.Post_data) bool {
 	} else {
                 dir = root_dir + "/" + dst_dir
 	}
+	post.Title = escpae_fname(post.Title)
+	i := strings.Index(dst_dir, "/")
+	category := dst_dir[0:i]
 
-	fname := dir + "/" + escpae_fname(post.Title)
+	h := md5.New()
+	io.WriteString(h, category+"/"+post.Title)
+	post_md5 := hex.EncodeToString(h.Sum(nil))
+
+	fname := dir + "/" + post_md5
 
 	oldMask := syscall.Umask(0)
 	os.MkdirAll(dir, 0777)
-        write_data(fname+".data", post)
+        write_data(fname+".data", post, post_md5)
         syscall.Umask(oldMask)
 
 	return true
@@ -127,9 +143,9 @@ func read_file(file_path string) string {
 	return content
 }
 
-func write_data(fname_data string, post webcrawler.Post_data) bool {
-	content := "id:\n\nsource: " + post.Source + "\n\nsummary: "
-        content = content + "\n\ntitle: \n\nstatus: \n\n" + data_separator + "\n" + post.Content
+func write_data(fname_data string, post webcrawler.Post_data, post_md5 string) bool {
+	content := "id: "+ post_md5 +"\n\nsource: " + post.Source + "\n\ntitle: " + post.Title + "\n\nsummary: "
+        content = content + "\n\nstatus: \n\n" + data_separator + "\n" + post.Content
 
         if (read_file(fname_data) == content) {
 		fmt.Printf("\n============ no need to update file:" + fname_data+" ===============\n")
