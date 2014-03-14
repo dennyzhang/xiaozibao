@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-13 00:40:39>
+## Updated: Time-stamp: <2014-03-14 12:16:11>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -42,6 +42,7 @@ def get_post():
     # TODO defensive code
     id = request.args.get('id', '')
     post = data.get_post(id)
+
     post.content = wash_content(post.content)
     
     content = render_template('get_post.json', post=post)

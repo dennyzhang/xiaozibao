@@ -10,7 +10,7 @@ var generator = map[string] Stringy {
 	"^http://haowenz.com/a/[a-z]+/.*": haowenzcom_1,
 	"^http://techcrunch.com/$": techcrunch_1,
 	"^http://techcrunch.com/.*$": techcrunch_2,
-	"^http://.*.stackexchange.com/[^\\/]*$": stackexchange_1,
+	"^http://.*.stackexchange.com/.*$": stackexchange_1,
 	"^http://stackoverflow.com/questions/tagged/.*$": stackoverflow_1,
 
 	"^http://svbtle.com/$": func(url string) []Task { return generator_simple(url,

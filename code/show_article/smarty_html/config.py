@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-01-11 19:38:53>
+## Updated: Time-stamp: <2014-03-14 11:03:16>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 DB_HOST="127.0.0.1"
@@ -19,7 +19,7 @@ DB_NAME="xzb"
 FLASK_SERVER_PORT="9081"
 
 HTML_VERSION="0.0.1"
-MAX_LEN_TITLE=20
+MAX_LEN_TITLE=40
 MIN_LEN_TITLE=10
 
 MAX_LEN_SUMMARY=40

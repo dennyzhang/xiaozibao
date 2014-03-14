@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-13 10:00:50>
+## Updated: Time-stamp: <2014-03-14 12:17:14>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -57,6 +57,8 @@ def get_post_filename_byid(id, category):
 
 def wash_content(content):
     ret = content[0:config.MAX_LENGTH]
+    if ret[-1] == '\\':
+        ret =ret[0:-1]
     return ret
 
 def fill_post_data(post):
