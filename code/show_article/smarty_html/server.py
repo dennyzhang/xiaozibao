@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-12 17:27:18>
+## Updated: Time-stamp: <2014-03-16 13:47:38>
 ##-------------------------------------------------------------------
 import os
 from flask import Flask, request, make_response
@@ -28,7 +28,7 @@ if sys.getdefaultencoding() != default_encoding:
 app = Flask(__name__, static_folder=util.get_html_dir())
 
 ################# public backend api ###########################
-## sample: http://127.0.0.1:9081/show_post?id=0fa410a29c294cf498c768b0cebc99c0
+## sample: http://127.0.0.1:9181/show_post?id=0fa410a29c294cf498c768b0cebc99c0
 @app.route("/show_post", methods=['GET'])
 def show_post():
     id = request.args.get('id')

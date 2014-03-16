@@ -99,11 +99,11 @@ func execute_task(tasks []taskgenerator.Task) bool {
         return true
 }
 
-func escpae_fname(fname string) string {
+func escape_title(fname string) string {
 	fname = strings.Replace(fname, "/", "_", -1)
 	fname = strings.Replace(fname, "\"", "'", -1)
-	fname = strings.Replace(fname, "{", "\\{", -1)
-	fname = strings.Replace(fname, "}", "\\}", -1)
+	fname = strings.Replace(fname, "{", "\\[", -1)
+	fname = strings.Replace(fname, "}", "\\]", -1)
 	fname = strings.Replace(fname, "\r", " ", -1)
 	fname = strings.Replace(fname, "	", " ", -1)
 	return fname
@@ -116,7 +116,7 @@ func store_result(post webcrawler.Post_data) bool {
 	} else {
                 dir = root_dir + "/" + dst_dir
 	}
-	post.Title = escpae_fname(post.Title)
+	post.Title = escape_title(post.Title)
 	i := strings.Index(dst_dir, "/")
 	category := dst_dir[0:i]
 
@@ -150,7 +150,7 @@ func write_data(fname_data string, post webcrawler.Post_data, post_md5 string) b
         if (read_file(fname_data) == content) {
 		fmt.Printf("\n============ no need to update file:" + fname_data+" ===============\n")
         } else {
-		fmt.Printf("\n============ write file:" + fname_data+" ===============\n")
+		fmt.Printf("\n============ write file: " + fname_data+" ===============\n")
 		f_data, err := os.OpenFile(fname_data, os.O_WRONLY | os.O_CREATE | os.O_TRUNC, 0777)
 		if err != nil {
 			panic(err)

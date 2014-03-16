@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-14 12:16:11>
+## Updated: Time-stamp: <2014-03-16 13:48:14>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -36,7 +36,7 @@ def index():
     return "您持续感兴趣的，就是要采编的!"
 
 ################# public backend api ###########################
-## sample: http://127.0.0.1:9080/api_get_post?id=0fa410a29c294cf498c768b0cebc99c0
+## sample: http://127.0.0.1:9180/api_get_post?id=0fa410a29c294cf498c768b0cebc99c0
 @app.route("/api_get_post", methods=['GET'])
 def get_post():
     # TODO defensive code
@@ -51,8 +51,8 @@ def get_post():
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
 
-## sample: http://127.0.0.1:9080/api_list_user_post?userid=denny&date=2013-01-24
-## sample: http://127.0.0.1:9080/api_list_user_post?userid=denny
+## sample: http://127.0.0.1:9180/api_list_user_post?userid=denny&date=2013-01-24
+## sample: http://127.0.0.1:9180/api_list_user_post?userid=denny
 # Note: If date is empty, list all posts deliver to a given user without filtering date
 # @app.route("/api_list_user_post", methods=['GET'])
 # def list_user_post():
@@ -66,7 +66,7 @@ def get_post():
 #     resp.headers['Content-type'] = 'application/json; charset=utf-8'
 #     return resp
 
-## http://127.0.0.1:9080/api_list_topic?topic=idea_startup&start_num=0&count=10
+## http://127.0.0.1:9180/api_list_topic?topic=idea_startup&start_num=0&count=10
 @app.route("/api_list_topic", methods=['GET'])
 def list_topic():
     # TODO defensive code
@@ -113,7 +113,7 @@ def after_request(response):
 ################################################################
 
 ################# private backend api ###########################
-# sample: http://127.0.0.1:9080/api_insert_post
+# sample: http://127.0.0.1:9180/api_insert_post
 # Note: this is an internal api
 @app.route("/api_insert_post", methods=['POST'])
 def insert_post():

@@ -33,6 +33,7 @@ var fetcher = map[string] Stringy {
 			Action {Replace, "content", "(?m)^ on .*[0-9]+  Edit  \\|  Flag", ""},
 			Action {Replace, "content", "(?m)^ Loading...", ""},
 			Action {Replace, "content", "(?m)^ *[0-9]+", ""},
+			Action {Filter, "content", "s\n", "function"},
 			//Action {Replace, "content", "(?m)^  ", ""}, // TODO
 
 		})

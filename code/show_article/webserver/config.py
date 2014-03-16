@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2013-07-27 17:47:35>
+## Updated: Time-stamp: <2014-03-16 13:47:55>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 import os
@@ -16,7 +16,7 @@ DB_HOST="127.0.0.1"
 DB_USERNAME="user_2013"
 DB_PWD="ilovechina"
 DB_NAME="xzb"
-FLASK_SERVER_PORT="9080"
+FLASK_SERVER_PORT="9180"
 
 DATA_BASEDIR = os.getcwd()+"/../../../webcrawler_data"
 

@@ -37,7 +37,7 @@ function parseHashBangArgs(queryString) {
   function changeVoteFunction(event) {
     var a = document.createElement('a');
     a.href = document.URL;
-    document.getElementById("post_form").action='http://'+a.hostname+':9080/api_feedback_post';
+    document.getElementById("post_form").action='http://'+a.hostname+':9180/api_feedback_post';
     params = parseHashBangArgs(a.search);
 
     document.getElementById("form_category").value=params['category'];
@@ -60,7 +60,7 @@ function parseHashBangArgs(queryString) {
 }
 </script>
 
-  <form action='http://127.0.0.1:9081/api_feedback_post' method='POST' target='hidden-form' id='post_form'>
+  <form action='http://127.0.0.1:9181/api_feedback_post' method='POST' target='hidden-form' id='post_form'>
     <input type='hidden' name='uid' value='test'/>
     <input type='hidden' id='form_id' name='postid' value='25b83bb7702ad180532a8d7824f41d16'/>
     <input type='hidden' id='form_category' name='category' value='algorithm'/>

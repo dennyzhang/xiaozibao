@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-12 18:45:34>
+## Updated: Time-stamp: <2014-03-16 13:34:33>
 ##-------------------------------------------------------------------
 . utility.sh
 # ensure_variable_isset "$XZB_HOME" # TODO
@@ -13,7 +13,7 @@
 function install_package ()
 {
     log "install package"
-
+    # yum_install git
     # yum_install mysql-server
     # yum_install mysql
     # yum_install MySQL-python
@@ -21,6 +21,8 @@ function install_package ()
     # yum_install golang
     # yum_install erlang
     # yum_install rabbitmq-server
+    # yum install python-devel
+    # yum install mysql-devel
 
     pip_install markdown
     pip_install flask

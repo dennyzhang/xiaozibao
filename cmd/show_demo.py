@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-14>
-## Updated: Time-stamp: <2014-01-15 12:03:53>
+## Updated: Time-stamp: <2014-03-16 13:46:27>
 ##-------------------------------------------------------------------
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -20,7 +20,7 @@ def open_url():
         key = Keys.COMMAND
     else:
         key = Keys.CONTROL
-    url_format="http://127.0.0.1:9081/list_topic?start_num=0&count=10&topic=%s"
+    url_format="http://127.0.0.1:9181/list_topic?start_num=0&count=10&topic=%s"
     driver.get(url_format % "idea_startup")
 
     for category in ["coder_questions", "understand_us", "child_亲子教育"]:

@@ -7,16 +7,16 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-14 11:03:16>
+## Updated: Time-stamp: <2014-03-16 13:47:27>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 DB_HOST="127.0.0.1"
 WEBSERVER_HOST="127.0.0.1"
-WEBSERVER_PORT="9080"
+WEBSERVER_PORT="9180"
 DB_USERNAME="user_2013"
 DB_PWD="ilovechina"
 DB_NAME="xzb"
-FLASK_SERVER_PORT="9081"
+FLASK_SERVER_PORT="9181"
 
 HTML_VERSION="0.0.1"
 MAX_LEN_TITLE=40

@@ -5,14 +5,14 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-14 12:46:39>
+## Updated: Time-stamp: <2014-03-16 13:46:23>
 ##-------------------------------------------------------------------
 . utility.sh
 snake_worker_logdir="/usr/local/xiaozibao/snake_worker/log"
 
 log "Check web server running"
-sudo lsof -i tcp:9080 | grep LISTEN || exit_error "webserver is not running"
-sudo lsof -i tcp:9081 | grep LISTEN || exit_error "smarty_html is not running"
+sudo lsof -i tcp:9180 | grep LISTEN || exit_error "webserver is not running"
+sudo lsof -i tcp:9181 | grep LISTEN || exit_error "smarty_html is not running"
 
 log "Check mysqld running"
 sudo ps -ef | grep mysqld || exit_error "mysqld is not running"

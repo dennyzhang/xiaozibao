@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 ##-------------------------------------------------------------------
 ## @copyright 2013
 ## File : xzb_update_category.sh
@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2014-03-14 09:21:11>
+## Updated: Time-stamp: <2014-03-14 16:53:03>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -47,7 +47,7 @@ function generate_category_sql() {
     do
         short_file=`basename $file`
         md5=${short_file%.data}
-        title=$(grep "title: " $file | awk -F'title: ' '{print $2}')
+        title=$(grep "^title: " $file | awk -F'title: ' '{print $2}')
         sql="REPLACE INTO posts(id, category, title) VALUES (\"$md5\", \"$category\", \"$title\");"
         echo $sql
     done
