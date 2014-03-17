@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-16 13:48:14>
+## Updated: Time-stamp: <2014-03-17 01:41:30>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -107,6 +107,7 @@ def feedback_post():
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*') # TODO: to be more secured
     response.headers.add('Access-Control-Allow-Methods', 'GET')
+    response.headers.add('Access-Control-Allow-Methods', 'POST')
     response.headers.add('Access-Control-Allow-Headers', 'X-Requested-With')
     return response
 
