@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-03-12 23:15:37>
+## Updated: Time-stamp: <2014-03-17 01:22:04>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -67,6 +67,7 @@ def update_feedback(voteup_dict, votedown_dict):
 
 if __name__=='__main__':
     if '--clean_first' in sys.argv:
+        print "clean old feedback first"
         clean_old_feedback_first()
 
     update_feedback_by_logfile(sys.argv[1])

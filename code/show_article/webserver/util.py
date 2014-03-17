@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-14 12:17:14>
+## Updated: Time-stamp: <2014-03-17 01:05:59>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -19,6 +19,7 @@ import json
 from logging.handlers import RotatingFileHandler
 import logging
 import sys
+import socket
 
 format = "%(asctime)s %(filename)s:%(lineno)d - %(levelname)s: %(message)s"
 formatter = logging.Formatter(format)
@@ -41,7 +42,11 @@ log.addHandler(Rthandler)
 #  --8<-------------------------- separator ------------------------>8--
 fb_log = logging.getLogger('xzb_feedback')
 
-fb_Rthandler = RotatingFileHandler('xzb_feedback.log', maxBytes=5*1024*1024,backupCount=5)
+XZB_HOME=os.environ.get('XZB_HOME')
+assert(XZB_HOME != '')
+
+fb_filename="%s/feedback/%s_xzb_feedback.log" % (XZB_HOME, socket.gethostname())
+fb_Rthandler = RotatingFileHandler(fb_filename, maxBytes=5*1024*1024,backupCount=5)
 fb_Rthandler.setLevel(logging.INFO)
 
 fb_log.setLevel(logging.INFO)

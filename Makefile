@@ -13,7 +13,7 @@ update:
 	sudo xzb_update_category.sh
 
 regenerate_feedback:
-	(cd ./code/filter_article/ && python ./update_post_feedback.py ../show_article/webserver/xzb_feedback.log --clean_first)
+	(cd ./code/filter_article/ && ./update_post_feedback.sh)
 
 demo:
 	(cd ./cmd && ./show_demo.sh)
