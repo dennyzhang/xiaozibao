@@ -6,11 +6,12 @@
 // Copyright (c) 2013年 mac. All rights reserved.
 //
 
-#import "AFJSONRequestOperation.h"
 #import "AFHTTPClient.h"
+#import "AFJSONRequestOperation.h"
 
 #import "Posts.h"
 #import "constants.h"
+
 @implementation Posts
 @synthesize postid, title, summary, category, content, readcount;
 
@@ -63,24 +64,39 @@
   [operation start];
 }
 
-+ (void) getCategoryList
++ (NSMutableArray *)getCategoryList
 {
+     NSMutableArray *_objects = [[NSMutableArray alloc] init];
+
      NSString *urlPrefix=SERVERURL;
-     NSString *urlStr= [NSString stringWithFormat: @"%@list_topic", urlPrefix];
+     NSString *urlStr= [NSString stringWithFormat: @"%@api_list_topic", urlPrefix];
      NSURL *url = [NSURL URLWithString:urlStr];
-     NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
-     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                             path:urlStr
+                                                       parameters:nil];
+     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+     [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+         NSString *response_str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
 
-         NSMutableArray *idMArray;
-         NSArray *idList = [JSON valueForKeyPath:@"id"];
-         idMArray = [idMArray initWithArray:idList];
- 
-       } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
-      }];
+         NSLog(@"Response: %@", response_str);
 
+         [_objects insertObject:@"test1" atIndex:0];
+         [_objects insertObject:@"test2" atIndex:0];
+
+       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         [_objects insertObject:@"linux" atIndex:0];
+         [_objects insertObject:@"cloud" atIndex:0];
+         [_objects insertObject:@"security" atIndex:0];
+         [_objects insertObject:@"algorithm" atIndex:0];
+         [_objects insertObject:@"product" atIndex:0];
+         [_objects insertObject:@"concept" atIndex:0];
+       }];
      [operation start];
+     return _objects;
 }
 
 + (bool)containId:(NSMutableArray*) objects

@@ -81,10 +81,11 @@
 
 - (void)load_topic_list
 {
-    [_objects insertObject:@"story" atIndex:0];
-    [_objects insertObject:@"concept" atIndex:0];
-    [_objects insertObject:@"algorithm" atIndex:0];
-    [_objects insertObject:@"product" atIndex:0];
+    _objects = [Posts getCategoryList];
+    // [_objects insertObject:@"story" atIndex:0];
+    // [_objects insertObject:@"concept" atIndex:0];
+    // [_objects insertObject:@"algorithm" atIndex:0];
+    // [_objects insertObject:@"product" atIndex:0];
 }
 
 - (void)didReceiveMemoryWarning

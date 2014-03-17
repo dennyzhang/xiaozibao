@@ -27,10 +27,10 @@
         // Update the view.
         [self configureView];
     }
-
+    
     NSLog(@"self.masterPopoverController: %@", self.masterPopoverController);
     if (self.masterPopoverController != nil) {
-
+        
         [self.masterPopoverController dismissPopoverAnimated:YES];
     }
 }
@@ -44,18 +44,18 @@
     self.feedbackUITextField.hidden = shouldEnable;
 }
 
--(IBAction) VoteUpButton:(id)sender 
+-(IBAction) VoteUpButton:(id)sender
 {
-  // TODO
-  [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag voteup" button:self.voteupButton];
-  self.voteupButton.hidden = false;
+    // TODO
+    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag voteup" button:self.voteupButton];
+    self.voteupButton.hidden = false;
 }
 
--(IBAction) VoteDownButton:(id)sender 
+-(IBAction) VoteDownButton:(id)sender
 {
-  // TODO
-  [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag votedown" button:self.votedownButton];
-  self.votedownButton.hidden = false;
+    // TODO
+    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag votedown" button:self.votedownButton];
+    self.votedownButton.hidden = false;
 }
 
 -(IBAction) improveButton:(id)sender
@@ -65,10 +65,10 @@
     self.voteimproveButton.hidden = false;
 }
 
--(IBAction) submitButton:(id)sender 
+-(IBAction) submitButton:(id)sender
 {
-  // TODO
-   [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:self.feedbackUITextField.text button:self.votesubmitButton];
+    // TODO
+    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:self.feedbackUITextField.text button:self.votesubmitButton];
 }
 
 - (void)configureView
@@ -84,26 +84,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.detailUITextView.clipsToBounds = NO;
-
+    
     [self configureView];
-
+    
     UIBarButtonItem *collectButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks
                                       target:self
                                       action:@selector(judgePost:)];
-
+    
     self.navigationItem.rightBarButtonItem = collectButton;
     
     self.title = @"";
     
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
-    // swipe right
-    UISwipeGestureRecognizer *swipeGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeGesture:)];
-    [self.view addGestureRecognizer:swipeGesture];
-
+    // // swipe right
+    // UISwipeGestureRecognizer *swipeGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeGesture:)];
+    // [self.view addGestureRecognizer:swipeGesture];
+    
     // // swipe left
     // UISwipeGestureRecognizer *swipeLeftGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
     // swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -131,11 +131,11 @@
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-
+    
     barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-
+    
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-
+    
     self.masterPopoverController = popoverController;
 }
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Posts : NSObject 
+@interface Posts : NSObject
 
 @property (nonatomic, retain) NSString* postid;
 @property (nonatomic, retain) NSString* title;
@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSString* content;
 @property (nonatomic, retain) NSNumber* readcount;
+
 + (void) feedbackPost:(NSString*) userid
                postid:(NSString*) postid
                category:(NSString*) category
@@ -25,5 +26,5 @@
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;
 
-+ (void)getCategoryList;
++ (NSMutableArray *)getCategoryList;
 @end

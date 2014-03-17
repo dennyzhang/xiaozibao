@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>  
+#import <CoreLocation/CoreLocation.h>
 
 //#import "/usr/include/sqlite3.h"
 #import "/usr/local/opt/sqlite/include/sqlite3.h"
@@ -19,7 +19,7 @@
 @interface MasterViewController : UITableViewController
 
 @property (retain, nonatomic) DetailViewController *detailViewController;
-@property (nonatomic, retain) CLLocationManager *locationManager;  
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 @property (nonatomic, retain) NSString* topic;
 @property (nonatomic, retain) NSString* username;
@@ -29,5 +29,5 @@
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 
 - (void) init_data:(NSString*)username_t
-             topic_t:(NSString*)topic_t;
+           topic_t:(NSString*)topic_t;
 @end

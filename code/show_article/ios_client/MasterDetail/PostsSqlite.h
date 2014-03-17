@@ -20,13 +20,13 @@
         dbPath:(NSString *) dbPath;
 
 + (Posts*)getPost: (sqlite3 *)postsDB
-          dbPath:(NSString *) dbPath
-          postId:(NSString *)postId;
+           dbPath:(NSString *) dbPath
+           postId:(NSString *)postId;
 
 + (bool)savePost: (sqlite3 *)postsDB
           dbPath:(NSString *) dbPath
           postId:(NSString *)postId
-          summary:(NSString *)summary
+         summary:(NSString *)summary
         category:(NSString *)category
            title:(NSString *)title
          content:(NSString *)content;
