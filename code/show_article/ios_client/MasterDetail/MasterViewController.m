@@ -117,7 +117,7 @@ NSLog(@"Error: Failed to open/create database");
         shouldAppendHead:(bool)shouldAppendHead
 {
 NSString *urlPrefix=SERVERURL;
-NSString *urlStr= [NSString stringWithFormat: @"%@api_list_topic?uid=%@&topic=%@&start_num=%d&count=%d",
+NSString *urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d",
                      urlPrefix, userid, topic_t, [start_num intValue], [count intValue]];
 NSLog(@"fetchArticleList, url:%@", urlStr);
 NSURL *url = [NSURL URLWithString:urlStr];

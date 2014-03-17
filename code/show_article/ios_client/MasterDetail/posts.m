@@ -61,7 +61,26 @@
     }];
 
   [operation start];
+}
 
++ (void) getCategoryList
+{
+     NSString *urlPrefix=SERVERURL;
+     NSString *urlStr= [NSString stringWithFormat: @"%@list_topic", urlPrefix];
+     NSURL *url = [NSURL URLWithString:urlStr];
+     NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+
+         NSMutableArray *idMArray;
+         NSArray *idList = [JSON valueForKeyPath:@"id"];
+         idMArray = [idMArray initWithArray:idList];
+ 
+       } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
+      }];
+
+     [operation start];
 }
 
 + (bool)containId:(NSMutableArray*) objects

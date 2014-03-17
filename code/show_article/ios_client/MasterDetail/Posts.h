@@ -25,4 +25,5 @@
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;
 
++ (void)getCategoryList;
 @end

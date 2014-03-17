@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-16 13:47:55>
+## Updated: Time-stamp: <2014-03-17 15:35:54>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 import os
@@ -18,7 +18,10 @@ DB_PWD="ilovechina"
 DB_NAME="xzb"
 FLASK_SERVER_PORT="9180"
 
-DATA_BASEDIR = os.getcwd()+"/../../../webcrawler_data"
+XZB_HOME=os.environ.get('XZB_HOME')
+assert(XZB_HOME != '')
+
+DATA_BASEDIR = "%s/webcrawler_data" % (XZB_HOME)
 
 DATA_SEPARATOR="--text follows this line--"
 MAX_LENGTH=10000

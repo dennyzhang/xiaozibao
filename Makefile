@@ -29,4 +29,3 @@ uninstall:
 
 upgrade:
 	(cd ./cmd && ./upgrade.sh)
-

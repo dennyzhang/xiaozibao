@@ -9,8 +9,8 @@ xiaozibao - iOS client
 - Open MasterDetail.xcworkspace with Xcode
 
 ## Test for talk with backend server
-- http://60.12.51.195:9180/api_list_topic?topic=algorithm&start_num=0&count=10
-- http://60.12.51.195:9180/api_list_topic?topic=product&start_num=0&count=10
+- http://60.12.51.195:9180/api_list_posts_in_topic?topic=algorithm&start_num=0&count=10
+- http://60.12.51.195:9180/api_list_posts_in_topic?topic=product&start_num=0&count=10
 - http://60.12.51.195:9180/api_get_post?id=f7b024dbf08de3f18dc1e6ab20fefb09
 
 ## Misc

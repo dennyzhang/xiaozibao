@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-17 01:41:30>
+## Updated: Time-stamp: <2014-03-17 15:34:34>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -66,7 +66,24 @@ def get_post():
 #     resp.headers['Content-type'] = 'application/json; charset=utf-8'
 #     return resp
 
-## http://127.0.0.1:9180/api_list_topic?topic=idea_startup&start_num=0&count=10
+## http://127.0.0.1:9180/api_list_posts_in_topic?topic=idea_startup&start_num=0&count=10
+@app.route("/api_list_posts_in_topic", methods=['GET'])
+def list_posts_in_topic():
+    # TODO defensive code
+    topic = request.args.get('topic', '')
+    start_num = request.args.get('start_num', 0)
+    count = request.args.get('count', 10)
+    voteup = request.args.get('voteup', -1)
+    votedown = request.args.get('votedown', -1)
+
+    posts = data.list_topic(topic, int(start_num), int(count), int(voteup), int(votedown))
+    content = render_template('list_posts_in_topic.json', posts=posts)
+    content = smarty_remove_extra_comma(content)
+    resp = make_response(content, 200)
+    resp.headers['Content-type'] = 'application/json; charset=utf-8'
+    return resp
+
+## http://127.0.0.1:9180/api_list_topic
 @app.route("/api_list_topic", methods=['GET'])
 def list_topic():
     # TODO defensive code
@@ -77,7 +94,7 @@ def list_topic():
     votedown = request.args.get('votedown', -1)
 
     posts = data.list_topic(topic, int(start_num), int(count), int(voteup), int(votedown))
-    content = render_template('list_topic.json', posts=posts)
+    content = "['test', 'test2', 'test3']"
     content = smarty_remove_extra_comma(content)
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
