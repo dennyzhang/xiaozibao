@@ -60,7 +60,6 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
       NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
     }];
-
   [operation start];
 }
 
@@ -96,6 +95,8 @@
          [_objects insertObject:@"concept" atIndex:0];
        }];
      [operation start];
+
+     // TODO: return after operation is done!!
      return _objects;
 }
 

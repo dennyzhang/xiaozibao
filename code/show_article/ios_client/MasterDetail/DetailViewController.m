@@ -100,6 +100,7 @@
     
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
+    
     // // swipe right
     // UISwipeGestureRecognizer *swipeGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeGesture:)];
     // [self.view addGestureRecognizer:swipeGesture];

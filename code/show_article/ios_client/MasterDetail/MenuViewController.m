@@ -81,11 +81,13 @@
 
 - (void)load_topic_list
 {
-    _objects = [Posts getCategoryList];
-    // [_objects insertObject:@"story" atIndex:0];
-    // [_objects insertObject:@"concept" atIndex:0];
-    // [_objects insertObject:@"algorithm" atIndex:0];
-    // [_objects insertObject:@"product" atIndex:0];
+    //_objects = [Posts getCategoryList];
+  [_objects insertObject:@"linux" atIndex:0];
+  [_objects insertObject:@"cloud" atIndex:0];
+  [_objects insertObject:@"security" atIndex:0];
+  [_objects insertObject:@"algorithm" atIndex:0];
+  [_objects insertObject:@"product" atIndex:0];
+  [_objects insertObject:@"concept" atIndex:0];
 }
 
 - (void)didReceiveMemoryWarning

@@ -44,12 +44,24 @@
                                       target:self.revealViewController
                                       action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = settingButton;
-    
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-    
+
+    // // TODO: dirty code here
+    // NSString* topic = self.topic;
+    // if (topic == nil) {
+    //     NSMutableArray *_objects  = [Posts getCategoryList];
+    //     if (! _objects) {
+    //         topic = [_objects objectAtIndex:0];
+    //       }
+    // }
+    // if (topic == nil) {
+    //   topic = @"algorithm";
+    // }
+    // [self init_data:@"denny" topic_t:topic];
     if (self.topic == nil) {
-        [self init_data:@"denny" topic_t:@"product"];
+      [self init_data:@"denny" topic_t:@"concept"];
     }
+
+    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void) init_data:(NSString*)username_t
