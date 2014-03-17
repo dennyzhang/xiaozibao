@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-13 09:56:05>
+## Updated: Time-stamp: <2014-03-17 00:31:42>
 ##-------------------------------------------------------------------
 import config
 from util import POST
@@ -18,7 +18,7 @@ db = None
 
 def create_db_engine():
     global db
-    engine_str = "mysql://%s:%s@%s/%s" % (config.DB_USERNAME, \
+    engine_str = "mysql://%s:%s@%s/%s?charset=utf8" % (config.DB_USERNAME, \
                                           config.DB_PWD, config.DB_HOST, config.DB_NAME)
     db = create_engine(engine_str)
 

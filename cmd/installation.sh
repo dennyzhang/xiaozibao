@@ -5,7 +5,7 @@
 ## Description :
 ## --
 ## Created : <2014-01-11>
-## Updated: Time-stamp: <2014-03-16 13:34:33>
+## Updated: Time-stamp: <2014-03-16 14:44:04>
 ##-------------------------------------------------------------------
 . utility.sh
 # ensure_variable_isset "$XZB_HOME" # TODO
@@ -59,6 +59,30 @@ function setup_ios_env ()
     log "setup ios env in OSX for iPhone development "
     # TODO follow instruction of xiaozibao/code/show_article/ios_client/README.md
 }
+
+function change_mysql_cnf()
+{
+    log "change_mysql_cnf"
+    # TODO /etc/my.cnf
+    cat > /etc/my.cnf <<EOF
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+user=mysql
+default-character-set = utf8
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+[client]
+default-character-set = utf8
+EOF
+}
+
+# change_mysql_cnf
 
 update_profile
 setup_ios_env
