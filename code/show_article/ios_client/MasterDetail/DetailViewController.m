@@ -48,28 +48,28 @@
 -(IBAction) VoteUpButton:(id)sender 
 {
   // TODO
-  [Posts feedbackPost:@"denny" postid:detailItem.postid comment:@"tag voteup"];
+  [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag voteup"];
   self.voteupButton.hidden = false;
 }
 
 -(IBAction) VoteDownButton:(id)sender 
 {
   // TODO
-  [Posts feedbackPost:@"denny" postid:detailItem.postid comment:@"tag votedown"];
+  [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag votedown"];
   self.votedownButton.hidden = false;
 }
 
 -(IBAction) improveButton:(id)sender
 {
     // TODO
-    [Posts feedbackPost:@"denny" postid:detailItem.postid comment:@"tag improve"];
+    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag improve"];
     self.voteimproveButton.hidden = false;
 }
 
 -(IBAction) submitButton:(id)sender 
 {
   // TODO
-   [Posts feedbackPost:@"denny" postid:detailItem.postid comment:self.feedbackUITextField.text];
+   [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:self.feedbackUITextField.text];
 }
 
 - (void)configureView

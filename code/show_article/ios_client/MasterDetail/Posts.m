@@ -31,12 +31,14 @@
 
 + (void) feedbackPost:(NSString*) userid
                postid:(NSString*) postid
+             category:(NSString*) category
               comment:(NSString*) comment
 {
   NSString *urlStr=SERVERURL;
   NSURL *url = [NSURL URLWithString:urlStr];
   NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                         userid, @"uid", postid, @"postid", comment, @"comment",
+                                         userid, @"uid", postid, @"postid",
+                                       category, @"category", comment, @"comment",
                          nil];
   NSLog(@"feedbackPost, url:%@", urlStr);
   AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:url];
