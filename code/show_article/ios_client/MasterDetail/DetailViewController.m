@@ -15,7 +15,6 @@
 
 @end
 
-
 @implementation DetailViewController
 @synthesize detailItem;
 
@@ -48,34 +47,34 @@
 -(IBAction) VoteUpButton:(id)sender 
 {
   // TODO
-  [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag voteup"];
+  [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag voteup" button:self.voteupButton];
   self.voteupButton.hidden = false;
 }
 
 -(IBAction) VoteDownButton:(id)sender 
 {
   // TODO
-  [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag votedown"];
+  [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag votedown" button:self.votedownButton];
   self.votedownButton.hidden = false;
 }
 
 -(IBAction) improveButton:(id)sender
 {
     // TODO
-    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag improve"];
+    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag improve" button:self.voteimproveButton];
     self.voteimproveButton.hidden = false;
 }
 
 -(IBAction) submitButton:(id)sender 
 {
   // TODO
-   [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:self.feedbackUITextField.text];
+   [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:self.feedbackUITextField.text button:self.votesubmitButton];
 }
 
 - (void)configureView
 {
     // Update the user interface for the detail item.
-    [self hideFeedback:true];
+    [self hideFeedback:false];
     
     if (self.detailItem) {
         self.detailUITextView.text = self.detailItem.content;
@@ -105,22 +104,22 @@
     UISwipeGestureRecognizer *swipeGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeGesture:)];
     [self.view addGestureRecognizer:swipeGesture];
 
-    // swipe left
-    UISwipeGestureRecognizer *swipeLeftGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
-    swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:swipeLeftGesture];
+    // // swipe left
+    // UISwipeGestureRecognizer *swipeLeftGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
+    // swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+    // [self.view addGestureRecognizer:swipeLeftGesture];
 }
 
-- (void)handleSwipeGesture:(UISwipeGestureRecognizer *)recognizer {
-    [self configureView];
-}
+// - (void)handleSwipeGesture:(UISwipeGestureRecognizer *)recognizer {
+//     [self configureView];
+// }
 
-- (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)recognizer {
-    if (self.detailItem) {
-        [self hideFeedback:false];
-        self.detailUITextView.text = @"";
-    }
-}
+// - (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)recognizer {
+//     if (self.detailItem) {
+//         [self hideFeedback:false];
+//         self.detailUITextView.text = @"";
+//     }
+// }
 
 - (void)didReceiveMemoryWarning
 {

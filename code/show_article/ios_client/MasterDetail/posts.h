@@ -19,7 +19,8 @@
 + (void) feedbackPost:(NSString*) userid
                postid:(NSString*) postid
                category:(NSString*) category
-               comment:(NSString*) comment;
+               comment:(NSString*) comment
+                button:(UIButton *) button;
 
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;

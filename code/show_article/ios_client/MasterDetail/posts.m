@@ -33,6 +33,7 @@
                postid:(NSString*) postid
              category:(NSString*) category
               comment:(NSString*) comment
+                button:(UIButton *) button
 {
   NSString *urlStr=SERVERURL;
   NSURL *url = [NSURL URLWithString:urlStr];
@@ -47,9 +48,7 @@
   AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
       NSString *status = [JSON valueForKeyPath:@"status"];
       if ([status isEqualToString:@"ok"]) {
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:
-                      @"Submited successfuly!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-         [alert show];
+         button.enabled = false;
       }
       else {
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:
