@@ -60,7 +60,7 @@ NSLock *lock;
                 NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
                 content = [content stringByReplacingOccurrencesOfString: @"dennyseperator" withString:@"\""];
                 NSString* readCountStr = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
-                
+
                 NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
                 [f setNumberStyle:NSNumberFormatterDecimalStyle];
                 NSNumber* readcount = [f numberFromString:readCountStr];
@@ -127,13 +127,20 @@ NSLock *lock;
            dbPath:(NSString *) dbPath
             topic:(NSString *)topic
           objects:(NSMutableArray *) objects
+    hideReadPosts:(BOOL) hideReadPosts
         tableview:(UITableView *)tableview
 {
     NSLog(@"loadposts, topic:%@",topic);
     bool ret = NO;
     const char *dbpath = [dbPath UTF8String];
     sqlite3_stmt *statement;
-    NSString *querySQL = [NSString stringWithFormat: @"SELECT postid, summary, category, title, content, readcount FROM POSTS where category =\"%@\" order by id desc limit 10", topic];
+    NSString *querySQL;
+    if (hideReadPosts == true) {
+      querySQL = [NSString stringWithFormat: @"SELECT postid, summary, category, title, content, readcount FROM POSTS where category =\"%@\" and readcount=0 order by id desc limit 10", topic];
+    }
+    else {
+      querySQL = [NSString stringWithFormat: @"SELECT postid, summary, category, title, content, readcount FROM POSTS where category =\"%@\" order by id desc limit 10", topic];
+    }
     const char *query_stmt = [querySQL UTF8String];
     [lock lock];
     if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)

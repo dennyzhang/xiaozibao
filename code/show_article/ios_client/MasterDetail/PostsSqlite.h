@@ -35,6 +35,7 @@
            dbPath:(NSString *) dbPath
             topic:(NSString *)topic
           objects:(NSMutableArray *) objects
+    hideReadPosts:(BOOL) hideReadPosts
         tableview:(UITableView *)tableview;
 
 + (bool)addPostReadCount: (sqlite3 *)postsDB

@@ -44,6 +44,9 @@
                                       target:self.revealViewController
                                       action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = settingButton;
+    if ([userDefaults integerForKey:@"HideReadPosts"] == 0) {
+      [userDefaults setInteger:2 forKey:@"HideReadPosts"];
+    }
 
     // // TODO: dirty code here
     // NSString* topic = self.topic;
@@ -88,7 +91,7 @@
     [self openSqlite];
     
     [PostsSqlite loadPosts:postsDB dbPath:databasePath topic:self.topic
-                   objects:_objects tableview:self.tableView];
+                   objects:_objects hideReadPosts:true tableview:self.tableView];
     
     [self fetchArticleList:username topic_t:topic_t
                  start_num:[NSNumber numberWithInt: 10]
@@ -175,6 +178,12 @@
                 marray:(NSMutableArray *)marray
                 object:(Posts*)object
 {
+    NSInteger myInteger = [userDefaults integerForKey:@"HideReadPosts"];
+    if (myInteger == 1) {
+        if (object.readcount.intValue !=0 )
+            return YES;
+    }
+
     bool ret = YES;
     [marray insertObject:object atIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
@@ -198,7 +207,8 @@
         [post setSummary:[JSON valueForKeyPath:@"summary"]];
         [post setCategory:[JSON valueForKeyPath:@"category"]];
         [post setContent:[JSON valueForKeyPath:@"content"]];
-        
+        [post setReadcount:[NSNumber numberWithInt:0]];
+
         if ([PostsSqlite savePost:postsDB dbPath:databasePath
                            postId:post.postid summary:post.summary category:post.category
                             title:post.title content:post.content] == NO) {
@@ -314,6 +324,13 @@
             [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             cell.textLabel.text = @"Auto hide read posts";
             cell.accessoryView = aSwitch;
+            if ([userDefaults integerForKey:@"HideReadPosts"] == 2) {
+              aSwitch.on = false;
+            }
+            else {
+              aSwitch.on = true;
+            }
+
         }
         if (indexPath.row == 1) {
             self.serverUITextField.text = @"hello";
@@ -415,7 +432,13 @@
 - (void) hideSwitchChanged:(id)sender {
     UISwitch* switchControl = sender;
     if (switchControl.tag == 111) {
-        NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
+      if (switchControl.on == true) {
+          [userDefaults setInteger:1 forKey:@"HideReadPosts"];
+      }
+      else {
+          [userDefaults setInteger:2 forKey:@"HideReadPosts"];
+      }
+      [userDefaults synchronize];
     }
 }
 
