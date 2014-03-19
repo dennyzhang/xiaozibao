@@ -196,6 +196,10 @@
         [post setSummary:[JSON valueForKeyPath:@"summary"]];
         [post setCategory:[JSON valueForKeyPath:@"category"]];
         [post setContent:[JSON valueForKeyPath:@"content"]];
+        NSString* source = [JSON valueForKeyPath:@"source"];
+        // add source link to content
+        NSString* content = [[NSString alloc] initWithFormat:@"Link:%@\n%@ ", source, post.content];
+        post.content = content;
         [post setReadcount:[NSNumber numberWithInt:0]];
 
         if ([PostsSqlite savePost:postsDB dbPath:databasePath

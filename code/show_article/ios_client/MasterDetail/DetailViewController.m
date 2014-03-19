@@ -61,7 +61,7 @@
     [self hideFeedback:false];
     
     if (self.detailItem) {
-        self.detailUITextView.text = self.detailItem.content;
+      self.detailUITextView.text = self.detailItem.content;
     }
 }
 
