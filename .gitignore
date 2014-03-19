@@ -64,3 +64,4 @@ raw_to_be_deleted
 xzb_webserver.log
 xzb_feedback.log*
 cron.log
+UserInterfaceState.xcuserstate
