@@ -7,12 +7,13 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-19 15:28:49>
+## Updated: Time-stamp: <2014-03-19 15:45:24>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
 from flask import make_response
 from flask import request
+import os
 
 from util import log, fb_log
 from util import POST
@@ -86,7 +87,14 @@ def list_posts_in_topic():
 ## http://127.0.0.1:9180/api_list_topic
 @app.route("/api_list_topic", methods=['GET'])
 def list_topic():
-    content = "linux,cloud,security,algorithm,product,concept"
+    category_list = os.listdir(config.DATA_BASEDIR)
+    content = ""
+    for category in category_list:
+        if category in ['test']:
+            continue
+        content = "%s,%s" %(content, category)
+
+    content = content[1:]
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp

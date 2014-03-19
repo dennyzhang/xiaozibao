@@ -52,9 +52,9 @@
     if (self.topic == nil) {
       NSString* topicList = [userDefaults stringForKey:@"TopicList"];
       NSArray *stringArray = [topicList componentsSeparatedByString: @","];
-      NSString* topic = stringArray[0];
-      topic = [topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-      [self init_data:@"denny" topic_t:topic];
+      NSString* default_topic = stringArray[0];
+      default_topic = [default_topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+      [self init_data:@"denny" topic_t:default_topic];
     }
 
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
@@ -371,7 +371,6 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"scrollView.contentOffset.y: %d", scrollView.contentOffset.y);
     // when reach the top
     if (scrollView.contentOffset.y == 0)
     {
