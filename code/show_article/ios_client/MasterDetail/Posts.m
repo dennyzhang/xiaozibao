@@ -68,7 +68,7 @@
      NSString *urlPrefix=SERVERURL;
      NSString *urlStr= [NSString stringWithFormat: @"%@api_list_topic", urlPrefix];
      NSURL *url = [NSURL URLWithString:urlStr];
-
+     NSLog(@"getCategoryList, url:%@", urlStr);
      AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
      NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                              path:urlStr

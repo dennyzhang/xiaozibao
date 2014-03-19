@@ -89,7 +89,7 @@
   {
       topic = stringArray[i];
       topic = [topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-      [_objects insertObject:topic atIndex:0];
+      [_objects addObject:topic];
   }
 }
 
