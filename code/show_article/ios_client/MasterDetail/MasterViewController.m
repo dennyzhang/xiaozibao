@@ -362,6 +362,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"scrollView.contentOffset.y: %d", scrollView.contentOffset.y);
     // when reach the top
     if (scrollView.contentOffset.y == 0)
     {

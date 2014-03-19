@@ -36,6 +36,12 @@ var fetcher = map[string] Stringy {
 			//Action {Filter, "content", "\ns \n", "function"},
 			//Action {Filter, "content", "\ns \n", "pagespeed"},
 			Action {Replace, "content", "(?m)^ *s *\n", ""},
+			Action {Replace, "content", "(?m) *pagespeed.lazyLoadImages.overrideAttributeFunctions.*", ""},
+			Action {Replace, "content", "(?m) *\\(function\\(\\)\\{var.*\n.*\n.*\n", ""},
+			// Action {Replace, "content", "(?m)^g\\[h\\]&&g\\[h\\].*", ""},
+			Action {Replace, "content", "(?m)^ *function validate.*", ""},
+			Action {Replace, "content", "(?m)^ *Edit *\\| *Report Duplicate.*", ""},
+			Action {Replace, "content", "(?m)^ *Add a Comment.*", ""},
 		})
 	},
 

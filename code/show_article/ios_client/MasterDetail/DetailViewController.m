@@ -39,9 +39,6 @@
 {
     self.votedownButton.hidden = shouldEnable;
     self.voteupButton.hidden = shouldEnable;
-    self.voteimproveButton.hidden = shouldEnable;
-    self.votesubmitButton.hidden = shouldEnable;
-    self.feedbackUITextField.hidden = shouldEnable;
 }
 
 -(IBAction) VoteUpButton:(id)sender
@@ -56,19 +53,6 @@
     // TODO
     [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag votedown" button:self.votedownButton];
     self.votedownButton.hidden = false;
-}
-
--(IBAction) improveButton:(id)sender
-{
-    // TODO
-    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag improve" button:self.voteimproveButton];
-    self.voteimproveButton.hidden = false;
-}
-
--(IBAction) submitButton:(id)sender
-{
-    // TODO
-    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:self.feedbackUITextField.text button:self.votesubmitButton];
 }
 
 - (void)configureView

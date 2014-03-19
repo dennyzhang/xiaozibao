@@ -167,32 +167,6 @@
                                     <action selector="VoteUpButton:" destination="Ah7-4n-0Wa" eventType="touchDown" id="NZq-FM-sOA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5mH-K8-iEm">
-                                <rect key="frame" x="264" y="10" width="49" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Submit">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="submitButton:" destination="Ah7-4n-0Wa" eventType="touchDown" id="Ch0-ua-7i0"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9NJ-87-Y0h">
-                                <rect key="frame" x="168" y="11" width="80" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YvG-PZ-Kk5">
-                                <rect key="frame" x="100" y="10" width="56" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Improve">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="improveButton:" destination="Ah7-4n-0Wa" eventType="touchDown" id="sKz-LO-bcB"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -203,10 +177,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="detailUITextView" destination="o2A-A8-FBa" id="D0J-Xr-f3w"/>
-                        <outlet property="feedbackUITextField" destination="9NJ-87-Y0h" id="Gzw-uV-thk"/>
                         <outlet property="votedownButton" destination="c2l-Ur-osa" id="udx-8H-pY1"/>
-                        <outlet property="voteimproveButton" destination="YvG-PZ-Kk5" id="IKB-M3-UhI"/>
-                        <outlet property="votesubmitButton" destination="5mH-K8-iEm" id="vaW-vn-PhF"/>
                         <outlet property="voteupButton" destination="V3V-1s-iYk" id="LaZ-uJ-ao0"/>
                     </connections>
                 </viewController>
