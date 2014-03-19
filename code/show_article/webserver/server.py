@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-19 15:56:59>
+## Updated: Time-stamp: <2014-03-19 16:25:26>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -96,7 +96,7 @@ def list_topic():
     #     content = "%s,%s" %(content, category)
 
     # content = content[1:]
-    content = 'concept,product,network,linux,security,cloud,algorithm'
+    content = 'concept,product,linux,algorithm,cloud,network,security'
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
