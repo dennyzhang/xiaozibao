@@ -36,6 +36,38 @@ NSLock *lock;
     return ret;
 }
 
++ (bool)cleanCache: (sqlite3 *)postsDB
+            dbPath:(NSString *)dbPath
+{
+    bool ret;
+    const char *dbpath = [dbPath UTF8String];
+    sqlite3_stmt *statement = NULL;
+    NSString *deleteSQL = @"DELETE FROM POSTS";
+    const char *delete_stmt = [deleteSQL UTF8String];
+    
+    [lock lock];
+    if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
+    {
+        sqlite3_prepare_v2(postsDB, delete_stmt, -1, &statement, NULL);
+        
+        if (sqlite3_step(statement) != SQLITE_DONE) {
+            NSLog(@"%@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)]);
+            ret = NO;
+        }
+        else
+            ret = YES;
+    }
+    else {
+        ret = NO;
+    }
+    
+    sqlite3_finalize(statement);
+    sqlite3_close(postsDB);
+    [lock unlock];
+    return ret;
+}
+
+
 + (Posts*)getPost: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
            postId:(NSString *)postId

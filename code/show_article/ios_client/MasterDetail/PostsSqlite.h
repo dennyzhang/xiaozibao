@@ -31,6 +31,9 @@
            title:(NSString *)title
          content:(NSString *)content;
 
++ (bool)cleanCache: (sqlite3 *)postsDB
+            dbPath:(NSString *)dbPath;
+
 + (bool)loadPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
             topic:(NSString *)topic

@@ -24,7 +24,7 @@ var fetcher = map[string] Stringy {
 	"^http://www.careercup.com/question\\?id=[0-9]+": func(url string) Post_data {
 		return common_webcrawler(url, []Action {
 			Action {Filter, "content", "Interview Question", " Add a Comment"},
-			Action {Replace, "content", "(?m)^  Comment hidden because of low score. Click to expand.", ""},
+			Action {Replace, "content", "(?m)^ +Comment hidden because of low score. Click to expand.", ""},
 			Action {Replace, "content", "(?m) Reply", ""},
 			Action {Replace, "content", "(?m)^ of  [0-9]+  vote", ""},
 			Action {Replace, "content", "(?m)^Answers", ""},
@@ -33,9 +33,9 @@ var fetcher = map[string] Stringy {
 			Action {Replace, "content", "(?m)^ on .*[0-9]+  Edit  \\|  Flag", ""},
 			Action {Replace, "content", "(?m)^ Loading...", ""},
 			Action {Replace, "content", "(?m)^ *[0-9]+", ""},
-			Action {Filter, "content", "s\n", "function"},
-			//Action {Replace, "content", "(?m)^  ", ""}, // TODO
-
+			//Action {Filter, "content", "\ns \n", "function"},
+			//Action {Filter, "content", "\ns \n", "pagespeed"},
+			Action {Replace, "content", "(?m)^ *s *\n", ""},
 		})
 	},
 

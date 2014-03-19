@@ -264,10 +264,10 @@ func post_wash_title(title string) string {
 }
 
 func post_wash_content(content string) string {
+	content = regexp.MustCompile(" ").ReplaceAllString(content, " ")
+	content = regexp.MustCompile("  +").ReplaceAllString(content, "  ")
 	content = regexp.MustCompile("(?m) +$").ReplaceAllString(content, "")
 	content = regexp.MustCompile("(?m)\n\n+").ReplaceAllString(content, "\n\n")
-	content = regexp.MustCompile("  +").ReplaceAllString(content, "  ")
-	content = regexp.MustCompile(" ").ReplaceAllString(content, " ")
 	return content
 }
 
@@ -276,6 +276,8 @@ func common_webcrawler(url string, actions []Action) Post_data {
         content = get_html_body(content)
         content = common_wash_content(content)
 	content = strip_html_tag(content)
+
+	//fmt.Print(content)
 
 	if debug == true {
 		fmt.Printf(content)
@@ -289,9 +291,10 @@ func common_webcrawler(url string, actions []Action) Post_data {
                         title = action.function(title, action.from_str, action.end_str)
                 }
         }
+	//fmt.Print(content)
+
 	title = post_wash_title(title)
 	content = post_wash_content(content)
-	//fmt.Print(content)
 
         return Post_data{title, "", content, url}
 }

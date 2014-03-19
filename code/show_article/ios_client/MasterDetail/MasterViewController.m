@@ -48,18 +48,6 @@
       [userDefaults setInteger:2 forKey:@"HideReadPosts"];
     }
 
-    // // TODO: dirty code here
-    // NSString* topic = self.topic;
-    // if (topic == nil) {
-    //     NSMutableArray *_objects  = [Posts getCategoryList];
-    //     if (! _objects) {
-    //         topic = [_objects objectAtIndex:0];
-    //       }
-    // }
-    // if (topic == nil) {
-    //   topic = @"algorithm";
-    // }
-    // [self init_data:@"denny" topic_t:topic];
     if (self.topic == nil) {
       [self init_data:@"denny" topic_t:@"concept"];
     }
@@ -131,8 +119,9 @@
         shouldAppendHead:(bool)shouldAppendHead
 {
     NSString *urlPrefix=SERVERURL;
-    NSString *urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d",
-                       urlPrefix, userid, topic_t, [start_num intValue], [count intValue]];
+    // TODO: voteup defined by users
+    NSString *urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&voteup=%d&votedown=0",
+                                urlPrefix, userid, topic_t, [start_num intValue], [count intValue], 0];
     NSLog(@"fetchArticleList, url:%@", urlStr);
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -330,7 +319,6 @@
             else {
               aSwitch.on = true;
             }
-
         }
         if (indexPath.row == 1) {
             self.serverUITextField.text = @"hello";
@@ -397,13 +385,19 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"segue identifier: %@", [segue identifier]);
-    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if ([self.topic isEqualToString:APP_SETTING]) {
+        NSLog(@"APP_setting");
+        if ([cell.textLabel.text isEqualToString:@"Clean cache"]) {
+            NSLog(@"clean cache");
+            [self openSqlite];
+            [PostsSqlite cleanCache:postsDB dbPath:databasePath];
+        }
         return;
     }
     
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Posts *post = _objects[indexPath.row];
         
         CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
@@ -418,9 +412,7 @@
         //       @"Postid": post.postid
         //       }];
         
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         cell.textLabel.textColor = [UIColor grayColor];
-        
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [PostsSqlite addPostReadCount:postsDB dbPath:databasePath
                                postId:post.postid topic:post.category];
