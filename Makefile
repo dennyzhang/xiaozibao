@@ -12,7 +12,7 @@ test:
 update:
 	sudo xzb_update_category.sh
 
-regenerate_feedback:
+update_feedback:
 	(cd ./code/filter_article/ && ./update_post_feedback.sh)
 
 demo:

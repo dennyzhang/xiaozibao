@@ -81,7 +81,6 @@
          [userDefaults setObject:response_str forKey:@"TopicList"];
        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          NSLog(@"Error: %@", error);
-         [userDefaults setObject:@"cloud,concept,security,algorithm,product,linux" forKey:@"TopicList"];
        }];
      [operation start];
 }

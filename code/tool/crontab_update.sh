@@ -3,4 +3,4 @@
 cd $XZB_HOME
 git pull
 git commit -am "schedule commit" && git push || true
-make regenerate_feedback
+make update_feedback

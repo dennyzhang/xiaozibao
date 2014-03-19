@@ -38,6 +38,7 @@
     [super viewDidLoad];
     
     userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"cloud,concept,security,algorithm,product,linux" forKey:@"TopicList"];
     [Posts getCategoryList:userDefaults];
 
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
