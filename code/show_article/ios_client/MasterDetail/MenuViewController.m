@@ -81,13 +81,16 @@
 
 - (void)load_topic_list
 {
-    //_objects = [Posts getCategoryList];
-  [_objects insertObject:@"linux" atIndex:0];
-  [_objects insertObject:@"cloud" atIndex:0];
-  [_objects insertObject:@"security" atIndex:0];
-  [_objects insertObject:@"algorithm" atIndex:0];
-  [_objects insertObject:@"product" atIndex:0];
-  [_objects insertObject:@"concept" atIndex:0];
+  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+  NSString* topicList = [userDefaults stringForKey:@"TopicList"];
+  NSString* topic;
+  NSArray *stringArray = [topicList componentsSeparatedByString: @","];
+  for (int i=0; i < [stringArray count]; i++)
+  {
+      topic = stringArray[i];
+      topic = [topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+      [_objects insertObject:topic atIndex:0];
+  }
 }
 
 - (void)didReceiveMemoryWarning

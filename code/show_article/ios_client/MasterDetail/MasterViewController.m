@@ -38,7 +38,8 @@
     [super viewDidLoad];
     
     userDefaults = [NSUserDefaults standardUserDefaults];
-    
+    [Posts getCategoryList:userDefaults];
+
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                       target:self.revealViewController
@@ -49,7 +50,11 @@
     }
 
     if (self.topic == nil) {
-      [self init_data:@"denny" topic_t:@"concept"];
+      NSString* topicList = [userDefaults stringForKey:@"TopicList"];
+      NSArray *stringArray = [topicList componentsSeparatedByString: @","];
+      NSString* topic = stringArray[0];
+      topic = [topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+      [self init_data:@"denny" topic_t:topic];
     }
 
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];

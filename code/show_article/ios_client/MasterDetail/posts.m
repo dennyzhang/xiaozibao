@@ -63,10 +63,8 @@
   [operation start];
 }
 
-+ (NSMutableArray *)getCategoryList
++ (void)getCategoryList:(NSUserDefaults *)userDefaults
 {
-     NSMutableArray *_objects = [[NSMutableArray alloc] init];
-
      NSString *urlPrefix=SERVERURL;
      NSString *urlStr= [NSString stringWithFormat: @"%@api_list_topic", urlPrefix];
      NSURL *url = [NSURL URLWithString:urlStr];
@@ -79,25 +77,13 @@
      [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
      [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
          NSString *response_str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-
-         NSLog(@"Response: %@", response_str);
-
-         [_objects insertObject:@"test1" atIndex:0];
-         [_objects insertObject:@"test2" atIndex:0];
-
+         NSLog(@"Response of list_topic: %@", response_str);
+         [userDefaults setObject:response_str forKey:@"TopicList"];
        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          NSLog(@"Error: %@", error);
-         [_objects insertObject:@"linux" atIndex:0];
-         [_objects insertObject:@"cloud" atIndex:0];
-         [_objects insertObject:@"security" atIndex:0];
-         [_objects insertObject:@"algorithm" atIndex:0];
-         [_objects insertObject:@"product" atIndex:0];
-         [_objects insertObject:@"concept" atIndex:0];
+         [userDefaults setObject:@"linux,cloud,security,algorithm,product,concept" forKey:@"TopicList"];
        }];
      [operation start];
-
-     // TODO: return after operation is done!!
-     return _objects;
 }
 
 + (bool)containId:(NSMutableArray*) objects
