@@ -21,7 +21,7 @@
                postid:(NSString*) postid
                category:(NSString*) category
                comment:(NSString*) comment
-                button:(UIButton *) button;
+barButtonItem:(UIBarButtonItem *) barButtonItem;
 
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;

@@ -35,31 +35,9 @@
     }
 }
 
-- (void) hideFeedback:(BOOL)shouldEnable
-{
-    self.votedownButton.hidden = shouldEnable;
-    self.voteupButton.hidden = shouldEnable;
-}
-
--(IBAction) VoteUpButton:(id)sender
-{
-    // TODO
-    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag voteup" button:self.voteupButton];
-    self.voteupButton.hidden = false;
-}
-
--(IBAction) VoteDownButton:(id)sender
-{
-    // TODO
-    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category comment:@"tag votedown" button:self.votedownButton];
-    self.votedownButton.hidden = false;
-}
-
 - (void)configureView
 {
     // Update the user interface for the detail item.
-    [self hideFeedback:false];
-    
     if (self.detailItem) {
       self.detailUITextView.text = self.detailItem.content;
     }
@@ -77,38 +55,38 @@
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(VoteUpButton:) forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *voteUpButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(VoteDownButton:) forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *voteDownButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
     [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *saveFavoriteButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(moreAction:) forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(commentPost:) forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 
     UIBarButtonItem *forwardButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                       target:self
-                                      action:@selector(savePostAsFavorite:)];
+                                      action:@selector(forwardPost:)];
 
     self.navigationItem.rightBarButtonItems =
     [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteUpButton, nil];
@@ -139,10 +117,45 @@
 }
 
 
+- (void)forwardPost:(id)sender
+{
+    NSLog(@"forwardPost");
+
+}
+- (void)commentPost:(id)sender
+{
+    NSLog(@"commentPost");
+
+}
+
+- (void)moreAction:(id)sender
+{
+    NSLog(@"moreAction");
+
+}
+
 - (void)savePostAsFavorite:(id)sender
 {
     NSLog(@"add to favorite");
 
+}
+
+-(IBAction) VoteUpButton:(id)sender
+{
+    NSLog(@"VoteUpButton");
+    UIBarButtonItem *barButtonItem= (UIBarButtonItem*)sender;
+    // TODO
+    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category
+                comment:@"tag voteup" barButtonItem:barButtonItem];
+}
+
+-(IBAction) VoteDownButton:(id)sender
+{
+    NSLog(@"VoteDownButton");
+    // TODO
+    UIBarButtonItem *barButtonItem= (UIBarButtonItem*)sender;
+    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category
+                comment:@"tag votedown" barButtonItem:barButtonItem];
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem

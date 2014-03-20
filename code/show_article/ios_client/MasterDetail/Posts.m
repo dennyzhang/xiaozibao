@@ -34,8 +34,9 @@
                postid:(NSString*) postid
              category:(NSString*) category
               comment:(NSString*) comment
-                button:(UIButton *) button
+        barButtonItem:(UIBarButtonItem *) barButtonItem
 {
+  return;
   NSString *urlStr=SERVERURL;
   NSURL *url = [NSURL URLWithString:urlStr];
   NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -49,7 +50,7 @@
   AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
       NSString *status = [JSON valueForKeyPath:@"status"];
       if ([status isEqualToString:@"ok"]) {
-         button.enabled = false;
+         barButtonItem.enabled = false;
       }
       else {
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:
