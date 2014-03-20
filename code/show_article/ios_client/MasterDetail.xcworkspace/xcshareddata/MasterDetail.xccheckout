@@ -10,6 +10,8 @@
 	<string>MasterDetail</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>0CBAB650-9EE7-479D-8D90-DA1C1F9C1B35</key>
+		<string>https://github.com/visualpharm/icons8icons.git</string>
 		<key>7C8A5F90-D06D-4314-8EC9-873591AEF192</key>
 		<string>ssh://github.com/DennyZhang/xiaozibao.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>code/show_article/ios_client/MasterDetail.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>0CBAB650-9EE7-479D-8D90-DA1C1F9C1B35</key>
+		<string>../../../../../../../../../../../Documents/Icons8/Icons</string>
 		<key>7C8A5F90-D06D-4314-8EC9-873591AEF192</key>
 		<string>../../../..</string>
 	</dict>
@@ -28,6 +32,14 @@
 	<string>7C8A5F90-D06D-4314-8EC9-873591AEF192</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0CBAB650-9EE7-479D-8D90-DA1C1F9C1B35</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Icons</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

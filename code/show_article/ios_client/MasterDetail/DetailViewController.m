@@ -72,39 +72,53 @@
     self.detailUITextView.clipsToBounds = NO;
     
     [self configureView];
+
+    UIButton *btn;
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *voteUpButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    UIBarButtonItem *collectButton = [[UIBarButtonItem alloc]
-                                      initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *voteDownButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *saveFavoriteButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+
+    UIBarButtonItem *forwardButton = [[UIBarButtonItem alloc]
+                                      initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                       target:self
                                       action:@selector(savePostAsFavorite:)];
-    
-    self.navigationItem.rightBarButtonItem = collectButton;
+
+    self.navigationItem.rightBarButtonItems =
+    [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteUpButton, nil];
     
     self.title = @"";
     
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
     
-    // // swipe right
-    // UISwipeGestureRecognizer *swipeGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeGesture:)];
-    // [self.view addGestureRecognizer:swipeGesture];
-    
-    // // swipe left
-    // UISwipeGestureRecognizer *swipeLeftGesture=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
-    // swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
-    // [self.view addGestureRecognizer:swipeLeftGesture];
 }
-
-// - (void)handleSwipeGesture:(UISwipeGestureRecognizer *)recognizer {
-//     [self configureView];
-// }
-
-// - (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)recognizer {
-//     if (self.detailItem) {
-//         [self hideFeedback:false];
-//         self.detailUITextView.text = @"";
-//     }
-// }
 
 - (void)didReceiveMemoryWarning
 {
