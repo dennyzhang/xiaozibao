@@ -64,11 +64,16 @@
     [btn addTarget:self action:@selector(VoteDownButton:) forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *voteDownButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
+
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
     [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
+    if (detailItem.issaved == YES) {
+      [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
+    }
+    else {
+      [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
+    }
     UIBarButtonItem *saveFavoriteButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -137,25 +142,46 @@
 - (void)savePostAsFavorite:(id)sender
 {
     NSLog(@"add to favorite");
+    UIButton *btn= (UIButton*)sender;
+
+    // TODO: call below, only if the async request is done correctly
+    NSLog(@"detailItem.issaved: %d", detailItem.issaved);
+    detailItem.issaved = ! detailItem.issaved;
+    NSLog(@"detailItem.issaved: %d", detailItem.issaved);
+    
+    if (detailItem.issaved == YES) {
+        [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
+    }
+    else {
+        [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
+    }
 
 }
 
 -(IBAction) VoteUpButton:(id)sender
 {
     NSLog(@"VoteUpButton");
-    UIBarButtonItem *barButtonItem= (UIBarButtonItem*)sender;
-    // TODO
+    
+    UIButton *btn= (UIButton*)sender;
+
+    // TODO: call below, only if the async request is done correctly    
+    [btn setImage:[UIImage imageNamed:@"thumbs_up-512.png"]  forState:UIControlStateNormal];
+
     [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category
-                comment:@"tag voteup" barButtonItem:barButtonItem];
+                comment:@"tag voteup" button:btn];
 }
 
 -(IBAction) VoteDownButton:(id)sender
 {
     NSLog(@"VoteDownButton");
-    // TODO
-    UIBarButtonItem *barButtonItem= (UIBarButtonItem*)sender;
+    UIButton *btn= (UIButton*)sender;
+
+    // TODO: call below, only if the async request is done correctly    
+    [btn setImage:[UIImage imageNamed:@"thumbs_down-512.png"]  forState:UIControlStateNormal];
+
     [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category
-                comment:@"tag votedown" barButtonItem:barButtonItem];
+                comment:@"tag votedown" button:btn];
+  
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem

@@ -16,12 +16,13 @@
 @property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSString* content;
 @property (nonatomic, retain) NSNumber* readcount;
+@property (nonatomic, assign) BOOL issaved;
 
 + (void) feedbackPost:(NSString*) userid
                postid:(NSString*) postid
                category:(NSString*) category
                comment:(NSString*) comment
-barButtonItem:(UIBarButtonItem *) barButtonItem;
+                button:(UIButton *) button;
 
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;
