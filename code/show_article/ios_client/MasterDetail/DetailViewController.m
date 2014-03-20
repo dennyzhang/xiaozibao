@@ -76,7 +76,7 @@
     UIBarButtonItem *collectButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks
                                       target:self
-                                      action:@selector(judgePost:)];
+                                      action:@selector(savePostAsFavorite:)];
     
     self.navigationItem.rightBarButtonItem = collectButton;
     
@@ -125,9 +125,10 @@
 }
 
 
-- (void)judgePost:(id)sender
+- (void)savePostAsFavorite:(id)sender
 {
     NSLog(@"add to favorite");
+
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
