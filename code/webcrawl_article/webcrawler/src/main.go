@@ -102,10 +102,10 @@ func execute_task(tasks []taskgenerator.Task) bool {
 func escape_title(fname string) string {
 	fname = strings.Replace(fname, "/", "_", -1)
 	fname = strings.Replace(fname, "\"", "'", -1)
-	fname = strings.Replace(fname, "{", "\\(", -1)
-	fname = strings.Replace(fname, "}", "\\)", -1)
-	fname = strings.Replace(fname, "[", "\\(", -1)
-	fname = strings.Replace(fname, "]", "\\)", -1)
+	fname = strings.Replace(fname, "{", "\\\\{", -1)
+	fname = strings.Replace(fname, "}", "\\\\}", -1)
+	fname = strings.Replace(fname, "[", "\\\\[", -1)
+	fname = strings.Replace(fname, "]", "\\\\]", -1)
 	fname = strings.Replace(fname, "\r", " ", -1)
 	fname = strings.Replace(fname, "	", " ", -1)
 	return fname
