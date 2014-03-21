@@ -36,7 +36,8 @@
 {
   //self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:0.157f green:0.424 blue:0.7f alpha:1.0f];
   //self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1.0f alpha:1.0f];
-    self.navigationController.navigationBar.backgroundColor = [UIColor yellowColor];
+  //self.navigationController.navigationBar.backgroundColor = [UIColor yellowColor];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
 
     [super viewDidLoad];
     UINavigationBar* appearance = self.navigationController.navigationBar;

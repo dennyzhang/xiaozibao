@@ -45,7 +45,7 @@
       self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n%@ ", self.detailItem.content];
       self.titleTextView.text = self.detailItem.title;
       self.linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", self.detailItem.source];
-      [self.titleTextView setFont:[UIFont fontWithName:@"ArialMT" size:16]];
+      [self.titleTextView setFont:[UIFont fontWithName:@"ArialMT" size:17]];
     }
 }
 
@@ -54,7 +54,7 @@
     //self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
     CGFloat width = self.detailUITextView.frame.size.width;
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
-    self.titleTextView.frame =  CGRectMake(20, 20, 250, 60);
+    self.titleTextView.frame =  CGRectMake(20, 20, 280, 80);
     self.linkTextView.frame =  CGRectMake(width - 180.0f, 140, 200, 60);
 }
 
@@ -149,26 +149,29 @@
 }
 
 #pragma mark - Hide/Show navigationBar
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-     //NSLog(@"scrollViewDidScroll");
-     if (self.navigationController.navigationBarHidden == NO) {
-       self.navigationController.navigationBarHidden = YES;
-     }
-}
-
 - (void)singleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
     NSLog(@"single tap");
     if (self.navigationController.navigationBarHidden == YES) {
         self.navigationController.navigationBarHidden = NO;
     }
+    else{
+        self.navigationController.navigationBarHidden = YES;
+    }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    NSLog(@"Finished scrolling");
-    self.navigationController.navigationBarHidden = NO; 
-}
+// - (void)scrollViewDidScroll:(UIScrollView *)scrollView
+// {
+//      //NSLog(@"scrollViewDidScroll");
+//      if (self.navigationController.navigationBarHidden == NO) {
+//        self.navigationController.navigationBarHidden = YES;
+//      }
+// }
+
+// - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+// {
+//     NSLog(@"Finished scrolling");
+//     self.navigationController.navigationBarHidden = NO; 
+// }
 
 #pragma mark - Split view
 
