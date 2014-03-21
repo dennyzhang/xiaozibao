@@ -11,6 +11,7 @@
 //#import "/usr/include/sqlite3.h"
 #import "/usr/local/opt/sqlite/include/sqlite3.h"
 #import "Posts.h"
+#import "constants.h"
 
 @interface PostsSqlite : NSObject {
     sqlite3 *postsDB;
@@ -46,4 +47,11 @@
                   dbPath:(NSString *) dbPath
                   postId:(NSString *)postId
                    topic:(NSString *)topic;
+
++ (bool)updatePostIssaved: (sqlite3 *)postsDB
+                  dbPath:(NSString *) dbPath
+                  postId:(NSString *)postId
+                  issaved:(BOOL)issaved
+                    topic:(NSString *)topic;
+
 @end

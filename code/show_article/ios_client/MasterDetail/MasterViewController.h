@@ -12,6 +12,7 @@
 //#import "/usr/include/sqlite3.h"
 #import "/usr/local/opt/sqlite/include/sqlite3.h"
 
+#import "Posts.h"
 #import "PostsSqlite.h"
 
 @class DetailViewController;

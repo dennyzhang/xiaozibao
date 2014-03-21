@@ -26,7 +26,7 @@
     category=@"";
     content=@"";
     source=@"";
-    issaved= NO;
+    issaved=NO;
     readcount=[NSNumber numberWithInt:0];
   }
   return self;

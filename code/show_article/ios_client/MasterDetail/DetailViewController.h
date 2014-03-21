@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Posts.h"
+#import "PostsSqlite.h"
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate>
 

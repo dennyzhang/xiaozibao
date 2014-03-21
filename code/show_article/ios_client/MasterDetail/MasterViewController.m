@@ -12,7 +12,6 @@
 
 #import "AFJSONRequestOperation.h"
 // #import "Mixpanel.h"
-#import "Posts.h"
 
 #import "constants.h"
 
@@ -137,6 +136,9 @@
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
 {
+    if ([self.topic isEqualToString:SAVED_POSTS])
+      return;
+
     NSString *urlPrefix=SERVERURL;
     // TODO: voteup defined by users
     NSString *urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&voteup=%d&votedown=0",

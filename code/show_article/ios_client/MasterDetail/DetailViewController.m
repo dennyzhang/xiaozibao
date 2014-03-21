@@ -7,7 +7,6 @@
 //
 
 #import "DetailViewController.h"
-#import "Posts.h"
 
 @interface DetailViewController ()
 
@@ -195,6 +194,29 @@
     else {
         [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
     }
+
+    // TODO remove code duplication
+    NSString *docsDir;
+    NSArray *dirPaths;
+    
+    // Get the documents directory
+    dirPaths = NSSearchPathForDirectoriesInDomains(
+                                                   NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    docsDir = [dirPaths objectAtIndex:0];
+    
+    sqlite3 *postsDB;
+    NSString *databasePath = [[NSString alloc]
+                               initWithString: [docsDir stringByAppendingPathComponent:
+                                                          @"posts.db"]];
+
+    //if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
+        NSLog(@"Error: Failed to open/create database");
+    }
+
+    [PostsSqlite updatePostIssaved:postsDB dbPath:databasePath
+                           postId:detailItem.postid issaved:detailItem.issaved topic:detailItem.category];
 
 }
 
