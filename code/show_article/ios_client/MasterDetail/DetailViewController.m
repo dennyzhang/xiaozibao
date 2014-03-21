@@ -39,18 +39,16 @@
 {
     // Update the user interface for the detail item.
     if (self.detailItem) {
-      self.detailUITextView.text = self.detailItem.content;
+        // TODO: here
+      self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n\n\n%@ ", self.detailItem.content];
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.detailUITextView.clipsToBounds = NO;
     
-    [self configureView];
-
     UIButton *btn;
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -94,13 +92,31 @@
                                       action:@selector(forwardPost:)];
 
     self.navigationItem.rightBarButtonItems =
-    [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteUpButton, nil];
+      [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
     
     self.title = @"";
     
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
     
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comments-512.png"]];
+    
+    [imageView setFrame:CGRectMake(0.0f, 0.0f, 150.0f, 150.0f)];
+    [self.detailUITextView addSubview:imageView];
+
+    UITextView* linkTextView = [[UITextView alloc] initWithFrame:CGRectMake(140, 60, 200, 60)];
+    if ([detailItem.source isEqualToString:@""])
+        detailItem.source = @"http://www.baidu.com/1341341414";
+    linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", detailItem.source];
+    linkTextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    linkTextView.editable = NO;
+    linkTextView.backgroundColor = NULL;
+    [self.detailUITextView addSubview:linkTextView];
+
+    self.detailUITextView.scrollEnabled = YES;
+    self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    [self configureView];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,11 +125,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+{
+    NSLog(@"scrollViewDidScrollToTop");
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"Finished scrolling");
+}
+
 #pragma mark - Split view
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
-{
-    
+{   
     barButtonItem.title = NSLocalizedString(@"Master", @"Master");
     
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
@@ -121,22 +146,19 @@
     self.masterPopoverController = popoverController;
 }
 
-
 - (void)forwardPost:(id)sender
 {
     NSLog(@"forwardPost");
-
 }
+
 - (void)commentPost:(id)sender
 {
     NSLog(@"commentPost");
-
 }
 
 - (void)moreAction:(id)sender
 {
     NSLog(@"moreAction");
-
 }
 
 - (void)savePostAsFavorite:(id)sender
@@ -145,9 +167,7 @@
     UIButton *btn= (UIButton*)sender;
 
     // TODO: call below, only if the async request is done correctly
-    NSLog(@"detailItem.issaved: %d", detailItem.issaved);
     detailItem.issaved = ! detailItem.issaved;
-    NSLog(@"detailItem.issaved: %d", detailItem.issaved);
     
     if (detailItem.issaved == YES) {
         [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];

@@ -35,8 +35,20 @@
 
 - (void)viewDidLoad
 {
+  //self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:0.157f green:0.424 blue:0.7f alpha:1.0f];
+  //self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1.0f alpha:1.0f];
+    self.navigationController.navigationBar.backgroundColor = [UIColor yellowColor];
+
     [super viewDidLoad];
-    
+    UINavigationBar* appearance = self.navigationController.navigationBar;
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor blackColor],
+                                               NSForegroundColorAttributeName,
+                                               [UIFont fontWithName:@"ArialMT" size:26.0],
+                                               NSFontAttributeName,
+                                               nil];
+    [appearance setTitleTextAttributes:navbarTitleTextAttributes];
+
     userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
     [Posts getCategoryList:userDefaults];
@@ -202,10 +214,7 @@
         [post setSummary:[JSON valueForKeyPath:@"summary"]];
         [post setCategory:[JSON valueForKeyPath:@"category"]];
         [post setContent:[JSON valueForKeyPath:@"content"]];
-        NSString* source = [JSON valueForKeyPath:@"source"];
-        // add source link to content
-        NSString* content = [[NSString alloc] initWithFormat:@"Link:%@\n%@ ", source, post.content];
-        post.content = content;
+        [post setSource:[JSON valueForKeyPath:@"source"]];
         [post setReadcount:[NSNumber numberWithInt:0]];
 
         if ([PostsSqlite savePost:postsDB dbPath:databasePath

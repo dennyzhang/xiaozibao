@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Posts.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) Posts* detailItem;
 

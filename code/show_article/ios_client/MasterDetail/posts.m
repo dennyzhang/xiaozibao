@@ -13,7 +13,7 @@
 #import "constants.h"
 
 @implementation Posts
-@synthesize postid, title, summary, category, content, readcount, issaved;
+@synthesize postid, title, summary, category, content, source, readcount, issaved;
 
 - (id)init
 {
@@ -25,6 +25,7 @@
     summary=@"";
     category=@"";
     content=@"";
+    source=@"";
     issaved= NO;
     readcount=[NSNumber numberWithInt:0];
   }
@@ -37,7 +38,6 @@
               comment:(NSString*) comment
                 button:(UIButton *) button
 {
-  return;
   NSString *urlStr=SERVERURL;
   NSURL *url = [NSURL URLWithString:urlStr];
   NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -51,7 +51,8 @@
   AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
       NSString *status = [JSON valueForKeyPath:@"status"];
       if ([status isEqualToString:@"ok"]) {
-         button.enabled = false;
+        NSLog(@"TODO");
+        //button.enabled = false;
       }
       else {
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:

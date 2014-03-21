@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSString* summary;
 @property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSString* content;
+@property (nonatomic, retain) NSString* source;
 @property (nonatomic, retain) NSNumber* readcount;
 @property (nonatomic, assign) BOOL issaved;
 

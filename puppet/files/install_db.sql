@@ -17,3 +17,9 @@ CREATE TABLE if not exists posts (
        votedown int default 0,
        memo VARCHAR(100)
 );
+
+-- DROP INDEX index_voteup ON posts;
+-- DROP INDEX index_votedown ON posts;
+
+CREATE INDEX index_voteup ON posts(voteup) USING btree;
+CREATE INDEX index_votedown ON posts(votedown) USING btree;
