@@ -220,7 +220,7 @@
 
         if ([PostsSqlite savePost:postsDB dbPath:databasePath
                            postId:post.postid summary:post.summary category:post.category
-                            title:post.title content:post.content] == NO) {
+                            title:post.title source:post.source content:post.content] == NO) {
             NSLog(@"Error: insert posts. id:%@, title:%@", post.postid, post.title);
         }
         

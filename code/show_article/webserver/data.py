@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-21 09:39:56>
+## Updated: Time-stamp: <2014-03-21 12:58:04>
 ##-------------------------------------------------------------------
 import config
 from util import POST
@@ -48,7 +48,7 @@ def list_topic(topic, start_num, count, voteup, votedown):
     if votedown != -1:
         extra_where_clause = "%s and votedown = %d" % (extra_where_clause, votedown)
 
-    sql_format = "select posts.id, posts.category, posts.title from posts where category = '%s' %s order by num desc limit %d offset %d;"
+    sql_format = "select posts.id, posts.category, posts.title from posts where category = '%s' %s order by voteup desc, votedown asc, num desc limit %d offset %d;"
     sql = sql_format % (topic, extra_where_clause, count, start_num)
     print sql
     cursor = conn.execute(sql)

@@ -19,7 +19,7 @@ NSLock *lock;
     char *errMsg;
     const char *dbpath = [dbPath UTF8String];
     NSLog(@"initDB");
-    const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, READCOUNT INT DEFAULT 0)";
+    const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, SOURCE TEXT, READCOUNT INT DEFAULT 0, ISSAVED INT DEFAULT 0)";
     //const char *sql_stmt = "drop table posts";
     if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
@@ -118,6 +118,7 @@ NSLock *lock;
          summary:(NSString *)summary
         category:(NSString *)category
            title:(NSString *)title
+           source:(NSString *)source
          content:(NSString *)content
 {
     bool ret;
@@ -127,8 +128,8 @@ NSLock *lock;
     content = [content stringByReplacingOccurrencesOfString: @"\"" withString:@"dennyseperator"];
     NSString *insertSQL = [NSString
                            stringWithFormat:
-                           @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
-                           postId, category, summary, title, content];
+                           @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, SOURCE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
+                            postId, category, summary, title, source, content];
     const char *insert_stmt = [insertSQL UTF8String];
     
     [lock lock];

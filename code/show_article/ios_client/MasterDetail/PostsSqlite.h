@@ -29,6 +29,7 @@
          summary:(NSString *)summary
         category:(NSString *)category
            title:(NSString *)title
+           source:(NSString *)source
          content:(NSString *)content;
 
 + (bool)cleanCache: (sqlite3 *)postsDB
