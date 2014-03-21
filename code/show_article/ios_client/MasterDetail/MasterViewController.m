@@ -50,7 +50,8 @@
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
 
     userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
+    // TODO: add test temporarily
+    [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux,test" forKey:@"TopicList"];
     [Posts getCategoryList:userDefaults];
 
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]

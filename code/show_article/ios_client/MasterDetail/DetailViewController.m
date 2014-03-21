@@ -10,13 +10,16 @@
 #import "Posts.h"
 
 @interface DetailViewController ()
+
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+
 - (void)configureView;
 
 @end
 
 @implementation DetailViewController
 @synthesize detailItem;
+@synthesize detailUITextView;
 
 #pragma mark - Managing the detail item
 
@@ -115,8 +118,13 @@
 
     self.detailUITextView.scrollEnabled = YES;
     self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    self.detailUITextView.delegate = self;
     [self configureView];
 
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapRecognized:)];
+    singleTap.numberOfTapsRequired = 1;
+    [self.detailUITextView addGestureRecognizer:singleTap];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,14 +133,25 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollViewDidScrollToTop");
+     //NSLog(@"scrollViewDidScroll");
+     if (self.navigationController.navigationBarHidden == NO) {
+       self.navigationController.navigationBarHidden = YES;
+     }
+}
+
+- (void)singleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
+    NSLog(@"single tap");
+    if (self.navigationController.navigationBarHidden == YES) {
+        self.navigationController.navigationBarHidden = NO;
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSLog(@"Finished scrolling");
+    self.navigationController.navigationBarHidden = NO; 
 }
 
 #pragma mark - Split view
@@ -159,6 +178,7 @@
 - (void)moreAction:(id)sender
 {
     NSLog(@"moreAction");
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)savePostAsFavorite:(id)sender
