@@ -193,7 +193,6 @@ NSLock *lock;
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 Posts* post = [[Posts alloc] init];
-                NSLog(@"here1");
                 NSString* postid = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
                 NSString* summary = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
                 NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
@@ -202,9 +201,7 @@ NSLock *lock;
                 content = [content stringByReplacingOccurrencesOfString: @"dennyseperator" withString:@"\""];
                 NSString* source = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
                 NSString* readCountStr = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 6)];
-                NSLog(@"abc2");
                 NSString* isSavedStr = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 7)];
-                NSLog(@"here3");
                 
                 NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
                 [f setNumberStyle:NSNumberFormatterDecimalStyle];

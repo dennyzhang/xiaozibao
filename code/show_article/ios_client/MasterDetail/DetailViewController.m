@@ -13,12 +13,12 @@
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
 - (void)configureView;
-
+- (void)refreshComponentsLayout;
 @end
 
 @implementation DetailViewController
 @synthesize detailItem;
-@synthesize detailUITextView;
+@synthesize detailUITextView, imageView, titleTextView, linkTextView;
 
 #pragma mark - Managing the detail item
 
@@ -42,8 +42,17 @@
     // Update the user interface for the detail item.
     if (self.detailItem) {
         // TODO: here
-      self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n\n\n%@ ", self.detailItem.content];
+      self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n%@ ", self.detailItem.content];
     }
+}
+
+- (void)refreshComponents
+{
+    //self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
+    CGFloat width = self.detailUITextView.frame.size.width;
+    self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
+    self.titleTextView.frame =  CGRectMake(20, 20, 200, 60);
+    self.linkTextView.frame =  CGRectMake(width - 200.0f, 100, 200, 60);
 }
 
 - (void)viewDidLoad
@@ -101,29 +110,36 @@
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comments-512.png"]];
-    
-    [imageView setFrame:CGRectMake(0.0f, 0.0f, 150.0f, 150.0f)];
-    [self.detailUITextView addSubview:imageView];
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header.png"]];
 
-    UITextView* linkTextView = [[UITextView alloc] initWithFrame:CGRectMake(140, 60, 200, 60)];
-    if ([detailItem.source isEqualToString:@""])
-        detailItem.source = @"http://www.baidu.com/1341341414";
-    linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", detailItem.source];
-    linkTextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    linkTextView.editable = NO;
-    linkTextView.backgroundColor = NULL;
-    [self.detailUITextView addSubview:linkTextView];
+    [self.imageView setFrame:CGRectMake(0, 0, 0, 0)];
+    [self.detailUITextView addSubview:self.imageView];
+
+    self.titleTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.titleTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", detailItem.title];
+    self.titleTextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    self.titleTextView.editable = NO;
+    self.titleTextView.backgroundColor = NULL;
+    [self.detailUITextView addSubview:self.titleTextView];
+
+    self.linkTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", detailItem.source];
+    self.linkTextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    self.linkTextView.editable = NO;
+    self.linkTextView.backgroundColor = NULL;
+    [self.detailUITextView addSubview:self.linkTextView];
 
     self.detailUITextView.scrollEnabled = YES;
     self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
     self.detailUITextView.delegate = self;
     [self configureView];
-
+    // hide and show navigation bar
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapRecognized:)];
     singleTap.numberOfTapsRequired = 1;
     [self.detailUITextView addGestureRecognizer:singleTap];
-    
+
+    // refreshComponentsLayout
+    [self refreshComponents];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -132,6 +148,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Hide/Show navigationBar
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
      //NSLog(@"scrollViewDidScroll");
@@ -177,7 +194,6 @@
 - (void)moreAction:(id)sender
 {
     NSLog(@"moreAction");
-    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)savePostAsFavorite:(id)sender
