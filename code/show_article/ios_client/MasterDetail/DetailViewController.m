@@ -43,6 +43,9 @@
     if (self.detailItem) {
         // TODO: here
       self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n%@ ", self.detailItem.content];
+      self.titleTextView.text = self.detailItem.title;
+      self.linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", self.detailItem.source];
+      [self.titleTextView setFont:[UIFont fontWithName:@"ArialMT" size:16]];
     }
 }
 
@@ -51,8 +54,8 @@
     //self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
     CGFloat width = self.detailUITextView.frame.size.width;
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
-    self.titleTextView.frame =  CGRectMake(20, 20, 200, 60);
-    self.linkTextView.frame =  CGRectMake(width - 200.0f, 100, 200, 60);
+    self.titleTextView.frame =  CGRectMake(20, 20, 250, 60);
+    self.linkTextView.frame =  CGRectMake(width - 180.0f, 140, 200, 60);
 }
 
 - (void)viewDidLoad
@@ -116,14 +119,11 @@
     [self.detailUITextView addSubview:self.imageView];
 
     self.titleTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    self.titleTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", detailItem.title];
-    self.titleTextView.dataDetectorTypes = UIDataDetectorTypeLink;
     self.titleTextView.editable = NO;
     self.titleTextView.backgroundColor = NULL;
     [self.detailUITextView addSubview:self.titleTextView];
 
     self.linkTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    self.linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", detailItem.source];
     self.linkTextView.dataDetectorTypes = UIDataDetectorTypeLink;
     self.linkTextView.editable = NO;
     self.linkTextView.backgroundColor = NULL;
