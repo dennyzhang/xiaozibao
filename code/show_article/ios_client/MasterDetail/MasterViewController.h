@@ -37,7 +37,8 @@
 #define TAG_SWITCH_SORT_METHOD 1236
 
 #define CLEAN_CACHE @"Clean cache"
-#define FOLLOW_TWITTER @"Follow us on twitter"
+#define FOLLOW_TWITTER @"Follow us on Twitter"
 #define FOLLOW_WEIBO @"Follow us on Weibo"
+#define FOLLOW_MAILTO @"Mailto us"
 
 @end

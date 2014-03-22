@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
-
+    
     [super viewDidLoad];
     UINavigationBar* appearance = self.navigationController.navigationBar;
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -45,35 +45,35 @@
                                                NSFontAttributeName,
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
-
+    
     userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
-
+    
     if ([[userDefaults stringForKey:@"SortMethod"] isEqualToString:@""]) {
         [userDefaults setObject:@"hotest" forKey:@"SortMethod"];
     }
-
+    
     [Posts getCategoryList:userDefaults];
-
+    
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                       target:self.revealViewController
                                       action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = settingButton;
-
+    
     if (self.topic == nil) {
-      NSString* topicList = [userDefaults stringForKey:@"TopicList"];
-      NSArray *stringArray = [topicList componentsSeparatedByString: @","];
-      NSString* default_topic = stringArray[0];
-      default_topic = [default_topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-      [self init_data:@"denny" topic_t:default_topic];
+        NSString* topicList = [userDefaults stringForKey:@"TopicList"];
+        NSArray *stringArray = [topicList componentsSeparatedByString: @","];
+        NSString* default_topic = stringArray[0];
+        default_topic = [default_topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [self init_data:@"denny" topic_t:default_topic];
     }
-
+    
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)init_data:(NSString*)username_t
-           topic_t:(NSString*)topic_t
+          topic_t:(NSString*)topic_t
 {
     self.topic=topic_t;
     self.navigationItem.title = self.topic;
@@ -136,12 +136,12 @@
         shouldAppendHead:(bool)shouldAppendHead
 {
     if ([self.topic isEqualToString:SAVED_POSTS])
-      return;
-
+        return;
+    
     NSString *urlPrefix=SERVERURL;
     // TODO: voteup defined by users
     NSString *urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&voteup=%d&votedown=0",
-                                urlPrefix, userid, topic_t, [start_num intValue], [count intValue], 0];
+                       urlPrefix, userid, topic_t, [start_num intValue], [count intValue], 0];
     NSLog(@"fetchArticleList, url:%@", urlStr);
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -192,7 +192,7 @@
         if (object.readcount.intValue !=0 )
             return YES;
     }
-
+    
     bool ret = YES;
     [marray insertObject:object atIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
@@ -218,7 +218,7 @@
         [post setContent:[JSON valueForKeyPath:@"content"]];
         [post setSource:[JSON valueForKeyPath:@"source"]];
         [post setReadcount:[NSNumber numberWithInt:0]];
-
+        
         if ([PostsSqlite savePost:postsDB dbPath:databasePath
                            postId:post.postid summary:post.summary category:post.category
                             title:post.title source:post.source content:post.content] == NO) {
@@ -317,7 +317,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([self.topic isEqualToString:APP_SETTING]) {
-        return 6;
+        return 7;
     }
     else
         return _objects.count;
@@ -336,10 +336,10 @@
             cell.textLabel.text = @"Auto hide read posts";
             cell.accessoryView = aSwitch;
             if ([userDefaults integerForKey:@"HideReadPosts"] == 0) {
-              aSwitch.on = false;
+                aSwitch.on = false;
             }
             else {
-              aSwitch.on = true;
+                aSwitch.on = true;
             }
         }
         if (indexPath.row == 1) {
@@ -351,12 +351,12 @@
             [button setImage:unselectedImage forState:UIControlStateNormal];
             [button setImage:selectedImage forState:UIControlStateSelected];
             [button addTarget:self
-                                    action:@selector(hideSwitchChanged:)
-                          forControlEvents:UIControlEventTouchUpInside];
+                       action:@selector(hideSwitchChanged:)
+             forControlEvents:UIControlEventTouchUpInside];
             cell.textLabel.text = @"How posts are sorted";
             button.selected = YES;
             button.tag = TAG_SWITCH_SORT_METHOD;
-
+            
             cell.accessoryView = button;
             // if ([[userDefaults stringForKey:@"SortMethod"] isEqualToString:@"hotest"]) {
             //     button.enabled = true;
@@ -379,11 +379,15 @@
         if (indexPath.row == 4) {
             cell.textLabel.text = FOLLOW_TWITTER;
         }
-
+        
         if (indexPath.row == 5) {
             cell.textLabel.text = FOLLOW_WEIBO;
         }
 
+        if (indexPath.row == 6) {
+            cell.textLabel.text = FOLLOW_MAILTO;
+        }
+        
         return cell;
     }
     else {
@@ -392,7 +396,7 @@
         
         UITextView *textView = nil;
         cell.textLabel.text = @"";
-
+        
         textView = [[UITextView alloc] initWithFrame:CGRectZero];
         [textView setTextColor:[UIColor blackColor]];
         [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
@@ -403,15 +407,15 @@
         textView.scrollEnabled = NO;
         textView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:textView];
-
+        
         NSString *text = post.title;
         CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
         CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
         if (!textView)
-          textView = (UITextView *)[cell viewWithTag:TAG_TEXTVIEW_IN_CELL];
+            textView = (UITextView *)[cell viewWithTag:TAG_TEXTVIEW_IN_CELL];
         [textView setText:text];
         [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), MAX(size.height, 44.0f))];
-
+        
         [self markCellAsRead:cell post:post];
         
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -421,7 +425,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   if ([self.topic isEqualToString:APP_SETTING]) {
+    if ([self.topic isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
     NSString *text = @"some testxt";
@@ -436,29 +440,71 @@
 {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if ([self.topic isEqualToString:APP_SETTING]){
-      if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
+        if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
             [self openSqlite];
             [PostsSqlite cleanCache:postsDB dbPath:databasePath];
-
-            UIAlertView *alert = [[UIAlertView alloc] 
+            
+            UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:@"All local cache are clean."
-                                                            message:@""
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
+                                  message:@""
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil, nil];
             [alert show];
         }
-      if([cell.textLabel.text isEqualToString:FOLLOW_WEIBO]) {
-        NSLog(@"TODO follow weibo");
-      }        
+        if([cell.textLabel.text isEqualToString:FOLLOW_WEIBO]) {
+            NSString* snsUserName=@"dennyzhang001";
+            UIApplication *app = [UIApplication sharedApplication];
+            NSURL *snsURL = [NSURL URLWithString:[NSString stringWithFormat:@"weibo://weibo.com/%@", snsUserName]];
+            if ([app canOpenURL:snsURL])
+            {
+            	[app openURL:snsURL];
+            }
+            else {
+                NSString* msg=[[NSString alloc] initWithFormat:@"Follow us by \nhttp://weibo.com/%@", snsUserName];
+                UIAlertView *alert = [[UIAlertView alloc]
+                                       initWithTitle:msg message:@"" delegate:self
+                                       cancelButtonTitle:@"OK"
+                                       otherButtonTitles:nil, nil];
+                [alert show];
+            
+            }
+        }
+        
+        if([cell.textLabel.text isEqualToString:FOLLOW_MAILTO]) {
+            NSString* to=@"denny.zhang001@gmail.com";
+            NSString* subject=@"Feedback for CoderPuzzle";
+            NSString* body=@"hi CoderPuzzle\n";
+            NSString* mailString = [NSString stringWithFormat:@"mailto:?to=%@&subject=%@&body=%@",
+                                    [to stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
 
-      if([cell.textLabel.text isEqualToString:FOLLOW_TWITTER]) {
-        NSLog(@"TODO follow twitter");
-      }        
-
-      return nil;
+                                    [subject stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
+                                    [body stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+            NSLog(@"mailstring:%@", mailString);
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailString]];
+        }
+        
+        if([cell.textLabel.text isEqualToString:FOLLOW_TWITTER]) {
+            NSString* snsUserName=@"dennyzhang001";
+            UIApplication *app = [UIApplication sharedApplication];
+            NSURL *snsURL = [NSURL URLWithString:[NSString stringWithFormat:@"tweetie://user?screen_name=%@", snsUserName]];
+            if ([app canOpenURL:snsURL])
+            {
+                [app openURL:snsURL];
+            }
+            else {
+                NSString* msg=[[NSString alloc] initWithFormat:@"Follow us by \nhttp://twitter.com/%@", snsUserName];
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle:msg message:@"" delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }
+        
+        return nil;
     }
-
+    
     return indexPath;
 }
 
@@ -515,7 +561,7 @@
     NSLog(@"segue identifier: %@", [segue identifier]);
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-
+    
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         Posts *post = _objects[indexPath.row];
         
@@ -530,7 +576,7 @@
         //     @"DeviceId":uuidString,
         //       @"Postid": post.postid
         //       }];
-
+        
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [self markCellAsRead:cell post:post];
         [PostsSqlite addPostReadCount:postsDB dbPath:databasePath
@@ -541,32 +587,32 @@
 }
 
 - (void) hideSwitchChanged:(id)sender {
-  if ([sender isKindOfClass:[UISwitch class]]) {
-      UISwitch* switchControl = sender;
-      if (switchControl.tag == TAG_SWITCH_HIDE_READ_POST) {
-        if (switchControl.on == true) {
-          [userDefaults setInteger:1 forKey:@"HideReadPosts"];
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch* switchControl = sender;
+        if (switchControl.tag == TAG_SWITCH_HIDE_READ_POST) {
+            if (switchControl.on == true) {
+                [userDefaults setInteger:1 forKey:@"HideReadPosts"];
+            }
+            else {
+                [userDefaults setInteger:0 forKey:@"HideReadPosts"];
+            }
+            [userDefaults synchronize];
+            NSLog(@"HideReadPosts:%d", [userDefaults integerForKey:@"HideReadPosts"]);
         }
-        else {
-          [userDefaults setInteger:0 forKey:@"HideReadPosts"];
+    }
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton* button = sender;
+        button.selected = !button.selected;
+        if (button.tag == TAG_SWITCH_SORT_METHOD) {
+            if (button.selected == true) {
+                [userDefaults setObject:@"hotest" forKey:@"SortMethod"];
+            }
+            else {
+                [userDefaults setObject:@"latest" forKey:@"SortMethod"];
+            }
+            [userDefaults synchronize];
+            NSLog(@"sortMethod:%@", [userDefaults stringForKey:@"SortMethod"]);
         }
-        [userDefaults synchronize];
-        NSLog(@"HideReadPosts:%d", [userDefaults integerForKey:@"HideReadPosts"]);
-      }
-  }
-  if ([sender isKindOfClass:[UIButton class]]) {
-      UIButton* button = sender;
-      button.selected = !button.selected;
-      if (button.tag == TAG_SWITCH_SORT_METHOD) {
-        if (button.selected == true) {
-          [userDefaults setObject:@"hotest" forKey:@"SortMethod"];
-        }
-        else {
-          [userDefaults setObject:@"latest" forKey:@"SortMethod"];
-        }
-        [userDefaults synchronize];
-        NSLog(@"sortMethod:%@", [userDefaults stringForKey:@"SortMethod"]);
-      }
     }
 }
 
