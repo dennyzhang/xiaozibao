@@ -31,7 +31,7 @@
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
 
-    [self addMenuCompoents:self.navigationItem.rightBarButtonItems];
+    [self addMenuCompoents];
     [self addPostHeaderCompoents];
 
     [self configureView];
@@ -213,7 +213,7 @@
     }
 }
 
-- (void)addMenuCompoents:(NSArray *)rightBarButtonItems
+- (void)addMenuCompoents
 {
     UIButton *btn;
 
@@ -256,10 +256,7 @@
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                       target:self
                                       action:@selector(forwardPost:)];
-
-    rightBarButtonItems =
-      [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
-
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
 }
 
 - (void)addPostHeaderCompoents

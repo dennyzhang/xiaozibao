@@ -49,7 +49,7 @@
 
     userDefaults = [NSUserDefaults standardUserDefaults];
     // TODO: add test temporarily
-    [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux,test" forKey:@"TopicList"];
+    [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
     [Posts getCategoryList:userDefaults];
 
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
