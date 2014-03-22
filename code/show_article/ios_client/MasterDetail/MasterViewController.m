@@ -343,17 +343,6 @@
             }
         }
         if (indexPath.row == 1) {
-            self.serverUITextField.text = @"hello";
-            [cell.contentView addSubview:self.serverUITextField];
-            cell.textLabel.text = @"Server IP:";
-            cell.accessoryView = self.serverUITextField;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-        if (indexPath.row == 2) {
-            cell.textLabel.text = CLEAN_CACHE;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-        if (indexPath.row == 3) {
             CGRect aframe = CGRectMake(0,0,40,40);
             UIButton* button = [[UIButton alloc] initWithFrame:aframe];
             UIImage *selectedImage = [UIImage imageNamed:@"hearts-512.png"];
@@ -365,16 +354,27 @@
                                     action:@selector(hideSwitchChanged:)
                           forControlEvents:UIControlEventTouchUpInside];
             cell.textLabel.text = @"How posts are sorted";
-            button.selected = NO;
+            button.selected = YES;
             button.tag = TAG_SWITCH_SORT_METHOD;
 
             cell.accessoryView = button;
-            if ([[userDefaults stringForKey:@"SortMethod"] isEqualToString:@"hotest"]) {
-                button.enabled = true;
-            }
-            else {
-                button.enabled = false;
-            }
+            // if ([[userDefaults stringForKey:@"SortMethod"] isEqualToString:@"hotest"]) {
+            //     button.enabled = true;
+            // }
+            // else {
+            //     button.enabled = false;
+            // }
+        }
+        if (indexPath.row == 2) {
+            cell.textLabel.text = CLEAN_CACHE;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        if (indexPath.row == 3) {
+            self.serverUITextField.text = @"hello";
+            [cell.contentView addSubview:self.serverUITextField];
+            cell.textLabel.text = @"Server IP:";
+            cell.accessoryView = self.serverUITextField;
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
         if (indexPath.row == 4) {
             cell.textLabel.text = FOLLOW_TWITTER;
@@ -556,6 +556,7 @@
   }
   if ([sender isKindOfClass:[UIButton class]]) {
       UIButton* button = sender;
+      button.selected = !button.selected;
       if (button.tag == TAG_SWITCH_SORT_METHOD) {
         if (button.selected == true) {
           [userDefaults setObject:@"hotest" forKey:@"SortMethod"];
