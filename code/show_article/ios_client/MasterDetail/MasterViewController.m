@@ -352,17 +352,56 @@
         return cell;
     }
     else {
+        NSInteger MY_CUSTOM_TAG = 1;
+
         Posts *post = _objects[indexPath.row];
+        [[cell.contentView viewWithTag:MY_CUSTOM_TAG]removeFromSuperview];
         
-        cell.textLabel.text = post.title;
+        UITextView *textView = nil;
+        cell.textLabel.text = @"";
+
+        textView = [[UITextView alloc] initWithFrame:CGRectZero];
+        [textView setTextColor:[UIColor blackColor]];
+        [textView setFont:[UIFont fontWithName:@"Helvetica" size:16.0f]];
+        [textView setBackgroundColor:[UIColor clearColor]];
+        [textView setTag:MY_CUSTOM_TAG];
+        [textView setEditable:NO];
+        textView.selectable = NO;
+        textView.scrollEnabled = NO;
+        [[cell contentView] addSubview:textView];
+
+        NSString *text = post.title;
+        CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:12.0f] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        if (!textView)
+          textView = (UITextView *)[cell viewWithTag:1];
+        [textView setText:text];
+        [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), MAX(size.height, 44.0f))];
+
+        // disable readPosts
         if ([post.readcount intValue] !=0) {
-            cell.textLabel.textColor = [UIColor grayColor];
+            textView.textColor = [UIColor grayColor];
         }
         else {
-            cell.textLabel.textColor = [UIColor blackColor];
+            textView.textColor = [UIColor blackColor];
         }
+        
+        cell.accessoryType = UITableViewCellAccessoryNone;
         return cell;
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.topic isEqualToString:APP_SETTING] || [self.topic isEqualToString:SAVED_POSTS]){
+        return 50.0f;
+    }
+    NSString *text = @"some testxt";
+    CGSize constraint = CGSizeMake(320 - (10 * 2), 20000.0f);
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGFloat height = MAX(size.height, 44.0f);
+    //return height + (10 * 2);
+    return height + (10 * 2) + 20;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath

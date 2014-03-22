@@ -74,11 +74,11 @@
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
     self.titleTextView.frame =  CGRectMake(20, 20, 280, 80);
     self.linkTextView.frame =  CGRectMake(width - 220.0f, 140, 200, 60);
-
 }
 
 - (void)viewDidLoad
 {
+    //TODO define function to make code shorter
     [super viewDidLoad];
     self.detailUITextView.clipsToBounds = NO;
     
