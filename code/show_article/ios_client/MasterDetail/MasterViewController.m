@@ -17,7 +17,6 @@
 
 #import <CoreFoundation/CFUUID.h>
 
-#define TAG_TEXTVIEW_IN_CELL 1234
 @interface MasterViewController () {
     NSMutableArray *_objects;
     sqlite3 *postsDB;
@@ -48,8 +47,12 @@
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
 
     userDefaults = [NSUserDefaults standardUserDefaults];
-    // TODO: add test temporarily
     [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
+
+    if ([[userDefaults stringForKey:@"SortMethod"] isEqualToString:@""]) {
+        [userDefaults setObject:@"hotest" forKey:@"SortMethod"];
+    }
+
     [Posts getCategoryList:userDefaults];
 
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
@@ -315,7 +318,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([self.topic isEqualToString:APP_SETTING]) {
-        return 3;
+        return 6;
     }
     else
         return _objects.count;
@@ -328,7 +331,7 @@
         if (indexPath.row == 0) {
             UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
             aSwitch.on = YES;
-            aSwitch.tag = 111;
+            aSwitch.tag = TAG_SWITCH_HIDE_READ_POST;
             [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             cell.textLabel.text = @"Auto hide read posts";
             cell.accessoryView = aSwitch;
@@ -347,9 +350,40 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
         if (indexPath.row == 2) {
-            cell.textLabel.text = @"Clean cache";
+            cell.textLabel.text = CLEAN_CACHE;
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        if (indexPath.row == 3) {
+            CGRect aframe = CGRectMake(0,0,40,40);
+            UIButton* button = [[UIButton alloc] initWithFrame:aframe];
+            UIImage *selectedImage = [UIImage imageNamed:@"hearts-512.png"];
+            UIImage *unselectedImage = [UIImage imageNamed:@"heart-512.png"];
+            
+            [button setImage:unselectedImage forState:UIControlStateNormal];
+            [button setImage:selectedImage forState:UIControlStateSelected];
+            [button addTarget:self
+                                    action:@selector(hideSwitchChanged:)
+                          forControlEvents:UIControlEventTouchUpInside];
+            cell.textLabel.text = @"How posts are sorted";
+            button.selected = NO;
+            button.tag = TAG_SWITCH_SORT_METHOD;
+
+            cell.accessoryView = button;
+            if ([[userDefaults stringForKey:@"SortMethod"] isEqualToString:@"hotest"]) {
+                button.enabled = true;
+            }
+            else {
+                button.enabled = false;
+            }
+        }
+        if (indexPath.row == 4) {
+            cell.textLabel.text = FOLLOW_TWITTER;
+        }
+
+        if (indexPath.row == 5) {
+            cell.textLabel.text = FOLLOW_WEIBO;
+        }
+
         return cell;
     }
     else {
@@ -400,14 +434,12 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if ([self.topic isEqualToString:APP_SETTING]){
-        if(indexPath.row == 0) {
-            return nil;
-        }
-        if(indexPath.row == 1) {
-            return nil;
-        }
-        if(indexPath.row == 2) {
+      if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
+            [self openSqlite];
+            [PostsSqlite cleanCache:postsDB dbPath:databasePath];
+
             UIAlertView *alert = [[UIAlertView alloc] 
                                   initWithTitle:@"All local cache are clean."
                                                             message:@""
@@ -415,9 +447,18 @@
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil, nil];
             [alert show];
-            return nil;
         }
+      if([cell.textLabel.text isEqualToString:FOLLOW_WEIBO]) {
+        NSLog(@"TODO follow weibo");
+      }        
+
+      if([cell.textLabel.text isEqualToString:FOLLOW_TWITTER]) {
+        NSLog(@"TODO follow twitter");
+      }        
+
+      return nil;
     }
+
     return indexPath;
 }
 
@@ -474,16 +515,7 @@
     NSLog(@"segue identifier: %@", [segue identifier]);
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if ([self.topic isEqualToString:APP_SETTING]) {
-        NSLog(@"APP_setting");
-        if ([cell.textLabel.text isEqualToString:@"Clean cache"]) {
-            NSLog(@"clean cache");
-            [self openSqlite];
-            [PostsSqlite cleanCache:postsDB dbPath:databasePath];
-        }
-        return;
-    }
-    
+
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         Posts *post = _objects[indexPath.row];
         
@@ -509,16 +541,31 @@
 }
 
 - (void) hideSwitchChanged:(id)sender {
-    UISwitch* switchControl = sender;
-    if (switchControl.tag == 111) {
-      if (switchControl.on == true) {
+  if ([sender isKindOfClass:[UISwitch class]]) {
+      UISwitch* switchControl = sender;
+      if (switchControl.tag == TAG_SWITCH_HIDE_READ_POST) {
+        if (switchControl.on == true) {
           [userDefaults setInteger:1 forKey:@"HideReadPosts"];
-      }
-      else {
+        }
+        else {
           [userDefaults setInteger:0 forKey:@"HideReadPosts"];
+        }
+        [userDefaults synchronize];
+        NSLog(@"HideReadPosts:%d", [userDefaults integerForKey:@"HideReadPosts"]);
       }
-      [userDefaults synchronize];
-      NSLog(@"HideReadPosts:%d", [userDefaults integerForKey:@"HideReadPosts"]);
+  }
+  if ([sender isKindOfClass:[UIButton class]]) {
+      UIButton* button = sender;
+      if (button.tag == TAG_SWITCH_SORT_METHOD) {
+        if (button.selected == true) {
+          [userDefaults setObject:@"hotest" forKey:@"SortMethod"];
+        }
+        else {
+          [userDefaults setObject:@"latest" forKey:@"SortMethod"];
+        }
+        [userDefaults synchronize];
+        NSLog(@"sortMethod:%@", [userDefaults stringForKey:@"SortMethod"]);
+      }
     }
 }
 
