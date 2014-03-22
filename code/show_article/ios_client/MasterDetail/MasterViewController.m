@@ -343,9 +343,11 @@
             [cell.contentView addSubview:self.serverUITextField];
             cell.textLabel.text = @"Server IP:";
             cell.accessoryView = self.serverUITextField;
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
         if (indexPath.row == 2) {
             cell.textLabel.text = @"Clean cache";
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
         return cell;
     }
@@ -361,6 +363,29 @@
         }
         return cell;
     }
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.topic isEqualToString:APP_SETTING]){
+        if(indexPath.row == 0) {
+            return nil;
+        }
+        if(indexPath.row == 1) {
+            return nil;
+        }
+        if(indexPath.row == 2) {
+            UIAlertView *alert = [[UIAlertView alloc] 
+                                  initWithTitle:@"All local cache are clean."
+                                                            message:@""
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+            [alert show];
+            return nil;
+        }
+    }
+    return indexPath;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
