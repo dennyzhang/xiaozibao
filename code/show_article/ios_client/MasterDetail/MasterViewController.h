@@ -39,6 +39,6 @@
 #define CLEAN_CACHE @"Clean cache"
 #define FOLLOW_TWITTER @"Follow us on Twitter"
 #define FOLLOW_WEIBO @"Follow us on Weibo"
-#define FOLLOW_MAILTO @"Mailto us"
+#define FOLLOW_MAILTO @"Mail to us"
 
 @end

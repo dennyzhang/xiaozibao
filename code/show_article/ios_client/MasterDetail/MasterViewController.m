@@ -372,7 +372,7 @@
         if (indexPath.row == 3) {
             self.serverUITextField.text = @"hello";
             [cell.contentView addSubview:self.serverUITextField];
-            cell.textLabel.text = @"Server IP:";
+            cell.textLabel.text = @"Server IP";
             cell.accessoryView = self.serverUITextField;
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
