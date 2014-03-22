@@ -42,7 +42,7 @@ NSLock *lock;
     bool ret;
     const char *dbpath = [dbPath UTF8String];
     sqlite3_stmt *statement = NULL;
-    NSString *deleteSQL = @"DELETE FROM POSTS;";
+    NSString *deleteSQL = @"DELETE FROM POSTS WHERE issaved=0;";
     const char *delete_stmt = [deleteSQL UTF8String];
     
     [lock lock];

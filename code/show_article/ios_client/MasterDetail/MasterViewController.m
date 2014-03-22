@@ -352,8 +352,6 @@
         return cell;
     }
     else {
-        NSInteger MY_CUSTOM_TAG = 1;
-
         Posts *post = _objects[indexPath.row];
         [[cell.contentView viewWithTag:MY_CUSTOM_TAG]removeFromSuperview];
         
@@ -367,24 +365,18 @@
         [textView setTag:MY_CUSTOM_TAG];
         [textView setEditable:NO];
         textView.selectable = NO;
-        textView.scrollEnabled = NO;
+        //textView.scrollEnabled = NO;
         [[cell contentView] addSubview:textView];
 
         NSString *text = post.title;
         CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
         CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:12.0f] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
         if (!textView)
-          textView = (UITextView *)[cell viewWithTag:1];
+          textView = (UITextView *)[cell viewWithTag:MY_CUSTOM_TAG];
         [textView setText:text];
         [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), MAX(size.height, 44.0f))];
 
-        // disable readPosts
-        if ([post.readcount intValue] !=0) {
-            textView.textColor = [UIColor grayColor];
-        }
-        else {
-            textView.textColor = [UIColor blackColor];
-        }
+        [self markCellAsRead:cell post:post];
         
         cell.accessoryType = UITableViewCellAccessoryNone;
         return cell;
@@ -425,6 +417,17 @@
         }
     }
     return indexPath;
+}
+
+- (void)markCellAsRead:(UITableViewCell *)cell post:(Posts *)post
+{
+    UITextView *textView = (UITextView *)[cell viewWithTag:MY_CUSTOM_TAG];
+    if ([post.readcount intValue] !=0) {
+        textView.textColor = [UIColor grayColor];
+    }
+    else {
+        textView.textColor = [UIColor blackColor];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -493,9 +496,9 @@
         //     @"DeviceId":uuidString,
         //       @"Postid": post.postid
         //       }];
-        
-        cell.textLabel.textColor = [UIColor grayColor];
+
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
+        [self markCellAsRead:cell post:post];
         [PostsSqlite addPostReadCount:postsDB dbPath:databasePath
                                postId:post.postid topic:post.category];
         

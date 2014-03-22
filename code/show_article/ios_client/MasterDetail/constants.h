@@ -4,3 +4,4 @@
 #define MORE_TOPICS @"More Topics"
 #define APP_SETTING @"App Setting"
 #define SAVED_POSTS @"Saved Posts"
+#define MY_CUSTOM_TAG 1234
