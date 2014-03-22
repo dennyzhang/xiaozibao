@@ -366,6 +366,7 @@
         [textView setEditable:NO];
         textView.selectable = NO;
         textView.scrollEnabled = NO;
+        textView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:textView];
 
         NSString *text = post.title;
