@@ -17,6 +17,7 @@
 
 #import <CoreFoundation/CFUUID.h>
 
+#define TAG_TEXTVIEW_IN_CELL 1234
 @interface MasterViewController () {
     NSMutableArray *_objects;
     sqlite3 *postsDB;
@@ -353,7 +354,7 @@
     }
     else {
         Posts *post = _objects[indexPath.row];
-        [[cell.contentView viewWithTag:MY_CUSTOM_TAG]removeFromSuperview];
+        [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
         
         UITextView *textView = nil;
         cell.textLabel.text = @"";
@@ -362,7 +363,7 @@
         [textView setTextColor:[UIColor blackColor]];
         [textView setFont:[UIFont fontWithName:@"ArialMT" size:16]];
         [textView setBackgroundColor:[UIColor clearColor]];
-        [textView setTag:MY_CUSTOM_TAG];
+        [textView setTag:TAG_TEXTVIEW_IN_CELL];
         [textView setEditable:NO];
         textView.selectable = NO;
         textView.scrollEnabled = NO;
@@ -373,7 +374,7 @@
         CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
         CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
         if (!textView)
-          textView = (UITextView *)[cell viewWithTag:MY_CUSTOM_TAG];
+          textView = (UITextView *)[cell viewWithTag:TAG_TEXTVIEW_IN_CELL];
         [textView setText:text];
         [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), MAX(size.height, 44.0f))];
 
@@ -422,7 +423,7 @@
 
 - (void)markCellAsRead:(UITableViewCell *)cell post:(Posts *)post
 {
-    UITextView *textView = (UITextView *)[cell viewWithTag:MY_CUSTOM_TAG];
+    UITextView *textView = (UITextView *)[cell viewWithTag:TAG_TEXTVIEW_IN_CELL];
     if ([post.readcount intValue] !=0) {
         textView.textColor = [UIColor grayColor];
     }

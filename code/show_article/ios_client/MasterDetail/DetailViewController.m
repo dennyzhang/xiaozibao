@@ -20,138 +20,20 @@
 @synthesize detailItem;
 @synthesize detailUITextView, imageView, titleTextView, linkTextView;
 
-#pragma mark - Managing the detail item
-
-- (void)setDetailItem:(Posts*)newDetailItem
-{
-    if (detailItem != newDetailItem) {
-        detailItem = newDetailItem;
-        // Update the view.
-        [self configureView];
-    }
-    
-    NSLog(@"self.masterPopoverController: %@", self.masterPopoverController);
-    if (self.masterPopoverController != nil) {
-        
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }
-}
-
-- (void)configureView
-{
-    // Update the user interface for the detail item.
-    if (self.detailItem) {
-        // TODO: here
-      self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n%@ ", self.detailItem.content];
-      self.titleTextView.text = self.detailItem.title;
-      self.linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", self.detailItem.source];
-    }
-}
-
-- (void)refreshComponentsLayout
-{
-    //self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
-    
-   // self.view.bounds = CGRectMake(0.0f, 0.0f,
-   //                               self.view.frame.size.width,
-   //                               self.view.frame.size.height);
-
-    // CGFloat width = self.view.frame.size.width;
-
-    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
-    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
-    // NSLog(@"height1:%f, height2:%f", self.detailUITextView.frame.size.height, self.view.frame.size.height);
-    
-
-    // self.detailUITextView.frame = CGRectMake(self.detailUITextView.frame.origin.x,
-    //                                          30,
-    //                                          self.view.frame.size.width - 30,
-    //                                          self.detailUITextView.frame.size.height);
-    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
-    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
-    
-    CGFloat width = self.detailUITextView.frame.size.width;
-    self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
-    self.titleTextView.frame =  CGRectMake(20, 20, 280, 80);
-    self.linkTextView.frame =  CGRectMake(width - 220.0f, 140, 200, 60);
-}
 
 - (void)viewDidLoad
 {
     //TODO define function to make code shorter
     [super viewDidLoad];
+
     self.detailUITextView.clipsToBounds = NO;
-    
-    UIButton *btn;
-
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(VoteUpButton:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *voteUpButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(VoteDownButton:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *voteDownButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
-    if (detailItem.issaved == YES) {
-      [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
-    }
-    else {
-      [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
-    }
-    UIBarButtonItem *saveFavoriteButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(moreAction:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(commentPost:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-
-    UIBarButtonItem *forwardButton = [[UIBarButtonItem alloc]
-                                      initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                      target:self
-                                      action:@selector(forwardPost:)];
-
-    self.navigationItem.rightBarButtonItems =
-      [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
-    
     self.title = @"";
-    
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
-    
-    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header.png"]];
 
-    [self.imageView setFrame:CGRectMake(0, 0, 0, 0)];
-    [self.detailUITextView addSubview:self.imageView];
+    [self addMenuCompoents:self.navigationItem.rightBarButtonItems];
+    [self addPostHeaderCompoents];
 
-    self.titleTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    self.titleTextView.editable = NO;
-    self.titleTextView.backgroundColor = NULL;
-    [self.titleTextView setFont:[UIFont fontWithName:@"ArialMT" size:17]];
-    [self.detailUITextView addSubview:self.titleTextView];
-
-    self.linkTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    self.linkTextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    self.linkTextView.editable = NO;
-    self.linkTextView.backgroundColor = NULL;
-    [self.detailUITextView addSubview:self.linkTextView];
-
-    self.detailUITextView.scrollEnabled = YES;
-    self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    self.detailUITextView.delegate = self;
     [self configureView];
     // hide and show navigation bar
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapRecognized:)];
@@ -215,6 +97,14 @@
     self.masterPopoverController = popoverController;
 }
 
+- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    // Called when the view is shown again in the split view, invalidating the button and popover controller.
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    self.masterPopoverController = nil;
+}    
+
+#pragma mark - user defined event selectors
 - (void)forwardPost:(id)sender
 {
     NSLog(@"forwardPost");
@@ -296,11 +186,131 @@
   
 }
 
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+#pragma mark - Private functions
+- (void)setDetailItem:(Posts*)newDetailItem
 {
-    // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.masterPopoverController = nil;
-}    
+    if (detailItem != newDetailItem) {
+        detailItem = newDetailItem;
+        // Update the view.
+        [self configureView];
+    }
+    
+    NSLog(@"self.masterPopoverController: %@", self.masterPopoverController);
+    if (self.masterPopoverController != nil) {
+        
+        [self.masterPopoverController dismissPopoverAnimated:YES];
+    }
+}
 
+- (void)configureView
+{
+    // Update the user interface for the detail item.
+    if (self.detailItem) {
+        // TODO: here
+      self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n%@ ", self.detailItem.content];
+      self.titleTextView.text = self.detailItem.title;
+      self.linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", self.detailItem.source];
+    }
+}
+
+- (void)addMenuCompoents:(NSArray *)rightBarButtonItems
+{
+    UIButton *btn;
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(VoteUpButton:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *voteUpButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(VoteDownButton:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *voteDownButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    if (detailItem.issaved == YES) {
+      [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
+    }
+    else {
+      [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
+    }
+    UIBarButtonItem *saveFavoriteButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(moreAction:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn addTarget:self action:@selector(commentPost:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+
+    UIBarButtonItem *forwardButton = [[UIBarButtonItem alloc]
+                                      initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                      target:self
+                                      action:@selector(forwardPost:)];
+
+    rightBarButtonItems =
+      [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
+
+}
+
+- (void)addPostHeaderCompoents
+{
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header.png"]];
+
+    [self.imageView setFrame:CGRectZero];
+    [self.detailUITextView addSubview:self.imageView];
+
+    self.titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    self.titleTextView.editable = NO;
+    self.titleTextView.backgroundColor = NULL;
+    [self.titleTextView setFont:[UIFont fontWithName:@"ArialMT" size:17]];
+    [self.detailUITextView addSubview:self.titleTextView];
+
+    self.linkTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    self.linkTextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    self.linkTextView.editable = NO;
+    self.linkTextView.backgroundColor = NULL;
+    [self.detailUITextView addSubview:self.linkTextView];
+
+    self.detailUITextView.scrollEnabled = YES;
+    self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    self.detailUITextView.delegate = self;
+}
+
+- (void)refreshComponentsLayout
+{
+    //self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
+    
+   // self.view.bounds = CGRectMake(0.0f, 0.0f,
+   //                               self.view.frame.size.width,
+   //                               self.view.frame.size.height);
+
+    // CGFloat width = self.view.frame.size.width;
+
+    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
+    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
+    // NSLog(@"height1:%f, height2:%f", self.detailUITextView.frame.size.height, self.view.frame.size.height);
+    
+
+    // self.detailUITextView.frame = CGRectMake(self.detailUITextView.frame.origin.x,
+    //                                          30,
+    //                                          self.view.frame.size.width - 30,
+    //                                          self.detailUITextView.frame.size.height);
+    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
+    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
+    
+    CGFloat width = self.detailUITextView.frame.size.width;
+    self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
+    self.titleTextView.frame =  CGRectMake(20, 20, 280, 80);
+    self.linkTextView.frame =  CGRectMake(width - 220.0f, 140, 200, 60);
+}
 @end
