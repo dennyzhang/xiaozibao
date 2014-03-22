@@ -41,7 +41,7 @@
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                [UIColor blackColor],
                                                NSForegroundColorAttributeName,
-                                               [UIFont fontWithName:@"ArialMT" size:26.0],
+                                               [UIFont fontWithName:@"ArialMT" size:24.0],
                                                NSFontAttributeName,
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
@@ -360,17 +360,17 @@
 
         textView = [[UITextView alloc] initWithFrame:CGRectZero];
         [textView setTextColor:[UIColor blackColor]];
-        [textView setFont:[UIFont fontWithName:@"Helvetica" size:16.0f]];
+        [textView setFont:[UIFont fontWithName:@"ArialMT" size:16]];
         [textView setBackgroundColor:[UIColor clearColor]];
         [textView setTag:MY_CUSTOM_TAG];
         [textView setEditable:NO];
         textView.selectable = NO;
-        //textView.scrollEnabled = NO;
+        textView.scrollEnabled = NO;
         [[cell contentView] addSubview:textView];
 
         NSString *text = post.title;
         CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
-        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:12.0f] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
         if (!textView)
           textView = (UITextView *)[cell viewWithTag:MY_CUSTOM_TAG];
         [textView setText:text];
@@ -393,7 +393,7 @@
     CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     CGFloat height = MAX(size.height, 44.0f);
     //return height + (10 * 2);
-    return height + (10 * 2) + 20;
+    return height + (10 * 2) + 30;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
