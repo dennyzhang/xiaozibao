@@ -34,9 +34,6 @@
 
 - (void)viewDidLoad
 {
-  //self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:0.157f green:0.424 blue:0.7f alpha:1.0f];
-  //self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1.0f alpha:1.0f];
-  //self.navigationController.navigationBar.backgroundColor = [UIColor yellowColor];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
 
     [super viewDidLoad];
@@ -59,9 +56,6 @@
                                       target:self.revealViewController
                                       action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = settingButton;
-    if ([userDefaults integerForKey:@"HideReadPosts"] == 0) {
-      [userDefaults setInteger:2 forKey:@"HideReadPosts"];
-    }
 
     if (self.topic == nil) {
       NSString* topicList = [userDefaults stringForKey:@"TopicList"];
@@ -74,7 +68,7 @@
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
-- (void) init_data:(NSString*)username_t
+- (void)init_data:(NSString*)username_t
            topic_t:(NSString*)topic_t
 {
     self.topic=topic_t;
@@ -96,9 +90,10 @@
     _objects = [[NSMutableArray alloc] init];
     
     [self openSqlite];
-    
+    userDefaults = [NSUserDefaults standardUserDefaults];
+    NSInteger myInteger = [userDefaults integerForKey:@"HideReadPosts"];
     [PostsSqlite loadPosts:postsDB dbPath:databasePath topic:self.topic
-                   objects:_objects hideReadPosts:true tableview:self.tableView];
+                   objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     
     [self fetchArticleList:username topic_t:topic_t
                  start_num:[NSNumber numberWithInt: 10]
@@ -252,7 +247,7 @@
     [super awakeFromNib];
 }
 
-- (void) initLocationManager
+- (void)initLocationManager
 {
     /*
      locationManager = [[CLLocationManager alloc] init];
@@ -336,7 +331,7 @@
             [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
             cell.textLabel.text = @"Auto hide read posts";
             cell.accessoryView = aSwitch;
-            if ([userDefaults integerForKey:@"HideReadPosts"] == 2) {
+            if ([userDefaults integerForKey:@"HideReadPosts"] == 0) {
               aSwitch.on = false;
             }
             else {
@@ -451,9 +446,10 @@
           [userDefaults setInteger:1 forKey:@"HideReadPosts"];
       }
       else {
-          [userDefaults setInteger:2 forKey:@"HideReadPosts"];
+          [userDefaults setInteger:0 forKey:@"HideReadPosts"];
       }
       [userDefaults synchronize];
+      NSLog(@"HideReadPosts:%d", [userDefaults integerForKey:@"HideReadPosts"]);
     }
 }
 

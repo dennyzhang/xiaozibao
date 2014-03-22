@@ -28,6 +28,10 @@
    // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
    //Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSLog(basePath);
+
     return YES;
 }
 							

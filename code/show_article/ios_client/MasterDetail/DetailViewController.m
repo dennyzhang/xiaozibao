@@ -45,17 +45,36 @@
       self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n%@ ", self.detailItem.content];
       self.titleTextView.text = self.detailItem.title;
       self.linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", self.detailItem.source];
-      [self.titleTextView setFont:[UIFont fontWithName:@"ArialMT" size:17]];
     }
 }
 
-- (void)refreshComponents
+- (void)refreshComponentsLayout
 {
     //self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
+    
+   // self.view.bounds = CGRectMake(0.0f, 0.0f,
+   //                               self.view.frame.size.width,
+   //                               self.view.frame.size.height);
+
+    // CGFloat width = self.view.frame.size.width;
+
+    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
+    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
+    // NSLog(@"height1:%f, height2:%f", self.detailUITextView.frame.size.height, self.view.frame.size.height);
+    
+
+    // self.detailUITextView.frame = CGRectMake(self.detailUITextView.frame.origin.x,
+    //                                          30,
+    //                                          self.view.frame.size.width - 30,
+    //                                          self.detailUITextView.frame.size.height);
+    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
+    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
+    
     CGFloat width = self.detailUITextView.frame.size.width;
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
     self.titleTextView.frame =  CGRectMake(20, 20, 280, 80);
-    self.linkTextView.frame =  CGRectMake(width - 180.0f, 140, 200, 60);
+    self.linkTextView.frame =  CGRectMake(width - 220.0f, 140, 200, 60);
+
 }
 
 - (void)viewDidLoad
@@ -121,6 +140,7 @@
     self.titleTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     self.titleTextView.editable = NO;
     self.titleTextView.backgroundColor = NULL;
+    [self.titleTextView setFont:[UIFont fontWithName:@"ArialMT" size:17]];
     [self.detailUITextView addSubview:self.titleTextView];
 
     self.linkTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -139,13 +159,24 @@
     [self.detailUITextView addGestureRecognizer:singleTap];
 
     // refreshComponentsLayout
-    [self refreshComponents];    
+    [self refreshComponentsLayout];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        NSLog(@"Portrait orientattion");
+    }
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        NSLog(@"Landscape orientattion");
+    }
+    [self refreshComponentsLayout];
 }
 
 #pragma mark - Hide/Show navigationBar

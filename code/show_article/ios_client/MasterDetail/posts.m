@@ -51,7 +51,8 @@
   AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
       NSString *status = [JSON valueForKeyPath:@"status"];
       if ([status isEqualToString:@"ok"]) {
-        NSLog(@"TODO");
+        // TODO
+        NSLog(@"perform operation after success");
         //button.enabled = false;
       }
       else {
