@@ -41,7 +41,7 @@
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                [UIColor blackColor],
                                                NSForegroundColorAttributeName,
-                                               [UIFont fontWithName:@"ArialMT" size:24.0],
+                                               [UIFont fontWithName:FONT_NAME1 size:FONT_BIG],
                                                NSFontAttributeName,
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
@@ -95,7 +95,6 @@
     
     [self openSqlite];
     userDefaults = [NSUserDefaults standardUserDefaults];
-    NSInteger myInteger = [userDefaults integerForKey:@"HideReadPosts"];
     [PostsSqlite loadPosts:postsDB dbPath:databasePath topic:self.topic
                    objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     
@@ -327,6 +326,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    [cell setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     if ([self.topic isEqualToString:APP_SETTING]) {
         if (indexPath.row == 0) {
             UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -395,7 +395,7 @@
 
         textView = [[UITextView alloc] initWithFrame:CGRectZero];
         [textView setTextColor:[UIColor blackColor]];
-        [textView setFont:[UIFont fontWithName:@"ArialMT" size:16]];
+        [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
         [textView setBackgroundColor:[UIColor clearColor]];
         [textView setTag:TAG_TEXTVIEW_IN_CELL];
         [textView setEditable:NO];
@@ -406,7 +406,7 @@
 
         NSString *text = post.title;
         CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
-        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
         if (!textView)
           textView = (UITextView *)[cell viewWithTag:TAG_TEXTVIEW_IN_CELL];
         [textView setText:text];
@@ -421,12 +421,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.topic isEqualToString:APP_SETTING] || [self.topic isEqualToString:SAVED_POSTS]){
+   if ([self.topic isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
     NSString *text = @"some testxt";
     CGSize constraint = CGSizeMake(320 - (10 * 2), 20000.0f);
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     CGFloat height = MAX(size.height, 44.0f);
     //return height + (10 * 2);
     return height + (10 * 2) + 30;

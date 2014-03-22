@@ -269,7 +269,7 @@
     self.titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     self.titleTextView.editable = NO;
     self.titleTextView.backgroundColor = NULL;
-    [self.titleTextView setFont:[UIFont fontWithName:@"ArialMT" size:17]];
+    [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     [self.detailUITextView addSubview:self.titleTextView];
 
     self.linkTextView = [[UITextView alloc] initWithFrame:CGRectZero];
