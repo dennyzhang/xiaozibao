@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-22 22:48:25>
+## Updated: Time-stamp: <2014-03-23 00:48:55>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -74,10 +74,11 @@ def list_posts_in_topic():
     topic = request.args.get('topic', '')
     start_num = request.args.get('start_num', 0)
     count = request.args.get('count', 10)
+    sort_method = request.args.get('sort_method', "hotest")
     voteup = request.args.get('voteup', -1)
     votedown = request.args.get('votedown', -1)
 
-    posts = data.list_topic(topic, int(start_num), int(count), int(voteup), int(votedown))
+    posts = data.list_topic(topic, int(start_num), int(count), int(voteup), int(votedown), sort_method)
     content = render_template('list_posts_in_topic.json', posts=posts)
     content = smarty_remove_extra_comma(content)
     resp = make_response(content, 200)

@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-21 12:58:04>
+## Updated: Time-stamp: <2014-03-23 00:55:15>
 ##-------------------------------------------------------------------
 import config
 from util import POST
@@ -38,18 +38,28 @@ def get_post(post_id):
 
     return post
 
-def list_topic(topic, start_num, count, voteup, votedown):
+def list_topic(topic, start_num, count, voteup, votedown, sort_method):
     global db
     conn = db.connect()
 
+    sql_clause = "select posts.id, posts.category, posts.title from posts "
+
+    where_clause = "where category ='%s'" % (topic)
     extra_where_clause = ""
     if voteup != -1:
         extra_where_clause = "%s and voteup = %d" % (extra_where_clause, voteup)
     if votedown != -1:
         extra_where_clause = "%s and votedown = %d" % (extra_where_clause, votedown)
+    where_clause = "%s%s" % (where_clause, extra_where_clause)
 
-    sql_format = "select posts.id, posts.category, posts.title from posts where category = '%s' %s order by voteup desc, votedown asc, num desc limit %d offset %d;"
-    sql = sql_format % (topic, extra_where_clause, count, start_num)
+    orderby_clause = " "
+    if sort_method == config.SORT_METHOD_LATEST:
+        orderby_clause = "order by voteup asc, votedown asc"
+
+    if sort_method == config.SORT_METHOD_HOTEST:
+        orderby_clause = "order by voteup desc, votedown desc"
+
+    sql = "%s %s %s limit %d offset %d;" % (sql_clause, where_clause, orderby_clause, count, start_num)
     print sql
     cursor = conn.execute(sql)
     out = cursor.fetchall()

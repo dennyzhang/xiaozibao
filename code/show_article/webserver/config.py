@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-17 15:35:54>
+## Updated: Time-stamp: <2014-03-23 00:48:26>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 import os
@@ -25,5 +25,8 @@ DATA_BASEDIR = "%s/webcrawler_data" % (XZB_HOME)
 
 DATA_SEPARATOR="--text follows this line--"
 MAX_LENGTH=10000
+
+SORT_METHOD_HOTEST="hotest"
+SORT_METHOD_LATEST="lates"
 ##########################################################
 ## File : config.py
