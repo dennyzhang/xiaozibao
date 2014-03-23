@@ -62,7 +62,13 @@
     [self refreshComponentsLayout];
 }
 
+- (void)linkTextSingleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
+    NSLog(@"loading: %@", self.detailItem.source);
+    [self browseWebPage:self.detailItem.source];
+}
+
 #pragma mark - Hide/Show navigationBar
+
 - (void)singleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
     NSLog(@"single tap");
     if (self.navigationController.navigationBarHidden == YES) {
@@ -274,9 +280,14 @@
     [self.detailUITextView addSubview:self.titleTextView];
 
     self.linkTextView = [[UITextView alloc] initWithFrame:CGRectZero];
-    self.linkTextView.dataDetectorTypes = UIDataDetectorTypeLink;
     self.linkTextView.editable = NO;
     self.linkTextView.backgroundColor = NULL;
+
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
+    singleTap.numberOfTapsRequired = 1;
+    [self.linkTextView addGestureRecognizer:singleTap];
+
+
     [self.detailUITextView addSubview:self.linkTextView];
 
     self.detailUITextView.scrollEnabled = YES;

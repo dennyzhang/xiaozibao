@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-17 15:36:22>
+## Updated: Time-stamp: <2014-03-22 22:02:03>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -96,7 +96,7 @@ def get_meta_dict(fname):
         if index != -1:
             key = line[0:index]
             value = line[index+1:length]
-            metadata_dict[key] = json_escape(value)
+            metadata_dict[key] = json_escape(value).strip()
 
     return metadata_dict
 
