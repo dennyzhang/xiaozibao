@@ -125,12 +125,21 @@
     return -1;
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *customLabel = [[UILabel alloc] init];
+    customLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    customLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigation_header.png"]];
+    
+    return customLabel;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return @"Topics";
+        return @" Topics";
     }
     if (section == 1) {
-        return @"Preference";
+        return @" Preference";
     }
     return @"ERROR tableview:titleForHeaderInSection";
 }
