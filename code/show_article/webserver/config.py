@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-23 00:48:26>
+## Updated: Time-stamp: <2014-03-23 15:41:19>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 import os
@@ -27,6 +27,6 @@ DATA_SEPARATOR="--text follows this line--"
 MAX_LENGTH=10000
 
 SORT_METHOD_HOTEST="hotest"
-SORT_METHOD_LATEST="lates"
+SORT_METHOD_LATEST="latest"
 ##########################################################
 ## File : config.py
