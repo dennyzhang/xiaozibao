@@ -171,12 +171,7 @@
       msg = @"Unmark as favorite";
     }
 
-    UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle:nil message:msg delegate:self
-                                  cancelButtonTitle:nil
-                                  otherButtonTitles:nil, nil];
-    [alert show];
-    [Posts timedAlert:alert];
+    [Posts infoMessage:nil msg:msg];
 }
 
 -(IBAction) VoteUpButton:(id)sender

@@ -31,6 +31,8 @@
 + (void)getCategoryList:(NSUserDefaults *)userDefaults;
 
 // TODO manage below code in a dedicated class
++(void)infoMessage:(NSString *) title 
+               msg:(NSString *) msg;
 +(void)timedAlert:(UIAlertView *) alertView;
 +(void)dismissAlert:(UIAlertView *) alertView;
 
