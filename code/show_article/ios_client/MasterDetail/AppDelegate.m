@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "constants.h"
 
 // #import "Mixpanel.h"
 
@@ -31,6 +32,8 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
     NSLog(basePath);
+
+    self.window.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
     return YES;
 }

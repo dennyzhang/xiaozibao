@@ -35,10 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+
     [self.tableView setRowHeight:ROW_HEIGHT];
     UINavigationBar* appearance = self.navigationController.navigationBar;
-    
+
     appearance.tintColor = [UIColor whiteColor];
     [appearance setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -407,6 +408,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+
     [cell setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     if ([self.topic isEqualToString:APP_SETTING]) {
         [self appSettingRows:cell indexPath:indexPath];

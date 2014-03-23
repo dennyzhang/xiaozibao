@@ -69,6 +69,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -129,8 +130,10 @@
 {
     UILabel *customLabel = [[UILabel alloc] init];
     customLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    customLabel.textColor = [UIColor whiteColor];
     customLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigation_header.png"]];
-    
+
+    //customLabel.foregroundColor = [UIColor whiteColor];
     return customLabel;
 }
 
@@ -148,6 +151,7 @@
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     if (indexPath.section == 0) {
         cell.textLabel.text = _objects[indexPath.row];
         return cell;

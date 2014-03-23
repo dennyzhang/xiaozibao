@@ -24,8 +24,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
     self.detailUITextView.clipsToBounds = NO;
+    self.detailUITextView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.title = @"";
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
