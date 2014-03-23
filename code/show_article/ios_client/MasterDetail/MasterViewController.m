@@ -37,6 +37,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
     
     [super viewDidLoad];
+    [self.tableView setRowHeight:ROW_HEIGHT];
     UINavigationBar* appearance = self.navigationController.navigationBar;
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                [UIColor blackColor],
@@ -450,12 +451,12 @@
     if ([self.topic isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
-    NSString *text = @"some testxt";
-    CGSize constraint = CGSizeMake(320 - (10 * 2), 20000.0f);
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height, 44.0f);
-    //return height + (10 * 2);
-    return height + (10 * 2) + 30;
+    // NSString *text = @"some testxt";
+    // CGSize constraint = CGSizeMake(320 - (10 * 2), 20000.0f);
+    // CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    // CGFloat height = MAX(size.height, 44.0f);
+    //return height + (10 * 2) + 30;
+    return ROW_HEIGHT;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

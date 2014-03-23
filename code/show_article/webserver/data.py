@@ -7,12 +7,13 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-23 00:55:15>
+## Updated: Time-stamp: <2014-03-23 15:38:02>
 ##-------------------------------------------------------------------
 import config
 from util import POST
 from util import fill_post_data, fill_post_meta
 from sqlalchemy import create_engine
+from util import log
 
 db = None
 
@@ -60,7 +61,7 @@ def list_topic(topic, start_num, count, voteup, votedown, sort_method):
         orderby_clause = "order by voteup desc, votedown desc"
 
     sql = "%s %s %s limit %d offset %d;" % (sql_clause, where_clause, orderby_clause, count, start_num)
-    print sql
+    log.info(sql)
     cursor = conn.execute(sql)
     out = cursor.fetchall()
     conn.close()

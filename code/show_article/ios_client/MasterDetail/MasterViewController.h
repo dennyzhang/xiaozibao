@@ -41,4 +41,5 @@
 #define FOLLOW_WEIBO @"Follow us on Weibo"
 #define FOLLOW_MAILTO @"Mail to us"
 
+#define ROW_HEIGHT 100.0f
 @end
