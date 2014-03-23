@@ -215,8 +215,19 @@
     if (self.detailItem) {
         // TODO: here
       self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n%@ ", self.detailItem.content];
-      self.titleTextView.text = self.detailItem.title;
-      self.linkTextView.text =  [[NSString alloc] initWithFormat:@"Link %@ ", self.detailItem.source];
+        self.titleTextView.text = self.detailItem.title;
+        NSString* shortUrl = [self shortUrl:self.detailItem.source];
+        NSString* prefix = @"Link:  ";
+        NSString* url =  [[NSString alloc] initWithFormat:@"%@%@", prefix, shortUrl];
+        
+        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc]
+                                           initWithString:url];
+        
+        [attString addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)} 
+                           range:NSMakeRange ([prefix length], [shortUrl length])];
+        [attString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor]
+                           range:NSMakeRange ([prefix length], [shortUrl length])];
+        self.linkTextView.attributedText = attString;
     }
 }
 
@@ -281,6 +292,8 @@
 
     self.linkTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     self.linkTextView.editable = NO;
+    self.linkTextView.textColor = [UIColor greenColor];
+    
     self.linkTextView.backgroundColor = NULL;
 
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
@@ -315,7 +328,7 @@
     CGFloat width = self.detailUITextView.frame.size.width;
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
     self.titleTextView.frame =  CGRectMake(20, 20, 280, 80);
-    self.linkTextView.frame =  CGRectMake(width - 220.0f, 140, 200, 60);
+    self.linkTextView.frame =  CGRectMake(width - 200, 140, 200, 60);
 }
 
 - (void)browseWebPage:(NSString*)url
@@ -330,5 +343,16 @@
     [webView loadRequest:nsrequest];
     [webViewController.view addSubview:webView];
     [self.navigationController pushViewController:webViewController  animated:YES];
+}
+
+- (NSString*)shortUrl:(NSString*) url
+{
+    if ([url isEqualToString:@""]) {
+        return @"";
+    }
+    int max_len = 25;
+    NSString* ret = [url substringToIndex:max_len];
+    ret = [ret stringByAppendingString:@"..." ];
+    return ret;
 }
 @end
