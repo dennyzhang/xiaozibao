@@ -10,3 +10,5 @@
 #define FONT_SMALL 13
 
 #define FONT_NAME1 @"ArialMT"
+
+#define HIDE_MESSAGEBOX_DELAY 1

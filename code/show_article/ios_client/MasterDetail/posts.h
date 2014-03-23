@@ -29,4 +29,9 @@
            postId:(NSString*)postId;
 
 + (void)getCategoryList:(NSUserDefaults *)userDefaults;
+
+// TODO manage below code in a dedicated class
++(void)timedAlert:(UIAlertView *) alertView;
++(void)dismissAlert:(UIAlertView *) alertView;
+
 @end

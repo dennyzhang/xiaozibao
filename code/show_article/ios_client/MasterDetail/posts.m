@@ -105,4 +105,15 @@
    return ret;
 }
 
++(void)timedAlert:(UIAlertView *) alertView
+{
+    [self performSelector:@selector(dismissAlert:) withObject:alertView afterDelay:HIDE_MESSAGEBOX_DELAY];
+}
+
++(void)dismissAlert:(UIAlertView *) alertView
+{
+    [alertView dismissWithClickedButtonIndex:nil animated:YES];
+}
+
+
 @end

@@ -166,6 +166,17 @@
     [PostsSqlite updatePostIssaved:postsDB dbPath:databasePath
                            postId:detailItem.postid issaved:detailItem.issaved topic:detailItem.category];
 
+    NSString* msg = @"Save the post to local";
+    if (detailItem.issaved == NO) {
+      msg = @"Unsave the posts from local";
+    }
+
+    UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle:nil message:msg delegate:self
+                                  cancelButtonTitle:nil
+                                  otherButtonTitles:nil, nil];
+    [alert show];
+    [Posts timedAlert:alert];
 }
 
 -(IBAction) VoteUpButton:(id)sender

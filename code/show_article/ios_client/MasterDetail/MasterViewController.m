@@ -494,10 +494,11 @@
             else {
                 NSString* msg=[[NSString alloc] initWithFormat:@"Follow us by \nhttp://twitter.com/%@", snsUserName];
                 UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle:msg message:@"" delegate:self
-                                      cancelButtonTitle:@"OK"
+                                      initWithTitle:nil message:msg delegate:self
+                                      cancelButtonTitle:nil
                                       otherButtonTitles:nil, nil];
                 [alert show];
+                [Posts timedAlert:alert];
             }
         }
         
