@@ -337,7 +337,7 @@
 {
     if ([self.topic isEqualToString:APP_SETTING]) {
         if (section == 0) {
-            return 4;
+            return 3;
         }
         if (section == 1) {
             return 2;
@@ -384,13 +384,6 @@
         }
         if (indexPath.row == 2) {
             cell.textLabel.text = CLEAN_CACHE;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-        if (indexPath.row == 3) {
-            self.serverUITextField.text = @"hello";
-            [cell.contentView addSubview:self.serverUITextField];
-            cell.textLabel.text = @"Font size";
-            cell.accessoryView = self.serverUITextField;
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
     }
