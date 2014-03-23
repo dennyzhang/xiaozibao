@@ -35,5 +35,5 @@
                msg:(NSString *) msg;
 +(void)timedAlert:(UIAlertView *) alertView;
 +(void)dismissAlert:(UIAlertView *) alertView;
-
++(NSString*) getLogoIcon:(NSString* )url;
 @end

@@ -127,4 +127,16 @@
     [alertView dismissWithClickedButtonIndex:nil animated:YES];
 }
 
++(NSString*) getLogoIcon:(NSString* )url
+{
+  if ([url rangeOfString:@"stackexchange.com"].location != NSNotFound) {
+    return @"stackexchange.com.png";
+  }
+
+  NSString* ret;
+  NSArray *stringArray = [url componentsSeparatedByString: @"/"];
+  ret = [[NSString alloc] initWithFormat:@"%@.png", stringArray[2]];
+
+  return ret;
+}
 @end

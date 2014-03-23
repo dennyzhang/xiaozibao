@@ -416,11 +416,25 @@
     else {
         Posts *post = _objects[indexPath.row];
         [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
-        
-        UITextView *textView = nil;
+        [[cell.contentView viewWithTag:TAG_ICON_IN_CELL]removeFromSuperview];
+
         cell.textLabel.text = @"";
+
+        NSString* iconPath = [Posts getLogoIcon:post.source];
+        NSLog(@"url:%@, iconPath:%@", post.source, iconPath);
+        //NSString* iconPath = @"stackexchange.com.png";
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
+
+        [imageView setFrame:CGRectMake(cell.frame.size.width - 75,
+                                       cell.frame.size.height - 45,
+                                       63.0f, 33.0f)];
         
-        textView = [[UITextView alloc] initWithFrame:CGRectZero];
+        [imageView setTag:TAG_ICON_IN_CELL];
+        imageView.userInteractionEnabled = NO;
+        [[cell contentView] addSubview:imageView];
+        
+        
+        UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
         [textView setTextColor:[UIColor blackColor]];
         [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
         [textView setBackgroundColor:[UIColor clearColor]];
@@ -434,8 +448,6 @@
         NSString *text = post.title;
         CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
         CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-        if (!textView)
-            textView = (UITextView *)[cell viewWithTag:TAG_TEXTVIEW_IN_CELL];
         [textView setText:text];
         [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), MAX(size.height, 44.0f))];
         

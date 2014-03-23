@@ -33,13 +33,14 @@
            topic_t:(NSString*)topic_t;
 
 #define TAG_TEXTVIEW_IN_CELL 1234
-#define TAG_SWITCH_HIDE_READ_POST 1235
-#define TAG_SWITCH_SORT_METHOD 1236
+#define TAG_ICON_IN_CELL 1235
+#define TAG_SWITCH_HIDE_READ_POST 1236
+#define TAG_SWITCH_SORT_METHOD 1237
 
 #define CLEAN_CACHE @"Clean cache"
 #define FOLLOW_TWITTER @"Follow us on Twitter"
 #define FOLLOW_WEIBO @"Follow us on Weibo"
 #define FOLLOW_MAILTO @"Mail to us"
 
-#define ROW_HEIGHT 100.0f
+#define ROW_HEIGHT 120.0f
 @end
