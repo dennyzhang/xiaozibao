@@ -34,13 +34,15 @@
 
 - (void)viewDidLoad
 {
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
-    
     [super viewDidLoad];
+    
     [self.tableView setRowHeight:ROW_HEIGHT];
     UINavigationBar* appearance = self.navigationController.navigationBar;
+    
+    appearance.tintColor = [UIColor whiteColor];
+    [appearance setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               [UIColor blackColor],
+                                               [UIColor whiteColor],
                                                NSForegroundColorAttributeName,
                                                [UIFont fontWithName:FONT_NAME1 size:FONT_BIG],
                                                NSFontAttributeName,
@@ -180,7 +182,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
         NSString* title = @"Server request error";
-        NSString* msg = @"Fail to get post list.\nPleaese make sure the app is latest first.\nReport the issue by mail, twitter, etc";
+        NSString* msg = @"Fail to get post list.\nPleaese check network or app version.\nReport the issue by mail, twitter, etc";
         [Posts infoMessage:title msg:msg];
     }];
     
@@ -237,9 +239,6 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
-        // NSString* title = @"Server request error";
-        // NSString* msg = @"Fail to fetch the post.\nPleaese make sure the app is latest first.\nReport the issue by mail, twitter, etc";
-        // [Posts infoMessage:title msg:msg];
     }];
     
     [operation start];
@@ -417,14 +416,14 @@
         Posts *post = _objects[indexPath.row];
         [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
         [[cell.contentView viewWithTag:TAG_ICON_IN_CELL]removeFromSuperview];
-
+        
         cell.textLabel.text = @"";
-
+        
         NSString* iconPath = [Posts getLogoIcon:post.source];
         NSLog(@"url:%@, iconPath:%@", post.source, iconPath);
         //NSString* iconPath = @"stackexchange.com.png";
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
-
+        
         [imageView setFrame:CGRectMake(cell.frame.size.width - 75,
                                        cell.frame.size.height - 45,
                                        63.0f, 33.0f)];
@@ -566,7 +565,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if ([self.topic isEqualToString:APP_SETTING])
         return;
-
+    
     // when reach the top
     if (scrollView.contentOffset.y == 0)
     {
