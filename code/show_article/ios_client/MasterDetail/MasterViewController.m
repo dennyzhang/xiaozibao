@@ -236,9 +236,9 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
-        NSString* title = @"Server request error";
-        NSString* msg = @"Fail to fetch the post.\nPleaese make sure the app is latest first.\nReport the issue by mail, twitter, etc";
-        [Posts infoMessage:title msg:msg];
+        // NSString* title = @"Server request error";
+        // NSString* msg = @"Fail to fetch the post.\nPleaese make sure the app is latest first.\nReport the issue by mail, twitter, etc";
+        // [Posts infoMessage:title msg:msg];
     }];
     
     [operation start];
@@ -317,23 +317,39 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if ([self.topic isEqualToString:APP_SETTING]) {
+        return 2;
+    }
+    
     return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if ([self.topic isEqualToString:APP_SETTING]) {
+        return @" ";
+    }
+    else
+        return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([self.topic isEqualToString:APP_SETTING]) {
-        return 6;
+        if (section == 0) {
+            return 4;
+        }
+        if (section == 1) {
+            return 2;
+        }
+        return 0;
     }
     else
         return _objects.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) appSettingRows:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    [cell setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
-    if ([self.topic isEqualToString:APP_SETTING]) {
+    if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
             aSwitch.on = YES;
@@ -364,12 +380,6 @@
             button.tag = TAG_SWITCH_SORT_METHOD;
             
             cell.accessoryView = button;
-            // if ([[userDefaults stringForKey:@"SortMethod"] isEqualToString:@"hotest"]) {
-            //     button.enabled = true;
-            // }
-            // else {
-            //     button.enabled = false;
-            // }
         }
         if (indexPath.row == 2) {
             cell.textLabel.text = CLEAN_CACHE;
@@ -382,18 +392,24 @@
             cell.accessoryView = self.serverUITextField;
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
-        if (indexPath.row == 4) {
+    }
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
             cell.textLabel.text = FOLLOW_TWITTER;
         }
         
-        if (indexPath.row == 5) {
+        if (indexPath.row == 1) {
             cell.textLabel.text = FOLLOW_MAILTO;
         }
-        
-        // if (indexPath.row == 6) {
-        //     cell.textLabel.text = FOLLOW_WEIBO;
-        // }
+    }
+}
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    [cell setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
+    if ([self.topic isEqualToString:APP_SETTING]) {
+        [self appSettingRows:cell indexPath:indexPath];
         return cell;
     }
     else {
@@ -447,8 +463,8 @@
         NSLog(@"He press Cancel");
     }
     else {
-            [self openSqlite];
-            [PostsSqlite cleanCache:postsDB dbPath:databasePath];
+        [self openSqlite];
+        [PostsSqlite cleanCache:postsDB dbPath:databasePath];
     }
 }
 
@@ -457,10 +473,10 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if ([self.topic isEqualToString:APP_SETTING]){
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
-
-          UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite posts?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
-
-          [alert show];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite posts?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
+            
+            [alert show];
         }
         
         if([cell.textLabel.text isEqualToString:FOLLOW_MAILTO]) {
@@ -469,7 +485,7 @@
             NSString* body=@"hi CoderPuzzle\n";
             NSString* mailString = [NSString stringWithFormat:@"mailto:?to=%@&subject=%@&body=%@",
                                     [to stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
-
+                                    
                                     [subject stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
                                     [body stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
             NSLog(@"mailstring:%@", mailString);
@@ -529,6 +545,9 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([self.topic isEqualToString:APP_SETTING])
+        return;
+
     // when reach the top
     if (scrollView.contentOffset.y == 0)
     {
