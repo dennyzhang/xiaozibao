@@ -135,7 +135,7 @@
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
 {
-    if ([self.topic isEqualToString:SAVED_POSTS])
+    if ([self.topic isEqualToString:FAVORITE_POSTS])
         return;
     
     NSString *urlPrefix=SERVERURL;
@@ -436,39 +436,26 @@
     return height + (10 * 2) + 30;
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        NSLog(@"He press Cancel");
+    }
+    else {
+            [self openSqlite];
+            [PostsSqlite cleanCache:postsDB dbPath:databasePath];
+    }
+}
+
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if ([self.topic isEqualToString:APP_SETTING]){
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
-            [self openSqlite];
-            [PostsSqlite cleanCache:postsDB dbPath:databasePath];
-            
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"All local cache are clean."
-                                  message:@""
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil, nil];
-            [alert show];
+
+          UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite posts?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
+
+          [alert show];
         }
-        // if([cell.textLabel.text isEqualToString:FOLLOW_WEIBO]) {
-        //     NSString* snsUserName=@"dennyzhang001";
-        //     UIApplication *app = [UIApplication sharedApplication];
-        //     NSURL *snsURL = [NSURL URLWithString:[NSString stringWithFormat:@"weibo://weibo.com/%@", snsUserName]];
-        //     if ([app canOpenURL:snsURL])
-        //     {
-        //     	[app openURL:snsURL];
-        //     }
-        //     else {
-        //         NSString* msg=[[NSString alloc] initWithFormat:@"Follow us by \nhttp://weibo.com/%@", snsUserName];
-        //         UIAlertView *alert = [[UIAlertView alloc]
-        //                                initWithTitle:msg message:@"" delegate:self
-        //                                cancelButtonTitle:@"OK"
-        //                                otherButtonTitles:nil, nil];
-        //         [alert show];
-        //     }
-        // }
         
         if([cell.textLabel.text isEqualToString:FOLLOW_MAILTO]) {
             NSString* to=@"denny.zhang001@gmail.com";

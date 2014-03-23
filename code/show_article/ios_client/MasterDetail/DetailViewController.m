@@ -134,9 +134,9 @@
     UIButton *btn= (UIButton*)sender;
 
     // TODO: call below, only if the async request is done correctly
-    detailItem.issaved = ! detailItem.issaved;
+    detailItem.isfavorite = ! detailItem.isfavorite;
     
-    if (detailItem.issaved == YES) {
+    if (detailItem.isfavorite == YES) {
         [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
     }
     else {
@@ -163,12 +163,12 @@
         NSLog(@"Error: Failed to open/create database");
     }
 
-    [PostsSqlite updatePostIssaved:postsDB dbPath:databasePath
-                           postId:detailItem.postid issaved:detailItem.issaved topic:detailItem.category];
+    [PostsSqlite updatePostIsfavorite:postsDB dbPath:databasePath
+                           postId:detailItem.postid isfavorite:detailItem.isfavorite topic:detailItem.category];
 
-    NSString* msg = @"Save the post to local";
-    if (detailItem.issaved == NO) {
-      msg = @"Unsave the posts from local";
+    NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite Posts";
+    if (detailItem.isfavorite == NO) {
+      msg = @"Unmark as favorite";
     }
 
     UIAlertView *alert = [[UIAlertView alloc]
@@ -262,7 +262,7 @@
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
     [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
-    if (detailItem.issaved == YES) {
+    if (detailItem.isfavorite == YES) {
       [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
     }
     else {

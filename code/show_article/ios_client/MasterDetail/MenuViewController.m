@@ -145,7 +145,7 @@
     }
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-          cell.textLabel.text = SAVED_POSTS;
+          cell.textLabel.text = FAVORITE_POSTS;
         }
         if (indexPath.row == 1) {
             cell.textLabel.text = MORE_TOPICS;

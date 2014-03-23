@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString* content;
 @property (nonatomic, retain) NSString* source;
 @property (nonatomic, retain) NSNumber* readcount;
-@property (nonatomic, assign) BOOL issaved;
+@property (nonatomic, assign) BOOL isfavorite;
 
 + (void) feedbackPost:(NSString*) userid
                postid:(NSString*) postid
