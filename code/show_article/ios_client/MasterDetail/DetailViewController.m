@@ -23,13 +23,14 @@
 
 - (void)viewDidLoad
 {
-    //TODO define function to make code shorter
     [super viewDidLoad];
 
     self.detailUITextView.clipsToBounds = NO;
     self.title = @"";
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
+    // TODO, when jump to webView, the bottom doesn't look natural
+    self.titleTextView.frame =  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 
     [self addMenuCompoents];
     [self addPostHeaderCompoents];
@@ -295,7 +296,8 @@
     self.linkTextView.textColor = [UIColor greenColor];
     
     self.linkTextView.backgroundColor = NULL;
-
+    self.linkTextView.dataDetectorTypes = UIDataDetectorTypeNone;
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
     singleTap.numberOfTapsRequired = 1;
     [self.linkTextView addGestureRecognizer:singleTap];
@@ -334,8 +336,18 @@
 - (void)browseWebPage:(NSString*)url
 {
     UIViewController *webViewController = [[UIViewController alloc]init];
-    
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0,0,320,480)];
+
+    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0,0,
+                                                                    self.view.frame.size.width,
+                                                                    self.view.frame.size.height 
+                                                                    + self.navigationController.navigationBar.frame.size.height
+                                                                    + 20)];
+
+  
+//    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0,0,
+//                                                                    self.view.frame.size.width,
+//                                                                    self.view.frame.size.height)];
+
     webView.scalesPageToFit= YES;
     NSURL *nsurl = [NSURL URLWithString:url];
 
