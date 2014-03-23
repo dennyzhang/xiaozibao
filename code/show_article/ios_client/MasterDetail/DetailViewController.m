@@ -42,6 +42,7 @@
 
     // refreshComponentsLayout
     [self refreshComponentsLayout];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -285,29 +286,38 @@
 
 - (void)refreshComponentsLayout
 {
-    //self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
-    
-   // self.view.bounds = CGRectMake(0.0f, 0.0f,
-   //                               self.view.frame.size.width,
-   //                               self.view.frame.size.height);
 
-    // CGFloat width = self.view.frame.size.width;
+    // self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
 
-    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
-    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
-    // NSLog(@"height1:%f, height2:%f", self.detailUITextView.frame.size.height, self.view.frame.size.height);
-    
+    NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
+    NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
+    NSLog(@"height1:%f, height2:%f", self.detailUITextView.frame.size.height, self.view.frame.size.height);
 
-    // self.detailUITextView.frame = CGRectMake(self.detailUITextView.frame.origin.x,
-    //                                          30,
-    //                                          self.view.frame.size.width - 30,
-    //                                          self.detailUITextView.frame.size.height);
-    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
-    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
+    //self.detailUITextView.frame.origin.x,
+    self.detailUITextView.frame = CGRectMake(100,
+                                             100,
+                                             self.view.frame.size.width - 30,
+                                             self.detailUITextView.frame.size.height);
+    NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
+    NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
     
     CGFloat width = self.detailUITextView.frame.size.width;
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
     self.titleTextView.frame =  CGRectMake(20, 20, 280, 80);
     self.linkTextView.frame =  CGRectMake(width - 220.0f, 140, 200, 60);
+}
+
+- (void)browseWebPage:(NSString*)url
+{
+    UIViewController *webViewController = [[UIViewController alloc]init];
+    
+    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0,0,320,480)];
+    webView.scalesPageToFit= YES;
+    NSURL *nsurl = [NSURL URLWithString:url];
+
+    NSURLRequest *nsrequest = [NSURLRequest requestWithURL:nsurl];
+    [webView loadRequest:nsrequest];
+    [webViewController.view addSubview:webView];
+    [self.navigationController pushViewController:webViewController  animated:YES];
 }
 @end

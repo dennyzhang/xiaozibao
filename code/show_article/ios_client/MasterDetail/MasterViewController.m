@@ -317,7 +317,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([self.topic isEqualToString:APP_SETTING]) {
-        return 7;
+        return 6;
     }
     else
         return _objects.count;
@@ -381,13 +381,13 @@
         }
         
         if (indexPath.row == 5) {
-            cell.textLabel.text = FOLLOW_WEIBO;
-        }
-
-        if (indexPath.row == 6) {
             cell.textLabel.text = FOLLOW_MAILTO;
         }
         
+        // if (indexPath.row == 6) {
+        //     cell.textLabel.text = FOLLOW_WEIBO;
+        // }
+
         return cell;
     }
     else {
@@ -452,24 +452,23 @@
                                   otherButtonTitles:nil, nil];
             [alert show];
         }
-        if([cell.textLabel.text isEqualToString:FOLLOW_WEIBO]) {
-            NSString* snsUserName=@"dennyzhang001";
-            UIApplication *app = [UIApplication sharedApplication];
-            NSURL *snsURL = [NSURL URLWithString:[NSString stringWithFormat:@"weibo://weibo.com/%@", snsUserName]];
-            if ([app canOpenURL:snsURL])
-            {
-            	[app openURL:snsURL];
-            }
-            else {
-                NSString* msg=[[NSString alloc] initWithFormat:@"Follow us by \nhttp://weibo.com/%@", snsUserName];
-                UIAlertView *alert = [[UIAlertView alloc]
-                                       initWithTitle:msg message:@"" delegate:self
-                                       cancelButtonTitle:@"OK"
-                                       otherButtonTitles:nil, nil];
-                [alert show];
-            
-            }
-        }
+        // if([cell.textLabel.text isEqualToString:FOLLOW_WEIBO]) {
+        //     NSString* snsUserName=@"dennyzhang001";
+        //     UIApplication *app = [UIApplication sharedApplication];
+        //     NSURL *snsURL = [NSURL URLWithString:[NSString stringWithFormat:@"weibo://weibo.com/%@", snsUserName]];
+        //     if ([app canOpenURL:snsURL])
+        //     {
+        //     	[app openURL:snsURL];
+        //     }
+        //     else {
+        //         NSString* msg=[[NSString alloc] initWithFormat:@"Follow us by \nhttp://weibo.com/%@", snsUserName];
+        //         UIAlertView *alert = [[UIAlertView alloc]
+        //                                initWithTitle:msg message:@"" delegate:self
+        //                                cancelButtonTitle:@"OK"
+        //                                otherButtonTitles:nil, nil];
+        //         [alert show];
+        //     }
+        // }
         
         if([cell.textLabel.text isEqualToString:FOLLOW_MAILTO]) {
             NSString* to=@"denny.zhang001@gmail.com";
