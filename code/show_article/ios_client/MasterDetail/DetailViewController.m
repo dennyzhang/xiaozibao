@@ -342,12 +342,8 @@
                                                                     self.view.frame.size.height 
                                                                     + self.navigationController.navigationBar.frame.size.height
                                                                     + 20)];
-
-  
-//    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0,0,
-//                                                                    self.view.frame.size.width,
-//                                                                    self.view.frame.size.height)];
-
+                                                                    
+    self.navigationController.navigationBarHidden = NO;
     webView.scalesPageToFit= YES;
     NSURL *nsurl = [NSURL URLWithString:url];
 
