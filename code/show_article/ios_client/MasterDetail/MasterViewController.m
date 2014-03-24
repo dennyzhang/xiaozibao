@@ -144,6 +144,14 @@
     
     NSString *urlPrefix=SERVERURL;
     // TODO: voteup defined by users
+    NSString *sortMethod;
+    if ([userDefaults integerForKey:@"IsEditorMode"] == 0) {
+      sortMethod = @"hotest";
+    }
+    else {
+      sortMethod = @"latest";
+    }
+
     NSString *urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
                        urlPrefix, userid, topic_t, [start_num intValue], [count intValue], [userDefaults stringForKey:@"SortMethod"]];
     NSLog(@"fetchArticleList, url:%@", urlStr);
@@ -366,21 +374,18 @@
             }
         }
         if (indexPath.row == 1) {
-            CGRect aframe = CGRectMake(0,0,40,40);
-            UIButton* button = [[UIButton alloc] initWithFrame:aframe];
-            UIImage *selectedImage = [UIImage imageNamed:@"hearts-512.png"];
-            UIImage *unselectedImage = [UIImage imageNamed:@"heart-512.png"];
-            
-            [button setImage:unselectedImage forState:UIControlStateNormal];
-            [button setImage:selectedImage forState:UIControlStateSelected];
-            [button addTarget:self
-                       action:@selector(hideSwitchChanged:)
-             forControlEvents:UIControlEventTouchUpInside];
-            cell.textLabel.text = @"How posts are sorted";
-            button.selected = YES;
-            button.tag = TAG_SWITCH_SORT_METHOD;
-            
-            cell.accessoryView = button;
+            UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            aSwitch.on = YES;
+            aSwitch.tag = TAG_SWITCH_EDITOR_MODE;
+            [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.textLabel.text = @"Enable editor mode";
+            cell.accessoryView = aSwitch;
+            if ([userDefaults integerForKey:@"IsEditorMode"] == 0) {
+                aSwitch.on = false;
+            }
+            else {
+                aSwitch.on = true;
+            }
         }
         if (indexPath.row == 2) {
             cell.textLabel.text = CLEAN_CACHE;
@@ -625,21 +630,16 @@
             [userDefaults synchronize];
             NSLog(@"HideReadPosts:%d", [userDefaults integerForKey:@"HideReadPosts"]);
         }
-    }
-    if ([sender isKindOfClass:[UIButton class]]) {
-        UIButton* button = sender;
-        button.selected = !button.selected;
-        if (button.tag == TAG_SWITCH_SORT_METHOD) {
-            if (button.selected == true) {
-                [userDefaults setObject:@"hotest" forKey:@"SortMethod"];
+        if (switchControl.tag == TAG_SWITCH_EDITOR_MODE) {
+            if (switchControl.on == true) {
+                [userDefaults setInteger:1 forKey:@"IsEditorMode"];
             }
             else {
-                [userDefaults setObject:@"latest" forKey:@"SortMethod"];
+                [userDefaults setInteger:0 forKey:@"IsEditorMode"];
             }
             [userDefaults synchronize];
-            NSLog(@"sortMethod:%@", [userDefaults stringForKey:@"SortMethod"]);
+            NSLog(@"IsEditorMode:%d", [userDefaults integerForKey:@"IsEditorMode"]);
         }
     }
 }
-
 @end
