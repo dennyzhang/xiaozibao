@@ -4,10 +4,13 @@ XiaoZibao--Webserver API
 ## API List
 =========
 
-- [API of Posts](#api明细----自媒体行业)
-  - [[自媒体] 插入数据:用户网页行为] (#自媒体-插入数据用户网页行为)
+- [API of Posts](#api-of-posts)
+  - [Get topic list] (#get-topic-list)
+  - [Get posts in a topic] (#get-posts-in-a-topic)
+  - [Get topic by id] (#Get-topic-by-id)
 
-All API conform to HTTP GET/POST; The data format is mostly json.
+- All API conform to HTTP GET/POST
+- The data format is mostly json.
 
 $server is server ip, $port is server port.
 
@@ -23,7 +26,6 @@ _Sample Request_
     
 ---
 
-
 ### Get posts in a topic
 `GET: http://$server:$port/api_list_posts_in_topic`
 
@@ -33,12 +35,8 @@ _Sample Request_
 | start_num  |N  |  |
 | count  |N  |  |
 
-_请求格式示例_
-
-    http://127.0.0.1:9180/api_list_posts_in_topic?topic=idea_startup&start_num=0&count=10
-
-
 _Sample Request_
+
     bash-3.2$ curl "http://$server:$port/api_list_posts_in_topic?topic=concept&start_num=0&count=10"
     [
     {"id":"fdce06044a839c40df0ca5cb79ff3c00","category":"concept","title":"Why is java secure? | CareerCup","summary":""},
@@ -51,13 +49,14 @@ _Sample Request_
     {"id":"b3b84f062816979ec2ce1d2ae94211cb","category":"concept","title":"1st interview continued: e ask... | CareerCup","summary":""},
     {"id":"8b425c921fccbbbd51a232aa9387b5e2","category":"concept","title":"What's the size of a empty cla... | CareerCup","summary":""},
     {"id":"afbb77f6c4e15c991b91ad2bcf745228","category":"concept","title":"Java: Differentiate between fi... | CareerCup","summary":""}]
+
 ---
 
-### Get topic by ip
+### Get topic by id
 `GET: http://$server:$port/api_get_post`
 
 | Parameter   |Required | Desc|
-:-----------|------|------------------------------------------------------------------------------|
+:-----------|------|-----------|
 | id  |Y  | post id |
 
 _Sample Request_
@@ -69,4 +68,3 @@ _Sample Request_
     "source":"http://www.careercup.com/question?id=4881711603122176"}
     
 ---
-
