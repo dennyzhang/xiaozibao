@@ -145,7 +145,9 @@
                                    fieldName:@"isvoteup" topic:detailItem.category];
             [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
 
-            [self feedbackPost:@"denny"
+            NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+            NSLog(@"userid:%@", userid);
+            [self feedbackPost:userid
                         postid:detailItem.postid
                       category:detailItem.category btn:btn
                        postsDB:postsDB dbPath:dbPath];

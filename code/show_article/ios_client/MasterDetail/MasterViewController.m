@@ -52,11 +52,14 @@
     
     userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
-    
-    if ([[userDefaults stringForKey:@"SortMethod"] isEqualToString:@""]) {
-        [userDefaults setObject:@"hotest" forKey:@"SortMethod"];
+
+    CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+    NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
+    CFRelease(uuidRef);
+    if (![userDefaults stringForKey:@"Userid"]) {
+      [userDefaults setObject:uuidString forKey:@"Userid"];
     }
-    
+
     [Posts getCategoryList:userDefaults];
     
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
@@ -596,10 +599,6 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         Posts *post = _objects[indexPath.row];
         
-        CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
-        NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
-        
-        CFRelease(uuidRef);
         
         // Mixpanel *mixpanel = [Mixpanel sharedInstance];
         

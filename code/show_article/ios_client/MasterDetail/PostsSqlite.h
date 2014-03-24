@@ -13,6 +13,7 @@
 #import "Posts.h"
 #import "constants.h"
 
+#define DB_SEPERATOR @"someseperator"
 @interface PostsSqlite : NSObject {
     sqlite3 *postsDB;
 }

@@ -27,7 +27,9 @@
         UITableViewCell* c = sender;
         if (c.textLabel.isEnabled == true) {
             MasterViewController* dstViewController = segue.destinationViewController;
-            [dstViewController init_data:@"denny" topic_t:c.textLabel.text]; // TODO
+
+            NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+            [dstViewController init_data:userid topic_t:c.textLabel.text]; // TODO
             [dstViewController view];
         }
         else { // disable actions

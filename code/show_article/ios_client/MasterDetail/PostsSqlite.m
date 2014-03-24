@@ -90,7 +90,7 @@ NSLock *lock;
                 NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
                 NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
                 NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
-                content = [content stringByReplacingOccurrencesOfString: @"dennyseperator" withString:@"\""];
+                content = [content stringByReplacingOccurrencesOfString:DB_SEPERATOR withString:@"\""];
                 NSString* source = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
                 NSNumber *readcount = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 6)];
                 NSNumber *isfavorite = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 7)];
@@ -129,7 +129,7 @@ NSLock *lock;
     const char *dbpath = [dbPath UTF8String];
     NSLog(@"savePost. id:%@, title:%@", postId, title);
     sqlite3_stmt *statement = NULL;
-    content = [content stringByReplacingOccurrencesOfString: @"\"" withString:@"dennyseperator"];
+    content = [content stringByReplacingOccurrencesOfString: @"\"" withString:DB_SEPERATOR];
     NSString *insertSQL = [NSString
                            stringWithFormat:
                            @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, SOURCE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
@@ -198,7 +198,7 @@ NSLock *lock;
                 NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
                 NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
                 NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
-                content = [content stringByReplacingOccurrencesOfString: @"dennyseperator" withString:@"\""];
+                content = [content stringByReplacingOccurrencesOfString:DB_SEPERATOR withString:@"\""];
                 NSString* source = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
                 NSNumber *readcount = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 6)];
                 NSNumber *isfavorite = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 7)];
