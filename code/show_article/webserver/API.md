@@ -9,8 +9,7 @@ XiaoZibao--Webserver API
   - [Get posts in a topic] (#get-posts-in-a-topic)
   - [Get topic by id] (#Get-topic-by-id)
 
-- All API conform to HTTP GET/POST
-- The data format is mostly json.
+- All API conform to HTTP GET/POST; The data format is mostly json.
 
 $server is server ip, $port is server port.
 
@@ -34,6 +33,9 @@ _Sample Request_
 | topic  |Y  | topic name |
 | start_num  |N  |  |
 | count  |N  |  |
+| sort_method  |N  |  |
+| voteup  |N  |  |
+| votedown  |N  |  |
 
 _Sample Request_
 
