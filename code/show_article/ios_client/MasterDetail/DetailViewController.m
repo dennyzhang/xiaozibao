@@ -105,46 +105,61 @@
 #pragma mark - user defined event selectors
 -(IBAction) barButtonEvent:(id)sender
 {
-    // TODO remove code duplication
-    NSString *docsDir;
-    NSArray *dirPaths;
+    UIButton* btn = sender;
+    if (btn.tag == TAG_BUTTON_COIN) {
+        NSLog(@"coin");
+        ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
     
-    // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    docsDir = [dirPaths objectAtIndex:0];
-    
-    sqlite3 *postsDB;
-    NSString *dbPath = [[NSString alloc] initWithString:
-                        [docsDir stringByAppendingPathComponent:@"posts.db"]];
-    if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
-        NSLog(@"Error: Failed to open/create database");
+        self.navigationController.navigationBarHidden = NO;
+
+        [self.navigationController pushViewController:reviewViewController  animated:YES];
     }
     
-    if ([sender isKindOfClass:[UIButton class]]) {
-        UIButton* btn = sender;
+    if (btn.tag == TAG_BUTTON_VOTEUP || btn.tag == TAG_BUTTON_VOTEDOWN || btn.tag == TAG_BUTTON_FAVORITE) {
+        // TODO remove code duplication
+        NSString *docsDir;
+        NSArray *dirPaths;
+        
+        // Get the documents directory
+        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        docsDir = [dirPaths objectAtIndex:0];
+        
+        sqlite3 *postsDB;
+        NSString *dbPath = [[NSString alloc] initWithString:
+                            [docsDir stringByAppendingPathComponent:@"posts.db"]];
+        if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
+            NSLog(@"Error: Failed to open/create database");
+        }
+        // mark locally, then send request to remote server
+        NSString* imgName = @"";
+        NSString* fieldName = @"";
+        BOOL boolValue = false;
+        if (btn.tag == TAG_BUTTON_VOTEUP) {
+            imgName = (detailItem.isvoteup == NO)?@"thumbs_up-512.png":@"thumb_up-512.png";
+            detailItem.isvoteup = !detailItem.isvoteup;
+            fieldName = @"isvoteup";
+            boolValue = detailItem.isvoteup;
+            NSLog(@"detailItem.isvoteup:%d, imgName:%@", detailItem.isvoteup, imgName);
+        }
+        if (btn.tag == TAG_BUTTON_VOTEDOWN) {
+            imgName = (detailItem.isvotedown == NO)?@"thumbs_down-512.png":@"thumb_down-512.png";
+            detailItem.isvotedown = !detailItem.isvotedown;
+            fieldName = @"isvotedown";
+            boolValue = detailItem.isvotedown;
+        }
+        if (btn.tag == TAG_BUTTON_FAVORITE) {
+            imgName = (detailItem.isvotedown == NO)?@"hearts-512.png":@"heart-512.png";
+            detailItem.isfavorite = ! detailItem.isfavorite;
+            fieldName = @"isfavorite";
+            boolValue = detailItem.isfavorite;
+        }
+        
+        [PostsSqlite updatePostBoolField:postsDB dbPath:dbPath
+                                  postId:detailItem.postid boolValue:boolValue
+                               fieldName:@"isvoteup" topic:detailItem.category];
+        [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
+        
         if (btn.tag == TAG_BUTTON_VOTEUP || btn.tag == TAG_BUTTON_VOTEDOWN) {
-            // mark locally, then send request to remote server
-            NSString* imgName = @"";
-            NSString* fieldName = @"";
-            BOOL boolValue = false;
-            if (btn.tag == TAG_BUTTON_VOTEUP) {
-              imgName = (detailItem.isvoteup == NO)?@"thumbs_up-512.png":@"thumb_up-512.png";
-              detailItem.isvoteup = !detailItem.isvoteup;
-              fieldName = @"isvoteup";
-              boolValue = detailItem.isvoteup;
-              NSLog(@"detailItem.isvoteup:%d, imgName:%@", detailItem.isvoteup, imgName);
-            }
-            if (btn.tag == TAG_BUTTON_VOTEDOWN) {
-              imgName = (detailItem.isvotedown == NO)?@"thumbs_down-512.png":@"thumb_down-512.png";
-              detailItem.isvotedown = !detailItem.isvotedown;
-              fieldName = @"isvotedown";
-              boolValue = detailItem.isvotedown;
-            }
-            [PostsSqlite updatePostBoolField:postsDB dbPath:dbPath
-                                      postId:detailItem.postid boolValue:boolValue
-                                   fieldName:@"isvoteup" topic:detailItem.category];
-            [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
-
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
             NSLog(@"userid:%@", userid);
             [self feedbackPost:userid
@@ -152,30 +167,16 @@
                       category:detailItem.category btn:btn
                        postsDB:postsDB dbPath:dbPath];
         }
-        
         if (btn.tag == TAG_BUTTON_FAVORITE) {
-            NSLog(@"FavoriteButton");
-            detailItem.isfavorite = ! detailItem.isfavorite;
-            if (detailItem.isfavorite == YES) {
-                [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
-            }
-            else {
-                [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
-            }
-            [PostsSqlite updatePostBoolField:postsDB dbPath:dbPath
-                                      postId:detailItem.postid boolValue:detailItem.isfavorite
-                                   fieldName:@"isfavorite" topic:detailItem.category];
-            
             NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite Posts";
             if (detailItem.isfavorite == NO) {
                 msg = @"Unmark as favorite";
             }
             
             [Posts infoMessage:nil msg:msg];
-            
         }
-        
     }
+    
 }
 
 - (void) feedbackPost:(NSString*) userid
@@ -312,7 +313,14 @@
     [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_COIN;
+    [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:moreButton, coinButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
 }
 
 - (void)addPostHeaderCompoents

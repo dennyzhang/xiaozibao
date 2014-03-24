@@ -193,9 +193,9 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
-        NSString* title = @"Server request error";
-        NSString* msg = @"Fail to get post list.\nPleaese check network or app version.\nReport the issue by mail, twitter, etc";
-        [Posts infoMessage:title msg:msg];
+        // NSString* title = @"Server request error";
+        // NSString* msg = @"Fail to get post list.\nPleaese check network or app version.\nReport the issue by mail, twitter, etc";
+        // [Posts infoMessage:title msg:msg];
     }];
     
     [operation start];

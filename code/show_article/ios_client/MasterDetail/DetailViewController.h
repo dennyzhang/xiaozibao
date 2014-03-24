@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Posts.h"
 #import "PostsSqlite.h"
+#import "ReviewViewController.h"
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate>
 #define TAG_BUTTON_VOTEUP 2001
@@ -16,6 +17,7 @@
 #define TAG_BUTTON_FAVORITE 2003
 #define TAG_BUTTON_MORE 2004
 #define TAG_BUTTON_COMMENT 2005
+#define TAG_BUTTON_COIN 2006
 
 #define INVALID_STRING @"INVALID_STRING"
 @property (strong, nonatomic) Posts* detailItem;
