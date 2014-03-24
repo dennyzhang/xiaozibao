@@ -320,7 +320,7 @@
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
     UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:moreButton, coinButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
 }
 
 - (void)addPostHeaderCompoents
