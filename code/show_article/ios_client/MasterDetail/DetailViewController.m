@@ -7,6 +7,8 @@
 //
 
 #import "DetailViewController.h"
+#import "AFJSONRequestOperation.h"
+#import "AFHTTPClient.h"
 
 @interface DetailViewController ()
 
@@ -115,148 +117,120 @@
 }    
 
 #pragma mark - user defined event selectors
-- (void)forwardPost:(id)sender
+-(IBAction) barButtonEvent:(id)sender
 {
-    NSLog(@"forwardPost");
-}
-
-- (void)commentPost:(id)sender
-{
-    NSLog(@"commentPost");
-}
-
-- (void)moreAction:(id)sender
-{
-    NSLog(@"moreAction");
-}
-
-- (void)savePostAsFavorite:(id)sender
-{
-    NSLog(@"add to favorite");
-    UIButton *btn= (UIButton*)sender;
-
-    // TODO: call below, only if the async request is done correctly
-    detailItem.isfavorite = ! detailItem.isfavorite;
-    
-    if (detailItem.isfavorite == YES) {
-        [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
-    }
-    else {
-        [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
-    }
-
     // TODO remove code duplication
     NSString *docsDir;
     NSArray *dirPaths;
     
     // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(
-                                                   NSDocumentDirectory, NSUserDomainMask, YES);
-    
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     docsDir = [dirPaths objectAtIndex:0];
     
     sqlite3 *postsDB;
-    NSString *databasePath = [[NSString alloc]
-                               initWithString: [docsDir stringByAppendingPathComponent:
-                                                          @"posts.db"]];
-
-    //if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    NSString *databasePath = [[NSString alloc] initWithString:
+                                                 [docsDir stringByAppendingPathComponent:@"posts.db"]];
     if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
         NSLog(@"Error: Failed to open/create database");
     }
 
-    [PostsSqlite updatePostBoolField:postsDB dbPath:databasePath
-                           postId:detailItem.postid boolValue:detailItem.isfavorite
-                           fieldName:@"isfavorite" topic:detailItem.category];
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton* btn = sender;
+        if (btn.tag == TAG_BUTTON_VOTEUP || btn.tag == TAG_BUTTON_VOTEDOWN) {
+          [self feedbackPost:@"denny" 
+                      postid:detailItem.postid
+                    category:detailItem.category btn:btn
+                     postsDB:postsDB dbPath:databasePath];
+        }
 
-    NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite Posts";
-    if (detailItem.isfavorite == NO) {
-      msg = @"Unmark as favorite";
+        if (btn.tag == TAG_BUTTON_FAVORITE) {
+          NSLog(@"FavoriteButton");
+          detailItem.isfavorite = ! detailItem.isfavorite;
+          if (detailItem.isfavorite == YES) {
+            [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
+          }
+          else {
+            [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
+          }
+          [PostsSqlite updatePostBoolField:postsDB dbPath:databasePath
+                                    postId:detailItem.postid boolValue:detailItem.isfavorite
+                                 fieldName:@"isfavorite" topic:detailItem.category];
+
+          NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite Posts";
+          if (detailItem.isfavorite == NO) {
+            msg = @"Unmark as favorite";
+          }
+
+          [Posts infoMessage:nil msg:msg];
+
+        }
+
     }
-
-    [Posts infoMessage:nil msg:msg];
 }
 
--(IBAction) VoteUpButton:(id)sender
+- (void) feedbackPost:(NSString*) userid
+               postid:(NSString*) postid
+             category:(NSString*) category
+                btn:(UIButton *) btn
+              postsDB:(sqlite3 *)postsDB
+               dbPath:(NSString *) dbPath
 {
-    NSLog(@"VoteUpButton");
-    UIButton *btn= (UIButton*)sender;
+  NSString *urlStr=SERVERURL;
+  NSURL *url = [NSURL URLWithString:urlStr];
 
-    // TODO: call below, only if the async request is done correctly
-    detailItem.isvoteup = ! detailItem.isvoteup;
-    
-    if (detailItem.isvoteup == YES) {
-        [btn setImage:[UIImage imageNamed:@"thumbs_up-512.png"] forState:UIControlStateNormal];
-    }
-    else {
-        [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
-    }
+  NSString* comment = INVALID_STRING;
+  if (btn.tag == TAG_BUTTON_VOTEUP) {
+    comment = @"tag voteup" ;
+  } 
+  if (btn.tag == TAG_BUTTON_VOTEDOWN) {
+    comment = @"tag votedown" ;
+  }
 
-    // TODO remove code duplication
-    NSString *docsDir;
-    NSArray *dirPaths;
-    
-    // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(
-                                                   NSDocumentDirectory, NSUserDomainMask, YES);
-    
-    docsDir = [dirPaths objectAtIndex:0];
-    
-    sqlite3 *postsDB;
-    NSString *databasePath = [[NSString alloc]
-                               initWithString: [docsDir stringByAppendingPathComponent:
-                                                          @"posts.db"]];
+  NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         userid, @"uid", postid, @"postid",
+                                       category, @"category", comment, @"comment",
+                         nil];
+  NSLog(@"feedbackPost, url:%@, postid:%@, comment:%@", urlStr, postid, comment);
+  AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:url];
+  NSURLRequest *request = [client requestWithMethod:@"POST" path:@"api_feedback_post" parameters:params];
 
-    //if ([filemgr fileExistsAtPath: databasePath ] == NO)
-    if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
-        NSLog(@"Error: Failed to open/create database");
-    }
+  AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+      NSString *status = [JSON valueForKeyPath:@"status"];
+      if ([status isEqualToString:@"ok"]) {
+        NSLog(@"perform operation after success");
+        NSString* imgName = @"";
+        NSString* fieldName = @"";
+        BOOL boolValue = false;
+        if (btn.tag == TAG_BUTTON_VOTEUP || btn.tag == TAG_BUTTON_VOTEDOWN) {
+          if (btn.tag == TAG_BUTTON_VOTEUP) {
+            imgName = (detailItem.isvoteup == YES)?@"thumbs_up-512.png":@"thumb_up-512.png";
+            detailItem.isvoteup = !detailItem.isvoteup;
+            fieldName = @"isvoteup";
+            boolValue = detailItem.isvoteup;
+            NSLog(@"detailItem.isvoteup:%d, imgName:%@", detailItem.isvoteup, imgName);
+          }
+          if (btn.tag == TAG_BUTTON_VOTEDOWN) {
+            imgName = (detailItem.isvotedown == YES)?@"thumbs_down-512.png":@"thumb_down-512.png";
+            detailItem.isvotedown = !detailItem.isvotedown;
+            fieldName = @"isvotedown";
+            boolValue = detailItem.isvotedown;
+          }
+          [PostsSqlite updatePostBoolField:postsDB dbPath:dbPath
+                                    postId:detailItem.postid boolValue:boolValue
+                                 fieldName:@"isvoteup" topic:detailItem.category];
+          [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
+        }
+      }
+      else {
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:
+                  [JSON valueForKeyPath:@"errmsg"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+         [alert show];
+      }
 
-    [PostsSqlite updatePostBoolField:postsDB dbPath:databasePath
-                           postId:detailItem.postid boolValue:detailItem.isvoteup
-                           fieldName:@"isvoteup" topic:detailItem.category];
-
-}
-
--(IBAction) VoteDownButton:(id)sender
-{
-    NSLog(@"VoteDownButton");
-    UIButton *btn= (UIButton*)sender;
-
-    // TODO: call below, only if the async request is done correctly
-    detailItem.isvotedown = ! detailItem.isvotedown;
-    
-    if (detailItem.isvotedown == YES) {
-        [btn setImage:[UIImage imageNamed:@"thumbs_down-512.png"] forState:UIControlStateNormal];
-    }
-    else {
-        [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
-    }
-
-    // TODO remove code ddownlication
-    NSString *docsDir;
-    NSArray *dirPaths;
-    
-    // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(
-                                                   NSDocumentDirectory, NSUserDomainMask, YES);
-    
-    docsDir = [dirPaths objectAtIndex:0];
-    
-    sqlite3 *postsDB;
-    NSString *databasePath = [[NSString alloc]
-                               initWithString: [docsDir stringByAppendingPathComponent:
-                                                          @"posts.db"]];
-
-    //if ([filemgr fileExistsAtPath: databasePath ] == NO)
-    if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
-        NSLog(@"Error: Failed to open/create database");
-    }
-
-    [PostsSqlite updatePostBoolField:postsDB dbPath:databasePath
-                           postId:detailItem.postid boolValue:detailItem.isvotedown
-                           fieldName:@"isvotedown" topic:detailItem.category];
-
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+      NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
+    }];
+  [operation start];
 }
 
 #pragma mark - Private functions
@@ -303,7 +277,8 @@
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(VoteUpButton:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_VOTEUP;
     if (detailItem.isvoteup == YES) {
       [btn setImage:[UIImage imageNamed:@"thumbs_up-512.png"] forState:UIControlStateNormal];
     }
@@ -314,7 +289,8 @@
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(VoteDownButton:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_VOTEDOWN;
     if (detailItem.isvotedown == YES) {
       [btn setImage:[UIImage imageNamed:@"thumbs_down-512.png"] forState:UIControlStateNormal];
     }
@@ -325,7 +301,8 @@
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(savePostAsFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_FAVORITE;
     if (detailItem.isfavorite == YES) {
       [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
     }
@@ -336,20 +313,18 @@
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(moreAction:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_MORE;
     [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(commentPost:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_COMMENT;
     [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
     UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 
-    UIBarButtonItem *forwardButton = [[UIBarButtonItem alloc]
-                                      initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                      target:self
-                                      action:@selector(forwardPost:)];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:moreButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
 }
 
@@ -438,4 +413,5 @@
     ret = [ret stringByAppendingString:@"..." ];
     return ret;
 }
+
 @end

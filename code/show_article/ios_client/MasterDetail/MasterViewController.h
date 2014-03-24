@@ -32,10 +32,10 @@
 - (void) init_data:(NSString*)username_t
            topic_t:(NSString*)topic_t;
 
-#define TAG_TEXTVIEW_IN_CELL 1234
-#define TAG_ICON_IN_CELL 1235
-#define TAG_SWITCH_HIDE_READ_POST 1236
-#define TAG_SWITCH_EDITOR_MODE 1237
+#define TAG_TEXTVIEW_IN_CELL 1001
+#define TAG_ICON_IN_CELL 1002
+#define TAG_SWITCH_HIDE_READ_POST 1003
+#define TAG_SWITCH_EDITOR_MODE 1004
 
 #define CLEAN_CACHE @"Clean cache"
 #define FOLLOW_TWITTER @"Follow us on Twitter"

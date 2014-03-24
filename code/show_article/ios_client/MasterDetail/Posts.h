@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AFHTTPClient.h"
+#import "AFJSONRequestOperation.h"
 
 @interface Posts : NSObject
 
@@ -20,12 +22,6 @@
 @property (nonatomic, assign) BOOL isfavorite;
 @property (nonatomic, assign) BOOL isvoteup;
 @property (nonatomic, assign) BOOL isvotedown;
-
-+ (void) feedbackPost:(NSString*) userid
-               postid:(NSString*) postid
-               category:(NSString*) category
-               comment:(NSString*) comment
-                button:(UIButton *) button;
 
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;
