@@ -107,7 +107,6 @@
 {
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {
-        NSLog(@"coin");
         ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
     
         self.navigationController.navigationBarHidden = NO;
