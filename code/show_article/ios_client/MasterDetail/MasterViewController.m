@@ -142,7 +142,7 @@
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
 {
-    if ([self.topic isEqualToString:FAVORITE_POSTS])
+    if ([self.topic isEqualToString:FAVORITE_QUESTIONS])
         return;
     
     NSString *urlPrefix=SERVERURL;
@@ -367,7 +367,7 @@
             aSwitch.on = YES;
             aSwitch.tag = TAG_SWITCH_HIDE_READ_POST;
             [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            cell.textLabel.text = @"Auto hide read posts";
+            cell.textLabel.text = @"Auto hide read questions";
             cell.accessoryView = aSwitch;
             if ([userDefaults integerForKey:@"HideReadPosts"] == 0) {
                 aSwitch.on = false;
@@ -490,7 +490,7 @@
     if ([self.topic isEqualToString:APP_SETTING]){
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite posts?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite questions?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
             
             [alert show];
         }

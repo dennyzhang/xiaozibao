@@ -113,7 +113,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -123,6 +123,9 @@
         return _objects.count;
     }
     if (section == 1) {
+        return 1;
+    }
+    if (section == 2) {
         return 3;
     }
     return -1;
@@ -141,9 +144,12 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return @" Topics";
+        return @" Questions";
     }
     if (section == 1) {
+        return @" Quiz";
+    }
+    if (section == 2) {
         return @" Preference";
     }
     return @"ERROR tableview:titleForHeaderInSection";
@@ -159,8 +165,14 @@
         return cell;
     }
     if (indexPath.section == 1) {
+        cell.textLabel.text = @"Coming soon";
+        cell.textLabel.enabled = false;
+        return cell;
+    }
+
+    if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-          cell.textLabel.text = FAVORITE_POSTS;
+            cell.textLabel.text = FAVORITE_QUESTIONS;
         }
         if (indexPath.row == 1) {
             cell.textLabel.text = MORE_TOPICS;

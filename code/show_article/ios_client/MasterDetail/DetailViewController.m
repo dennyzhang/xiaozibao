@@ -168,7 +168,7 @@
                        postsDB:postsDB dbPath:dbPath];
         }
         if (btn.tag == TAG_BUTTON_FAVORITE) {
-            NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite Posts";
+            NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite questions";
             if (detailItem.isfavorite == NO) {
                 msg = @"Unmark as favorite";
             }

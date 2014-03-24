@@ -3,7 +3,7 @@
 
 #define MORE_TOPICS @"More Topics"
 #define APP_SETTING @"App Setting"
-#define FAVORITE_POSTS @"Favorite Posts"
+#define FAVORITE_QUESTIONS @"Favorite Questions"
 
 #define FONT_BIG 22
 #define FONT_NORMAL 17

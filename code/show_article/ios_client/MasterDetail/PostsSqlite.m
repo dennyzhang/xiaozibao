@@ -172,7 +172,7 @@ NSLock *lock;
     const char *dbpath = [dbPath UTF8String];
     sqlite3_stmt *statement;
     NSString *querySQL;
-    if ([topic isEqualToString:FAVORITE_POSTS]) {
+    if ([topic isEqualToString:FAVORITE_QUESTIONS]) {
       querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10", topic];
     }
     else {
