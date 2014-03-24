@@ -165,7 +165,7 @@
         return cell;
     }
     if (indexPath.section == 1) {
-        cell.textLabel.text = @"Coming soon";
+        cell.textLabel.text = @"Coming Soon";
         cell.textLabel.enabled = false;
         return cell;
     }
