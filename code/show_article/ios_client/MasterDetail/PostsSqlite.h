@@ -48,10 +48,11 @@
                   postId:(NSString *)postId
                    topic:(NSString *)topic;
 
-+ (bool)updatePostIsfavorite: (sqlite3 *)postsDB
++ (bool)updatePostBoolField: (sqlite3 *)postsDB
                   dbPath:(NSString *) dbPath
                   postId:(NSString *)postId
-                  isfavorite:(BOOL)isfavorite
-                    topic:(NSString *)topic;
+                  boolValue:(BOOL)boolValue
+                  fieldName:(NSString*)fieldName
+                   topic:(NSString *)topic;
 
 @end

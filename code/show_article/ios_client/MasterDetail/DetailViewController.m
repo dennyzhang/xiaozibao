@@ -165,8 +165,9 @@
         NSLog(@"Error: Failed to open/create database");
     }
 
-    [PostsSqlite updatePostIsfavorite:postsDB dbPath:databasePath
-                           postId:detailItem.postid isfavorite:detailItem.isfavorite topic:detailItem.category];
+    [PostsSqlite updatePostBoolField:postsDB dbPath:databasePath
+                           postId:detailItem.postid boolValue:detailItem.isfavorite
+                           fieldName:@"isfavorite" topic:detailItem.category];
 
     NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite Posts";
     if (detailItem.isfavorite == NO) {
@@ -179,14 +180,42 @@
 -(IBAction) VoteUpButton:(id)sender
 {
     NSLog(@"VoteUpButton");
-    
     UIButton *btn= (UIButton*)sender;
 
-    // TODO: call below, only if the async request is done correctly    
-    [btn setImage:[UIImage imageNamed:@"thumbs_up-512.png"]  forState:UIControlStateNormal];
+    // TODO: call below, only if the async request is done correctly
+    detailItem.isvoteup = ! detailItem.isvoteup;
+    
+    if (detailItem.isvoteup == YES) {
+        [btn setImage:[UIImage imageNamed:@"thumbs_up-512.png"] forState:UIControlStateNormal];
+    }
+    else {
+        [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
+    }
 
-    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category
-                comment:@"tag voteup" button:btn];
+    // TODO remove code duplication
+    NSString *docsDir;
+    NSArray *dirPaths;
+    
+    // Get the documents directory
+    dirPaths = NSSearchPathForDirectoriesInDomains(
+                                                   NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    docsDir = [dirPaths objectAtIndex:0];
+    
+    sqlite3 *postsDB;
+    NSString *databasePath = [[NSString alloc]
+                               initWithString: [docsDir stringByAppendingPathComponent:
+                                                          @"posts.db"]];
+
+    //if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
+        NSLog(@"Error: Failed to open/create database");
+    }
+
+    [PostsSqlite updatePostBoolField:postsDB dbPath:databasePath
+                           postId:detailItem.postid boolValue:detailItem.isvoteup
+                           fieldName:@"isvoteup" topic:detailItem.category];
+
 }
 
 -(IBAction) VoteDownButton:(id)sender
@@ -194,12 +223,40 @@
     NSLog(@"VoteDownButton");
     UIButton *btn= (UIButton*)sender;
 
-    // TODO: call below, only if the async request is done correctly    
-    [btn setImage:[UIImage imageNamed:@"thumbs_down-512.png"]  forState:UIControlStateNormal];
+    // TODO: call below, only if the async request is done correctly
+    detailItem.isvotedown = ! detailItem.isvotedown;
+    
+    if (detailItem.isvotedown == YES) {
+        [btn setImage:[UIImage imageNamed:@"thumbs_down-512.png"] forState:UIControlStateNormal];
+    }
+    else {
+        [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
+    }
 
-    [Posts feedbackPost:@"denny" postid:detailItem.postid category:detailItem.category
-                comment:@"tag votedown" button:btn];
-  
+    // TODO remove code ddownlication
+    NSString *docsDir;
+    NSArray *dirPaths;
+    
+    // Get the documents directory
+    dirPaths = NSSearchPathForDirectoriesInDomains(
+                                                   NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    docsDir = [dirPaths objectAtIndex:0];
+    
+    sqlite3 *postsDB;
+    NSString *databasePath = [[NSString alloc]
+                               initWithString: [docsDir stringByAppendingPathComponent:
+                                                          @"posts.db"]];
+
+    //if ([filemgr fileExistsAtPath: databasePath ] == NO)
+    if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
+        NSLog(@"Error: Failed to open/create database");
+    }
+
+    [PostsSqlite updatePostBoolField:postsDB dbPath:databasePath
+                           postId:detailItem.postid boolValue:detailItem.isvotedown
+                           fieldName:@"isvotedown" topic:detailItem.category];
+
 }
 
 #pragma mark - Private functions
@@ -247,13 +304,23 @@
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
     [btn addTarget:self action:@selector(VoteUpButton:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
+    if (detailItem.isvoteup == YES) {
+      [btn setImage:[UIImage imageNamed:@"thumbs_up-512.png"] forState:UIControlStateNormal];
+    }
+    else {
+      [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
+    }
     UIBarButtonItem *voteUpButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
     [btn addTarget:self action:@selector(VoteDownButton:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
+    if (detailItem.isvotedown == YES) {
+      [btn setImage:[UIImage imageNamed:@"thumbs_down-512.png"] forState:UIControlStateNormal];
+    }
+    else {
+      [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
+    }
     UIBarButtonItem *voteDownButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];

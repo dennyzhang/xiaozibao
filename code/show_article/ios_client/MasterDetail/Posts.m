@@ -13,7 +13,8 @@
 #import "constants.h"
 
 @implementation Posts
-@synthesize postid, title, summary, category, content, source, readcount, isfavorite;
+@synthesize postid, title, summary, category, content, source, readcount;
+@synthesize isfavorite, isvoteup, isvotedown;
 
 - (id)init
 {
@@ -27,6 +28,8 @@
     content=@"";
     source=@"";
     isfavorite=NO;
+    isvoteup=NO;
+    isvotedown=NO;
     readcount=[NSNumber numberWithInt:0];
   }
   return self;

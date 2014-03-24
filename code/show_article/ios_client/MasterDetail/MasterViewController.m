@@ -153,7 +153,7 @@
     }
 
     NSString *urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
-                       urlPrefix, userid, topic_t, [start_num intValue], [count intValue], [userDefaults stringForKey:@"SortMethod"]];
+                       urlPrefix, userid, topic_t, [start_num intValue], [count intValue], sortMethod];
     NSLog(@"fetchArticleList, url:%@", urlStr);
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
