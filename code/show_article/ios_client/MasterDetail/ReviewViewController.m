@@ -13,7 +13,8 @@
 @end
 
 @implementation ReviewViewController
-@synthesize summaryTextView, tableView, score;
+@synthesize summaryTextView, tableView;
+@synthesize category;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -96,7 +97,12 @@
                                                                    self.view.frame.size.width,
                                                                    self.view.frame.size.height - UITABLE_HEIGHT)];
     NSString* str_topic = @"Skill Learning Review For linux";
-    NSString* str_stastics = @"Questions learned: 123\nTime spent: 10 min\nFeedback count: 10 times";
+    NSString* str_stastics = [[NSString alloc] initWithFormat:@"Questions learned: %d\nTime spent: XX min\nFeedback count: %d times",
+                                   [UserProfile integerForKey:self.category key:POST_VISIT_KEY],
+                                   [UserProfile integerForKey:self.category key:POST_VOTEUP_KEY] +
+                                   [UserProfile integerForKey:self.category key:POST_VOTEDOWN_KEY] +
+                                   [UserProfile integerForKey:self.category key:POST_FAVORITE_KEY]];
+
     NSString* str_ranklist = @"Top active experts of this skill is XXX, XXX, ...";
 
     self.summaryTextView.text =  [[NSString alloc] initWithFormat:@"%@\n\n%@\n\n%@",
@@ -110,7 +116,8 @@
     [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 50, 10.0f, 50.0f, 50.0f)];
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
 
-    [ReviewViewController addScoreToButton:btn score:[self.score intValue] fontSize:FONT_TINY
+    NSInteger score = [UserProfile scoreByCategory:self.category];
+    [ReviewViewController addScoreToButton:btn score:score fontSize:FONT_TINY
                                       chWidth:10 chHeight:30];
 
     [summaryTextView addSubview:btn];
@@ -147,11 +154,11 @@
 {
     int width = btn.frame.size.width;
     int height = btn.frame.size.height;
-    NSString* scoreStr = [NSString stringWithFormat: @"%d", (int)score];
+    NSString* scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
     int scoreWidth = chWidth * [scoreStr length];
     int scoreHeight = chHeight;
 
-    UITextView* scoreTextView = [[UITextView alloc] initWithFrame:CGRectMake(width - scoreWidth + 0.75f * chWidth,
+    UITextView* scoreTextView = [[UITextView alloc] initWithFrame:CGRectMake(width - scoreWidth + 0.75*chWidth,
                                                                               height - scoreHeight,
                                                                               scoreWidth, scoreHeight)];
     scoreTextView.backgroundColor = [UIColor clearColor];

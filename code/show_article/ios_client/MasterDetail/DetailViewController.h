@@ -10,6 +10,7 @@
 #import "Posts.h"
 #import "PostsSqlite.h"
 #import "ReviewViewController.h"
+#import "UserProfile.h"
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate>
 #define TAG_BUTTON_VOTEUP 2001
@@ -27,5 +28,4 @@
 @property (retain, nonatomic) IBOutlet UITextView *titleTextView;
 @property (retain, nonatomic) IBOutlet UITextView *linkTextView;
 
-@property (nonatomic, retain) NSNumber* score;
 @end

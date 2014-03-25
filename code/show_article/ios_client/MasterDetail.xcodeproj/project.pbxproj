@@ -26,6 +26,7 @@
 		049B22F7179D7D3000F82187 /* Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 049B22F6179D7D2800F82187 /* Posts.m */; };
 		049FE34C18E0C252009FDB39 /* ReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FE34B18E0C252009FDB39 /* ReviewViewController.m */; };
 		049FE34E18E1168D009FDB39 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FE34D18E1168D009FDB39 /* share.png */; };
+		049FE35118E12CFF009FDB39 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FE35018E12CFF009FDB39 /* UserProfile.m */; };
 		04C2689C1868118E004C46BC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C2689B1868118E004C46BC /* libPods.a */; };
 		04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
 		04E893DB179130C400E9573C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DA179130C400E9573C /* Foundation.framework */; };
@@ -78,6 +79,8 @@
 		049FE34A18E0C252009FDB39 /* ReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewViewController.h; sourceTree = "<group>"; };
 		049FE34B18E0C252009FDB39 /* ReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewViewController.m; sourceTree = "<group>"; };
 		049FE34D18E1168D009FDB39 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
+		049FE34F18E12CFF009FDB39 /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
+		049FE35018E12CFF009FDB39 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
 		04A7BDEB179EA84700E9D0BC /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		04A7BDEC179EA84700E9D0BC /* MenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		04C24E7E1867FEC500184A3E /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -221,6 +224,8 @@
 				049B22F5179D7D2800F82187 /* Posts.h */,
 				049B22F6179D7D2800F82187 /* Posts.m */,
 				04FA8F2C179BE20300D28058 /* PostsSqlite.m */,
+				049FE34F18E12CFF009FDB39 /* UserProfile.h */,
+				049FE35018E12CFF009FDB39 /* UserProfile.m */,
 				04FA8F2B179BE1F800D28058 /* PostsSqlite.h */,
 				04E893EF179130C400E9573C /* Main_iPad.storyboard */,
 				04E893F2179130C400E9573C /* MasterViewController.h */,
@@ -416,6 +421,7 @@
 			files = (
 				047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */,
 				049B22F7179D7D3000F82187 /* Posts.m in Sources */,
+				049FE35118E12CFF009FDB39 /* UserProfile.m in Sources */,
 				049FE34C18E0C252009FDB39 /* ReviewViewController.m in Sources */,
 				04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */,
 				04E893EB179130C400E9573C /* AppDelegate.m in Sources */,

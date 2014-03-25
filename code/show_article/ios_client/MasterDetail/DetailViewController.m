@@ -21,14 +21,14 @@
 @implementation DetailViewController
 @synthesize detailItem;
 @synthesize detailUITextView, imageView, titleTextView, linkTextView;
-@synthesize score;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [UserProfile incInteger:self.detailItem.category key:POST_VISIT_KEY];
+
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    
-    self.score = [NSNumber numberWithInt: 1234]; // TODO
+
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
     self.title = @"";
@@ -111,7 +111,7 @@
         ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
     
         self.navigationController.navigationBarHidden = NO;
-        reviewViewController.score = self.score;
+        reviewViewController.category = self.detailItem.category;
         //[self.navigationController.navigationItem setTitle:@"hello"];
         //self.navigationController.navigationBar.topItem.title = @"Your Title";
 
@@ -138,6 +138,7 @@
         NSString* fieldName = @"";
         BOOL boolValue = false;
         if (btn.tag == TAG_BUTTON_VOTEUP) {
+            [UserProfile incInteger:self.detailItem.category key:POST_VOTEUP_KEY];
             imgName = (detailItem.isvoteup == NO)?@"thumbs_up-512.png":@"thumb_up-512.png";
             detailItem.isvoteup = !detailItem.isvoteup;
             fieldName = @"isvoteup";
@@ -145,12 +146,14 @@
             NSLog(@"detailItem.isvoteup:%d, imgName:%@", detailItem.isvoteup, imgName);
         }
         if (btn.tag == TAG_BUTTON_VOTEDOWN) {
+            [UserProfile incInteger:self.detailItem.category key:POST_VOTEDOWN_KEY];
             imgName = (detailItem.isvotedown == NO)?@"thumbs_down-512.png":@"thumb_down-512.png";
             detailItem.isvotedown = !detailItem.isvotedown;
             fieldName = @"isvotedown";
             boolValue = detailItem.isvotedown;
         }
         if (btn.tag == TAG_BUTTON_FAVORITE) {
+            [UserProfile incInteger:self.detailItem.category key:POST_FAVORITE_KEY];
             imgName = (detailItem.isfavorite == NO)?@"hearts-512.png":@"heart-512.png";
             detailItem.isfavorite = ! detailItem.isfavorite;
             fieldName = @"isfavorite";
@@ -321,7 +324,8 @@
     btn.tag = TAG_BUTTON_COIN;
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
 
-    [ReviewViewController addScoreToButton:btn score:[self.score intValue] fontSize:FONT_TINY chWidth:9 chHeight:25];
+    NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
+    [ReviewViewController addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25];
 
     UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
