@@ -25,7 +25,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     if ([self.detailItem.readcount intValue] == 1){
       [UserProfile addInteger:self.detailItem.category key:POST_VISIT_KEY offset:1];
     }
