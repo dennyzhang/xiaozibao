@@ -19,13 +19,21 @@
 #define TAG_BUTTON_MORE 2004
 #define TAG_BUTTON_COMMENT 2005
 #define TAG_BUTTON_COIN 2006
+#define TAG_SCORE_TEXT 2007
 
 #define INVALID_STRING @"INVALID_STRING"
+#define FEEDBACK_ENVOTEUP @"tag envoteup"
+#define FEEDBACK_ENVOTEDOWN @"tag envotedown"
+#define FEEDBACK_ENFAVORITE @"tag enfavorite"
+#define FEEDBACK_DEVOTEUP @"tag devoteup"
+#define FEEDBACK_DEVOTEDOWN @"tag devotedown"
+#define FEEDBACK_DEFAVORITE @"tag defavorite"
+
 @property (strong, nonatomic) Posts* detailItem;
 
 @property (retain, nonatomic) IBOutlet UITextView *detailUITextView;
 @property (retain, nonatomic) IBOutlet UIImageView *imageView;
 @property (retain, nonatomic) IBOutlet UITextView *titleTextView;
 @property (retain, nonatomic) IBOutlet UITextView *linkTextView;
-
+@property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @end

@@ -21,6 +21,7 @@
 @implementation DetailViewController
 @synthesize detailItem;
 @synthesize detailUITextView, imageView, titleTextView, linkTextView;
+@synthesize coinButton;
 
 - (void)viewDidLoad
 {
@@ -181,14 +182,14 @@
                                fieldName:@"isvoteup" topic:detailItem.category];
         [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
         
-        if (btn.tag == TAG_BUTTON_VOTEUP || btn.tag == TAG_BUTTON_VOTEDOWN) {
-            NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
-            NSLog(@"userid:%@", userid);
-            [self feedbackPost:userid
-                        postid:detailItem.postid
-                      category:detailItem.category btn:btn
-                       postsDB:postsDB dbPath:dbPath];
-        }
+        NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+        NSLog(@"userid:%@", userid);
+        [self feedbackPost:userid
+                    postid:detailItem.postid
+                  category:detailItem.category btn:btn
+                   postsDB:postsDB dbPath:dbPath];
+
+        // tell client where to find favorite questions
         if (btn.tag == TAG_BUTTON_FAVORITE) {
             NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite questions";
             if (detailItem.isfavorite == NO) {
@@ -196,8 +197,9 @@
             }
             [Posts infoMessage:nil msg:msg];
         }
+
     }
-    
+    [self updateScoreText];    
 }
 
 - (void) feedbackPost:(NSString*) userid
@@ -212,11 +214,15 @@
     
     NSString* comment = INVALID_STRING;
     if (btn.tag == TAG_BUTTON_VOTEUP) {
-        comment = @"tag voteup" ;
+        comment = @"tag envoteup" ;
     }
     if (btn.tag == TAG_BUTTON_VOTEDOWN) {
-        comment = @"tag votedown" ;
+        comment = @"tag envotedown" ;
     }
+    if (btn.tag == TAG_BUTTON_FAVORITE) {
+        comment = @"tag enfavorite" ;
+    }
+
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             userid, @"uid", postid, @"postid",
                             category, @"category", comment, @"comment",
@@ -339,10 +345,9 @@
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_COIN;
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
-
+    self.coinButton = btn;
     NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
-    [ReviewViewController addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25];
-
+    [ReviewViewController addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
     UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
@@ -434,4 +439,16 @@
     return ret;
 }
 
+- (void)updateScoreText
+{
+  NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
+  NSString* scoreStr;
+  // TODO better way, instead of workaround for the layout
+  if (score < 10)
+    scoreStr = [NSString stringWithFormat: @"%d  ", (int)score];
+  else
+    scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
+  UITextView *textView = (UITextView *)[self.coinButton viewWithTag:TAG_SCORE_TEXT];
+  textView.text = scoreStr;
+}
 @end

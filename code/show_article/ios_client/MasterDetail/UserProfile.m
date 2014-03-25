@@ -35,7 +35,7 @@
     ret = [UserProfile integerForKey:category key:POST_VISIT_KEY]*2 +
           [UserProfile integerForKey:category key:POST_VOTEUP_KEY] +
           [UserProfile integerForKey:category key:POST_VOTEDOWN_KEY] +
-          [UserProfile integerForKey:category key:POST_FAVORITE_KEY];
+          [UserProfile integerForKey:category key:POST_FAVORITE_KEY]*2;
 
     return ret;
 }

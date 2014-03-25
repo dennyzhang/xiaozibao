@@ -13,7 +13,7 @@
 @end
 
 @implementation ReviewViewController
-@synthesize summaryTextView, tableView;
+@synthesize summaryTextView, tableView, coinButton;
 @synthesize category;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -115,10 +115,11 @@
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 50, 10.0f, 50.0f, 50.0f)];
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+    self.coinButton = btn;
 
     NSInteger score = [UserProfile scoreByCategory:self.category];
     [ReviewViewController addScoreToButton:btn score:score fontSize:FONT_TINY
-                                      chWidth:10 chHeight:30];
+                                   chWidth:10 chHeight:30 tag:TAG_SCORE_TEXT];
 
     [summaryTextView addSubview:btn];
 
@@ -150,16 +151,17 @@
                  fontSize:(NSInteger)fontSize
                chWidth:(NSInteger)chWidth
                chHeight:(NSInteger)chHeight
-  
+                 tag:(NSInteger)tag
 {
+  NSString* scoreStr;
+  // TODO better way, instead of workaround for the layout
+  if (score < 10)
+    scoreStr = [NSString stringWithFormat: @"%d  ", (int)score];
+  else
+    scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
+
     int width = btn.frame.size.width;
     int height = btn.frame.size.height;
-    NSString* scoreStr;
-    // TODO better way, instead of workaround for the layout
-    if (score < 10)
-      scoreStr = [NSString stringWithFormat: @"%d  ", (int)score];
-    else
-      scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
     int scoreWidth = chWidth * [scoreStr length];
     int scoreHeight = chHeight;
 
@@ -169,6 +171,7 @@
     scoreTextView.backgroundColor = [UIColor clearColor];
     scoreTextView.font = [UIFont fontWithName:FONT_NAME1 size:fontSize];
     scoreTextView.text = scoreStr;
+    scoreTextView.tag = tag;
     [scoreTextView setUserInteractionEnabled:NO];
 
     [btn addSubview:scoreTextView];
