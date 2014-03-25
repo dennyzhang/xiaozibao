@@ -479,7 +479,17 @@
     }
     else {
         [self openSqlite];
+        NSLog(@"clean cache");
+
         [PostsSqlite cleanCache:postsDB dbPath:databasePath];
+        if ([userDefaults integerForKey:@"IsEditorMode"] == 1) {
+          NSString* topicList = [userDefaults stringForKey:@"TopicList"];
+          NSArray *stringArray = [topicList componentsSeparatedByString: @","];
+          for (int i=0; i < [stringArray count]; i++)
+            {
+              [UserProfile cleanCategoryKey:stringArray[i]];
+            }
+        }
     }
 }
 
@@ -488,7 +498,6 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if ([self.topic isEqualToString:APP_SETTING]){
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
-            
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite questions?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
             
             [alert show];
@@ -596,6 +605,9 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
+      NSLog(@"increate visit count, for topic:%@. previous key:%d", self.topic,
+                    [UserProfile integerForKey:self.topic key:POST_VISIT_KEY]);
+        [UserProfile incInteger:self.topic key:POST_VISIT_KEY];
         Posts *post = _objects[indexPath.row];
         
         

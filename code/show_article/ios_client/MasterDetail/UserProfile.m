@@ -16,6 +16,12 @@
     return [[NSUserDefaults standardUserDefaults] integerForKey:fullKey];
 }
 
++(void) setInteger:(NSString* )category key:(NSString*)key value:(NSInteger)value
+{
+    NSString *fullKey = [[NSString alloc] initWithFormat:@"%@--%@ ", category, key];
+    [[NSUserDefaults standardUserDefaults] setInteger:value forKey:fullKey];
+}
+
 +(void) incInteger:(NSString* )category key:(NSString*)key
 {
     NSInteger value = [UserProfile integerForKey:category key:key];
@@ -32,6 +38,15 @@
           [UserProfile integerForKey:category key:POST_FAVORITE_KEY];
 
     return ret;
+}
+
++(void) cleanCategoryKey:(NSString* )category
+{
+  [UserProfile setInteger:category key:POST_VISIT_KEY value:0];
+  [UserProfile setInteger:category key:POST_VOTEUP_KEY value:0];
+  [UserProfile setInteger:category key:POST_VOTEDOWN_KEY value:0];
+  [UserProfile setInteger:category key:POST_FAVORITE_KEY value:0];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

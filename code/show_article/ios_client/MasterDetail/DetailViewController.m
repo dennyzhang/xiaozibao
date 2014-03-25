@@ -25,7 +25,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [UserProfile incInteger:self.detailItem.category key:POST_VISIT_KEY];
 
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 

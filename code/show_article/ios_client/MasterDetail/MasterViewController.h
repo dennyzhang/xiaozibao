@@ -14,6 +14,7 @@
 
 #import "Posts.h"
 #import "PostsSqlite.h"
+#import "UserProfile.h"
 
 @class DetailViewController;
 
