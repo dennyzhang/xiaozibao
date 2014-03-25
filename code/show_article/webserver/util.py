@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-22 22:02:03>
+## Updated: Time-stamp: <2014-03-25 14:51:34>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -98,6 +98,9 @@ def get_meta_dict(fname):
             value = line[index+1:length]
             metadata_dict[key] = json_escape(value).strip()
 
+    if metadata_dict.has_key('meta') is False:
+        metadata_dict['meta'] ="length=1234&difficulty=0.3"
+
     return metadata_dict
 
 def fill_post_meta(post):
@@ -108,6 +111,7 @@ def fill_post_meta(post):
             post.title = metadata_dict["title"]
         post.source = metadata_dict["source"]
         post.summary = metadata_dict["summary"]
+        post.meta = metadata_dict["meta"]
     except IOError:
         print "Fail to get filename for post. category:%s, title:%s" % (post.category, post.title)
         return False
@@ -120,12 +124,13 @@ class POST:
         self.title = title.encode('utf-8')
         self.summary = ""
         self.source = ""
+        self.meta = ""
         self.content = ""
 
 
     def print_obj(self):
-        print "id:%s, category:%s, title:%s, summary:%s, content:%s\n" % \
-            (self.id, self.category, self.title, self.summary, self.content)
+        print "id:%s, category:%s, title:%s, summary:%s, content:%s, meta:%s\n" % \
+            (self.id, self.category, self.title, self.summary, self.content, self.meta)
 
     @staticmethod
     def list_to_post(list_obj):
