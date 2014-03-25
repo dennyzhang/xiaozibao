@@ -147,15 +147,20 @@
     NSString *urlPrefix=SERVERURL;
     // TODO: voteup defined by users
     NSString *sortMethod;
+    NSString *urlStr;
     if ([userDefaults integerForKey:@"IsEditorMode"] == 0) {
       sortMethod = @"hotest";
+      // If anyone votedown, it's not shown
+      urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
+                        urlPrefix, userid, topic_t, [start_num intValue], [count intValue], sortMethod];
     }
     else {
       sortMethod = @"latest";
+      urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
+                        urlPrefix, userid, topic_t, [start_num intValue], [count intValue], sortMethod];
+
     }
 
-    NSString *urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
-                       urlPrefix, userid, topic_t, [start_num intValue], [count intValue], sortMethod];
     NSLog(@"fetchArticleList, url:%@", urlStr);
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
