@@ -30,7 +30,7 @@
     
     self.score = [NSNumber numberWithInt: 1234]; // TODO
     self.detailUITextView.clipsToBounds = NO;
-    self.detailUITextView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    self.detailUITextView.backgroundColor = [UIColor clearColor];
     self.title = @"";
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
@@ -335,7 +335,7 @@
     
     self.titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     self.titleTextView.editable = NO;
-    self.titleTextView.backgroundColor = NULL;
+    self.titleTextView.backgroundColor = [UIColor clearColor];
     [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     [self.detailUITextView addSubview:self.titleTextView];
     
@@ -343,7 +343,7 @@
     self.linkTextView.editable = NO;
     self.linkTextView.textColor = [UIColor greenColor];
     
-    self.linkTextView.backgroundColor = NULL;
+    self.linkTextView.backgroundColor = [UIColor clearColor];
     self.linkTextView.dataDetectorTypes = UIDataDetectorTypeNone;
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];

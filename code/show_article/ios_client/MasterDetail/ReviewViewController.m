@@ -63,6 +63,7 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     cell.textLabel.text = @"question title";
+    cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     return cell;
 }
 
@@ -92,6 +93,7 @@
     self.summaryTextView.text =  [[NSString alloc] initWithFormat:@"%@\n\n%@\n\n%@",
                                     str_topic, str_stastics, str_ranklist];
     [self.summaryTextView setUserInteractionEnabled:NO];
+    summaryTextView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:summaryTextView];
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -106,6 +108,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - UITABLE_HEIGHT,
                                                                      self.view.frame.size.width,
                                                                      UITABLE_HEIGHT)];
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
