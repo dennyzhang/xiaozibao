@@ -96,7 +96,7 @@
     summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0,
                                                                    self.view.frame.size.width,
                                                                    self.view.frame.size.height - UITABLE_HEIGHT)];
-    NSString* str_topic = @"Skill Learning Review For linux";
+    NSString* str_category = @"Skill Learning Review For linux";
     NSString* str_stastics = [[NSString alloc] initWithFormat:@"Questions learned: %d\nTime spent: XX min\nFeedback count: %d times",
                                    [UserProfile integerForKey:self.category key:POST_VISIT_KEY],
                                    [UserProfile integerForKey:self.category key:POST_VOTEUP_KEY] +
@@ -106,7 +106,7 @@
     NSString* str_ranklist = @"Top active experts of this skill is XXX, XXX, ...";
 
     self.summaryTextView.text =  [[NSString alloc] initWithFormat:@"%@\n\n%@\n\n%@",
-                                    str_topic, str_stastics, str_ranklist];
+                                    str_category, str_stastics, str_ranklist];
     [self.summaryTextView setUserInteractionEnabled:NO];
     self.summaryTextView.backgroundColor = [UIColor clearColor];
     [self.summaryTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_SMALL]];

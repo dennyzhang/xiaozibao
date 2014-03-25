@@ -16,7 +16,7 @@
 #define POST_FAVORITE_KEY @"post_FAVORITE_count"
 
 +(NSInteger) integerForKey:(NSString* )category key:(NSString*)key;
-+(void) incInteger:(NSString* )category key:(NSString*)key;
++(void) addInteger:(NSString* )category key:(NSString*)key offset:(NSInteger)offset;
 +(void) setInteger:(NSString* )category key:(NSString*)key value:(NSInteger)value;
 +(NSInteger) scoreByCategory:(NSString* )category;
 +(void) cleanCategoryKey:(NSString* )category;

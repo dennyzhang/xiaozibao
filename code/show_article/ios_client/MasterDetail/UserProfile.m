@@ -22,11 +22,11 @@
     [[NSUserDefaults standardUserDefaults] setInteger:value forKey:fullKey];
 }
 
-+(void) incInteger:(NSString* )category key:(NSString*)key
++(void) addInteger:(NSString* )category key:(NSString*)key offset:(NSInteger)offset
 {
     NSInteger value = [UserProfile integerForKey:category key:key];
     NSString *fullKey = [[NSString alloc] initWithFormat:@"%@--%@ ", category, key];
-    [[NSUserDefaults standardUserDefaults] setInteger:(value+1) forKey:fullKey];
+    [[NSUserDefaults standardUserDefaults] setInteger:(value+offset) forKey:fullKey];
 }
 
 +(NSInteger) scoreByCategory:(NSString* )category

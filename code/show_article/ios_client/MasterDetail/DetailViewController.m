@@ -26,8 +26,11 @@
 {
     [super viewDidLoad];
 
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    if ([self.detailItem.readcount intValue] == 1){
+      [UserProfile addInteger:self.detailItem.category key:POST_VISIT_KEY offset:1];
+    }
 
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
     self.title = @"";
@@ -137,26 +140,41 @@
         NSString* fieldName = @"";
         BOOL boolValue = false;
         if (btn.tag == TAG_BUTTON_VOTEUP) {
-            [UserProfile incInteger:self.detailItem.category key:POST_VOTEUP_KEY];
             imgName = (detailItem.isvoteup == NO)?@"thumbs_up-512.png":@"thumb_up-512.png";
             detailItem.isvoteup = !detailItem.isvoteup;
             fieldName = @"isvoteup";
             boolValue = detailItem.isvoteup;
             NSLog(@"detailItem.isvoteup:%d, imgName:%@", detailItem.isvoteup, imgName);
+            if (boolValue) {
+              [UserProfile addInteger:self.detailItem.category key:POST_VOTEUP_KEY offset:1];
+            }
+            else {
+              [UserProfile addInteger:self.detailItem.category key:POST_VOTEUP_KEY offset:-1];
+            }
         }
         if (btn.tag == TAG_BUTTON_VOTEDOWN) {
-            [UserProfile incInteger:self.detailItem.category key:POST_VOTEDOWN_KEY];
             imgName = (detailItem.isvotedown == NO)?@"thumbs_down-512.png":@"thumb_down-512.png";
             detailItem.isvotedown = !detailItem.isvotedown;
             fieldName = @"isvotedown";
             boolValue = detailItem.isvotedown;
+            if (boolValue) {
+              [UserProfile addInteger:self.detailItem.category key:POST_VOTEDOWN_KEY offset:1];
+            }
+            else {
+              [UserProfile addInteger:self.detailItem.category key:POST_VOTEDOWN_KEY offset:-1];
+            }
         }
         if (btn.tag == TAG_BUTTON_FAVORITE) {
-            [UserProfile incInteger:self.detailItem.category key:POST_FAVORITE_KEY];
             imgName = (detailItem.isfavorite == NO)?@"hearts-512.png":@"heart-512.png";
             detailItem.isfavorite = ! detailItem.isfavorite;
             fieldName = @"isfavorite";
             boolValue = detailItem.isfavorite;
+            if (boolValue) {
+              [UserProfile addInteger:self.detailItem.category key:POST_FAVORITE_KEY offset:1];
+            }
+            else {
+              [UserProfile addInteger:self.detailItem.category key:POST_FAVORITE_KEY offset:-1];
+            }
         }
         
         [PostsSqlite updatePostBoolField:postsDB dbPath:dbPath

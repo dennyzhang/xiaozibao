@@ -607,9 +607,7 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
       NSLog(@"increate visit count, for topic:%@. previous key:%d", self.topic,
                     [UserProfile integerForKey:self.topic key:POST_VISIT_KEY]);
-        [UserProfile incInteger:self.topic key:POST_VISIT_KEY];
-        Posts *post = _objects[indexPath.row];
-        
+        Posts *post = _objects[indexPath.row];      
         
         // Mixpanel *mixpanel = [Mixpanel sharedInstance];
         
