@@ -154,7 +154,12 @@
 {
     int width = btn.frame.size.width;
     int height = btn.frame.size.height;
-    NSString* scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
+    NSString* scoreStr;
+    // TODO better way, instead of workaround for the layout
+    if (score < 10)
+      scoreStr = [NSString stringWithFormat: @"%d  ", (int)score];
+    else
+      scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
     int scoreWidth = chWidth * [scoreStr length];
     int scoreHeight = chHeight;
 
