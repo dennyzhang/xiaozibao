@@ -19,7 +19,7 @@
 
 - (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
 {
-    NSLog(@"prepareForSegue");
+    NSLog(@"MenuViewController segue identifier: %@", [segue identifier]);
     // configure the destination view controller:
     if ( [segue.destinationViewController isKindOfClass: [MasterViewController class]] &&
         [sender isKindOfClass:[UITableViewCell class]] )
@@ -78,6 +78,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
     _objects = [[NSMutableArray alloc] init];
     [self load_topic_list];
 }
@@ -86,6 +87,7 @@
 {
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
   NSString* topicList = [userDefaults stringForKey:@"TopicList"];
+  NSLog(@"load_topic_list:%@", topicList);
   NSString* topic;
   NSArray *stringArray = [topicList componentsSeparatedByString: @","];
   for (int i=0; i < [stringArray count]; i++)

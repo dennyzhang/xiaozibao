@@ -151,7 +151,7 @@
             boolValue = detailItem.isvotedown;
         }
         if (btn.tag == TAG_BUTTON_FAVORITE) {
-            imgName = (detailItem.isvotedown == NO)?@"hearts-512.png":@"heart-512.png";
+            imgName = (detailItem.isfavorite == NO)?@"hearts-512.png":@"heart-512.png";
             detailItem.isfavorite = ! detailItem.isfavorite;
             fieldName = @"isfavorite";
             boolValue = detailItem.isfavorite;

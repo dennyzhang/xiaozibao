@@ -51,7 +51,9 @@
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
     
     userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
+    if (![userDefaults stringForKey:@"TopicList"]) {
+      [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
+    }
 
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
     NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
@@ -60,8 +62,6 @@
       [userDefaults setObject:uuidString forKey:@"Userid"];
     }
 
-    [Posts getCategoryList:userDefaults];
-    
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                       target:self.revealViewController
@@ -591,7 +591,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"segue identifier: %@", [segue identifier]);
+    NSLog(@"MasterViewController segue identifier: %@", [segue identifier]);
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     

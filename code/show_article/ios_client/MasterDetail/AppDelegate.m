@@ -7,15 +7,12 @@
 //
 
 #import "AppDelegate.h"
-#import "constants.h"
 
 // #import "Mixpanel.h"
 
 
 @implementation AppDelegate
 // #define MIXPANEL_TOKEN @"e0b419ea09d6c01e60cd3747f6a2ad12"
-
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -28,6 +25,7 @@
 
    // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
    //Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [Posts getCategoryList:[NSUserDefaults standardUserDefaults]];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
