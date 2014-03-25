@@ -30,6 +30,16 @@
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     // Do any additional setup after loading the view.
     [self addCompoents];
+    //UINavigationBar* appearance = self.navigationController.navigationBar;
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_SHARE;
+    [btn setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
+
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton, nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,6 +87,14 @@
     customLabel.textColor = [UIColor whiteColor];
     customLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigation_header.png"]];
     return customLabel;
+}
+
+#pragma mark - user defined event selectors
+-(IBAction) barButtonEvent:(id)sender
+{
+  // TODO
+  NSString* msg = @"Coming Soon. \nSend to twitter, weibo, etc";
+  [Posts infoMessage:nil msg:msg];
 }
 
 #pragma mark - private function

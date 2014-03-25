@@ -112,7 +112,10 @@
     
         self.navigationController.navigationBarHidden = NO;
         reviewViewController.score = self.score;
-        [self.navigationController pushViewController:reviewViewController  animated:YES];
+        //[self.navigationController.navigationItem setTitle:@"hello"];
+        //self.navigationController.navigationBar.topItem.title = @"Your Title";
+
+        [self.navigationController pushViewController:reviewViewController animated:YES];
     }
     
     if (btn.tag == TAG_BUTTON_VOTEUP || btn.tag == TAG_BUTTON_VOTEDOWN || btn.tag == TAG_BUTTON_FAVORITE) {
@@ -172,7 +175,6 @@
             if (detailItem.isfavorite == NO) {
                 msg = @"Unmark as favorite";
             }
-            
             [Posts infoMessage:nil msg:msg];
         }
     }

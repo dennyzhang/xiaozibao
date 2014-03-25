@@ -109,7 +109,6 @@
                  start_num:[NSNumber numberWithInt: 10]
                      count:self.page_count
           shouldAppendHead:YES]; // TODO
-    
 }
 
 - (void)openSqlite
