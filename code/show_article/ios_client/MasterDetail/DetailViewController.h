@@ -22,10 +22,10 @@
 #define INVALID_STRING @"INVALID_STRING"
 @property (strong, nonatomic) Posts* detailItem;
 
-
 @property (retain, nonatomic) IBOutlet UITextView *detailUITextView;
 @property (retain, nonatomic) IBOutlet UIImageView *imageView;
 @property (retain, nonatomic) IBOutlet UITextView *titleTextView;
 @property (retain, nonatomic) IBOutlet UITextView *linkTextView;
 
+@property (nonatomic, retain) NSNumber* score;
 @end

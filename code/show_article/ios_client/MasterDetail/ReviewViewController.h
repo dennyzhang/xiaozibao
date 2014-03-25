@@ -13,5 +13,11 @@
 @property (retain, nonatomic) IBOutlet UITextView *summaryTextView;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, retain) NSNumber* score;
+
 #define UITABLE_HEIGHT 300
++ (void) addScoreToButton:(UIButton*) btn score:(NSInteger)score
+                 fontSize:(NSInteger)fontSize
+               chWidth:(NSInteger)chWidth
+               chHeight:(NSInteger)chHeight;
 @end

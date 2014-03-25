@@ -8,6 +8,8 @@
 #define FONT_BIG 22
 #define FONT_NORMAL 17
 #define FONT_SMALL 13
+#define FONT_TINY 9
+#define FONT_TINY2 8
 
 #define FONT_NAME1 @"ArialMT"
 

@@ -13,7 +13,7 @@
 @end
 
 @implementation ReviewViewController
-@synthesize summaryTextView, tableView;
+@synthesize summaryTextView, tableView, score;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -77,6 +77,7 @@
     customLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigation_header.png"]];
     return customLabel;
 }
+
 #pragma mark - private function
 
 - (void)addCompoents
@@ -90,14 +91,16 @@
 
     self.summaryTextView.text =  [[NSString alloc] initWithFormat:@"%@\n\n%@\n\n%@",
                                     str_topic, str_stastics, str_ranklist];
-    self.summaryTextView.editable = false;
-    self.summaryTextView.selectable = false;
-
+    [self.summaryTextView setUserInteractionEnabled:NO];
     [self.view addSubview:summaryTextView];
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 50, 10.0f, 50.0f, 50.0f)];
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+
+    [ReviewViewController addScoreToButton:btn score:[self.score intValue] fontSize:FONT_TINY
+                                      chWidth:10 chHeight:30];
+
     [summaryTextView addSubview:btn];
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - UITABLE_HEIGHT,
@@ -106,5 +109,28 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
+}
+
++ (void) addScoreToButton:(UIButton*) btn score:(NSInteger)score
+                 fontSize:(NSInteger)fontSize
+               chWidth:(NSInteger)chWidth
+               chHeight:(NSInteger)chHeight
+  
+{
+    int width = btn.frame.size.width;
+    int height = btn.frame.size.height;
+    NSString* scoreStr = [NSString stringWithFormat: @"%d", (int)score];
+    int scoreWidth = chWidth * [scoreStr length];
+    int scoreHeight = chHeight;
+
+    UITextView* scoreTextView = [[UITextView alloc] initWithFrame:CGRectMake(width - scoreWidth + 0.75f * chWidth,
+                                                                              height - scoreHeight,
+                                                                              scoreWidth, scoreHeight)];
+    scoreTextView.backgroundColor = [UIColor clearColor];
+    scoreTextView.font = [UIFont fontWithName:FONT_NAME1 size:fontSize];
+    scoreTextView.text = scoreStr;
+    [scoreTextView setUserInteractionEnabled:NO];
+
+    [btn addSubview:scoreTextView];
 }
 @end

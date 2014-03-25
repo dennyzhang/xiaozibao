@@ -21,13 +21,14 @@
 @implementation DetailViewController
 @synthesize detailItem;
 @synthesize detailUITextView, imageView, titleTextView, linkTextView;
-
+@synthesize score;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
+    self.score = [NSNumber numberWithInt: 1234]; // TODO
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.title = @"";
@@ -110,7 +111,7 @@
         ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
     
         self.navigationController.navigationBarHidden = NO;
-
+        reviewViewController.score = self.score;
         [self.navigationController pushViewController:reviewViewController  animated:YES];
     }
     
@@ -317,6 +318,9 @@
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_COIN;
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+
+    [ReviewViewController addScoreToButton:btn score:[self.score intValue] fontSize:FONT_TINY chWidth:9 chHeight:25];
+
     UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
