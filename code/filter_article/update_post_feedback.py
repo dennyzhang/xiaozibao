@@ -7,12 +7,24 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-03-25 23:01:00>
+## Updated: Time-stamp: <2014-03-26 01:06:28>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
 import os
+import time
 import fnmatch
+
+import sys
+import logging
+log = logging.getLogger("update_post_feedback")
+format = "L:%(lineno)d - %(levelname)s: %(message)s"
+formatter = logging.Formatter(format)
+stream_handler = logging.StreamHandler(sys.stdout)
+stream_handler.setFormatter(formatter)
+log.addHandler(stream_handler)
+#log.setLevel(logging.INFO)
+log.setLevel(logging.ERROR)
 
 XZB_HOME=os.environ.get('XZB_HOME')
 assert(XZB_HOME != '')
@@ -24,7 +36,7 @@ DB_USERNAME="user_2013"
 DB_PWD="ilovechina"
 DB_NAME="xzb"
 
-EDITOR_UID_LIST = ['denny', '749A51E0-50F4-49AD-A5D5-BDCBA787EF29']
+EDITOR_UID_LIST = ["denny", "749A51E0-50F4-49AD-A5D5-BDCBA787EF29"]
 
 FIELD_SEPARATOR="&$!"
 FEEDBACK_ENVOTEUP="tag envoteup"
@@ -35,9 +47,9 @@ FEEDBACK_DEVOTEDOWN="tag devotedown"
 FEEDBACK_DEFAVORITE="tag defavorite"
 META_LEADING_STRING="meta:"
 
-
 engine_str = "mysql://%s:%s@%s/%s" % (DB_USERNAME, DB_PWD, DB_HOST, DB_NAME)
 
+FLAGFILE="flagfile_modifytime"
 # TODO: refine later
 def get_post_filename_byid(postid, category):
     for root, dirnames, filenames in os.walk("%s/%s/" % (DATA_BASEDIR, category)):
@@ -64,7 +76,7 @@ def get_post_metdata_dict(postid, category):
     metadata_dict = {}
     fname = get_post_filename_byid(postid, category)
     if fname == "":
-        print "Warning: fail to find related file for postid(%s)" % (postid)
+        log.warn("Warning: fail to find related file for postid(%s)" % (postid))
         return None
 
     with open(fname,'r') as f:
@@ -105,7 +117,7 @@ def update_post_metadata_file(postid, category, fname, metadata_dict):
             lines[i] = meta_str
             break
 
-    print "update file with find_meta:%d, meta_str:%s" % (find_meta, meta_str)
+    log.info("update file with find_meta:%d, meta_str:%s" % (find_meta, meta_str))
         
     with open(fname, "wab") as f:
         if find_meta is False:
@@ -117,12 +129,11 @@ def update_post_metadata_file(postid, category, fname, metadata_dict):
 def update_post_metadata_db(postid, category, metadata_dict):
     db = create_engine(engine_str)
     conn = db.connect()
-    where_clause = ""
+    update_clause = ""
     for key in metadata_dict.keys():
         if key in ['postid', 'category']:
             continue
         value = metadata_dict[key]
-        update_clause = ""
         if isinstance(value, str):
             update_clause = "%s and %s='%s'" % (update_clause, key, value)
         else:
@@ -133,11 +144,11 @@ def update_post_metadata_db(postid, category, metadata_dict):
 
     sql = "update posts set %s where id='%s' and category='%s'" % \
           (update_clause, metadata_dict["postid"], metadata_dict["category"])
-    print sql
+    log.info(sql)
     cursor = conn.execute(sql)
     conn.close()
 
-def update_feedback_by_logfile(clean_first, logfile):
+def update_feedback_by_logfile(logfile):
     for dict_log in parse_feedback_logfile(logfile):
         #print dict_log
         postid = dict_log["postid"]
@@ -157,10 +168,16 @@ def update_feedback_by_logfile(clean_first, logfile):
         update_post_metadata_db(postid, category, dict_db)
 
 def caculate_meta(dict_file, dict_log):
+    global modifytime
     # TODO: better way
     dict_new = {}
     for key in dict_file.keys():
         dict_new[key] = dict_file[key]
+        # regenerate dict
+        if (dict_file.has_key('modifytime') is False) or modifytime > (int)(dict_file["modifytime"]):
+            dict_new["voteup"] = 0
+            dict_new["votedown"] = 0
+            dict_new["favorite"] = 0
 
     comment = dict_log["comment"]
     uid = dict_log["uid"]
@@ -171,7 +188,8 @@ def caculate_meta(dict_file, dict_log):
 
     postid = dict_log["postid"]
     category = dict_log["category"]
-
+    
+    dict_new["modifytime"] = modifytime
     if dict_new.has_key("voteup") is False:
         dict_new["voteup"] = 0
     else:
@@ -205,11 +223,23 @@ def caculate_meta(dict_file, dict_log):
     return dict_new
 
 if __name__=='__main__':
-    clean_first = False
-    if '--clean_first' in sys.argv:
-        print "clean old feedback first"
-        clean_first = True
+    global modifytime
+    modifytime = int(round(time.time()))
+    command = sys.argv[1]
+    if command == "generate_flagfile":
+        print "generage %s with %d" %(FLAGFILE, modifytime)
+        open(FLAGFILE, "wab").write(str(modifytime))
 
-    update_feedback_by_logfile(clean_first, sys.argv[1])
+    if command == "clean_flagfile":
+        if os.path.exists(FLAGFILE):
+            os.remove(FLAGFILE)
+
+    if command == "update_feedabck":
+        if os.path.exists(FLAGFILE):
+            with open(FLAGFILE,'r') as f:
+                content = f.readlines()
+                modifytime = int(content[0])
+                #print modifytime
+                update_feedback_by_logfile(sys.argv[2])
 
 ## File : update_post_feedback.py ends

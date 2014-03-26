@@ -1,5 +1,5 @@
-//#define SERVERURL @"http://50.198.76.251:9180/"
-#define SERVERURL @"http://10.0.0.20:9180/"
+#define SERVERURL @"http://50.198.76.251:9180/"
+//#define SERVERURL @"http://10.0.0.20:9180/"
 
 #define MORE_TOPICS @"Manage Subscription"
 #define APP_SETTING @"App Setting"
