@@ -347,7 +347,7 @@
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
     self.coinButton = btn;
     NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
-    [ReviewViewController addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
+    [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
     UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];

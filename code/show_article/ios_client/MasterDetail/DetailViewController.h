@@ -11,6 +11,7 @@
 #import "PostsSqlite.h"
 #import "ReviewViewController.h"
 #import "UserProfile.h"
+#import "ComponentUtil.h"
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate>
 #define TAG_BUTTON_VOTEUP 2001

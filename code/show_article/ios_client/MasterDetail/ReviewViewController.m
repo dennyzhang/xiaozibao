@@ -118,8 +118,8 @@
     self.coinButton = btn;
 
     NSInteger score = [UserProfile scoreByCategory:self.category];
-    [ReviewViewController addScoreToButton:btn score:score fontSize:FONT_TINY
-                                   chWidth:10 chHeight:30 tag:TAG_SCORE_TEXT];
+    [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY
+                            chWidth:10 chHeight:30 tag:TAG_SCORE_TEXT];
 
     [summaryTextView addSubview:btn];
 
@@ -147,33 +147,4 @@
 
 }
 
-+ (void) addScoreToButton:(UIButton*) btn score:(NSInteger)score
-                 fontSize:(NSInteger)fontSize
-               chWidth:(NSInteger)chWidth
-               chHeight:(NSInteger)chHeight
-                 tag:(NSInteger)tag
-{
-  NSString* scoreStr;
-  // TODO better way, instead of workaround for the layout
-  if (score < 10)
-    scoreStr = [NSString stringWithFormat: @"%d  ", (int)score];
-  else
-    scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
-
-    int width = btn.frame.size.width;
-    int height = btn.frame.size.height;
-    int scoreWidth = chWidth * [scoreStr length];
-    int scoreHeight = chHeight;
-
-    UITextView* scoreTextView = [[UITextView alloc] initWithFrame:CGRectMake(width - scoreWidth + 0.75*chWidth,
-                                                                              height - scoreHeight,
-                                                                              scoreWidth, scoreHeight)];
-    scoreTextView.backgroundColor = [UIColor clearColor];
-    scoreTextView.font = [UIFont fontWithName:FONT_NAME1 size:fontSize];
-    scoreTextView.text = scoreStr;
-    scoreTextView.tag = tag;
-    [scoreTextView setUserInteractionEnabled:NO];
-
-    [btn addSubview:scoreTextView];
-}
 @end

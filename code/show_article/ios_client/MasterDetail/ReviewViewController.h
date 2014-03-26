@@ -8,6 +8,7 @@
 #import "constants.h"
 #import "posts.h"
 #import "UserProfile.h"
+#import "ComponentUtil.h"
 
 #import <UIKit/UIKit.h>
 
@@ -21,9 +22,4 @@
 #define TAG_SCORE_TEXT 3002
 
 #define UITABLE_HEIGHT 300
-+ (void) addScoreToButton:(UIButton*) btn score:(NSInteger)score
-                 fontSize:(NSInteger)fontSize
-               chWidth:(NSInteger)chWidth
-               chHeight:(NSInteger)chHeight
-                 tag:(NSInteger)tag;
 @end

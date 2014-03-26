@@ -11,6 +11,7 @@
 		040E856518DF776000FD3E56 /* stackoverflow.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856118DF776000FD3E56 /* stackoverflow.com.png */; };
 		040E856618DF776000FD3E56 /* www.careercup.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856218DF776000FD3E56 /* www.careercup.com.png */; };
 		040E856718DF776000FD3E56 /* www.v2ex.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856318DF776000FD3E56 /* www.v2ex.com.png */; };
+		0411B24E18E2F98600428AB1 /* ComponentUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0411B24D18E2F98600428AB1 /* ComponentUtil.m */; };
 		04409A5318DB69670021F9C3 /* comments-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4E18DB69670021F9C3 /* comments-512.png */; };
 		04409A5418DB69670021F9C3 /* hearts-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4F18DB69670021F9C3 /* hearts-512.png */; };
 		04409A5518DB69670021F9C3 /* more-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A5018DB69670021F9C3 /* more-512.png */; };
@@ -63,6 +64,8 @@
 		040E856118DF776000FD3E56 /* stackoverflow.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stackoverflow.com.png; sourceTree = "<group>"; };
 		040E856218DF776000FD3E56 /* www.careercup.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.careercup.com.png; sourceTree = "<group>"; };
 		040E856318DF776000FD3E56 /* www.v2ex.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.v2ex.com.png; sourceTree = "<group>"; };
+		0411B24C18E2F98600428AB1 /* ComponentUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentUtil.h; sourceTree = "<group>"; };
+		0411B24D18E2F98600428AB1 /* ComponentUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentUtil.m; sourceTree = "<group>"; };
 		04409A4E18DB69670021F9C3 /* comments-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments-512.png"; sourceTree = "<group>"; };
 		04409A4F18DB69670021F9C3 /* hearts-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hearts-512.png"; sourceTree = "<group>"; };
 		04409A5018DB69670021F9C3 /* more-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-512.png"; sourceTree = "<group>"; };
@@ -215,6 +218,8 @@
 				049FE34A18E0C252009FDB39 /* ReviewViewController.h */,
 				049FE34B18E0C252009FDB39 /* ReviewViewController.m */,
 				04D77FCC18B4636300643F3C /* constants.h */,
+				0411B24C18E2F98600428AB1 /* ComponentUtil.h */,
+				0411B24D18E2F98600428AB1 /* ComponentUtil.m */,
 				04D0427D17A360C300593E18 /* Images */,
 				04E893E9179130C400E9573C /* AppDelegate.h */,
 				04E893EA179130C400E9573C /* AppDelegate.m */,
@@ -426,6 +431,7 @@
 				04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */,
 				04E893EB179130C400E9573C /* AppDelegate.m in Sources */,
 				04E893F4179130C400E9573C /* MasterViewController.m in Sources */,
+				0411B24E18E2F98600428AB1 /* ComponentUtil.m in Sources */,
 				04E893E7179130C400E9573C /* main.m in Sources */,
 				04E893F7179130C400E9573C /* DetailViewController.m in Sources */,
 			);
