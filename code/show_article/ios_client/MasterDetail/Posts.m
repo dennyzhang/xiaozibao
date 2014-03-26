@@ -10,7 +10,7 @@
 
 @implementation Posts
 @synthesize postid, title, summary, category, content, source, readcount;
-@synthesize isfavorite, isvoteup, isvotedown;
+@synthesize isfavorite, isvoteup, isvotedown, metadata;
 
 - (id)init
 {
@@ -23,6 +23,7 @@
     category=@"";
     content=@"";
     source=@"";
+    metadata=@"";
     isfavorite=NO;
     isvoteup=NO;
     isvotedown=NO;

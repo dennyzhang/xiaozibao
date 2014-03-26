@@ -19,7 +19,7 @@ NSLock *lock;
     char *errMsg;
     const char *dbpath = [dbPath UTF8String];
     NSLog(@"initDB");
-    const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, SOURCE TEXT, READCOUNT INT DEFAULT 0, ISFAVORITE INT DEFAULT 0, ISVOTEUP INT DEFAULT 0, ISVOTEDOWN INT DEFAULT 0)";
+    const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, METADATA TEXT, SOURCE TEXT, READCOUNT INT DEFAULT 0, ISFAVORITE INT DEFAULT 0, ISVOTEUP INT DEFAULT 0, ISVOTEDOWN INT DEFAULT 0)";
     //const char *sql_stmt = "drop table posts";
     if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
@@ -75,7 +75,7 @@ NSLock *lock;
     Posts* ret = nil;
     const char *dbpath = [dbPath UTF8String];
     sqlite3_stmt *statement;
-    NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE POSTID=\"%@\"", postId];
+    NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE POSTID=\"%@\"", postId];
     const char *query_stmt = [querySQL UTF8String];
     [lock lock];
     if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
@@ -96,6 +96,7 @@ NSLock *lock;
                 NSNumber *isfavorite = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 7)];
                 NSNumber *isvoteup = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 8)];
                 NSNumber *isvotedown = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 9)];
+                NSString* metadata = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 10)];
 
                 [ret setPostid:postid];
                 [ret setSummary:summary];
@@ -107,6 +108,7 @@ NSLock *lock;
                 [ret setIsfavorite:[isfavorite intValue]];
                 [ret setIsvoteup:[isvoteup intValue]];
                 [ret setIsvotedown:[isvotedown intValue]];
+                [ret setMetadata:metadata];
             }
         }
         sqlite3_finalize(statement);
@@ -124,6 +126,7 @@ NSLock *lock;
            title:(NSString *)title
            source:(NSString *)source
          content:(NSString *)content
+        metadata:(NSString*)metdata
 {
     bool ret;
     const char *dbpath = [dbPath UTF8String];
@@ -132,8 +135,8 @@ NSLock *lock;
     content = [content stringByReplacingOccurrencesOfString: @"\"" withString:DB_SEPERATOR];
     NSString *insertSQL = [NSString
                            stringWithFormat:
-                           @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, SOURCE, CONTENT) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
-                            postId, category, summary, title, source, content];
+                           @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, SOURCE, CONTENT, METADATA) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
+                            postId, category, summary, title, source, content, metdata];
     const char *insert_stmt = [insertSQL UTF8String];
     
     [lock lock];
@@ -173,14 +176,14 @@ NSLock *lock;
     sqlite3_stmt *statement;
     NSString *querySQL;
     if ([category isEqualToString:FAVORITE_QUESTIONS]) {
-      querySQL = @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10";
+      querySQL = @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METDATA FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10";
     }
     else {
       if (hideReadPosts == true) {
-        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN  FROM POSTS WHERE CATEGORY =\"%@\" and READCOUNT=0 ORDER BY ID DESC LIMIT 10", category];
+        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METDATA FROM POSTS WHERE CATEGORY =\"%@\" and READCOUNT=0 ORDER BY ID DESC LIMIT 10", category];
       }
       else {
-        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE CATEGORY =\"%@\" ORDER BY ID DESC LIMIT 10", category];
+        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METDATA FROM POSTS WHERE CATEGORY =\"%@\" ORDER BY ID DESC LIMIT 10", category];
       }
     }
     //NSLog(@"sql: %@", querySQL);
@@ -204,6 +207,7 @@ NSLock *lock;
                 NSNumber *isfavorite = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 7)];
                 NSNumber *isvoteup = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 8)];
                 NSNumber *isvotedown = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 9)];
+                NSString* metadata = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 10)];
                 
                 [post setPostid:postid];
                 [post setSummary:summary];
@@ -215,6 +219,7 @@ NSLock *lock;
                 [post setIsfavorite:[isfavorite intValue]];
                 [post setIsvoteup:[isvoteup intValue]];
                 [post setIsvotedown:[isvotedown intValue]];
+                [post setMetadata:metadata];
                 
                 [objects insertObject:post atIndex:0];
                 

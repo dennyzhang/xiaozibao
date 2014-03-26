@@ -258,11 +258,13 @@
         [post setCategory:[JSON valueForKeyPath:@"category"]];
         [post setContent:[JSON valueForKeyPath:@"content"]];
         [post setSource:[JSON valueForKeyPath:@"source"]];
+        [post setMetadata:[JSON valueForKeyPath:@"metadata"]];
         [post setReadcount:[NSNumber numberWithInt:0]];
         
         if ([PostsSqlite savePost:postsDB dbPath:databasePath
                            postId:post.postid summary:post.summary category:post.category
-                            title:post.title source:post.source content:post.content] == NO) {
+                            title:post.title source:post.source content:post.content
+                         metadata:post.metadata] == NO) {
             NSLog(@"Error: insert posts. id:%@, title:%@", post.postid, post.title);
         }
         

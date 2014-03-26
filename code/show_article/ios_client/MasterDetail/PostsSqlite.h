@@ -32,7 +32,8 @@
         category:(NSString *)category
            title:(NSString *)title
            source:(NSString *)source
-         content:(NSString *)content;
+         content:(NSString *)content
+        metadata:(NSString*)metdata;
 
 + (bool)cleanCache: (sqlite3 *)postsDB
             dbPath:(NSString *)dbPath;
