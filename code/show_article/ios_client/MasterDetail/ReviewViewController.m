@@ -14,7 +14,7 @@
 
 @implementation ReviewViewController
 @synthesize summaryTextView, tableView, coinButton;
-@synthesize category;
+@synthesize category, questions;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,6 +32,27 @@
     // Do any additional setup after loading the view.
     [self addCompoents];
     [self addMenuCompoents];
+    self.questions = [[NSMutableArray alloc] init];
+
+    // TODO: refine later
+    NSString *docsDir;
+    NSArray *dirPaths;
+        
+    // Get the documents directory
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    docsDir = [dirPaths objectAtIndex:0];
+
+    sqlite3 *postsDB;
+    NSString *dbPath = [[NSString alloc] initWithString:
+                                           [docsDir stringByAppendingPathComponent:@"posts.db"]];
+    if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
+      NSLog(@"Error: Failed to open/create database");
+    }
+
+    // load data
+    [PostsSqlite loadRecommendPosts:postsDB dbPath:dbPath category:self.category
+                   objects:self.questions tableview:self.tableView];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,16 +76,16 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // return number of rows
-   NSLog(@"numberOfRowsInSection");
-   return 10;
+  return questions.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // return cell
     //static NSString *CellIdentifier = @"Cell";
+    Posts *post = questions[indexPath.row];
     UITableViewCell *cell = [[UITableViewCell alloc] init];
-    cell.textLabel.text = @"question title";
+    cell.textLabel.text = post.title;
     cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     return cell;
 }
@@ -75,7 +96,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *customLabel = [[UILabel alloc] init];
-    customLabel.text = @" Top 10 Questions From Your History";
+    customLabel.text = @" Top 10 Questions By Your History";
     customLabel.textColor = [UIColor whiteColor];
     customLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigation_header.png"]];
     return customLabel;

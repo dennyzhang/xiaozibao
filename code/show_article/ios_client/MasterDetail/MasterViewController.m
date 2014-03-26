@@ -20,7 +20,7 @@
 @interface MasterViewController () {
     NSMutableArray *_objects;
     sqlite3 *postsDB;
-    NSString *databasePath;
+    NSString *dbPath;
     NSUserDefaults *userDefaults;
     NSNumber *bottom_num;
     NSNumber *page_count;
@@ -119,7 +119,7 @@
     
     [self openSqlite];
     userDefaults = [NSUserDefaults standardUserDefaults];
-    [PostsSqlite loadPosts:postsDB dbPath:databasePath category:self.category
+    [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
                    objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     
     [self fetchArticleList:username category_t:category_t
@@ -140,14 +140,14 @@
     docsDir = [dirPaths objectAtIndex:0];
     
     // Build the path to the database file
-    databasePath = [[NSString alloc]
+    dbPath = [[NSString alloc]
                     initWithString: [docsDir stringByAppendingPathComponent:
                                      @"posts.db"]];
     
     //NSFileManager *filemgr = [NSFileManager defaultManager];
     
-    //if ([filemgr fileExistsAtPath: databasePath ] == NO)
-    if ([PostsSqlite initDB:postsDB dbPath:databasePath] == NO) {
+    //if ([filemgr fileExistsAtPath: dbPath ] == NO)
+    if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
         NSLog(@"Error: Failed to open/create database");
     }
 }
@@ -192,7 +192,7 @@
         // bypass sqlite lock problem
         for(i=0; i<count; i++) {
             if ([Posts containId:_objects postId:idList[i]] == NO) {
-                post = [PostsSqlite getPost:postsDB dbPath:databasePath postId:idList[i]];
+                post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
                 if (post == nil) {
                     [self fetchJson:_objects
                              urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]
@@ -259,7 +259,7 @@
         [post setMetadata:[JSON valueForKeyPath:@"metadata"]];
         [post setReadcount:[NSNumber numberWithInt:0]];
         
-        if ([PostsSqlite savePost:postsDB dbPath:databasePath
+        if ([PostsSqlite savePost:postsDB dbPath:dbPath
                            postId:post.postid summary:post.summary category:post.category
                             title:post.title source:post.source content:post.content
                          metadata:post.metadata] == NO) {
@@ -510,7 +510,7 @@
         [self openSqlite];
         NSLog(@"clean cache");
         
-        [PostsSqlite cleanCache:postsDB dbPath:databasePath];
+        [PostsSqlite cleanCache:postsDB dbPath:dbPath];
         if ([userDefaults integerForKey:@"IsEditorMode"] == 1) {
             NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
             NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
@@ -640,7 +640,7 @@
         
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [self markCellAsRead:cell post:post];
-        [PostsSqlite addPostReadCount:postsDB dbPath:databasePath
+        [PostsSqlite addPostReadCount:postsDB dbPath:dbPath
                                postId:post.postid category:post.category];
         
         [[segue destinationViewController] setDetailItem:post];

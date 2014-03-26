@@ -235,6 +235,68 @@ NSLock *lock;
     return ret;
 }
 
+// TODO: refine later
++ (bool)loadRecommendPosts: (sqlite3 *)postsDB
+           dbPath:(NSString *) dbPath
+            category:(NSString *)category
+          objects:(NSMutableArray *) objects
+        tableview:(UITableView *)tableview
+{
+    bool ret = NO;
+    const char *dbpath = [dbPath UTF8String];
+    sqlite3_stmt *statement;
+    NSString *querySQL;
+    querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE CATEGORY =\"%@\" and READCOUNT=0 ORDER BY READCOUNT DESC, ISFAVORITE DESC, ISVOTEUP DESC, ISVOTEDOWN DESC, ID DESC LIMIT 10", category];
+
+    NSLog(@"sql: %@", querySQL);
+    const char *query_stmt = [querySQL UTF8String];
+    [lock lock];
+    if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
+    {
+        if (sqlite3_prepare_v2(postsDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                Posts* post = [[Posts alloc] init];
+                NSString* postid = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
+                NSString* summary = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
+                NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
+                NSString* title = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
+                NSString* content = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
+                content = [content stringByReplacingOccurrencesOfString:DB_SEPERATOR withString:@"\""];
+                NSString* source = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
+                NSNumber *readcount = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 6)];
+                NSNumber *isfavorite = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 7)];
+                NSNumber *isvoteup = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 8)];
+                NSNumber *isvotedown = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 9)];
+                NSString* metadata = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 10)];
+                
+                [post setPostid:postid];
+                [post setSummary:summary];
+                [post setCategory:category];
+                [post setTitle:title];
+                [post setContent:content];
+                [post setSource:source];
+                [post setReadcount:readcount];
+                [post setIsfavorite:[isfavorite intValue]];
+                [post setIsvoteup:[isvoteup intValue]];
+                [post setIsvotedown:[isvotedown intValue]];
+                [post setMetadata:metadata];
+                
+                [objects insertObject:post atIndex:0];
+                
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [tableview insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                ret = YES;
+            }
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(postsDB);
+    }
+    [lock unlock];
+    return ret;
+}
+
 + (bool)addPostReadCount: (sqlite3 *)postsDB
                   dbPath:(NSString *) dbPath
                   postId:(NSString *)postId

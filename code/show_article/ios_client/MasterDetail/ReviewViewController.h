@@ -9,6 +9,7 @@
 #import "posts.h"
 #import "UserProfile.h"
 #import "ComponentUtil.h"
+#import "PostsSqlite.h"
 
 #import <UIKit/UIKit.h>
 
@@ -17,6 +18,7 @@
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (nonatomic, retain) NSString* category;
+@property (nonatomic, retain) NSMutableArray* questions;
 
 #define TAG_BUTTON_SHARE 3001
 #define TAG_SCORE_TEXT 3002

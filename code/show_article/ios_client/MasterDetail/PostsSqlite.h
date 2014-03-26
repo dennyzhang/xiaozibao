@@ -45,6 +45,12 @@
     hideReadPosts:(BOOL) hideReadPosts
         tableview:(UITableView *)tableview;
 
++ (bool)loadRecommendPosts: (sqlite3 *)postsDB
+           dbPath:(NSString *) dbPath
+            category:(NSString *)category
+          objects:(NSMutableArray *) objects
+        tableview:(UITableView *)tableview;
+
 + (bool)addPostReadCount: (sqlite3 *)postsDB
                   dbPath:(NSString *) dbPath
                   postId:(NSString *)postId
