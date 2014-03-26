@@ -139,8 +139,8 @@
     self.coinButton = btn;
 
     NSInteger score = [UserProfile scoreByCategory:self.category];
-    [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY
-                            chWidth:10 chHeight:30 tag:TAG_SCORE_TEXT];
+    [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+                          fontSize:FONT_TINY chWidth:10 chHeight:30 tag:TAG_SCORE_TEXT];
 
     [summaryTextView addSubview:btn];
 

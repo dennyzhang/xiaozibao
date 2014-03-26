@@ -12,7 +12,7 @@
 #import "constants.h"
 
 @interface ComponentUtil : NSObject
-+ (void) addScoreToButton:(UIButton*) btn score:(NSInteger)score
++ (void) addTextToButton:(UIButton*) btn text:(NSString*)text
                  fontSize:(NSInteger)fontSize
                chWidth:(NSInteger)chWidth
                chHeight:(NSInteger)chHeight

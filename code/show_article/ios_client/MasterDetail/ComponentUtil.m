@@ -9,34 +9,37 @@
 #import "ComponentUtil.h"
 
 @implementation ComponentUtil
-+ (void) addScoreToButton:(UIButton*) btn score:(NSInteger)score
++ (void) addTextToButton:(UIButton*) btn text:(NSString*)text
                  fontSize:(NSInteger)fontSize
                chWidth:(NSInteger)chWidth
                chHeight:(NSInteger)chHeight
                  tag:(NSInteger)tag
 {
-  NSString* scoreStr;
-  // TODO better way, instead of workaround for the layout
-  if (score < 10)
-    scoreStr = [NSString stringWithFormat: @"%d  ", (int)score];
-  else
-    scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
+
+    // TODO better way, instead of workaround for the layout
+  text = @"12";
+    if ([text length] == 1)
+      text = [NSString stringWithFormat: @"%@ ", text];
+    if ([text length] == 2)
+      text = [NSString stringWithFormat: @" %@", text];
+    if ([text length] == 3)
+      text = [NSString stringWithFormat: @"%@ ", text];
 
     int width = btn.frame.size.width;
     int height = btn.frame.size.height;
-    int scoreWidth = chWidth * [scoreStr length];
-    int scoreHeight = chHeight;
+    int textWidth = chWidth * [text length];
+    int textHeight = chHeight;
 
-    UITextView* scoreTextView = [[UITextView alloc] initWithFrame:CGRectMake(width - scoreWidth + 0.75*chWidth,
-                                                                              height - scoreHeight,
-                                                                              scoreWidth, scoreHeight)];
-    scoreTextView.backgroundColor = [UIColor clearColor];
-    scoreTextView.font = [UIFont fontWithName:FONT_NAME1 size:fontSize];
-    scoreTextView.text = scoreStr;
-    scoreTextView.tag = tag;
-    [scoreTextView setUserInteractionEnabled:NO];
+    UITextView* textTextView = [[UITextView alloc] initWithFrame:CGRectMake(width - textWidth,
+                                                                              height - textHeight,
+                                                                              textWidth, textHeight)];
+    textTextView.backgroundColor = [UIColor clearColor];
+    textTextView.font = [UIFont fontWithName:FONT_NAME1 size:fontSize];
+    textTextView.text = text;
+    textTextView.tag = tag;
+    [textTextView setUserInteractionEnabled:NO];
 
-    [btn addSubview:scoreTextView];
+    [btn addSubview:textTextView];
 }
 
 + (void)updateScoreText:(NSString*) category

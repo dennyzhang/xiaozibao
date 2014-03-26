@@ -289,8 +289,8 @@
 - (void)addMenuCompoents
 {
     UIButton *btn;
-    int iconWidth = 33.0f;
-    int iconHeight = 30.0f;
+    int iconWidth = 28.0f;
+    int iconHeight = 28.0f;
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -348,7 +348,9 @@
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
     self.coinButton = btn;
     NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
-    [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
+    [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+                              fontSize:FONT_TINY2 chWidth:7 chHeight:23 tag:TAG_SCORE_TEXT];
+
     UIBarButtonItem* coinBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteUpBarButton, voteDownBarButton, nil];
