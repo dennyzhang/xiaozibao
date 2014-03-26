@@ -86,7 +86,7 @@
 {
   // TODO
   NSString* msg = @"Coming Soon. \nSend to twitter, weibo, etc";
-  [Posts infoMessage:nil msg:msg];
+  [ComponentUtil infoMessage:nil msg:msg];
 }
 
 #pragma mark - private function

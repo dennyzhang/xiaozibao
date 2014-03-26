@@ -195,7 +195,7 @@
             if (detailItem.isfavorite == NO) {
                 msg = @"Unmark as favorite";
             }
-            [Posts infoMessage:nil msg:msg];
+            [ComponentUtil infoMessage:nil msg:msg];
         }
 
     }

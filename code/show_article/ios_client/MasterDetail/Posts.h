@@ -22,16 +22,10 @@
 @property (nonatomic, assign) BOOL isfavorite;
 @property (nonatomic, assign) BOOL isvoteup;
 @property (nonatomic, assign) BOOL isvotedown;
+@property (nonatomic, retain) NSString* metadata;
 
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;
 
 + (void)getCategoryList:(NSUserDefaults *)userDefaults;
-
-// TODO manage below code in a dedicated class
-+(void)infoMessage:(NSString *) title 
-               msg:(NSString *) msg;
-+(void)timedAlert:(UIAlertView *) alertView;
-+(void)dismissAlert:(UIAlertView *) alertView;
-+(NSString*) getLogoIcon:(NSString* )url;
 @end

@@ -218,7 +218,7 @@
         NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
         // NSString* title = @"Server request error";
         // NSString* msg = @"Fail to get post list.\nPleaese check network or app version.\nReport the issue by mail, twitter, etc";
-        // [Posts infoMessage:title msg:msg];
+        // [ComponentUtil infoMessage:title msg:msg];
     }];
     
     [operation start];
@@ -440,7 +440,7 @@
         
         cell.textLabel.text = @"";
         
-        NSString* iconPath = [Posts getLogoIcon:post.source];
+        NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
         NSLog(@"url:%@, iconPath:%@", post.source, iconPath);
         //NSString* iconPath = @"stackexchange.com.png";
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
@@ -550,7 +550,7 @@
                                       cancelButtonTitle:nil
                                       otherButtonTitles:nil, nil];
                 [alert show];
-                [Posts timedAlert:alert];
+                [ComponentUtil timedAlert:alert];
             }
         }
         

@@ -70,39 +70,4 @@
    return ret;
 }
 
-+(void)infoMessage:(NSString *) title
-               msg:(NSString *) msg
-{
-    UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle:title message:msg delegate:self
-                                  cancelButtonTitle:nil
-                                  otherButtonTitles:nil, nil];
-    [alert show];
-    [Posts timedAlert:alert];
-
-}
-
-+(void)timedAlert:(UIAlertView *) alertView
-{
-    [self performSelector:@selector(dismissAlert:) withObject:alertView afterDelay:HIDE_MESSAGEBOX_DELAY];
-}
-
-+(void)dismissAlert:(UIAlertView *) alertView
-{
-    [alertView dismissWithClickedButtonIndex:0 animated:YES];
-}
-
-+(NSString*) getLogoIcon:(NSString* )url
-{
-  if ([url rangeOfString:@"stackexchange.com"].location != NSNotFound) {
-    return @"stackexchange.com.png";
-  }
-
-  NSString* ret;
-  NSArray *stringArray = [url componentsSeparatedByString: @"/"];
-  ret = [[NSString alloc] initWithFormat:@"%@.png", stringArray[2]];
-
-  return ret;
-}
-
 @end

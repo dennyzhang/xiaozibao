@@ -21,4 +21,10 @@
 + (void)updateScoreText:(NSString*) category
                     btn:(UIButton*) btn
                     tag:(NSInteger) tag;
++(void)infoMessage:(NSString *) title 
+               msg:(NSString *) msg;
++(void)timedAlert:(UIAlertView *) alertView;
++(void)dismissAlert:(UIAlertView *) alertView;
++(NSString*) getLogoIcon:(NSString* )url;
+
 @end
