@@ -191,9 +191,9 @@
 
         // tell client where to find favorite questions
         if (btn.tag == TAG_BUTTON_FAVORITE) {
-            NSString* msg = @"Mark as favorite.\nSee: Preference --> Favorite questions";
+            NSString* msg = @"Save the question to as favorite.\nSee: Preference --> Saved questions";
             if (detailItem.isfavorite == NO) {
-                msg = @"Unmark as favorite";
+                msg = @"Unsave the question";
             }
             [ComponentUtil infoMessage:nil msg:msg];
         }
@@ -289,9 +289,10 @@
 - (void)addMenuCompoents
 {
     UIButton *btn;
-    
+    int iconWidth = 33.0f;
+    int iconHeight = 30.0f;
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_VOTEUP;
     if (detailItem.isvoteup == YES) {
@@ -303,7 +304,7 @@
     UIBarButtonItem *voteUpBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_VOTEDOWN;
     if (detailItem.isvotedown == YES) {
@@ -315,7 +316,7 @@
     UIBarButtonItem *voteDownBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_FAVORITE;
     if (detailItem.isfavorite == YES) {
@@ -327,21 +328,21 @@
     UIBarButtonItem *saveFavoriteBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 //    
 //    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+//    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
 //    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    btn.tag = TAG_BUTTON_MORE;
 //    [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
 //    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 //    
 //    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+//    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
 //    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    btn.tag = TAG_BUTTON_COMMENT;
 //    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
 //    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 //    
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_COIN_DETAILVIEW;
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
@@ -350,7 +351,7 @@
     [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
     UIBarButtonItem* coinBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteDownBarButton, voteUpBarButton, nil];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteUpBarButton, voteDownBarButton, nil];
 }
 
 - (void)addPostHeaderCompoents

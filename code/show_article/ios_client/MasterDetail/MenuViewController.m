@@ -30,7 +30,7 @@
 
             NSIndexPath *path = [self.tableView indexPathForCell:c];
             NSString* category = NONE_QUESTION_CATEGORY;
-            if (path.section == 0 || [c.textLabel.text isEqualToString:FAVORITE_QUESTIONS])
+            if (path.section == 0 || [c.textLabel.text isEqualToString:SAVED_QUESTIONS])
                 category = c.textLabel.text;
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
@@ -179,7 +179,7 @@
 
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = FAVORITE_QUESTIONS;
+            cell.textLabel.text = SAVED_QUESTIONS;
         }
         if (indexPath.row == 1) {
             cell.textLabel.text = MORE_CATEGORY;

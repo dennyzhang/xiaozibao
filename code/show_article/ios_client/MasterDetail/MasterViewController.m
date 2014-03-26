@@ -62,7 +62,7 @@
         NSString* category_t = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         [self init_data:@"denny" category_t:category_t navigationTitle:category_t];
     }
-    if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:FAVORITE_QUESTIONS])) {
+    if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
         UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
         [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -158,7 +158,7 @@
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
 {
-    if ([self.navigationItem.title isEqualToString:FAVORITE_QUESTIONS])
+    if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
         return;
     
     NSString *urlPrefix=SERVERURL;
