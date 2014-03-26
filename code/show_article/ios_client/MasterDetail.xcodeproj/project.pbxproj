@@ -12,6 +12,9 @@
 		040E856618DF776000FD3E56 /* www.careercup.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856218DF776000FD3E56 /* www.careercup.com.png */; };
 		040E856718DF776000FD3E56 /* www.v2ex.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856318DF776000FD3E56 /* www.v2ex.com.png */; };
 		0411B24E18E2F98600428AB1 /* ComponentUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0411B24D18E2F98600428AB1 /* ComponentUtil.m */; };
+		0411B25218E364EC00428AB1 /* news.ycombinator.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B24F18E364EC00428AB1 /* news.ycombinator.com.png */; };
+		0411B25318E364EC00428AB1 /* www.quora.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B25018E364EC00428AB1 /* www.quora.com.png */; };
+		0411B25418E364EC00428AB1 /* www.reddit.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B25118E364EC00428AB1 /* www.reddit.com.png */; };
 		04409A5318DB69670021F9C3 /* comments-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4E18DB69670021F9C3 /* comments-512.png */; };
 		04409A5418DB69670021F9C3 /* hearts-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4F18DB69670021F9C3 /* hearts-512.png */; };
 		04409A5518DB69670021F9C3 /* more-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A5018DB69670021F9C3 /* more-512.png */; };
@@ -66,6 +69,9 @@
 		040E856318DF776000FD3E56 /* www.v2ex.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.v2ex.com.png; sourceTree = "<group>"; };
 		0411B24C18E2F98600428AB1 /* ComponentUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentUtil.h; sourceTree = "<group>"; };
 		0411B24D18E2F98600428AB1 /* ComponentUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentUtil.m; sourceTree = "<group>"; };
+		0411B24F18E364EC00428AB1 /* news.ycombinator.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = news.ycombinator.com.png; sourceTree = "<group>"; };
+		0411B25018E364EC00428AB1 /* www.quora.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.quora.com.png; sourceTree = "<group>"; };
+		0411B25118E364EC00428AB1 /* www.reddit.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.reddit.com.png; sourceTree = "<group>"; };
 		04409A4E18DB69670021F9C3 /* comments-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments-512.png"; sourceTree = "<group>"; };
 		04409A4F18DB69670021F9C3 /* hearts-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hearts-512.png"; sourceTree = "<group>"; };
 		04409A5018DB69670021F9C3 /* more-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-512.png"; sourceTree = "<group>"; };
@@ -149,6 +155,9 @@
 			isa = PBXGroup;
 			children = (
 				040E856018DF776000FD3E56 /* stackexchange.com.png */,
+				0411B24F18E364EC00428AB1 /* news.ycombinator.com.png */,
+				0411B25018E364EC00428AB1 /* www.quora.com.png */,
+				0411B25118E364EC00428AB1 /* www.reddit.com.png */,
 				040E856118DF776000FD3E56 /* stackoverflow.com.png */,
 				040E856218DF776000FD3E56 /* www.careercup.com.png */,
 				040E856318DF776000FD3E56 /* www.v2ex.com.png */,
@@ -357,6 +366,8 @@
 				04409A6218DB6A8B0021F9C3 /* thumbs_down-512.png in Resources */,
 				04409A5618DB69670021F9C3 /* thumb_down-512.png in Resources */,
 				040E856418DF776000FD3E56 /* stackexchange.com.png in Resources */,
+				0411B25218E364EC00428AB1 /* news.ycombinator.com.png in Resources */,
+				0411B25418E364EC00428AB1 /* www.reddit.com.png in Resources */,
 				04409A5518DB69670021F9C3 /* more-512.png in Resources */,
 				04E893F1179130C400E9573C /* Main_iPad.storyboard in Resources */,
 				040E856618DF776000FD3E56 /* www.careercup.com.png in Resources */,
@@ -368,6 +379,7 @@
 				04E893EE179130C400E9573C /* Main_iPhone.storyboard in Resources */,
 				046E471118E0BFF900ACC618 /* coin.png in Resources */,
 				04409A5718DB69670021F9C3 /* thumb_up-512.png in Resources */,
+				0411B25318E364EC00428AB1 /* www.quora.com.png in Resources */,
 				0473C99618DCD9E600AC4DCD /* header.png in Resources */,
 				040E856718DF776000FD3E56 /* www.v2ex.com.png in Resources */,
 				04E893E5179130C400E9573C /* InfoPlist.strings in Resources */,
