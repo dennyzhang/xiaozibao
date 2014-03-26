@@ -35,7 +35,6 @@
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
             [dstViewController init_data:userid category_t:category navigationTitle:c.textLabel.text];
-            NSLog(@"MenuViewController navigationTitle:%@", c.textLabel.text);
             [dstViewController view];
         }
         else { // disable actions

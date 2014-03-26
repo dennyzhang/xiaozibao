@@ -438,6 +438,7 @@
     else {
         Posts *post = _objects[indexPath.row];
         [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
+        [[cell.contentView viewWithTag:TAG_METADATA_IN_CELL]removeFromSuperview];
         [[cell.contentView viewWithTag:TAG_ICON_IN_CELL]removeFromSuperview];
         
         cell.textLabel.text = @"";
