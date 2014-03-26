@@ -39,7 +39,7 @@
 
 + (bool)loadPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
-            topic:(NSString *)topic
+            category:(NSString *)category
           objects:(NSMutableArray *) objects
     hideReadPosts:(BOOL) hideReadPosts
         tableview:(UITableView *)tableview;
@@ -47,13 +47,13 @@
 + (bool)addPostReadCount: (sqlite3 *)postsDB
                   dbPath:(NSString *) dbPath
                   postId:(NSString *)postId
-                   topic:(NSString *)topic;
+                   category:(NSString *)category;
 
 + (bool)updatePostBoolField: (sqlite3 *)postsDB
                   dbPath:(NSString *) dbPath
                   postId:(NSString *)postId
                   boolValue:(BOOL)boolValue
                   fieldName:(NSString*)fieldName
-                   topic:(NSString *)topic;
+                   category:(NSString *)category;
 
 @end

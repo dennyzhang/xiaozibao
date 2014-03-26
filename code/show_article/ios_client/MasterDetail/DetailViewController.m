@@ -179,7 +179,7 @@
         
         [PostsSqlite updatePostBoolField:postsDB dbPath:dbPath
                                   postId:detailItem.postid boolValue:boolValue
-                               fieldName:@"isvoteup" topic:detailItem.category];
+                               fieldName:@"isvoteup" category:detailItem.category];
         [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
         
         NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];

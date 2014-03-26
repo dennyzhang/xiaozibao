@@ -23,7 +23,7 @@
 @property (retain, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, retain) CLLocationManager *locationManager;
 
-@property (nonatomic, retain) NSString* topic;
+@property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSString* username;
 @property (atomic, retain) NSNumber* bottom_num;
 @property (atomic, retain) NSNumber* page_count;
@@ -31,7 +31,7 @@
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 
 - (void) init_data:(NSString*)username_t
-           topic_t:(NSString*)topic_t;
+           category_t:(NSString*)category_t;
 
 #define TAG_TEXTVIEW_IN_CELL 1001
 #define TAG_ICON_IN_CELL 1002

@@ -30,7 +30,7 @@
 
 @implementation MasterViewController
 
-@synthesize locationManager, topic, username, bottom_num, page_count;
+@synthesize locationManager, category, username, bottom_num, page_count;
 
 - (void)viewDidLoad
 {
@@ -51,8 +51,8 @@
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
     
     userDefaults = [NSUserDefaults standardUserDefaults];
-    if (![userDefaults stringForKey:@"TopicList"]) {
-      [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"TopicList"];
+    if (![userDefaults stringForKey:@"CategoryList"]) {
+      [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"CategoryList"];
     }
 
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
@@ -68,28 +68,28 @@
                                       action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = settingButton;
     
-    if (self.topic == nil) {
-        NSString* topicList = [userDefaults stringForKey:@"TopicList"];
-        NSArray *stringArray = [topicList componentsSeparatedByString: @","];
-        NSString* default_topic = stringArray[0];
-        default_topic = [default_topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [self init_data:@"denny" topic_t:default_topic];
+    if (self.category == nil) {
+        NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
+        NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
+        NSString* default_category = stringArray[0];
+        default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [self init_data:@"denny" category_t:default_category];
     }
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)init_data:(NSString*)username_t
-          topic_t:(NSString*)topic_t
+          category_t:(NSString*)category_t
 {
-    self.topic=topic_t;
-    self.navigationItem.title = self.topic;
+    self.category=category_t;
+    self.navigationItem.title = self.category;
     
-    if ([topic_t isEqualToString:MORE_TOPICS]) {
+    if ([category_t isEqualToString:MORE_CATEGORY]) {
         return;
     }
     
-    if ([topic_t isEqualToString:APP_SETTING]) {
+    if ([category_t isEqualToString:APP_SETTING]) {
         return;
     }
     
@@ -102,10 +102,10 @@
     
     [self openSqlite];
     userDefaults = [NSUserDefaults standardUserDefaults];
-    [PostsSqlite loadPosts:postsDB dbPath:databasePath topic:self.topic
+    [PostsSqlite loadPosts:postsDB dbPath:databasePath category:self.category
                    objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     
-    [self fetchArticleList:username topic_t:topic_t
+    [self fetchArticleList:username category_t:category_t
                  start_num:[NSNumber numberWithInt: 10]
                      count:self.page_count
           shouldAppendHead:YES]; // TODO
@@ -136,12 +136,12 @@
 }
 
 - (void)fetchArticleList:(NSString*) userid
-                 topic_t:(NSString*)topic_t
+                 category_t:(NSString*)category_t
                start_num:(NSNumber*)start_num
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
 {
-    if ([self.topic isEqualToString:FAVORITE_QUESTIONS])
+    if ([self.category isEqualToString:FAVORITE_QUESTIONS])
         return;
     
     NSString *urlPrefix=SERVERURL;
@@ -152,12 +152,12 @@
       sortMethod = @"hotest";
       // If anyone votedown, it's not shown
       urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
-                        urlPrefix, userid, topic_t, [start_num intValue], [count intValue], sortMethod];
+                        urlPrefix, userid, category_t, [start_num intValue], [count intValue], sortMethod];
     }
     else {
       sortMethod = @"latest";
       urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
-                        urlPrefix, userid, topic_t, [start_num intValue], [count intValue], sortMethod];
+                        urlPrefix, userid, category_t, [start_num intValue], [count intValue], sortMethod];
 
     }
 
@@ -333,7 +333,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([self.topic isEqualToString:APP_SETTING]) {
+    if ([self.category isEqualToString:APP_SETTING]) {
         return 2;
     }
     
@@ -341,7 +341,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if ([self.topic isEqualToString:APP_SETTING]) {
+    if ([self.category isEqualToString:APP_SETTING]) {
         return @" ";
     }
     else
@@ -350,7 +350,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([self.topic isEqualToString:APP_SETTING]) {
+    if ([self.category isEqualToString:APP_SETTING]) {
         if (section == 0) {
             return 3;
         }
@@ -416,7 +416,7 @@
     cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
     [cell setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
-    if ([self.topic isEqualToString:APP_SETTING]) {
+    if ([self.category isEqualToString:APP_SETTING]) {
         [self appSettingRows:cell indexPath:indexPath];
         return cell;
     }
@@ -467,7 +467,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.topic isEqualToString:APP_SETTING]) {
+    if ([self.category isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
     // NSString *text = @"some testxt";
@@ -488,8 +488,8 @@
 
         [PostsSqlite cleanCache:postsDB dbPath:databasePath];
         if ([userDefaults integerForKey:@"IsEditorMode"] == 1) {
-          NSString* topicList = [userDefaults stringForKey:@"TopicList"];
-          NSArray *stringArray = [topicList componentsSeparatedByString: @","];
+          NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
+          NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
           for (int i=0; i < [stringArray count]; i++)
             {
               [UserProfile cleanCategoryKey:stringArray[i]];
@@ -501,7 +501,7 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if ([self.topic isEqualToString:APP_SETTING]){
+    if ([self.category isEqualToString:APP_SETTING]){
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite questions?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
             
@@ -574,20 +574,20 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if ([self.topic isEqualToString:APP_SETTING])
+    if ([self.category isEqualToString:APP_SETTING])
         return 30;
     return 0;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([self.topic isEqualToString:APP_SETTING])
+    if ([self.category isEqualToString:APP_SETTING])
         return;
     
     // when reach the top
     if (scrollView.contentOffset.y == 0)
     {
         NSLog(@"top is reached");
-        [self fetchArticleList:username topic_t:self.topic
+        [self fetchArticleList:username category_t:self.category
                      start_num:[NSNumber numberWithInt:0]
                          count:self.page_count
               shouldAppendHead:YES]; // TODO
@@ -597,7 +597,7 @@
     if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
     {
         NSLog(@"bottom is reached");
-        [self fetchArticleList:username topic_t:self.topic
+        [self fetchArticleList:username category_t:self.category
                      start_num:self.bottom_num count:self.page_count
               shouldAppendHead:NO]; // TODO
     }
@@ -610,8 +610,8 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-      NSLog(@"increate visit count, for topic:%@. previous key:%d", self.topic,
-                    [UserProfile integerForKey:self.topic key:POST_VISIT_KEY]);
+      NSLog(@"increate visit count, for category:%@. previous key:%d", self.category,
+                    [UserProfile integerForKey:self.category key:POST_VISIT_KEY]);
         Posts *post = _objects[indexPath.row];      
         
         // Mixpanel *mixpanel = [Mixpanel sharedInstance];
@@ -624,7 +624,7 @@
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [self markCellAsRead:cell post:post];
         [PostsSqlite addPostReadCount:postsDB dbPath:databasePath
-                               postId:post.postid topic:post.category];
+                               postId:post.postid category:post.category];
         
         [[segue destinationViewController] setDetailItem:post];
     }

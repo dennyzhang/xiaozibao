@@ -162,25 +162,25 @@ NSLock *lock;
 // TODO: refine later
 + (bool)loadPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
-            topic:(NSString *)topic
+            category:(NSString *)category
           objects:(NSMutableArray *) objects
     hideReadPosts:(BOOL) hideReadPosts
         tableview:(UITableView *)tableview
 {
-    NSLog(@"loadposts, topic:%@, hideReadPosts:%d",topic, hideReadPosts);
+    NSLog(@"loadposts, category:%@, hideReadPosts:%d",category, hideReadPosts);
     bool ret = NO;
     const char *dbpath = [dbPath UTF8String];
     sqlite3_stmt *statement;
     NSString *querySQL;
-    if ([topic isEqualToString:FAVORITE_QUESTIONS]) {
-      querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10", topic];
+    if ([category isEqualToString:FAVORITE_QUESTIONS]) {
+      querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10", category];
     }
     else {
       if (hideReadPosts == true) {
-        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN  FROM POSTS WHERE CATEGORY =\"%@\" and READCOUNT=0 ORDER BY ID DESC LIMIT 10", topic];
+        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN  FROM POSTS WHERE CATEGORY =\"%@\" and READCOUNT=0 ORDER BY ID DESC LIMIT 10", category];
       }
       else {
-        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE CATEGORY =\"%@\" ORDER BY ID DESC LIMIT 10", topic];
+        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE CATEGORY =\"%@\" ORDER BY ID DESC LIMIT 10", category];
       }
     }
     //NSLog(@"sql: %@", querySQL);
@@ -233,16 +233,16 @@ NSLock *lock;
 + (bool)addPostReadCount: (sqlite3 *)postsDB
                   dbPath:(NSString *) dbPath
                   postId:(NSString *)postId
-                   topic:(NSString *)topic
+                   category:(NSString *)category
 {
     bool ret;
     const char *dbpath = [dbPath UTF8String];
-    NSLog(@"addPostReadCount. id:%@, topic:%@", postId, topic);
+    NSLog(@"addPostReadCount. id:%@, category:%@", postId, category);
     sqlite3_stmt *statement = NULL;
     NSString *updateSql = [NSString
                            stringWithFormat:
                            @"UPDATE POSTS SET readcount=readcount+1 WHERE postid=\"%@\" and category=\"%@\"",
-                           postId, topic];
+                           postId, category];
     const char *sql_stmt = [updateSql UTF8String];
     
     [lock lock];
@@ -272,16 +272,16 @@ NSLock *lock;
                   postId:(NSString *)postId
                   boolValue:(BOOL)boolValue
                   fieldName:(NSString*)fieldName
-                   topic:(NSString *)topic
+                   category:(NSString *)category
 {
     bool ret;
     const char *dbpath = [dbPath UTF8String];
-    NSLog(@"updatePostBoolField. id:%@, topic:%@", postId, topic);
+    NSLog(@"updatePostBoolField. id:%@, category:%@", postId, category);
     sqlite3_stmt *statement = NULL;
     NSString *updateSql = [NSString
                            stringWithFormat:
                            @"UPDATE POSTS SET %@=%d WHERE postid=\"%@\" and category=\"%@\"",
-                            fieldName, boolValue, postId, topic];
+                            fieldName, boolValue, postId, category];
     const char *sql_stmt = [updateSql UTF8String];
     
     [lock lock];

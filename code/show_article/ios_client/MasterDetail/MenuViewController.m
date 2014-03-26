@@ -29,7 +29,7 @@
             MasterViewController* dstViewController = segue.destinationViewController;
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
-            [dstViewController init_data:userid topic_t:c.textLabel.text]; // TODO
+            [dstViewController init_data:userid category_t:c.textLabel.text]; // TODO
             [dstViewController view];
         }
         else { // disable actions
@@ -80,21 +80,21 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     _objects = [[NSMutableArray alloc] init];
-    [self load_topic_list];
+    [self load_category_list];
 }
 
-- (void)load_topic_list
+- (void)load_category_list
 {
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-  NSString* topicList = [userDefaults stringForKey:@"TopicList"];
-  NSLog(@"load_topic_list:%@", topicList);
-  NSString* topic;
-  NSArray *stringArray = [topicList componentsSeparatedByString: @","];
+  NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
+  NSLog(@"load_category_list:%@", categoryList);
+  NSString* category;
+  NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
   for (int i=0; i < [stringArray count]; i++)
   {
-      topic = stringArray[i];
-      topic = [topic stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-      [_objects addObject:topic];
+      category = stringArray[i];
+      category = [category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+      [_objects addObject:category];
   }
 }
 
@@ -177,7 +177,7 @@
             cell.textLabel.text = FAVORITE_QUESTIONS;
         }
         if (indexPath.row == 1) {
-            cell.textLabel.text = MORE_TOPICS;
+            cell.textLabel.text = MORE_CATEGORY;
             cell.textLabel.enabled = false;
         }
         if (indexPath.row == 2) {

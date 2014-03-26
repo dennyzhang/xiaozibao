@@ -45,8 +45,8 @@
      [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
      [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
          NSString *response_str = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-         NSLog(@"Response of list_topic: %@", response_str);
-         [userDefaults setObject:response_str forKey:@"TopicList"];
+         NSLog(@"Response of list_category: %@", response_str);
+         [userDefaults setObject:response_str forKey:@"CategoryList"];
          [userDefaults synchronize];
        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          NSLog(@"Error: %@", error);
