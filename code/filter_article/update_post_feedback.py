@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-03-25 22:39:17>
+## Updated: Time-stamp: <2014-03-25 23:01:00>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -54,7 +54,7 @@ def parse_feedback_logfile(logfile):
             metadata_dict = {}
             for field in row.split(FIELD_SEPARATOR):
                 field = field.strip(' \n')
-                print field
+                #print field
                 key, value = field.split('=')
                 metadata_dict[key] = value
                 
@@ -63,6 +63,10 @@ def parse_feedback_logfile(logfile):
 def get_post_metdata_dict(postid, category):
     metadata_dict = {}
     fname = get_post_filename_byid(postid, category)
+    if fname == "":
+        print "Warning: fail to find related file for postid(%s)" % (postid)
+        return None
+
     with open(fname,'r') as f:
         for row in f:
             if row.find(META_LEADING_STRING) == 0:
@@ -75,7 +79,7 @@ def get_post_metdata_dict(postid, category):
                     metadata_dict[key.strip(' ')] = value.strip(' \n')
                 break
 
-    print metadata_dict
+    #print metadata_dict
     return metadata_dict
 
 def update_post_metadata_file(postid, category, fname, metadata_dict):
@@ -91,7 +95,7 @@ def update_post_metadata_file(postid, category, fname, metadata_dict):
         meta_str = meta_str[1:]
     meta_str = "%s %s\n" % (META_LEADING_STRING, meta_str)
 
-    print metadata_dict
+    #print metadata_dict
 
     # in place change to the file
     find_meta = False
@@ -135,10 +139,12 @@ def update_post_metadata_db(postid, category, metadata_dict):
 
 def update_feedback_by_logfile(clean_first, logfile):
     for dict_log in parse_feedback_logfile(logfile):
-        print dict_log
+        #print dict_log
         postid = dict_log["postid"]
         category = dict_log["category"]
         dict_file = get_post_metdata_dict(postid, category)
+        if dict_file is None:
+            continue
         dict_new = caculate_meta(dict_file, dict_log)
         # write back result to file and db
         fname = get_post_filename_byid(postid, category)
