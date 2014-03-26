@@ -39,4 +39,19 @@
     [btn addSubview:scoreTextView];
 }
 
++ (void)updateScoreText:(NSString*) category
+                    btn:(UIButton*) btn
+                    tag:(NSInteger) tag
+{
+  NSInteger score = [UserProfile scoreByCategory:category];
+  NSString* scoreStr;
+  // TODO better way, instead of workaround for the layout
+  if (score < 10)
+    scoreStr = [NSString stringWithFormat: @"%d  ", (int)score];
+  else
+    scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
+  UITextView *textView = (UITextView *)[btn viewWithTag:tag];
+  textView.text = scoreStr;
+}
+
 @end

@@ -20,6 +20,8 @@
 
 @interface MasterViewController : UITableViewController
 
+#define TAG_BUTTON_COIN 4001
+
 @property (retain, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, retain) CLLocationManager *locationManager;
 
@@ -27,6 +29,7 @@
 @property (nonatomic, retain) NSString* username;
 @property (atomic, retain) NSNumber* bottom_num;
 @property (atomic, retain) NSNumber* page_count;
+@property (retain, nonatomic) IBOutlet UIButton *coinButton;
 
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 

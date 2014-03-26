@@ -55,6 +55,14 @@
       [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"CategoryList"];
     }
 
+    if (self.category == nil) {
+        NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
+        NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
+        NSString* default_category = stringArray[0];
+        self.category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [self init_data:@"denny" category_t:self.category];
+    }
+
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
     NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
     CFRelease(uuidRef);
@@ -67,16 +75,22 @@
                                       target:self.revealViewController
                                       action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = settingButton;
-    
-    if (self.category == nil) {
-        NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
-        NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-        NSString* default_category = stringArray[0];
-        default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [self init_data:@"denny" category_t:default_category];
-    }
-    
+
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_COIN;
+    [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+    self.coinButton = btn;
+    NSInteger score = [UserProfile scoreByCategory:self.category];
+    NSLog(@"score:%d", score);
+    [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
+    UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
+
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+
 }
 
 - (void)init_data:(NSString*)username_t
@@ -312,21 +326,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)settingArticle:(id)sender
+-(IBAction) barButtonEvent:(id)sender
 {
-    /*
-     NSBundle *bundle = [NSBundle mainBundle];
-     NSString *plistPath = [bundle pathForResource:@"statedictionary" ofType:@"plist"];
-     
-     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
-     
-     CLLocationManager *locationManager = [[CLLocationManager alloc] init];
-     locationManager.delegate = self;
-     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-     
-     [locationManager startUpdatingLocation];
-     NSLog(@"%1f", locationManager.location.coordinate.longitude);
-     */
+    UIButton* btn = sender;
+    if (btn.tag == TAG_BUTTON_COIN) {
+        ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
+    
+        self.navigationController.navigationBarHidden = NO;
+        reviewViewController.category = self.category;
+        [self.navigationController pushViewController:reviewViewController animated:YES];
+    }
 }
 
 #pragma mark - Table View
@@ -613,13 +622,6 @@
       NSLog(@"increate visit count, for category:%@. previous key:%d", self.category,
                     [UserProfile integerForKey:self.category key:POST_VISIT_KEY]);
         Posts *post = _objects[indexPath.row];      
-        
-        // Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        
-        // [mixpanel track:@"Article Open" properties:@{
-        //     @"DeviceId":uuidString,
-        //       @"Postid": post.postid
-        //       }];
         
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [self markCellAsRead:cell post:post];

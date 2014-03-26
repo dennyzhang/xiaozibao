@@ -199,7 +199,7 @@
         }
 
     }
-    [self updateScoreText];    
+    [ComponentUtil updateScoreText:self.detailItem.category btn:self.coinButton tag:TAG_SCORE_TEXT];
 }
 
 - (void) feedbackPost:(NSString*) userid
@@ -437,18 +437,5 @@
     NSString* ret = [url substringToIndex:max_len];
     ret = [ret stringByAppendingString:@"..." ];
     return ret;
-}
-
-- (void)updateScoreText
-{
-  NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
-  NSString* scoreStr;
-  // TODO better way, instead of workaround for the layout
-  if (score < 10)
-    scoreStr = [NSString stringWithFormat: @"%d  ", (int)score];
-  else
-    scoreStr = [NSString stringWithFormat: @"%d ", (int)score];
-  UITextView *textView = (UITextView *)[self.coinButton viewWithTag:TAG_SCORE_TEXT];
-  textView.text = scoreStr;
 }
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "UserProfile.h"
 #import "constants.h"
 
 @interface ComponentUtil : NSObject
@@ -17,4 +18,7 @@
                chHeight:(NSInteger)chHeight
                  tag:(NSInteger)tag;
 
++ (void)updateScoreText:(NSString*) category
+                    btn:(UIButton*) btn
+                    tag:(NSInteger) tag;
 @end
