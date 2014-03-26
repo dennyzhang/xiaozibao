@@ -5,10 +5,11 @@
 ## Description :
 ## --
 ## Created : <2014-03-17>
-## Updated: Time-stamp: <2014-03-17 01:24:10>
+## Updated: Time-stamp: <2014-03-25 16:02:26>
 ##-------------------------------------------------------------------
 echo "clean old feedback first"
-python -c "import update_post_feedback; update_post_feedback.clean_old_feedback_first()"
+# TODO
+# python -c "import update_post_feedback; update_post_feedback.clean_old_feedback_first()"
 for file in `ls $XZB_HOME/feedback/*xzb_feedback.log*`
 do
     echo "./update_post_feedback.py $file"

@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-23 15:41:19>
+## Updated: Time-stamp: <2014-03-25 14:56:29>
 ##-------------------------------------------------------------------
 ################## global variable   #####################
 import os
@@ -28,5 +28,6 @@ MAX_LENGTH=10000
 
 SORT_METHOD_HOTEST="hotest"
 SORT_METHOD_LATEST="latest"
+FIELD_SEPARATOR="&$!"
 ##########################################################
 ## File : config.py

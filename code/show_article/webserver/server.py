@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-24 22:58:55>
+## Updated: Time-stamp: <2014-03-25 22:34:26>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -19,6 +19,7 @@ from util import log, fb_log
 from util import POST
 # from util import get_id_by_title
 from util import smarty_remove_extra_comma, wash_content
+import time
 
 import config
 import data
@@ -67,7 +68,7 @@ def get_post():
 #     resp.headers['Content-type'] = 'application/json; charset=utf-8'
 #     return resp
 
-## http://127.0.0.1:9180/api_list_posts_in_topic?topic=idea_startup&start_num=0&count=10
+## http://127.0.0.1:9180/api_list_posts_in_topic?topic=concept&start_num=0&count=10
 @app.route("/api_list_posts_in_topic", methods=['GET'])
 def list_posts_in_topic():
     # TODO defensive code
@@ -141,9 +142,12 @@ def insert_post():
     return "TODO be implemented"
 
 def handle_feedback(uid, category, postid, comment):
+    seconds = int(round(time.time()))
     dir_name = "%s/%s" % (config.DATA_BASEDIR, category)
-    fb_log.info("%s %s %s" %(postid, category, comment))
-
+    field_list = ["postid="+postid, "category="+category,
+                  "seconds="+str(seconds), "uid="+uid, 
+                  "comment="+comment]
+    fb_log.info(config.FIELD_SEPARATOR.join(field_list))
 ################################################################
 
 if __name__ == "__main__":
