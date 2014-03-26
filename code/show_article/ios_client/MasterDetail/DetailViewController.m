@@ -109,7 +109,7 @@
 -(IBAction) barButtonEvent:(id)sender
 {
     UIButton* btn = sender;
-    if (btn.tag == TAG_BUTTON_COIN) {
+    if (btn.tag == TAG_BUTTON_COIN_DETAILVIEW) {
         ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
     
         self.navigationController.navigationBarHidden = NO;
@@ -300,7 +300,7 @@
     else {
         [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
     }
-    UIBarButtonItem *voteUpButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    UIBarButtonItem *voteUpBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
@@ -312,7 +312,7 @@
     else {
         [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
     }
-    UIBarButtonItem *voteDownButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    UIBarButtonItem *voteDownBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
@@ -324,33 +324,33 @@
     else {
         [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
     }
-    UIBarButtonItem *saveFavoriteButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_MORE;
-    [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_COMMENT;
-    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
+    UIBarButtonItem *saveFavoriteBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+//    
+//    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+//    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+//    btn.tag = TAG_BUTTON_MORE;
+//    [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
+//    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+//    
+//    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btn setFrame:CGRectMake(0.0f, 0.0f, 22.0f, 33.0f)];
+//    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+//    btn.tag = TAG_BUTTON_COMMENT;
+//    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
+//    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+//    
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_COIN;
+    btn.tag = TAG_BUTTON_COIN_DETAILVIEW;
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
     self.coinButton = btn;
     NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
     [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
-    UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    UIBarButtonItem* coinBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, saveFavoriteButton, voteDownButton, voteUpButton, nil];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteDownBarButton, voteUpBarButton, nil];
 }
 
 - (void)addPostHeaderCompoents
@@ -382,7 +382,7 @@
     
     self.detailUITextView.scrollEnabled = YES;
     self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    self.detailUITextView.delegate = self;
+    //self.detailUITextView.delegate = self;
 }
 
 - (void)refreshComponentsLayout

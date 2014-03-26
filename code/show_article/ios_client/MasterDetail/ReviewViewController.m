@@ -62,7 +62,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // return cell
-    static NSString *CellIdentifier = @"Cell";
+    //static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     cell.textLabel.text = @"question title";
     cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;

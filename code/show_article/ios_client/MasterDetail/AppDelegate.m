@@ -26,10 +26,10 @@
    // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
    //Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [Posts getCategoryList:[NSUserDefaults standardUserDefaults]];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    NSLog(basePath);
+//    
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+//    NSLog(basePath);
 
     self.window.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 

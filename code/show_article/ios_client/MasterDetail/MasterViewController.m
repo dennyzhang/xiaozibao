@@ -423,8 +423,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-
-    [cell setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
+    cell.textLabel.font = [UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL];
     if ([self.category isEqualToString:APP_SETTING]) {
         [self appSettingRows:cell indexPath:indexPath];
         return cell;
@@ -462,10 +461,11 @@
         [[cell contentView] addSubview:textView];
         
         NSString *text = post.title;
-        CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
-        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        //CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
+        //CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
         [textView setText:text];
-        [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), MAX(size.height, 44.0f))];
+        //[textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), MAX(size.height, 44.0f))];
+        [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), 44.0f)];
         
         [self markCellAsRead:cell post:post];
         

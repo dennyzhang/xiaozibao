@@ -173,7 +173,7 @@ NSLock *lock;
     sqlite3_stmt *statement;
     NSString *querySQL;
     if ([category isEqualToString:FAVORITE_QUESTIONS]) {
-      querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10", category];
+      querySQL = @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10";
     }
     else {
       if (hideReadPosts == true) {
