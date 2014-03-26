@@ -466,13 +466,22 @@
         textView.scrollEnabled = NO;
         textView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:textView];
-        
-        NSString *text = post.title;
-        //CGSize constraint = CGSizeMake(320 - (10 * 2), 99999.0f);
-        //CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_NORMAL] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-        [textView setText:text];
-        //[textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), MAX(size.height, 44.0f))];
+        [textView setText:post.title];
         [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), 44.0f)];
+
+        UITextView *metadataTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+        [metadataTextView setTextColor:[UIColor blackColor]];
+        [metadataTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY]];
+        [metadataTextView setBackgroundColor:[UIColor clearColor]];
+        [metadataTextView setTag:TAG_METADATA_IN_CELL];
+        [metadataTextView setEditable:NO];
+        metadataTextView.selectable = NO;
+        metadataTextView.scrollEnabled = NO;
+        metadataTextView.userInteractionEnabled = NO;
+        [[cell contentView] addSubview:metadataTextView];
+        [metadataTextView setText:post.metadata];
+        
+        [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - 40, 200, 20)];
         
         [self markCellAsRead:cell post:post];
         

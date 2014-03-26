@@ -39,6 +39,7 @@
      navigationTitle:(NSString*)navigationTitle;
 
 #define TAG_TEXTVIEW_IN_CELL 1001
+#define TAG_METADATA_IN_CELL 1005
 #define TAG_ICON_IN_CELL 1002
 #define TAG_SWITCH_HIDE_READ_POST 1003
 #define TAG_SWITCH_EDITOR_MODE 1004
