@@ -103,10 +103,10 @@
                                    [UserProfile integerForKey:self.category key:POST_VOTEDOWN_KEY] +
                                    [UserProfile integerForKey:self.category key:POST_FAVORITE_KEY]];
 
-    NSString* str_ranklist = @"Top active experts of this skill is XXX, XXX, ...";
+    //NSString* str_ranklist = @"Top active experts of this skill is XXX, XXX, ...";
 
-    self.summaryTextView.text =  [[NSString alloc] initWithFormat:@"%@\n\n%@\n\n%@",
-                                    str_category, str_stastics, str_ranklist];
+    self.summaryTextView.text =  [[NSString alloc] initWithFormat:@"%@\n\n%@",
+                                    str_category, str_stastics];
     [self.summaryTextView setUserInteractionEnabled:NO];
     self.summaryTextView.backgroundColor = [UIColor clearColor];
     [self.summaryTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_SMALL]];

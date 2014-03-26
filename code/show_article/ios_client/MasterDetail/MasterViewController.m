@@ -36,10 +36,10 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-
+    
     [self.tableView setRowHeight:ROW_HEIGHT];
     UINavigationBar* appearance = self.navigationController.navigationBar;
-
+    
     appearance.tintColor = [UIColor whiteColor];
     [appearance setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -52,9 +52,9 @@
     
     userDefaults = [NSUserDefaults standardUserDefaults];
     if (![userDefaults stringForKey:@"CategoryList"]) {
-      [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"CategoryList"];
+        [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"CategoryList"];
     }
-
+    
     if (self.category == nil) {
         NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
         NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
@@ -62,8 +62,7 @@
         NSString* category_t = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         [self init_data:@"denny" category_t:category_t navigationTitle:category_t];
     }
-    else {
-      if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:FAVORITE_QUESTIONS])) {
+    if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:FAVORITE_QUESTIONS])) {
         UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
         [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -74,31 +73,30 @@
         NSLog(@"score:%d", score);
         [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
         UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-
+        
         self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
-      }
     }
-
+    
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
     NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
     CFRelease(uuidRef);
     if (![userDefaults stringForKey:@"Userid"]) {
-      [userDefaults setObject:uuidString forKey:@"Userid"];
+        [userDefaults setObject:uuidString forKey:@"Userid"];
     }
-
+    
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                       target:self.revealViewController
                                       action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = settingButton;
-
+    
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-
+    
 }
 
 - (void)init_data:(NSString*)username_t
-          category_t:(NSString*)category_t
-     navigationTitle:(NSString*)navigationTitle
+       category_t:(NSString*)category_t
+  navigationTitle:(NSString*)navigationTitle
 {
     self.category=category_t;
     NSLog(@"navigationTitle: %@", navigationTitle);
@@ -155,7 +153,7 @@
 }
 
 - (void)fetchArticleList:(NSString*) userid
-                 category_t:(NSString*)category_t
+              category_t:(NSString*)category_t
                start_num:(NSNumber*)start_num
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
@@ -168,18 +166,18 @@
     NSString *sortMethod;
     NSString *urlStr;
     if ([userDefaults integerForKey:@"IsEditorMode"] == 0) {
-      sortMethod = @"hotest";
-      // If anyone votedown, it's not shown
-      urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
-                        urlPrefix, userid, category_t, [start_num intValue], [count intValue], sortMethod];
+        sortMethod = @"hotest";
+        // If anyone votedown, it's not shown
+        urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
+                 urlPrefix, userid, category_t, [start_num intValue], [count intValue], sortMethod];
     }
     else {
-      sortMethod = @"latest";
-      urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
-                        urlPrefix, userid, category_t, [start_num intValue], [count intValue], sortMethod];
-
+        sortMethod = @"latest";
+        urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
+                 urlPrefix, userid, category_t, [start_num intValue], [count intValue], sortMethod];
+        
     }
-
+    
     NSLog(@"fetchArticleList, url:%@", urlStr);
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -338,7 +336,7 @@
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {
         ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
-    
+        
         self.navigationController.navigationBarHidden = NO;
         reviewViewController.category = self.category;
         [self.navigationController pushViewController:reviewViewController animated:YES];
@@ -469,7 +467,7 @@
         [[cell contentView] addSubview:textView];
         [textView setText:post.title];
         [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), 44.0f)];
-
+        
         UITextView *metadataTextView = [[UITextView alloc] initWithFrame:CGRectZero];
         [metadataTextView setTextColor:[UIColor blackColor]];
         [metadataTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY]];
@@ -511,14 +509,14 @@
     else {
         [self openSqlite];
         NSLog(@"clean cache");
-
+        
         [PostsSqlite cleanCache:postsDB dbPath:databasePath];
         if ([userDefaults integerForKey:@"IsEditorMode"] == 1) {
-          NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
-          NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-          for (int i=0; i < [stringArray count]; i++)
+            NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
+            NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
+            for (int i=0; i < [stringArray count]; i++)
             {
-              [UserProfile cleanCategoryKey:stringArray[i]];
+                [UserProfile cleanCategoryKey:stringArray[i]];
             }
         }
     }
@@ -636,9 +634,9 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-      NSLog(@"increate visit count, for category:%@. previous key:%d", self.category,
-                    [UserProfile integerForKey:self.category key:POST_VISIT_KEY]);
-        Posts *post = _objects[indexPath.row];      
+        NSLog(@"increate visit count, for category:%@. previous key:%d", self.category,
+              [UserProfile integerForKey:self.category key:POST_VISIT_KEY]);
+        Posts *post = _objects[indexPath.row];
         
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [self markCellAsRead:cell post:post];
