@@ -60,23 +60,25 @@
         NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
         NSString* default_category = stringArray[0];
         NSString* category_t = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [self init_data:@"denny" category_t:category_t];
+        [self init_data:@"denny" category_t:category_t navigationTitle:category_t];
     }
     else {
-      UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-      [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
-      [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-      btn.tag = TAG_BUTTON_COIN;
-      [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
-      self.coinButton = btn;
-      NSInteger score = [UserProfile scoreByCategory:self.category];
-      NSLog(@"score:%d", score);
-      [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
-      UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+      if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:FAVORITE_QUESTIONS])) {
+        UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
+        [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = TAG_BUTTON_COIN;
+        [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+        self.coinButton = btn;
+        NSInteger score = [UserProfile scoreByCategory:self.category];
+        NSLog(@"score:%d", score);
+        [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
+        UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 
-      self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
-
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
+      }
     }
+
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
     NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
     CFRelease(uuidRef);
@@ -96,9 +98,11 @@
 
 - (void)init_data:(NSString*)username_t
           category_t:(NSString*)category_t
+     navigationTitle:(NSString*)navigationTitle
 {
     self.category=category_t;
-    self.navigationItem.title = self.category;
+    NSLog(@"navigationTitle: %@", navigationTitle);
+    self.navigationItem.title = navigationTitle;
     
     if ([category_t isEqualToString:MORE_CATEGORY]) {
         return;
@@ -156,7 +160,7 @@
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
 {
-    if ([self.category isEqualToString:FAVORITE_QUESTIONS])
+    if ([self.navigationItem.title isEqualToString:FAVORITE_QUESTIONS])
         return;
     
     NSString *urlPrefix=SERVERURL;
@@ -343,7 +347,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([self.category isEqualToString:APP_SETTING]) {
+    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         return 2;
     }
     
@@ -351,7 +355,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if ([self.category isEqualToString:APP_SETTING]) {
+    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         return @" ";
     }
     else
@@ -360,7 +364,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([self.category isEqualToString:APP_SETTING]) {
+    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         if (section == 0) {
             return 3;
         }
@@ -425,7 +429,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     cell.textLabel.font = [UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL];
-    if ([self.category isEqualToString:APP_SETTING]) {
+    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         [self appSettingRows:cell indexPath:indexPath];
         return cell;
     }
@@ -477,7 +481,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.category isEqualToString:APP_SETTING]) {
+    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
     // NSString *text = @"some testxt";
@@ -511,7 +515,7 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if ([self.category isEqualToString:APP_SETTING]){
+    if ([self.navigationItem.title isEqualToString:APP_SETTING]){
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite questions?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
             
@@ -584,13 +588,13 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if ([self.category isEqualToString:APP_SETTING])
+    if ([self.navigationItem.title isEqualToString:APP_SETTING])
         return 30;
     return 0;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([self.category isEqualToString:APP_SETTING])
+    if ([self.navigationItem.title isEqualToString:APP_SETTING])
         return;
     
     // when reach the top

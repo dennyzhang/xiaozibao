@@ -4,6 +4,7 @@
 #define MORE_CATEGORY @"Manage Subscription"
 #define APP_SETTING @"App Setting"
 #define FAVORITE_QUESTIONS @"Favorite Questions"
+#define NONE_QUESTION_CATEGORY @"NONE_QUESTION_CATEGORY"
 
 #define FONT_BIG 22
 #define FONT_NORMAL 17

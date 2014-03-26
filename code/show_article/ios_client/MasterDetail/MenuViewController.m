@@ -29,12 +29,13 @@
             MasterViewController* dstViewController = segue.destinationViewController;
 
             NSIndexPath *path = [self.tableView indexPathForCell:c];
-            NSString* category = nil;
-            if (path.section == 0)
+            NSString* category = NONE_QUESTION_CATEGORY;
+            if (path.section == 0 || [c.textLabel.text isEqualToString:FAVORITE_QUESTIONS])
                 category = c.textLabel.text;
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
-            [dstViewController init_data:userid category_t:category];
+            [dstViewController init_data:userid category_t:category navigationTitle:c.textLabel.text];
+            NSLog(@"MenuViewController navigationTitle:%@", c.textLabel.text);
             [dstViewController view];
         }
         else { // disable actions

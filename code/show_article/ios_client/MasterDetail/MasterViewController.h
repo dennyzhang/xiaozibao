@@ -33,8 +33,9 @@
 
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 
-- (void) init_data:(NSString*)username_t
-           category_t:(NSString*)category_t;
+- (void)init_data:(NSString*)username_t
+          category_t:(NSString*)category_t
+     navigationTitle:(NSString*)navigationTitle;
 
 #define TAG_TEXTVIEW_IN_CELL 1001
 #define TAG_ICON_IN_CELL 1002
