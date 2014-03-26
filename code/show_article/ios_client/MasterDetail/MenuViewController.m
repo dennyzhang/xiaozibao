@@ -28,8 +28,13 @@
         if (c.textLabel.isEnabled == true) {
             MasterViewController* dstViewController = segue.destinationViewController;
 
+            NSIndexPath *path = [self.tableView indexPathForCell:c];
+            NSString* category = nil;
+            if (path.section == 0)
+                category = c.textLabel.text;
+
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
-            [dstViewController init_data:userid category_t:c.textLabel.text]; // TODO
+            [dstViewController init_data:userid category_t:category];
             [dstViewController view];
         }
         else { // disable actions

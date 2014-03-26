@@ -59,10 +59,24 @@
         NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
         NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
         NSString* default_category = stringArray[0];
-        self.category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [self init_data:@"denny" category_t:self.category];
+        NSString* category_t = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [self init_data:@"denny" category_t:category_t];
     }
+    else {
+      UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+      [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
+      [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+      btn.tag = TAG_BUTTON_COIN;
+      [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+      self.coinButton = btn;
+      NSInteger score = [UserProfile scoreByCategory:self.category];
+      NSLog(@"score:%d", score);
+      [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
+      UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 
+      self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
+
+    }
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
     NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
     CFRelease(uuidRef);
@@ -75,19 +89,6 @@
                                       target:self.revealViewController
                                       action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = settingButton;
-
-    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_COIN;
-    [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
-    self.coinButton = btn;
-    NSInteger score = [UserProfile scoreByCategory:self.category];
-    NSLog(@"score:%d", score);
-    [ComponentUtil addScoreToButton:btn score:score fontSize:FONT_TINY chWidth:9 chHeight:25 tag:TAG_SCORE_TEXT];
-    UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
 
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 
