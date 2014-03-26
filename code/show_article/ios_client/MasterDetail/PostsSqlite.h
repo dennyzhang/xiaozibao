@@ -33,7 +33,7 @@
            title:(NSString *)title
            source:(NSString *)source
          content:(NSString *)content
-        metadata:(NSString*)metdata;
+        metadata:(NSString*)metadata;
 
 + (bool)cleanCache: (sqlite3 *)postsDB
             dbPath:(NSString *)dbPath;

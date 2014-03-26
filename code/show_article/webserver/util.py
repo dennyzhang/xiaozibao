@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-25 14:53:00>
+## Updated: Time-stamp: <2014-03-26 11:43:37>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -111,7 +111,7 @@ def fill_post_meta(post):
             post.title = metadata_dict["title"]
         post.source = metadata_dict["source"]
         post.summary = metadata_dict["summary"]
-        post.meta = metadata_dict["meta"]
+        post.metadata = metadata_dict["meta"]
     except IOError:
         print "Fail to get filename for post. category:%s, title:%s" % (post.category, post.title)
         return False
@@ -124,7 +124,7 @@ class POST:
         self.title = title.encode('utf-8')
         self.summary = ""
         self.source = ""
-        self.meta = ""
+        self.metadata = ""
         self.content = ""
 
 
