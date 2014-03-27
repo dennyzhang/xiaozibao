@@ -115,9 +115,7 @@
 - (void)addCompoents
 {
      // add summaryTextView
-    summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0,
-                                                                   self.view.frame.size.width,
-                                                                   self.view.frame.size.height - UITABLE_HEIGHT)];
+    summaryTextView = [[UITextView alloc] initWithFrame:CGRectZero];
 
     [self.summaryTextView setUserInteractionEnabled:NO];
     self.summaryTextView.backgroundColor = [UIColor clearColor];
@@ -125,8 +123,8 @@
     [self.view addSubview:summaryTextView];
 
      // create summaryTextView's subview components
-    float imageWidth = 80.0f;
-    float imageHeight = 80.0f;
+    float imageWidth = 75.0f;
+    float imageHeight = 75.0f;
     float verticalDistance = 35.0f;
     float horizonDistance = 30.0f;
     UIImageView *figureImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"figure.png"]]; // TODO
@@ -158,12 +156,20 @@
     x = x + imageWidth + horizonDistance;
     [clockImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
 
-    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 50, 10.0f, 50.0f, 50.0f)];
-
+    float summaryTextViewHeight = y + imageHeight;
+    
+    summaryTextViewHeight += imageHeight; // TODO, workaround here
+    
+    [summaryTextView setFrame:CGRectMake(0, 0,
+                                         self.view.frame.size.width,
+                                          summaryTextViewHeight)];
+    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 70, 10.0f, 50.0f, 50.0f)];
+    
+    float uitable_height = self.view.frame.size.height - summaryTextView.frame.size.height;
     // Add tableview for questions from history
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - UITABLE_HEIGHT,
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - uitable_height,
                                                                      self.view.frame.size.width,
-                                                                     UITABLE_HEIGHT)];
+                                                                     uitable_height)];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

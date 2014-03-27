@@ -23,5 +23,4 @@
 #define TAG_BUTTON_SHARE 3001
 #define TAG_SCORE_TEXT 3002
 
-#define UITABLE_HEIGHT 300
 @end
