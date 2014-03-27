@@ -14,6 +14,8 @@
 
 #define FONT_NAME1 @"ArialMT"
 
+#define FONT_NAME_TITLE @"helvetica"
+
 #define ICON_WIDTH 28.0f
 #define ICON_HEIGHT 28.0f
 
