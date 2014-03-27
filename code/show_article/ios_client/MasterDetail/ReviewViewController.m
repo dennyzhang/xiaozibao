@@ -127,15 +127,34 @@
     float imageHeight = 75.0f;
     float verticalDistance = 35.0f;
     float horizonDistance = 30.0f;
+    float textHeight = 35.0f;
     UITextView* titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     UIImageView *figureImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"figure.png"]]; // TODO
+
     UIImageView *clockImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hourglass.png"]];
+    UITextView* clockTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+
     UIImageView *questionsImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"question.png"]];
+    UITextView* questionsTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+
     UIImageView *feedbackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback.png"]];
+    UITextView* feedbackTextView = [[UITextView alloc] initWithFrame:CGRectZero];
 
     titleTextView.backgroundColor = [UIColor clearColor];
     titleTextView.text = [[NSString alloc] initWithFormat:@"Learning Review: %@", self.category];
     [titleTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
+
+    clockTextView.backgroundColor = [UIColor clearColor];
+    clockTextView.text = [[NSString alloc] initWithFormat:@"%d minutes spent", 5]; // TODO
+    [clockTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY2]];
+
+    questionsTextView.backgroundColor = [UIColor clearColor];
+    questionsTextView.text = [[NSString alloc] initWithFormat:@"%d questions learned", 103]; // TODO
+    [questionsTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY2]];
+
+    feedbackTextView.backgroundColor = [UIColor clearColor];
+    feedbackTextView.text = [[NSString alloc] initWithFormat:@"%d feedback contributed", 13]; // TODO
+    [feedbackTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY2]];
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
@@ -149,23 +168,31 @@
     [summaryTextView addSubview:figureImageView];
     [summaryTextView addSubview:titleTextView];
     [summaryTextView addSubview:clockImageView];
+    [summaryTextView addSubview:clockTextView];
     [summaryTextView addSubview:questionsImageView];
+    [summaryTextView addSubview:questionsTextView];
     [summaryTextView addSubview:feedbackImageView];
+    [summaryTextView addSubview:feedbackTextView];
 
     // configure frames of summaryTextView's subview components
     [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 10.0f, 55.0f, 55.0f)];
-    [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, 40.0f)];
+    [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, textHeight)];
 
     [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
     float x=15, y = 20 + ICON_HEIGHT + verticalDistance;
 
     [questionsImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [questionsTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
+
     x = x + imageWidth + horizonDistance;
     [feedbackImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [feedbackTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
+
     x = x + imageWidth + horizonDistance;
     [clockImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [clockTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
 
-    float summaryTextViewHeight = y + imageHeight;
+    float summaryTextViewHeight = y + imageHeight + textHeight;
     
     summaryTextViewHeight += imageHeight; // TODO, workaround here
     
