@@ -232,7 +232,7 @@
     feedbackTextView.attributedText = attString1;
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"coin2.png"] forState:UIControlStateNormal];
     self.coinButton = btn;
 
     [summaryTextView addSubview:btn];
@@ -246,7 +246,7 @@
     [summaryTextView addSubview:feedbackTextView];
 
     // configure frames of summaryTextView's subview components
-    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 50.0f, 55.0f, 55.0f)];
+    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 50.0f, 40.0f, 40.0f)];
     [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, textHeight)];
 
     [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];

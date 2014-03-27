@@ -15,7 +15,6 @@
                chHeight:(NSInteger)chHeight
                  tag:(NSInteger)tag
 {
-
     // TODO better way, instead of workaround for the layout
     if ([text length] == 1)
       text = [NSString stringWithFormat: @"%@ ", text];
