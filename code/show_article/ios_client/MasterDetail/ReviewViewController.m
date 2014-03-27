@@ -114,28 +114,27 @@
 
 - (void)addCompoents
 {
+     // add summaryTextView
     summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0,
                                                                    self.view.frame.size.width,
                                                                    self.view.frame.size.height - UITABLE_HEIGHT)];
-    NSString* str_category = @"Skill Learning Review";
-    NSString* str_stastics = [[NSString alloc] initWithFormat:@"For: %@\n - %d questions learned\n - xx min spent\n - %d feedback contributed",
-                                               self.category,
-                                   [UserProfile integerForKey:self.category key:POST_VISIT_KEY],
-                                   [UserProfile integerForKey:self.category key:POST_VOTEUP_KEY] +
-                                   [UserProfile integerForKey:self.category key:POST_VOTEDOWN_KEY] +
-                                   [UserProfile integerForKey:self.category key:POST_FAVORITE_KEY]];
 
-    //NSString* str_ranklist = @"Top active experts of this skill is XXX, XXX, ...";
-
-    self.summaryTextView.text =  [[NSString alloc] initWithFormat:@"%@\n\n%@",
-                                    str_category, str_stastics];
     [self.summaryTextView setUserInteractionEnabled:NO];
     self.summaryTextView.backgroundColor = [UIColor clearColor];
     [self.summaryTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     [self.view addSubview:summaryTextView];
 
+     // create summaryTextView's subview components
+    float imageWidth = 80.0f;
+    float imageHeight = 80.0f;
+    float verticalDistance = 35.0f;
+    float horizonDistance = 30.0f;
+    UIImageView *figureImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"figure.png"]]; // TODO
+    UIImageView *clockImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hourglass.png"]];
+    UIImageView *questionsImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"question.png"]];
+    UIImageView *feedbackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback.png"]];
+
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 50, 10.0f, 50.0f, 50.0f)];
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
     self.coinButton = btn;
 
@@ -144,6 +143,22 @@
                           fontSize:FONT_TINY chWidth:10 chHeight:30 tag:TAG_SCORE_TEXT];
 
     [summaryTextView addSubview:btn];
+    [summaryTextView addSubview:figureImageView];
+    [summaryTextView addSubview:clockImageView];
+    [summaryTextView addSubview:questionsImageView];
+    [summaryTextView addSubview:feedbackImageView];
+
+    // configure frames of summaryTextView's subview components
+    [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
+    float x=15, y = 10 + ICON_HEIGHT + verticalDistance;
+
+    [questionsImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    x = x + imageWidth + horizonDistance;
+    [feedbackImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    x = x + imageWidth + horizonDistance;
+    [clockImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+
+    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 50, 10.0f, 50.0f, 50.0f)];
 
     // Add tableview for questions from history
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - UITABLE_HEIGHT,
