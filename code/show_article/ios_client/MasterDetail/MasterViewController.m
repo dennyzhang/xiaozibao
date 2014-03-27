@@ -656,7 +656,13 @@
         [self markCellAsRead:cell post:post];
         [PostsSqlite addPostReadCount:postsDB dbPath:dbPath
                                postId:post.postid category:post.category];
-        
+        self.bottom_num = [NSNumber numberWithInt:20];
+        if ([self.category isEqualToString:SAVED_QUESTIONS]) {
+          [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:0]];
+        }
+        else {
+          [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:1]];
+        }
         [[segue destinationViewController] setDetailItem:post];
     }
 }

@@ -37,4 +37,5 @@
 @property (retain, nonatomic) IBOutlet UITextView *titleTextView;
 @property (retain, nonatomic) IBOutlet UITextView *linkTextView;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
+@property (atomic, retain) NSNumber* shouldShowCoin;
 @end

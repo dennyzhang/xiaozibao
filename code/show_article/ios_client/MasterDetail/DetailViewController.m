@@ -21,7 +21,7 @@
 @implementation DetailViewController
 @synthesize detailItem;
 @synthesize detailUITextView, imageView, titleTextView, linkTextView;
-@synthesize coinButton;
+@synthesize coinButton, shouldShowCoin;
 
 - (void)viewDidLoad
 {
@@ -339,19 +339,24 @@
 //    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
 //    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 //    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_COIN_DETAILVIEW;
-    [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
-    self.coinButton = btn;
-    NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
-    [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
-                              fontSize:FONT_TINY2 chWidth:7 chHeight:23 tag:TAG_SCORE_TEXT];
+    if ([self.shouldShowCoin intValue] == 1) {
+      btn = [UIButton buttonWithType:UIButtonTypeCustom];
+      [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+      [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+      btn.tag = TAG_BUTTON_COIN_DETAILVIEW;
+      [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+      self.coinButton = btn;
+      NSInteger score = [UserProfile scoreByCategory:self.detailItem.category];
+      [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+                            fontSize:FONT_TINY2 chWidth:7 chHeight:23 tag:TAG_SCORE_TEXT];
 
-    UIBarButtonItem* coinBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+      UIBarButtonItem* coinBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteDownBarButton, voteUpBarButton, nil];
+      self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteDownBarButton, voteUpBarButton, nil];
+    }
+    else {
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:saveFavoriteBarButton, voteDownBarButton, voteUpBarButton, nil];
+    }
 }
 
 - (void)addPostHeaderCompoents
