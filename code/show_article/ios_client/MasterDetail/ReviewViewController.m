@@ -115,7 +115,7 @@
 - (void)addCompoents
 {
      // add summaryTextView
-    summaryTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
     [self.summaryTextView setUserInteractionEnabled:NO];
     self.summaryTextView.backgroundColor = [UIColor clearColor];
@@ -127,10 +127,15 @@
     float imageHeight = 75.0f;
     float verticalDistance = 35.0f;
     float horizonDistance = 30.0f;
+    UITextView* titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     UIImageView *figureImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"figure.png"]]; // TODO
     UIImageView *clockImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hourglass.png"]];
     UIImageView *questionsImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"question.png"]];
     UIImageView *feedbackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback.png"]];
+
+    titleTextView.backgroundColor = [UIColor clearColor];
+    titleTextView.text = [[NSString alloc] initWithFormat:@"Learning Review: %@", self.category];
+    [titleTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
@@ -142,13 +147,17 @@
 
     [summaryTextView addSubview:btn];
     [summaryTextView addSubview:figureImageView];
+    [summaryTextView addSubview:titleTextView];
     [summaryTextView addSubview:clockImageView];
     [summaryTextView addSubview:questionsImageView];
     [summaryTextView addSubview:feedbackImageView];
 
     // configure frames of summaryTextView's subview components
+    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 10.0f, 55.0f, 55.0f)];
+    [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, 40.0f)];
+
     [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
-    float x=15, y = 10 + ICON_HEIGHT + verticalDistance;
+    float x=15, y = 20 + ICON_HEIGHT + verticalDistance;
 
     [questionsImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
     x = x + imageWidth + horizonDistance;
@@ -163,8 +172,7 @@
     [summaryTextView setFrame:CGRectMake(0, 0,
                                          self.view.frame.size.width,
                                           summaryTextViewHeight)];
-    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 70, 10.0f, 50.0f, 50.0f)];
-    
+
     float uitable_height = self.view.frame.size.height - summaryTextView.frame.size.height;
     // Add tableview for questions from history
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - uitable_height,
