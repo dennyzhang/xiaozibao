@@ -23,6 +23,8 @@
 @property (nonatomic, assign) BOOL isvoteup;
 @property (nonatomic, assign) BOOL isvotedown;
 @property (nonatomic, retain) NSString* metadata;
+@property (nonatomic, retain) NSMutableDictionary *metadataDictionary;
+- (void)set_metadata:(NSString *)metadata_t;
 
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;

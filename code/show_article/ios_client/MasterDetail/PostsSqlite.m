@@ -72,7 +72,7 @@ NSLock *lock;
            dbPath:(NSString *) dbPath
            postId:(NSString *)postId
 {
-    Posts* ret = nil;
+    Posts* post = nil;
     const char *dbpath = [dbPath UTF8String];
     sqlite3_stmt *statement;
     NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE POSTID=\"%@\"", postId];
@@ -84,7 +84,7 @@ NSLock *lock;
         {
             if (sqlite3_step(statement) == SQLITE_ROW)
             {
-                ret = [[Posts alloc] init];
+                post = [[Posts alloc] init];
                 NSString* postid = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
                 NSString* summary = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
                 NSString* category = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
@@ -98,24 +98,24 @@ NSLock *lock;
                 NSNumber *isvotedown = [NSNumber numberWithInt:(int)sqlite3_column_int(statement, 9)];
                 NSString* metadata = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 10)];
 
-                [ret setPostid:postid];
-                [ret setSummary:summary];
-                [ret setCategory:category];
-                [ret setTitle:title];
-                [ret setContent:content];
-                [ret setSource:source];
-                [ret setReadcount:readcount];
-                [ret setIsfavorite:[isfavorite intValue]];
-                [ret setIsvoteup:[isvoteup intValue]];
-                [ret setIsvotedown:[isvotedown intValue]];
-                [ret setMetadata:metadata];
+                [post setPostid:postid];
+                [post setSummary:summary];
+                [post setCategory:category];
+                [post setTitle:title];
+                [post setContent:content];
+                [post setSource:source];
+                [post setReadcount:readcount];
+                [post setIsfavorite:[isfavorite intValue]];
+                [post setIsvoteup:[isvoteup intValue]];
+                [post setIsvotedown:[isvotedown intValue]];
+                [post set_metadata:metadata];
             }
         }
         sqlite3_finalize(statement);
         sqlite3_close(postsDB);
     }
     [lock unlock];
-    return ret;
+    return post;
 }
 
 + (bool)savePost: (sqlite3 *)postsDB
@@ -219,7 +219,7 @@ NSLock *lock;
                 [post setIsfavorite:[isfavorite intValue]];
                 [post setIsvoteup:[isvoteup intValue]];
                 [post setIsvotedown:[isvotedown intValue]];
-                [post setMetadata:metadata];
+                [post set_metadata:metadata];
                 
                 [objects insertObject:post atIndex:0];
                 
@@ -281,7 +281,7 @@ NSLock *lock;
                 [post setIsfavorite:[isfavorite intValue]];
                 [post setIsvoteup:[isvoteup intValue]];
                 [post setIsvotedown:[isvotedown intValue]];
-                [post setMetadata:metadata];
+                [post set_metadata:metadata];
                 
                 [objects insertObject:post atIndex:0];
                 

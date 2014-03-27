@@ -10,7 +10,7 @@
 
 @implementation Posts
 @synthesize postid, title, summary, category, content, source, readcount;
-@synthesize isfavorite, isvoteup, isvotedown, metadata;
+@synthesize isfavorite, isvoteup, isvotedown, metadata, metadataDictionary;
 
 - (id)init
 {
@@ -28,8 +28,33 @@
     isvoteup=NO;
     isvotedown=NO;
     readcount=[NSNumber numberWithInt:0];
+    metadataDictionary = [[NSMutableDictionary alloc] init];
   }
   return self;
+}
+
+- (void)set_metadata:(NSString *)metadata_t
+{
+  self.metadata = metadata_t;
+  self.metadataDictionary = [[NSMutableDictionary alloc] init];
+  NSArray* stringArray = [metadata_t componentsSeparatedByString: @"&"];
+  NSArray* array;
+  NSString* keypair;
+  NSString* key;
+  NSString* value;
+  if (![self.metadata isEqualToString:@""]) {
+    for(int i = 0; i < [stringArray count]; i++) {
+      keypair=[stringArray objectAtIndex:i];
+      array=[keypair componentsSeparatedByString: @"="];
+      if ([array count] != 2) {
+        NSLog(@"Error invalid metadata: %@", metadata);
+      }
+      key = [array objectAtIndex:0];
+      value = [array objectAtIndex:1];
+      [self.metadataDictionary setValue:value forKey:key];
+    }
+  }
+  //NSLog(@"self.metadataDictionary:%@", self.metadataDictionary);
 }
 
 + (void)getCategoryList:(NSUserDefaults *)userDefaults

@@ -314,7 +314,7 @@
     UIBarButtonItem *voteDownBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH - 5, ICON_HEIGHT - 5)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_FAVORITE;
     if (detailItem.isfavorite == YES) {
@@ -351,7 +351,7 @@
 
     UIBarButtonItem* coinBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteUpBarButton, voteDownBarButton, nil];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteDownBarButton, voteUpBarButton, nil];
 }
 
 - (void)addPostHeaderCompoents
