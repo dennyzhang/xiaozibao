@@ -33,6 +33,7 @@
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
+    [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
     self.title = @"";
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
@@ -369,7 +370,7 @@
     self.titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     self.titleTextView.editable = NO;
     self.titleTextView.backgroundColor = [UIColor clearColor];
-    [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
+    [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
     [self.detailUITextView addSubview:self.titleTextView];
     
     self.linkTextView = [[UITextView alloc] initWithFrame:CGRectZero];
