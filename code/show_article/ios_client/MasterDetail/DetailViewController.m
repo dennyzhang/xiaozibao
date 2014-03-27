@@ -412,9 +412,9 @@
     CGFloat height = self.detailUITextView.frame.size.height;
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
     self.titleTextView.frame =  CGRectMake(10, 10, width - 20, 100);
-    self.linkTextView.frame =  CGRectMake(width - 190,
+    self.linkTextView.frame =  CGRectMake(width - 200,
                                           self.imageView.frame.size.height - 40,
-                                          190, 40);
+                                          200, 40);
 }
 
 - (void)browseWebPage:(NSString*)url
