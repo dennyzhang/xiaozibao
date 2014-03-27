@@ -126,7 +126,7 @@
     float imageWidth = 75.0f;
     float imageHeight = 75.0f;
     float verticalDistance = 35.0f;
-    float horizonDistance = 30.0f;
+    float horizonDistance = 28.0f;
     float textHeight = 35.0f;
     UITextView* titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     UIImageView *figureImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"figure.png"]]; // TODO
@@ -140,21 +140,96 @@
     UIImageView *feedbackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback.png"]];
     UITextView* feedbackTextView = [[UITextView alloc] initWithFrame:CGRectZero];
 
+    NSMutableAttributedString *attString1;
+    NSMutableAttributedString *attString2;
+
+    NSString *text1;
+    NSString *text2;
+
     titleTextView.backgroundColor = [UIColor clearColor];
-    titleTextView.text = [[NSString alloc] initWithFormat:@"Learning Review: %@", self.category];
     [titleTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
 
+    // configure attributedString
+    text1 = @"Learning Review: ";
+    text2 = self.category;
+    attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
+    attString2 = [[NSMutableAttributedString alloc] initWithString:text2];
+    
+    [attString1 addAttribute:NSFontAttributeName
+                       value:[UIFont systemFontOfSize:FONT_NORMAL]
+                       range:NSMakeRange (0, [text1 length])];
+    
+    [attString2 addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}
+                range:NSMakeRange (0, [text2 length])];
+    [attString2 addAttribute:NSFontAttributeName
+                       value:[UIFont systemFontOfSize:FONT_BIG]
+                       range:NSMakeRange (0, [text2 length])];
+
+    [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
+    titleTextView.attributedText = attString1;
+    
+    // clock
     clockTextView.backgroundColor = [UIColor clearColor];
-    clockTextView.text = [[NSString alloc] initWithFormat:@"%d minutes spent", 5]; // TODO
-    [clockTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY2]];
+    text1 = [NSString stringWithFormat: @"%d",
+                      [UserProfile integerForKey:self.category key:POST_VISIT_KEY]];
+    text2 = @"minutes spent";
+    attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
+    attString2 = [[NSMutableAttributedString alloc] initWithString:text2];
+    
+    [attString1 addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}
+                range:NSMakeRange (0, [text1 length])];
+    [attString1 addAttribute:NSFontAttributeName
+                       value:[UIFont systemFontOfSize:FONT_NORMAL]
+                       range:NSMakeRange (0, [text1 length])];
+    
+    [attString2 addAttribute:NSFontAttributeName
+                       value:[UIFont systemFontOfSize:FONT_TINY2]
+                       range:NSMakeRange (0, [text2 length])];
+    [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
+    clockTextView.attributedText = attString1;
 
+    // questions
     questionsTextView.backgroundColor = [UIColor clearColor];
-    questionsTextView.text = [[NSString alloc] initWithFormat:@"%d questions learned", 103]; // TODO
-    [questionsTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY2]];
+    text1 = [NSString stringWithFormat: @"%d",
+                      [UserProfile integerForKey:self.category key:POST_VISIT_KEY]];
+    text2 = @"questions learned";
+    attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
+    attString2 = [[NSMutableAttributedString alloc] initWithString:text2];
+    
+    [attString1 addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}
+                range:NSMakeRange (0, [text1 length])];
+    [attString1 addAttribute:NSFontAttributeName
+                       value:[UIFont systemFontOfSize:FONT_NORMAL]
+                       range:NSMakeRange (0, [text1 length])];
+    
+    [attString2 addAttribute:NSFontAttributeName
+                       value:[UIFont systemFontOfSize:FONT_TINY2]
+                       range:NSMakeRange (0, [text2 length])];
+    [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
+    questionsTextView.attributedText = attString1;
 
+    // feedback
     feedbackTextView.backgroundColor = [UIColor clearColor];
-    feedbackTextView.text = [[NSString alloc] initWithFormat:@"%d feedback contributed", 13]; // TODO
-    [feedbackTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY2]];
+    text1 = [NSString stringWithFormat: @"%d",
+                      [UserProfile integerForKey:self.category key:POST_VOTEUP_KEY]
+                     +[UserProfile integerForKey:self.category key:POST_VOTEDOWN_KEY]
+                     +[UserProfile integerForKey:self.category key:POST_FAVORITE_KEY]
+             ];
+    text2 = @"feedback contributed";
+    attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
+    attString2 = [[NSMutableAttributedString alloc] initWithString:text2];
+    
+    [attString1 addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}
+                range:NSMakeRange (0, [text1 length])];
+    [attString1 addAttribute:NSFontAttributeName
+                       value:[UIFont systemFontOfSize:FONT_NORMAL]
+                       range:NSMakeRange (0, [text1 length])];
+    
+    [attString2 addAttribute:NSFontAttributeName
+                       value:[UIFont systemFontOfSize:FONT_TINY2]
+                       range:NSMakeRange (0, [text2 length])];
+    [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
+    feedbackTextView.attributedText = attString1;
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
@@ -175,22 +250,22 @@
     [summaryTextView addSubview:feedbackTextView];
 
     // configure frames of summaryTextView's subview components
-    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 10.0f, 55.0f, 55.0f)];
+    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 50.0f, 55.0f, 55.0f)];
     [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, textHeight)];
 
     [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
-    float x=15, y = 20 + ICON_HEIGHT + verticalDistance;
+    float x=10, y = 50 + ICON_HEIGHT + verticalDistance;
 
+    [clockImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [clockTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
+
+    x = x + imageWidth + horizonDistance - 10; // TODO workaround
     [questionsImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
     [questionsTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
 
     x = x + imageWidth + horizonDistance;
     [feedbackImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
     [feedbackTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
-
-    x = x + imageWidth + horizonDistance;
-    [clockImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
-    [clockTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
 
     float summaryTextViewHeight = y + imageHeight + textHeight;
     
