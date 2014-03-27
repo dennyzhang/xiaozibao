@@ -235,10 +235,6 @@
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
     self.coinButton = btn;
 
-    NSInteger score = [UserProfile scoreByCategory:self.category];
-    [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
-                          fontSize:FONT_TINY chWidth:10 chHeight:30 tag:TAG_SCORE_TEXT];
-
     [summaryTextView addSubview:btn];
     [summaryTextView addSubview:figureImageView];
     [summaryTextView addSubview:titleTextView];
@@ -275,8 +271,13 @@
                                          self.view.frame.size.width,
                                           summaryTextViewHeight)];
 
-    float uitable_height = self.view.frame.size.height - summaryTextView.frame.size.height;
+    // add score to Coin
+    NSInteger score = [UserProfile scoreByCategory:self.category];
+    [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+                          fontSize:FONT_TINY chWidth:10 chHeight:30 tag:TAG_SCORE_TEXT];
+
     // Add tableview for questions from history
+    float uitable_height = self.view.frame.size.height - summaryTextView.frame.size.height;
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - uitable_height,
                                                                      self.view.frame.size.width,
                                                                      uitable_height)];
