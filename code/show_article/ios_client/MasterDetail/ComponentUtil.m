@@ -17,11 +17,10 @@
 {
 
     // TODO better way, instead of workaround for the layout
-  text = @"12";
     if ([text length] == 1)
       text = [NSString stringWithFormat: @"%@ ", text];
     if ([text length] == 2)
-      text = [NSString stringWithFormat: @" %@", text];
+      text = [NSString stringWithFormat: @"  %@", text];
     if ([text length] == 3)
       text = [NSString stringWithFormat: @"%@ ", text];
 

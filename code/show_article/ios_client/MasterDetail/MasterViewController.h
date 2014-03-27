@@ -39,15 +39,17 @@
      navigationTitle:(NSString*)navigationTitle;
 
 #define TAG_TEXTVIEW_IN_CELL 1001
-#define TAG_METADATA_IN_CELL 1005
-#define TAG_ICON_IN_CELL 1002
-#define TAG_SWITCH_HIDE_READ_POST 1003
-#define TAG_SWITCH_EDITOR_MODE 1004
+#define TAG_METADATA_IN_CELL 1002
+#define TAG_ICON_IN_CELL 1003
+#define TAG_VOTEUP_IN_CELL 1004
+#define TAG_SWITCH_HIDE_READ_POST 1005
+#define TAG_SWITCH_EDITOR_MODE 1006
+#define TAG_VOTEUP_TEXT 1007
 
 #define CLEAN_CACHE @"Clean cache"
 #define FOLLOW_TWITTER @"Follow us on Twitter"
 #define FOLLOW_WEIBO @"Follow us on Weibo"
 #define FOLLOW_MAILTO @"Mail to us"
 
-#define ROW_HEIGHT 120.0f
+#define ROW_HEIGHT 140.0f
 @end

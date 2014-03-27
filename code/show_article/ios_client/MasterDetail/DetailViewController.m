@@ -289,10 +289,8 @@
 - (void)addMenuCompoents
 {
     UIButton *btn;
-    int iconWidth = 28.0f;
-    int iconHeight = 28.0f;
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_VOTEUP;
     if (detailItem.isvoteup == YES) {
@@ -304,7 +302,7 @@
     UIBarButtonItem *voteUpBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_VOTEDOWN;
     if (detailItem.isvotedown == YES) {
@@ -316,7 +314,7 @@
     UIBarButtonItem *voteDownBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_FAVORITE;
     if (detailItem.isfavorite == YES) {
@@ -328,21 +326,21 @@
     UIBarButtonItem *saveFavoriteBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 //    
 //    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
+//    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
 //    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    btn.tag = TAG_BUTTON_MORE;
 //    [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
 //    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 //    
 //    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
+//    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
 //    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    btn.tag = TAG_BUTTON_COMMENT;
 //    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
 //    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 //    
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, iconWidth, iconHeight)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_COIN_DETAILVIEW;
     [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];

@@ -64,7 +64,7 @@
     }
     if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
         UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
+        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
         [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = TAG_BUTTON_COIN;
         [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
@@ -479,10 +479,19 @@
         metadataTextView.scrollEnabled = NO;
         metadataTextView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:metadataTextView];
-        [metadataTextView setText:post.metadata];
-        
-        [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - 40, 200, 20)];
-        
+        //[metadataTextView setText:post.metadata];
+        [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - 50, 100, 50)];
+
+        UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+        btn.tag = TAG_VOTEUP_IN_CELL;
+        [btn setImage:[UIImage imageNamed:@"thumbs_up2.png"] forState:UIControlStateNormal];
+        NSString* text = @"92345";
+        [ComponentUtil addTextToButton:btn text:text
+                              fontSize:FONT_TINY2 chWidth:7 chHeight:17 tag:TAG_VOTEUP_TEXT];
+
+        [metadataTextView addSubview:btn];
+
         [self markCellAsRead:cell post:post];
         
         cell.accessoryType = UITableViewCellAccessoryNone;
