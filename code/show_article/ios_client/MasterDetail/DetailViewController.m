@@ -37,7 +37,7 @@
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
     // TODO, when jump to webView, the bottom doesn't look natural
-    self.titleTextView.frame =  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    //self.detailUITextView.frame =  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     
     [self addMenuCompoents];
     [self addPostHeaderCompoents];
@@ -405,7 +405,7 @@
     
     CGFloat width = self.detailUITextView.frame.size.width;
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
-    self.titleTextView.frame =  CGRectMake(20, 20, 280, 80);
+    self.titleTextView.frame =  CGRectMake(20, 20, 280, 100);
     self.linkTextView.frame =  CGRectMake(width - 200, 140, 200, 60);
 }
 

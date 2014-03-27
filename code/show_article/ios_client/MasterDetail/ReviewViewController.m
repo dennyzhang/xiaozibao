@@ -117,8 +117,9 @@
     summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0,
                                                                    self.view.frame.size.width,
                                                                    self.view.frame.size.height - UITABLE_HEIGHT)];
-    NSString* str_category = @"Skill Learning Review For linux";
-    NSString* str_stastics = [[NSString alloc] initWithFormat:@"Questions learned: %d\nTime spent: XX min\nFeedback count: %d times",
+    NSString* str_category = @"Skill Learning Review";
+    NSString* str_stastics = [[NSString alloc] initWithFormat:@"For: %@\n - %d questions learned\n - xx min spent\n - %d feedback contributed",
+                                               self.category,
                                    [UserProfile integerForKey:self.category key:POST_VISIT_KEY],
                                    [UserProfile integerForKey:self.category key:POST_VOTEUP_KEY] +
                                    [UserProfile integerForKey:self.category key:POST_VOTEDOWN_KEY] +
@@ -130,7 +131,7 @@
                                     str_category, str_stastics];
     [self.summaryTextView setUserInteractionEnabled:NO];
     self.summaryTextView.backgroundColor = [UIColor clearColor];
-    [self.summaryTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_SMALL]];
+    [self.summaryTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     [self.view addSubview:summaryTextView];
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -144,6 +145,7 @@
 
     [summaryTextView addSubview:btn];
 
+    // Add tableview for questions from history
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - UITABLE_HEIGHT,
                                                                      self.view.frame.size.width,
                                                                      UITABLE_HEIGHT)];
@@ -157,7 +159,7 @@
 {
     //UINavigationBar* appearance = self.navigationController.navigationBar;
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, 33.0f, 33.0f)];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_SHARE;
     [btn setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
@@ -165,7 +167,6 @@
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton, nil];
-
 }
 
 @end
