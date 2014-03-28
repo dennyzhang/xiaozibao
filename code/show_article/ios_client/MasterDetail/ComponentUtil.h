@@ -13,11 +13,10 @@
 
 @interface ComponentUtil : NSObject
 + (void) addTextToButton:(UIButton*) btn text:(NSString*)text
-                 fontSize:(NSInteger)fontSize
-               chWidth:(NSInteger)chWidth
-               chHeight:(NSInteger)chHeight
-                 tag:(NSInteger)tag;
-
+                 fontSize:(int)fontSize
+               chWidth:(float)chWidth
+               chHeight:(float)chHeight
+                 tag:(int)tag;
 + (void)updateScoreText:(NSString*) category
                     btn:(UIButton*) btn
                     tag:(NSInteger) tag;

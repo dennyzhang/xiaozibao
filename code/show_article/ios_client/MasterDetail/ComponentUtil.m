@@ -10,34 +10,45 @@
 
 @implementation ComponentUtil
 + (void) addTextToButton:(UIButton*) btn text:(NSString*)text
-                 fontSize:(NSInteger)fontSize
-               chWidth:(NSInteger)chWidth
-               chHeight:(NSInteger)chHeight
-                 tag:(NSInteger)tag
+                 fontSize:(int)fontSize
+               chWidth:(float)chWidth
+               chHeight:(float)chHeight
+                 tag:(int)tag
 {
     // TODO better way, instead of workaround for the layout
     if ([text length] == 1)
       text = [NSString stringWithFormat: @"%@ ", text];
     if ([text length] == 2)
-      text = [NSString stringWithFormat: @"  %@", text];
+      text = [NSString stringWithFormat: @" %@", text];
     if ([text length] == 3)
-      text = [NSString stringWithFormat: @"%@ ", text];
+      text = [NSString stringWithFormat: @"%@", text];
 
-    int width = btn.frame.size.width;
-    int height = btn.frame.size.height;
-    int textWidth = chWidth * [text length];
-    int textHeight = chHeight;
+    float width = btn.frame.size.width;
+    float height = btn.frame.size.height;
+    float textWidth = chWidth * [text length];
+    float textHeight = chHeight;
 
-    UITextView* textTextView = [[UITextView alloc] initWithFrame:CGRectMake(width - textWidth,
-                                                                              height - textHeight,
-                                                                              textWidth, textHeight)];
+    UITextView* textTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    [btn addSubview:textTextView];
     textTextView.backgroundColor = [UIColor clearColor];
     textTextView.font = [UIFont fontWithName:FONT_NAME1 size:fontSize];
     textTextView.text = text;
     textTextView.tag = tag;
+    textTextView.textAlignment = UITextAlignmentRight;
     [textTextView setUserInteractionEnabled:NO];
+    [textTextView setFrame:CGRectMake(width - textWidth,
+                                      height - textHeight,
+                                      textWidth, textHeight)];
+    NSLog(@"text:%@, text length: %d", text, [text length]);
+    NSLog(@"width - textWidth: %f, height - textHeight: %f, textWidth: %f, textHeight: %f",
+          width - textWidth, height - textHeight,textWidth, textHeight);
 
-    [btn addSubview:textTextView];
+    NSLog(@"fontSize:%d, chWidth:%f, chHeight: %f", fontSize, chWidth, chHeight);
+    NSLog(@"textWidth:%f, textHeight:%f", textWidth, textHeight);
+    NSLog(@"btn.frame.size.width: %f, btn.frame.size.height: %f",
+          btn.frame.size.width, btn.frame.size.height);
+
+    NSLog(@"7*1.0f: %f", (7 * 1.0f)); // 6.0
 }
 
 + (void)updateScoreText:(NSString*) category

@@ -70,9 +70,8 @@
         [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
         self.coinButton = btn;
         NSInteger score = [UserProfile scoreByCategory:self.category];
-        NSLog(@"score:%d", score);
         [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
-                              fontSize:FONT_TINY2 chWidth:7 chHeight:23 tag:TAG_SCORE_TEXT];
+                              fontSize:FONT_TINY2 chWidth:9 chHeight:20 tag:TAG_SCORE_TEXT];
         UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
         
         self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
@@ -491,7 +490,7 @@
           [btn setImage:[UIImage imageNamed:@"thumbs_up2.png"] forState:UIControlStateNormal];
           NSString* text = voteupStr;
           [ComponentUtil addTextToButton:btn text:text
-                                fontSize:FONT_TINY2 chWidth:7 chHeight:17 tag:TAG_VOTEUP_TEXT];
+                                fontSize:FONT_TINY2 chWidth:9 chHeight:17 tag:TAG_VOTEUP_TEXT];
 
           [metadataTextView addSubview:btn];
         }
