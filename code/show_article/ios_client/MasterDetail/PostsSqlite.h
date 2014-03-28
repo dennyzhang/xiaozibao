@@ -11,7 +11,7 @@
 //#import "/usr/include/sqlite3.h"
 #import "/usr/local/opt/sqlite/include/sqlite3.h"
 #import "Posts.h"
-#import "constants.h"
+#import "global.h"
 
 #define DB_SEPERATOR @"someseperator"
 @interface PostsSqlite : NSObject {

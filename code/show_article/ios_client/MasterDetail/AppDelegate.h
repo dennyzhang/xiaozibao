@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "constants.h"
+#import "global.h"
 #import "posts.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

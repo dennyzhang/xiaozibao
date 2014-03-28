@@ -5,7 +5,7 @@
 //  Created by mac on 14-3-24.
 //
 //
-#import "constants.h"
+#import "global.h"
 #import "posts.h"
 #import "UserProfile.h"
 #import "ComponentUtil.h"

@@ -6,7 +6,7 @@
 // Copyright (c) 2013年 mac. All rights reserved.
 //
 #import "Posts.h"
-#import "constants.h"
+#import "global.h"
 
 @implementation Posts
 @synthesize postid, title, summary, category, content, source, readcount;

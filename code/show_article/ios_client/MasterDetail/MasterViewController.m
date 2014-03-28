@@ -13,7 +13,7 @@
 #import "AFJSONRequestOperation.h"
 // #import "Mixpanel.h"
 
-#import "constants.h"
+#import "global.h"
 
 #import <CoreFoundation/CFUUID.h>
 
@@ -35,6 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIButton* btn;
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
     [self.tableView setRowHeight:ROW_HEIGHT];
@@ -63,7 +64,7 @@
         [self init_data:@"denny" category_t:category_t navigationTitle:category_t];
     }
     if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
-        UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
         [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = TAG_BUTTON_COIN;
@@ -81,10 +82,14 @@
         [userDefaults setObject:uuidString forKey:@"Userid"];
     }
     
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
-                                      initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                      target:self.revealViewController
-                                      action:@selector(revealToggle:)];
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
+    [btn addTarget:self.revealViewController action:@selector(revealToggle:) 
+            forControlEvents:UIControlEventTouchUpInside];
+
+    [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+
     self.navigationItem.leftBarButtonItem = settingButton;
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];

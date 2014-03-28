@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "UserProfile.h"
-#import "constants.h"
+#import "global.h"
 
 @interface ComponentUtil : NSObject
 + (void) addTextToButton:(UIButton*) btn text:(NSString*)text

@@ -8,7 +8,7 @@
 
 #import "MenuViewController.h"
 #import "MasterViewController.h"
-#import "constants.h"
+#import "global.h"
 
 @interface MenuViewController () {
     NSMutableArray *_objects;
