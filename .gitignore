@@ -67,5 +67,6 @@ cron.log
 UserInterfaceState.xcuserstate
 code/show_article/ios_client/MasterDetail.xcworkspace/xcuserdata/mac.xcuserdatad/UserInterfaceState.xcuserstate
 Images.bak
-resource copy
+*copy.png
 *.psd
+resource copy

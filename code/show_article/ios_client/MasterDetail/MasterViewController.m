@@ -86,6 +86,9 @@
     [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
     [btn addTarget:self.revealViewController action:@selector(revealToggle:) 
             forControlEvents:UIControlEventTouchUpInside];
+    // NSLog(@"rightViewRevealWidth: %f, rearViewRevealWidth:%f",
+    //       self.revealViewController.rightViewRevealWidth,
+    //       self.revealViewController.rearViewRevealWidth);
 
     [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
