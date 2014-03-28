@@ -12,8 +12,6 @@
 
 @interface DetailViewController ()
 
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
-
 - (void)configureView;
 - (void)refreshComponentsLayout;
 @end
@@ -90,24 +88,6 @@
     }
 }
 
-#pragma mark - Split view
-
-- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
-{
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    
-    self.masterPopoverController = popoverController;
-}
-
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
-    // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.masterPopoverController = nil;
-}
-
 #pragma mark - user defined event selectors
 -(IBAction) barButtonEvent:(id)sender
 {
@@ -117,9 +97,6 @@
     
         self.navigationController.navigationBarHidden = NO;
         reviewViewController.category = self.detailItem.category;
-        //[self.navigationController.navigationItem setTitle:@"hello"];
-        //self.navigationController.navigationBar.topItem.title = @"Your Title";
-
         [self.navigationController pushViewController:reviewViewController animated:YES];
     }
     
@@ -270,14 +247,7 @@
 {
     if (detailItem != newDetailItem) {
         detailItem = newDetailItem;
-        // Update the view.
         [self configureView];
-    }
-    
-    NSLog(@"self.masterPopoverController: %@", self.masterPopoverController);
-    if (self.masterPopoverController != nil) {
-        
-        [self.masterPopoverController dismissPopoverAnimated:YES];
     }
 }
 
@@ -341,21 +311,7 @@
         [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
     }
     UIBarButtonItem *saveFavoriteBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-//    
-//    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-//    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-//    btn.tag = TAG_BUTTON_MORE;
-//    [btn setImage:[UIImage imageNamed:@"more-512.png"] forState:UIControlStateNormal];
-//    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-//    
-//    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-//    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-//    btn.tag = TAG_BUTTON_COMMENT;
-//    [btn setImage:[UIImage imageNamed:@"comments-512.png"] forState:UIControlStateNormal];
-//    UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-//    
+
     if ([self.shouldShowCoin intValue] == 1) {
       btn = [UIButton buttonWithType:UIButtonTypeCustom];
       [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
@@ -410,20 +366,6 @@
 
 - (void)refreshComponentsLayout
 {
-    
-    // self.detailUITextView.frame =  CGRectMake(100, 100, 500.0f, 150.0f);
-    
-    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
-    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
-    // NSLog(@"height1:%f, height2:%f", self.detailUITextView.frame.size.height, self.view.frame.size.height);
-    
-    // //self.detailUITextView.frame.origin.x,
-    // self.detailUITextView.frame = CGRectMake(100,
-    //                                          100,
-    //                                          self.view.frame.size.width - 30,
-    //                                          self.detailUITextView.frame.size.height);
-    // NSLog(@"x:%f, y:%f", self.detailUITextView.frame.origin.x, self.detailUITextView.frame.origin.y);
-    // NSLog(@"width1:%f, width2:%f", self.detailUITextView.frame.size.width, self.view.frame.size.width);
     
     CGFloat width = self.detailUITextView.frame.size.width;
     CGFloat height = self.detailUITextView.frame.size.height;
