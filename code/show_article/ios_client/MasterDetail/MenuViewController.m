@@ -28,13 +28,17 @@
         if (c.textLabel.isEnabled == true) {
             MasterViewController* dstViewController = segue.destinationViewController;
 
+            NSString* navigationTitle = c.textLabel.text;
             NSIndexPath *path = [self.tableView indexPathForCell:c];
             NSString* category = NONE_QUESTION_CATEGORY;
-            if (path.section == 0 || [c.textLabel.text isEqualToString:SAVED_QUESTIONS])
-                category = c.textLabel.text;
+            if (path.section == 0)
+              category = [c.textLabel.text lowercaseString];
+            if ([c.textLabel.text isEqualToString:SAVED_QUESTIONS])
+              category = c.textLabel.text;
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
-            [dstViewController init_data:userid category_t:category navigationTitle:c.textLabel.text];
+            [dstViewController init_data:userid category_t:category 
+                         navigationTitle:navigationTitle];
             [dstViewController view];
         }
         else { // disable actions
@@ -77,7 +81,6 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -168,7 +171,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     if (indexPath.section == 0) {
-        cell.textLabel.text = _objects[indexPath.row];
+        cell.textLabel.text = [_objects[indexPath.row] capitalizedString];
         return cell;
     }
     if (indexPath.section == 1) {
