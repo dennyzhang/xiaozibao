@@ -29,7 +29,8 @@
     if ([self.detailItem.readcount intValue] == 1){
       [UserProfile addInteger:self.detailItem.category key:POST_VISIT_KEY offset:1];
     }
-
+//    self.detailUITextView.contentSize = CGSizeMake(self.detailUITextView.frame.size.width - 20,
+//                                               self.detailUITextView.frame.size.height);
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
@@ -270,7 +271,7 @@
     // Update the user interface for the detail item.
     if (self.detailItem) {
         // TODO: here
-        self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n%@ ", self.detailItem.content];
+        self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n\n\n\n%@ ", self.detailItem.content];
         self.titleTextView.text = self.detailItem.title;
         NSString* shortUrl = [self shortUrl:self.detailItem.source];
         NSString* prefix = @"Link:  ";

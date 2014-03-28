@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
             endingLineNumber = "24"
-            landmarkName = "@synthesize titleTextView, linkTextView, contentTextView;"
+            landmarkName = "@synthesize coinButton, shouldShowCoin;"
             landmarkType = "19">
          </BreakpointContent>
       </BreakpointProxy>
