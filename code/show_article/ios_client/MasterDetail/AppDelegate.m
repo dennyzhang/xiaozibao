@@ -25,7 +25,12 @@
 
    // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
    //Mixpanel *mixpanel = [Mixpanel sharedInstance];
+
     [Posts getCategoryList:[NSUserDefaults standardUserDefaults]];
+    CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+    uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
+    CFRelease(uuidRef);
+
 //    
 //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;

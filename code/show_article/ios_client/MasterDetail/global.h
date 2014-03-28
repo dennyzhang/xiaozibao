@@ -29,3 +29,5 @@
 #define HIDE_MESSAGEBOX_DELAY 0.5f
 
 #define DEFAULT_BACKGROUND_COLOR [UIColor colorWithRed:246.0f/255.0f green:244.0f/255.0f blue:231.0f/255.0f alpha:1.0f]
+
+NSString* uuidString;

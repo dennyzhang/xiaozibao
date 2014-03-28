@@ -77,9 +77,6 @@
         self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
     }
     
-    CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
-    NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
-    CFRelease(uuidRef);
     if (![userDefaults stringForKey:@"Userid"]) {
         [userDefaults setObject:uuidString forKey:@"Userid"];
     }
