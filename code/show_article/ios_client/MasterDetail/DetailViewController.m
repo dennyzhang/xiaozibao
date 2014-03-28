@@ -143,6 +143,13 @@
         NSString* fieldName = @"";
         BOOL boolValue = false;
         if (btn.tag == TAG_BUTTON_VOTEUP) {
+            // exclusive check
+            if ((detailItem.isvoteup == FALSE) && (detailItem.isvotedown == TRUE)) {
+                NSString* msg = @"You can only either voteup or votedown the same post.";
+                [ComponentUtil infoMessage:nil msg:msg];
+                return;
+            }
+
             imgName = (detailItem.isvoteup == NO)?@"thumbs_up-512.png":@"thumb_up-512.png";
             detailItem.isvoteup = !detailItem.isvoteup;
             fieldName = @"isvoteup";
@@ -156,6 +163,13 @@
             }
         }
         if (btn.tag == TAG_BUTTON_VOTEDOWN) {
+            // exclusive check
+            if ((detailItem.isvotedown == FALSE) && (detailItem.isvoteup == TRUE)) {
+                NSString* msg = @"You can only either voteup or votedown the same post.";
+                [ComponentUtil infoMessage:nil msg:msg];
+                return;
+            }
+
             imgName = (detailItem.isvotedown == NO)?@"thumbs_down-512.png":@"thumb_down-512.png";
             detailItem.isvotedown = !detailItem.isvotedown;
             fieldName = @"isvotedown";
