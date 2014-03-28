@@ -231,11 +231,11 @@
     [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
     feedbackTextView.attributedText = attString1;
 
-    UIButton* coinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [coinButton setImage:[UIImage imageNamed:@"coin2.png"] forState:UIControlStateNormal];
-    self.coinButton = coinButton;
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[UIImage imageNamed:@"coin2.png"] forState:UIControlStateNormal];
+    self.coinButton = btn;
 
-    [summaryTextView addSubview:coinButton];
+    [summaryTextView addSubview:btn];
     [summaryTextView addSubview:figureImageView];
     [summaryTextView addSubview:titleTextView];
     [summaryTextView addSubview:clockImageView];
@@ -246,7 +246,7 @@
     [summaryTextView addSubview:feedbackTextView];
 
     // configure frames of summaryTextView's subview components
-    [coinButton setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 50.0f, ICON_WIDTH, ICON_HEIGHT)];
+    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 50.0f, ICON_WIDTH, ICON_HEIGHT)];
     [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, textHeight)];
 
     [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
@@ -273,8 +273,8 @@
 
     // add score to Coin
     NSInteger score = [UserProfile scoreByCategory:self.category];
-    [ComponentUtil addTextToButton:coinButton text:[NSString stringWithFormat: @"%d", (int)score]
-                          fontSize:FONT_TINY2 chWidth:9 chHeight:20 tag:TAG_SCORE_TEXT];
+    [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+                          fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_SCORE_TEXT];
 
     // Add tableview for questions from history
     float uitable_height = self.view.frame.size.height - summaryTextView.frame.size.height;

@@ -71,7 +71,7 @@
         self.coinButton = btn;
         NSInteger score = [UserProfile scoreByCategory:self.category];
         [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
-                              fontSize:FONT_TINY2 chWidth:9 chHeight:20 tag:TAG_SCORE_TEXT];
+                              fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_SCORE_TEXT];
         UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
         
         self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];

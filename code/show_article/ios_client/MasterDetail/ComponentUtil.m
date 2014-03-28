@@ -34,21 +34,11 @@
     textTextView.font = [UIFont fontWithName:FONT_NAME1 size:fontSize];
     textTextView.text = text;
     textTextView.tag = tag;
-    textTextView.textAlignment = UITextAlignmentRight;
+    textTextView.textAlignment = NSTextAlignmentCenter;
     [textTextView setUserInteractionEnabled:NO];
     [textTextView setFrame:CGRectMake(width - textWidth,
                                       height - textHeight,
                                       textWidth, textHeight)];
-    NSLog(@"text:%@, text length: %d", text, [text length]);
-    NSLog(@"width - textWidth: %f, height - textHeight: %f, textWidth: %f, textHeight: %f",
-          width - textWidth, height - textHeight,textWidth, textHeight);
-
-    NSLog(@"fontSize:%d, chWidth:%f, chHeight: %f", fontSize, chWidth, chHeight);
-    NSLog(@"textWidth:%f, textHeight:%f", textWidth, textHeight);
-    NSLog(@"btn.frame.size.width: %f, btn.frame.size.height: %f",
-          btn.frame.size.width, btn.frame.size.height);
-
-    NSLog(@"7*1.0f: %f", (7 * 1.0f)); // 6.0
 }
 
 + (void)updateScoreText:(NSString*) category

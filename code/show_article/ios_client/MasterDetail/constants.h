@@ -20,6 +20,9 @@
 #define ICON_WIDTH 28.0f
 #define ICON_HEIGHT 28.0f
 
+#define ICON_CHWIDTH 9.0f
+#define ICON_CHHEIGHT 21.0f
+
 #define ICON_WIDTH2 35.0f
 #define ICON_HEIGHT2 35.0f
 
