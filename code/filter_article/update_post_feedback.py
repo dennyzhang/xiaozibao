@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-03-27 11:50:43>
+## Updated: Time-stamp: <2014-03-29 12:41:15>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -52,11 +52,18 @@ engine_str = "mysql://%s:%s@%s/%s" % (DB_USERNAME, DB_PWD, DB_HOST, DB_NAME)
 FLAGFILE="flagfile_modifytime"
 # TODO: refine later
 def get_post_filename_byid(postid, category):
-    for root, dirnames, filenames in os.walk("%s/%s/" % (DATA_BASEDIR, category)):
-        for filename in fnmatch.filter(filenames, postid+".data"):
-            return "%s/%s.data" % (root, postid)
+    db = create_engine(engine_str)
+    conn = db.connect()
 
-    return ""
+    cursor = conn.execute("select postid, category, title, filename from posts where postid ='%s' and category='%s'" % \
+                          (postid, category))
+    out = cursor.fetchall()
+    conn.close()
+    if len(out) != 1:
+        return "";
+
+    filename = out[0][3]
+    return "%s/%s" % (DATA_BASEDIR, filename)
 
 def parse_feedback_logfile(logfile):
     with open(logfile, 'r') as f:
@@ -142,7 +149,7 @@ def update_post_metadata_db(postid, category, metadata_dict):
     if update_clause != "":
         update_clause = update_clause[len(" and "):]
 
-    sql = "update posts set %s where id='%s' and category='%s'" % \
+    sql = "update posts set %s where postid='%s' and category='%s'" % \
           (update_clause, metadata_dict["postid"], metadata_dict["category"])
     log.info(sql)
     cursor = conn.execute(sql)
