@@ -31,8 +31,11 @@
             NSString* value = [[self textToValue:c.textLabel.text] lowercaseString];
 
             NSString* category = NONE_QUESTION_CATEGORY;
-            if (path.section == 0 || [value isEqualToString:SAVED_QUESTIONS]) {
+            if (path.section == 0) {
               category = value;
+            }
+            if ([value isEqualToString:[SAVED_QUESTIONS lowercaseString]]) {
+             category = SAVED_QUESTIONS;
             }
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
