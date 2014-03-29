@@ -10,9 +10,8 @@
 #import "MasterViewController.h"
 #import "global.h"
 
-@interface MenuViewController () {
-    NSMutableArray *_objects;
-}
+@interface MenuViewController ()
+
 @end
 
 @implementation MenuViewController
@@ -28,17 +27,17 @@
         if (c.textLabel.isEnabled == true) {
             MasterViewController* dstViewController = segue.destinationViewController;
 
-            NSString* navigationTitle = c.textLabel.text;
             NSIndexPath *path = [self.tableView indexPathForCell:c];
+            NSString* value = [self textToValue:c.textLabel.text];
+
             NSString* category = NONE_QUESTION_CATEGORY;
-            if (path.section == 0)
-              category = [c.textLabel.text lowercaseString];
-            if ([c.textLabel.text isEqualToString:SAVED_QUESTIONS])
-              category = c.textLabel.text;
+            if (path.section == 0 || [value isEqualToString:SAVED_QUESTIONS]) {
+              category = value;
+            }
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
             [dstViewController init_data:userid category_t:category 
-                         navigationTitle:navigationTitle];
+                         navigationTitle:c.textLabel.text];
             [dstViewController view];
         }
         else { // disable actions
@@ -87,6 +86,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
+    self.sectionArray = [NSArray arrayWithObjects:@" Questions", @" Preference",nil];
     [self load_category_list];
 }
 
@@ -97,12 +97,12 @@
   NSLog(@"load_category_list:%@", categoryList);
   NSString* category;
   NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-  _objects = [[NSMutableArray alloc] init];
+  self._objects = [[NSMutableArray alloc] init];
   for (int i=0; i < [stringArray count]; i++)
   {
       category = stringArray[i];
       category = [category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-      [_objects addObject:category];
+      [self._objects addObject:category];
   }
 }
 
@@ -123,22 +123,41 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 3;
+    return [self.sectionArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return _objects.count;
+        return self._objects.count;
     }
     if (section == 1) {
-        return 1;
-    }
-    if (section == 2) {
-        return 3;
+        return 2;
     }
     return -1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSString* value = @"";
+    cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    if (indexPath.section == 0) {
+      value = self._objects[indexPath.row];
+    }
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            value = SAVED_QUESTIONS;
+        }
+        if (indexPath.row == 1) {
+            value = APP_SETTING;
+        }
+    }
+
+    cell.textLabel.text = [self valueToText:value];
+    return cell;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -153,47 +172,26 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
-        return @" Questions";
-    }
-    if (section == 1) {
-        return @" Quiz";
-    }
-    if (section == 2) {
-        return @" Preference";
-    }
-    return @"ERROR tableview:titleForHeaderInSection";
+   return [self.sectionArray objectAtIndex:section];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    if (indexPath.section == 0) {
-        cell.textLabel.text = [_objects[indexPath.row] capitalizedString];
-        return cell;
-    }
-    if (indexPath.section == 1) {
-        cell.textLabel.text = @"Coming Soon";
-        cell.textLabel.enabled = false;
-        return cell;
-    }
+- (NSString *)valueToText:(NSString*) value {
+    // int width = 30;
+    // int paddingWidth = width - [value length];
 
-    if (indexPath.section == 2) {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = SAVED_QUESTIONS;
-        }
-        if (indexPath.row == 1) {
-            cell.textLabel.text = MORE_CATEGORY;
-            cell.textLabel.enabled = false;
-        }
-        if (indexPath.row == 2) {
-            cell.textLabel.text = APP_SETTING;
-        }
-        return cell;
-    }
-    return cell;
+    // NSString* ret = [[NSString alloc] initWithFormat:@"%@%@>", [value capitalizedString],
+    //            [@"" stringByPaddingToLength:paddingWidth withString: @" " startingAtIndex:0]];
+    // NSLog(@"value:%@, ret:%@, paddingWidth:%d", value, ret, paddingWidth);
+    // return ret;
+  return [value capitalizedString];
+}
+
+- (NSString *)textToValue:(NSString*) text {
+    // NSRange range = NSMakeRange (0, [text length] - 1);
+    // NSString* str = [text substringWithRange:range];
+    // return [str
+    //            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+   return [text capitalizedString];
 }
 
 @end
