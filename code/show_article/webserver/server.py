@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-25 22:34:26>
+## Updated: Time-stamp: <2014-03-29 09:05:05>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -112,8 +112,8 @@ def feedback_post():
     postid = data["postid"]
     category = data["category"]
     comment = data["comment"]
-
-    handle_feedback(uid, category, postid, comment)
+    clientip = request.remote_addr
+    handle_feedback(uid, category, postid, comment, clientip)
 
     status="ok"
     errmsg=""
@@ -141,12 +141,12 @@ def after_request(response):
 def insert_post():
     return "TODO be implemented"
 
-def handle_feedback(uid, category, postid, comment):
+def handle_feedback(uid, category, postid, comment, clientip):
     seconds = int(round(time.time()))
     dir_name = "%s/%s" % (config.DATA_BASEDIR, category)
     field_list = ["postid="+postid, "category="+category,
-                  "seconds="+str(seconds), "uid="+uid, 
-                  "comment="+comment]
+                  "seconds="+str(seconds), "uid="+uid,
+                  "comment="+comment, "ip="+clientip]
     fb_log.info(config.FIELD_SEPARATOR.join(field_list))
 ################################################################
 
