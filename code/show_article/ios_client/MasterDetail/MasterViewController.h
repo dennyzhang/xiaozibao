@@ -16,6 +16,7 @@
 #import "PostsSqlite.h"
 #import "ComponentUtil.h"
 #import "UserProfile.h"
+#import "MenuViewController.h"
 
 @class DetailViewController;
 

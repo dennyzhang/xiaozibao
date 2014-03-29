@@ -27,6 +27,7 @@
    //Mixpanel *mixpanel = [Mixpanel sharedInstance];
 
     [Posts getCategoryList:[NSUserDefaults standardUserDefaults]];
+
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
     uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
     CFRelease(uuidRef);

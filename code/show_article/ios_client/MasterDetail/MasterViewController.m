@@ -35,6 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     UIButton* btn;
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
@@ -84,12 +85,8 @@
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
-    [btn addTarget:self.revealViewController action:@selector(revealToggle:) 
+    [btn addTarget:self action:@selector(showMenuViewController:) 
             forControlEvents:UIControlEventTouchUpInside];
-    // NSLog(@"rightViewRevealWidth: %f, rearViewRevealWidth:%f",
-    //       self.revealViewController.rightViewRevealWidth,
-    //       self.revealViewController.rearViewRevealWidth);
-
     [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
 
@@ -97,6 +94,15 @@
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
+}
+
+- (void) showMenuViewController:(id)sender
+{
+    SWRevealViewController* rvc = self.revealViewController;
+    MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
+    [menuvc load_category_list];
+
+    [rvc revealToggleAnimated:YES];
 }
 
 - (void)init_data:(NSString*)username_t
