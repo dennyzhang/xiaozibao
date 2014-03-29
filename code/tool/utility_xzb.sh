@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2014-03-16 13:48:42>
+## Updated: Time-stamp: <2014-03-29 12:08:06>
 ##-------------------------------------------------------------------
 DB_HOST="127.0.0.1"
 DB_USERNAME="user_2013"
@@ -43,6 +43,7 @@ function userlist_in_db() {
 }
 
 function category_in_fs() {
-    echo $(ls -lt $XZB_HOME/webcrawler_data | grep ^'d' | awk -F':' '{print $2}' | awk -F' ' '{print $2}')
+    cd $XZB_HOME/webcrawler_data
+    echo $(ls -lt | grep ^'d' | awk -F':' '{print $2}' | awk -F' ' '{print $2}')
 }
 ## File : utility_xzb.sh ends

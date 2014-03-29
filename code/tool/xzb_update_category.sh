@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2014-03-29 12:05:28>
+## Updated: Time-stamp: <2014-03-29 12:07:24>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -19,7 +19,7 @@ function update_category_list() {
     lists=($category_list)
     for category_name in ${lists[*]}; do
         log "[$BIN_NAME.sh] Generate sql file for $category_name."
-        sql_output=$(generate_category_sql "webcrawler_data/$category_name")
+        sql_output=$(generate_category_sql "$category_name")
         if [ $? -ne 0 ]; then
             log "[$BIN_NAME.sh] Generate sql file failed."
             exit 1
@@ -38,7 +38,7 @@ function update_category_list() {
 }
 # sample: sh ./post_sql_generation.sh /home/denny/backup/essential/Dropbox/private_data/xiaozibao/webcrawler_data/lifehack
 function generate_category_sql() {
-    cd $XZB_HOME
+    cd $XZB_HOME/webcrawler_data
     directory=${1?"base web page directory is required for sql generation"}
     category=`basename $directory`
     SAVEIFS=$IFS

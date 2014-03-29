@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-26 11:43:37>
+## Updated: Time-stamp: <2014-03-29 12:19:18>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -50,13 +50,6 @@ fb_log.setLevel(logging.INFO)
 fb_log.addHandler(consoleHandler)
 fb_log.addHandler(fb_Rthandler)
 
-def get_post_filename_byid(id, category):
-    for root, dirnames, filenames in os.walk("%s/%s/" % (config.DATA_BASEDIR, category)):
-        for filename in fnmatch.filter(filenames, id+".data"):
-            return "%s/%s" % (root, id)
-
-    return ""
-
 def wash_content(content):
     ret = content[0:config.MAX_LENGTH]
     if ret[-1] == '\\':
@@ -64,8 +57,7 @@ def wash_content(content):
     return ret
 
 def fill_post_data(post):
-    fname = get_post_filename_byid(post.id, post.category) + ".data"
-    with open(fname, 'r') as f:
+    with open(post.filename, 'r') as f:
         content = f.read()
 
     # TODO: more efficient way
@@ -105,8 +97,7 @@ def get_meta_dict(fname):
 
 def fill_post_meta(post):
     try:
-        fname = get_post_filename_byid(post.id, post.category) + ".data"
-        metadata_dict = get_meta_dict(fname)
+        metadata_dict = get_meta_dict(post.filename)
         if metadata_dict.has_key("title") and metadata_dict["title"].strip() !="":
             post.title = metadata_dict["title"]
         post.source = metadata_dict["source"]
@@ -118,7 +109,7 @@ def fill_post_meta(post):
     return True
 
 class POST:
-    def __init__(self, id, category, title):
+    def __init__(self, id, category, title, filename):
         self.id = id
         self.category = category.encode('utf-8')
         self.title = title.encode('utf-8')
@@ -126,15 +117,15 @@ class POST:
         self.source = ""
         self.metadata = ""
         self.content = ""
-
+        self.filename = "%s/%s" % (config.DATA_BASEDIR, filename)
 
     def print_obj(self):
-        print "id:%s, category:%s, title:%s, summary:%s, content:%s, meta:%s\n" % \
-            (self.id, self.category, self.title, self.summary, self.content, self.meta)
+        print "id:%s, category:%s, title:%s, summary:%s, content:%s, filename:%s, meta:%s\n" % \
+            (self.id, self.category, self.title, self.summary, self.content, self.filename, self.meta)
 
     @staticmethod
     def list_to_post(list_obj):
-        return POST(list_obj[0], list_obj[1], list_obj[2])
+        return POST(list_obj[0], list_obj[1], list_obj[2], list_obj[3])
 
     @staticmethod
     def lists_to_posts(lists_obj):

@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-25 14:48:54>
+## Updated: Time-stamp: <2014-03-29 12:12:54>
 ##-------------------------------------------------------------------
 import config
 from util import POST
@@ -28,7 +28,7 @@ def get_post(post_id):
     global db
     conn = db.connect()
 
-    cursor = conn.execute("select id, category, title from posts where id ='%s'" % post_id)
+    cursor = conn.execute("select id, category, title, filename from posts where id ='%s'" % post_id)
     out = cursor.fetchall()
     conn.close()
     post = None
@@ -43,7 +43,7 @@ def list_topic(topic, start_num, count, voteup, votedown, sort_method):
     global db
     conn = db.connect()
 
-    sql_clause = "select posts.id, posts.category, posts.title from posts "
+    sql_clause = "select id, category, title, filename from posts "
 
     where_clause = "where category ='%s'" % (topic)
     extra_where_clause = ""
