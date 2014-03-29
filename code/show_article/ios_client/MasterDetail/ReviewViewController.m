@@ -106,7 +106,7 @@
 -(IBAction) barButtonEvent:(id)sender
 {
   // TODO
-  NSString* msg = @"Coming Soon. \nSend to twitter, weibo, etc";
+  NSString* msg = @"Coming Soon. \nShare to friends, Or\nto twitter, wechat, etc";
   [ComponentUtil infoMessage:nil msg:msg];
 }
 

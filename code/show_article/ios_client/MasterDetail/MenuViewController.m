@@ -87,7 +87,6 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-    _objects = [[NSMutableArray alloc] init];
     [self load_category_list];
 }
 
@@ -98,6 +97,7 @@
   NSLog(@"load_category_list:%@", categoryList);
   NSString* category;
   NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
+  _objects = [[NSMutableArray alloc] init];
   for (int i=0; i < [stringArray count]; i++)
   {
       category = stringArray[i];
