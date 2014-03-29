@@ -113,11 +113,11 @@
     NSLog(@"navigationTitle: %@", navigationTitle);
     self.navigationItem.title = navigationTitle;
     
-    if ([category_t isEqualToString:MORE_CATEGORY]) {
+    if ([navigationTitle isEqualToString:MORE_CATEGORY]) {
         return;
     }
     
-    if ([category_t isEqualToString:APP_SETTING]) {
+    if ([navigationTitle isEqualToString:APP_SETTING]) {
         return;
     }
     
