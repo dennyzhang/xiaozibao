@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2014-03-22 17:44:21>
+## Updated: Time-stamp: <2014-03-29 12:05:28>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -19,7 +19,7 @@ function update_category_list() {
     lists=($category_list)
     for category_name in ${lists[*]}; do
         log "[$BIN_NAME.sh] Generate sql file for $category_name."
-        sql_output=$(generate_category_sql "$XZB_HOME/webcrawler_data/$category_name")
+        sql_output=$(generate_category_sql "webcrawler_data/$category_name")
         if [ $? -ne 0 ]; then
             log "[$BIN_NAME.sh] Generate sql file failed."
             exit 1
@@ -38,6 +38,7 @@ function update_category_list() {
 }
 # sample: sh ./post_sql_generation.sh /home/denny/backup/essential/Dropbox/private_data/xiaozibao/webcrawler_data/lifehack
 function generate_category_sql() {
+    cd $XZB_HOME
     directory=${1?"base web page directory is required for sql generation"}
     category=`basename $directory`
     SAVEIFS=$IFS
@@ -47,7 +48,8 @@ function generate_category_sql() {
         short_file=`basename $file`
         md5=${short_file%.data}
         title=$(grep "^title: " $file | awk -F'title: ' '{print $2}')
-        sql="REPLACE INTO posts(id, category, title) VALUES (\"$md5\", \"$category\", \"$title\");"
+        filename="$file"
+        sql="REPLACE INTO posts(id, category, title, filename) VALUES (\"$md5\", \"$category\", \"$title\", \"$filename\");"
         echo $sql
     done
     IFS=$SAVEIFS

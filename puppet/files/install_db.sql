@@ -13,6 +13,7 @@ CREATE TABLE if not exists posts (
        id CHAR(40) NOT NULL unique,
        category VARCHAR(50) NOT NULL,
        title VARCHAR(200) NOT NULL,
+       filename VARCHAR(200) NOT NULL,
        voteup int default 0,
        votedown int default 0,
        memo VARCHAR(100)
