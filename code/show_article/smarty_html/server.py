@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-17 15:28:33>
+## Updated: Time-stamp: <2014-03-29 12:33:41>
 ##-------------------------------------------------------------------
 import os
 from flask import Flask, request, make_response
@@ -31,8 +31,8 @@ app = Flask(__name__, static_folder=util.get_html_dir())
 ## sample: http://127.0.0.1:9181/show_post?id=0fa410a29c294cf498c768b0cebc99c0
 @app.route("/show_post", methods=['GET'])
 def show_post():
-    id = request.args.get('id')
-    url = "http://{0}:{1}/api_get_post?id={2}".format(config.WEBSERVER_HOST, config.WEBSERVER_PORT, id)
+    postid = request.args.get('postid')
+    url = "http://{0}:{1}/api_get_post?postid={2}".format(config.WEBSERVER_HOST, config.WEBSERVER_PORT, postid)
     date = "2013-02-18" # TODO
     filepath = "%s/%s.html" % (util.get_html_dir(), id)
     # TODO: improve time performance to cache

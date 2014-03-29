@@ -6,7 +6,7 @@
 ## Description : Update posts info to mysql
 ## --
 ## Created : <2013-01-31>
-## Updated: Time-stamp: <2014-03-29 12:07:24>
+## Updated: Time-stamp: <2014-03-29 12:25:17>
 ##-------------------------------------------------------------------
 . $(dirname $0)/utility_xzb.sh
 
@@ -49,7 +49,7 @@ function generate_category_sql() {
         md5=${short_file%.data}
         title=$(grep "^title: " $file | awk -F'title: ' '{print $2}')
         filename="$file"
-        sql="REPLACE INTO posts(id, category, title, filename) VALUES (\"$md5\", \"$category\", \"$title\", \"$filename\");"
+        sql="REPLACE INTO posts(postid, category, title, filename) VALUES (\"$md5\", \"$category\", \"$title\", \"$filename\");"
         echo $sql
     done
     IFS=$SAVEIFS

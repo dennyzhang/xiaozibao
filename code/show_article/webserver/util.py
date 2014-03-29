@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-29 12:19:18>
+## Updated: Time-stamp: <2014-03-29 12:25:54>
 ##-------------------------------------------------------------------
 import hashlib
 import config
@@ -109,8 +109,8 @@ def fill_post_meta(post):
     return True
 
 class POST:
-    def __init__(self, id, category, title, filename):
-        self.id = id
+    def __init__(self, postid, category, title, filename):
+        self.postid = postid
         self.category = category.encode('utf-8')
         self.title = title.encode('utf-8')
         self.summary = ""

@@ -1,2 +1,2 @@
 [{% for post in posts %}
-{"id":"{{ post.id }}","category":"{{ post.category }}","title":"{{ post.title }}","summary":"{{ post.summary }}"},{% endfor %}]
+{"postid":"{{ post.postid }}","category":"{{ post.category }}","title":"{{ post.title }}","summary":"{{ post.summary }}"},{% endfor %}]

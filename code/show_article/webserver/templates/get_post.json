@@ -1,4 +1,4 @@
-{"id":"{{ post.id }}","category":"{{ post.category }}","title":"{{ post.title }}",
+{"id":"{{ post.postid }}","category":"{{ post.category }}","title":"{{ post.title }}",
 "summary":"{{ post.summary }}",
 "content":"{{ post.content }}",
 "source":"{{ post.source }}",

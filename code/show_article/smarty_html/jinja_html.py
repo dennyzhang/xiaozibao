@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-30 00:00:00>
-## Updated: Time-stamp: <2014-03-29 12:24:16>
+## Updated: Time-stamp: <2014-03-29 12:27:12>
 ##-------------------------------------------------------------------
 from jinja2 import Template
 from urllib2 import urlopen
@@ -36,11 +36,11 @@ def generate_user_all_posts(userid, date, dst_dir, host=config.DB_HOST, port=con
     url = "http://%s:%s/api_list_user_post?userid=%s&date=%s" % (host, port, userid, date)
     (status, json_obj) = request_json(url)
     for post in json_obj:
-        url = "http://%s:%s/api_get_post?id=%s" % (host, port, post['id'])
-        generate_html(url, "%s/%s.html" % (dst_dir, post['id']), [date])
+        url = "http://%s:%s/api_get_post?id=%s" % (host, port, post['postid'])
+        generate_html(url, "%s/%s.html" % (dst_dir, post['postid']), [date])
 
 # sample: jinja_html.generate_html("http://127.0.0.1:9180/api_list_user_post?userid=testuser&date=2013-01-24", "/tmp/test.html")
-# sample: jinja_html.generate_html("http://127.0.0.1:9180/api_get_post?id=c83191cbde5b5b465b62003bb1c79d3a", "/tmp/test.html")
+# sample: jinja_html.generate_html("http://127.0.0.1:9180/api_get_post?postid=c83191cbde5b5b465b62003bb1c79d3a", "/tmp/test.html")
 def generate_html(url, dst_html, arg_list = []):
     # TODO
     if len(arg_list) == 0: 

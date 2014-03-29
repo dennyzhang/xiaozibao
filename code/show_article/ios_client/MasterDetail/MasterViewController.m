@@ -196,7 +196,7 @@
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
         NSMutableArray *idMArray;
-        NSArray *idList = [JSON valueForKeyPath:@"id"];
+        NSArray *idList = [JSON valueForKeyPath:@"postid"];
         idMArray = [idMArray initWithArray:idList];
         Posts *post = nil;
         NSUInteger i, count = [idList count];
@@ -206,7 +206,7 @@
                 post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
                 if (post == nil) {
                     [self fetchJson:_objects
-                             urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?id="] stringByAppendingString:idList[i]]
+                             urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
                    shouldAppendHead:shouldAppendHead];
                 }
                 else {
