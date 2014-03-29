@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-03-29 14:37:03>
+## Updated: Time-stamp: <2014-03-29 14:40:00>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -23,8 +23,8 @@ formatter = logging.Formatter(format)
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setFormatter(formatter)
 log.addHandler(stream_handler)
-log.setLevel(logging.INFO)
-#log.setLevel(logging.ERROR)
+#log.setLevel(logging.INFO)
+log.setLevel(logging.ERROR)
 
 XZB_HOME=os.environ.get('XZB_HOME')
 assert(XZB_HOME != '')
