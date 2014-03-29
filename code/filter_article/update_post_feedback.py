@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-03-29 13:31:45>
+## Updated: Time-stamp: <2014-03-29 14:37:03>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -135,12 +135,12 @@ def update_post_metadata_db(postid, category, metadata_dict):
             continue
         value = metadata_dict[key]
         if isinstance(value, str):
-            update_clause = "%s and %s='%s'" % (update_clause, key, value)
+            update_clause = "%s , %s='%s'" % (update_clause, key, value)
         else:
-            update_clause = "%s and %s=%s" % (update_clause, key, value)
+            update_clause = "%s , %s=%s" % (update_clause, key, value)
 
     if update_clause != "":
-        update_clause = update_clause[len(" and "):]
+        update_clause = update_clause[len(" , "):]
 
     sql = "update posts set %s where postid='%s' and category='%s'" % \
           (update_clause, metadata_dict["postid"], metadata_dict["category"])
