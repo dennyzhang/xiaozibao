@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-03-29 09:05:05>
+## Updated: Time-stamp: <2014-03-29 12:24:01>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -53,8 +53,8 @@ def get_post():
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
 
-## sample: http://127.0.0.1:9180/api_list_user_post?userid=denny&date=2013-01-24
-## sample: http://127.0.0.1:9180/api_list_user_post?userid=denny
+## sample: http://127.0.0.1:9180/api_list_user_post?userid=testuser&date=2013-01-24
+## sample: http://127.0.0.1:9180/api_list_user_post?userid=testuser
 # Note: If date is empty, list all posts deliver to a given user without filtering date
 # @app.route("/api_list_user_post", methods=['GET'])
 # def list_user_post():
