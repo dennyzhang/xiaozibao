@@ -28,7 +28,7 @@
             MasterViewController* dstViewController = segue.destinationViewController;
 
             NSIndexPath *path = [self.tableView indexPathForCell:c];
-            NSString* value = [self textToValue:c.textLabel.text];
+            NSString* value = [[self textToValue:c.textLabel.text] lowercaseString];
 
             NSString* category = NONE_QUESTION_CATEGORY;
             if (path.section == 0 || [value isEqualToString:SAVED_QUESTIONS]) {
