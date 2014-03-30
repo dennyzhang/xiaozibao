@@ -63,4 +63,6 @@
                   fieldName:(NSString*)fieldName
                    category:(NSString *)category;
 
++ (sqlite3 *)openSqlite:(NSString*) dbPath;
++ (NSString *)getDBPath;
 @end

@@ -12,6 +12,8 @@
 
 @interface DetailViewController () {
   NSTimeInterval startTime;
+  sqlite3 *postsDB;
+  NSString *dbPath;
 }
 - (void)configureView;
 - (void)refreshComponentsLayout;
@@ -25,13 +27,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    dbPath = [PostsSqlite getDBPath];
+    postsDB = [PostsSqlite openSqlite:dbPath];
+
     UIBarButtonItem* barButtonItem = self.navigationItem.leftBarButtonItem;
     [barButtonItem setTarget: self];
     [barButtonItem setAction: @selector( test: )];
     
-    if ([self.detailItem.readcount intValue] == 1){
+    if ([self.detailItem.readcount intValue] == 0){
       [UserProfile addInteger:self.detailItem.category key:POST_VISIT_KEY offset:1];
     }
+    // update readcount
+    self.detailItem.readcount = [NSNumber numberWithInt:(1+[self.detailItem.readcount intValue])];
+
+    [PostsSqlite addPostReadCount:postsDB dbPath:dbPath
+                           postId:self.detailItem.postid category:self.detailItem.category];
+
     contentPrefix = @"\n\n\n\n\n\n\n"; // TODO workaround
     if (!self.detailUITextView) {
       NSLog(@"here!");
@@ -110,20 +121,6 @@
     }
     
     if (btn.tag == TAG_BUTTON_VOTEUP || btn.tag == TAG_BUTTON_VOTEDOWN || btn.tag == TAG_BUTTON_FAVORITE) {
-        // TODO remove code duplication
-        NSString *docsDir;
-        NSArray *dirPaths;
-        
-        // Get the documents directory
-        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        docsDir = [dirPaths objectAtIndex:0];
-        
-        sqlite3 *postsDB;
-        NSString *dbPath = [[NSString alloc] initWithString:
-                            [docsDir stringByAppendingPathComponent:@"posts.db"]];
-        if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
-            NSLog(@"Error: Failed to open/create database");
-        }
         // mark locally, then send request to remote server
         NSString* imgName = @"";
         NSString* fieldName = @"";

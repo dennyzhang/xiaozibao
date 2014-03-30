@@ -8,8 +8,10 @@
 
 #import "ReviewViewController.h"
 
-@interface ReviewViewController ()
-
+@interface ReviewViewController () {
+    sqlite3 *postsDB;
+    NSString *dbPath;
+}
 @end
 
 @implementation ReviewViewController
@@ -35,20 +37,8 @@
     [self addMenuCompoents];
     self.questions = [[NSMutableArray alloc] init];
 
-    // TODO: refine later
-    NSString *docsDir;
-    NSArray *dirPaths;
-        
-    // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    docsDir = [dirPaths objectAtIndex:0];
-
-    sqlite3 *postsDB;
-    NSString *dbPath = [[NSString alloc] initWithString:
-                                           [docsDir stringByAppendingPathComponent:@"posts.db"]];
-    if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
-      NSLog(@"Error: Failed to open/create database");
-    }
+    dbPath = [PostsSqlite getDBPath];
+    postsDB = [PostsSqlite openSqlite:dbPath];
 
     // load data
     [PostsSqlite loadRecommendPosts:postsDB dbPath:dbPath category:self.category

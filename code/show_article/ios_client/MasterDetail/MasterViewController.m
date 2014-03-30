@@ -128,8 +128,9 @@
     self.username=username_t;
     
     _objects = [[NSMutableArray alloc] init];
-    
-    [self openSqlite];
+    dbPath = [PostsSqlite getDBPath];
+    postsDB = [PostsSqlite openSqlite:dbPath];
+
     userDefaults = [NSUserDefaults standardUserDefaults];
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
                    objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
@@ -138,30 +139,6 @@
                  start_num:[NSNumber numberWithInt: 10]
                      count:self.page_count
           shouldAppendHead:YES]; // TODO
-}
-
-- (void)openSqlite
-{
-    NSString *docsDir;
-    NSArray *dirPaths;
-    
-    // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(
-                                                   NSDocumentDirectory, NSUserDomainMask, YES);
-    
-    docsDir = [dirPaths objectAtIndex:0];
-    
-    // Build the path to the database file
-    dbPath = [[NSString alloc]
-                    initWithString: [docsDir stringByAppendingPathComponent:
-                                     @"posts.db"]];
-    
-    //NSFileManager *filemgr = [NSFileManager defaultManager];
-    
-    //if ([filemgr fileExistsAtPath: dbPath ] == NO)
-    if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
-        NSLog(@"Error: Failed to open/create database");
-    }
 }
 
 - (void)fetchArticleList:(NSString*) userid
@@ -532,7 +509,7 @@
         NSLog(@"He press Cancel");
     }
     else {
-        [self openSqlite];
+        [PostsSqlite openSqlite:dbPath];
         NSLog(@"clean cache");
         
         [PostsSqlite cleanCache:postsDB dbPath:dbPath];
@@ -663,10 +640,8 @@
               [UserProfile integerForKey:self.category key:POST_VISIT_KEY]);
         Posts *post = _objects[indexPath.row];
         
-        post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
+        //post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [self markCellAsRead:cell post:post];
-        [PostsSqlite addPostReadCount:postsDB dbPath:dbPath
-                               postId:post.postid category:post.category];
         self.bottom_num = [NSNumber numberWithInt:20];
         if ([self.category isEqualToString:SAVED_QUESTIONS]) {
           [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:0]];
