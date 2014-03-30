@@ -367,8 +367,11 @@
     
     self.detailUITextView.scrollEnabled = YES;
     self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    //self.detailUITextView.delegate = self;
+    self.detailUITextView.selectable = NO;
 
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
+    [self.detailUITextView addGestureRecognizer:swipe];
+    swipe.delegate = self;
 }
 
 - (void)refreshComponentsLayout
@@ -452,6 +455,17 @@
     else {
       NSLog(@"Stay for ove %d seconds", seconds);
       [UserProfile addInteger:self.detailItem.category key:POST_STAY_SECONDS_KEY offset:seconds];
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGesture
+{
+    return YES;
+}
+
+-(void) textWithSwipe:(UISwipeGestureRecognizer*)recognizer {
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionRight){
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

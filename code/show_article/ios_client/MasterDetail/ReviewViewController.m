@@ -123,7 +123,13 @@
      // add summaryTextView
     summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
-    [self.summaryTextView setUserInteractionEnabled:NO];
+    self.summaryTextView.selectable = NO;
+    self.summaryTextView.scrollEnabled = NO;
+
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
+    [self.summaryTextView addGestureRecognizer:swipe];
+    swipe.delegate = self;
+
     self.summaryTextView.backgroundColor = [UIColor clearColor];
     [self.summaryTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     [self.view addSubview:summaryTextView];
@@ -140,14 +146,17 @@
     UIImageView *clockImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hourglass.png"]];
     clockTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     clockTextView.backgroundColor = [UIColor clearColor];
+    [clockTextView setUserInteractionEnabled:NO]; 
 
     UIImageView *questionsImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"question.png"]];
     questionsTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     questionsTextView.backgroundColor = [UIColor clearColor];
+    [questionsTextView setUserInteractionEnabled:NO];
 
     UIImageView *feedbackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback.png"]];
     feedbackTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     feedbackTextView.backgroundColor = [UIColor clearColor];
+    [feedbackTextView setUserInteractionEnabled:NO];
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[UIImage imageNamed:@"coin2.png"] forState:UIControlStateNormal];
@@ -231,6 +240,10 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
+
+    UISwipeGestureRecognizer *swipeTableView = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
+    [self.tableView addGestureRecognizer:swipeTableView];
+    swipeTableView.delegate = self;
 }
 
 - (void)addMenuCompoents
@@ -307,4 +320,14 @@
     feedbackTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGesture
+{
+    return YES;
+}
+
+-(void) textWithSwipe:(UISwipeGestureRecognizer*)recognizer {
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionRight){
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 @end

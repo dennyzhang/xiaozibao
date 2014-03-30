@@ -14,7 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ReviewViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ReviewViewController : UIViewController <UITableViewDelegate, 
+        UITableViewDataSource>
+
 @property (retain, nonatomic) IBOutlet UITextView *summaryTextView;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
