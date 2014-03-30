@@ -158,7 +158,7 @@
             value = APP_SETTING;
         }
     }
-
+    //cell.accessoryType = UITableViewCellAccessoryDetailButton;
     cell.textLabel.text = [self valueToText:value];
     return cell;
 }

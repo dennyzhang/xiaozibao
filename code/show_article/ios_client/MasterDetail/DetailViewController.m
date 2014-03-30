@@ -24,6 +24,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIBarButtonItem* barButtonItem = self.navigationItem.leftBarButtonItem;
+    [barButtonItem setTarget: self];
+    [barButtonItem setAction: @selector( test: )];
+    
     if ([self.detailItem.readcount intValue] == 1){
       [UserProfile addInteger:self.detailItem.category key:POST_VISIT_KEY offset:1];
     }
@@ -256,7 +260,7 @@
     // Update the user interface for the detail item.
     if (self.detailItem) {
         // TODO: here
-        self.detailUITextView.text = [[NSString alloc] initWithFormat:@"\n\n\n\n\n\n\n%@ ", self.detailItem.content];
+      self.detailUITextView.text = [self getContent:self.detailItem.content];
         self.titleTextView.text = self.detailItem.title;
         NSString* shortUrl = [self shortUrl:self.detailItem.source];
         NSString* prefix = @"Link:  ";
@@ -366,7 +370,6 @@
 
 - (void)refreshComponentsLayout
 {
-    
     CGFloat width = self.detailUITextView.frame.size.width;
     //CGFloat height = self.detailUITextView.frame.size.height;
     self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
@@ -405,5 +408,24 @@
     NSString* ret = [url substringToIndex:max_len];
     ret = [ret stringByAppendingString:@"..." ];
     return ret;
+}
+
+-(IBAction) test:(id)sender
+{
+  NSLog(@"test");
+}
+
+-(NSString*) getContent:(NSString*) content
+{
+  NSString* prefix = @"\n\n\n\n\n\n\n";
+  NSString* ret;
+  if ([content length] > MAX_POST_CONTENT){
+    ret = [NSString stringWithFormat:@"%@%@... ...", prefix,
+                    [content substringWithRange:NSMakeRange(0, MAX_POST_CONTENT)]];
+  }
+  else {
+    ret = [NSString stringWithFormat:@"%@%@", prefix, content];
+  }
+  return ret;
 }
 @end
