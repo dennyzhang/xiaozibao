@@ -456,4 +456,5 @@
       [UserProfile addInteger:self.detailItem.category key:POST_STAY_SECONDS_KEY offset:seconds];
     }
 }
+
 @end

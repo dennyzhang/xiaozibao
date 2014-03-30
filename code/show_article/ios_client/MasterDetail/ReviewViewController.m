@@ -15,6 +15,7 @@
 @implementation ReviewViewController
 @synthesize summaryTextView, tableView, coinButton;
 @synthesize category, questions;
+@synthesize clockTextView, questionsTextView, feedbackTextView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -147,24 +148,27 @@
     UIImageView *figureImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"figure.png"]]; // TODO
 
     UIImageView *clockImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hourglass.png"]];
-    UITextView* clockTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    clockTextView = [[UITextView alloc] initWithFrame:CGRectZero];
 
     UIImageView *questionsImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"question.png"]];
-    UITextView* questionsTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    questionsTextView = [[UITextView alloc] initWithFrame:CGRectZero];
 
     UIImageView *feedbackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback.png"]];
-    UITextView* feedbackTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    feedbackTextView = [[UITextView alloc] initWithFrame:CGRectZero];
 
-    NSMutableAttributedString *attString1;
-    NSMutableAttributedString *attString2;
-
-    NSString *text1;
-    NSString *text2;
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[UIImage imageNamed:@"coin2.png"] forState:UIControlStateNormal];
+    self.coinButton = btn;
 
     titleTextView.backgroundColor = [UIColor clearColor];
     [titleTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
 
     // configure attributedString
+    NSMutableAttributedString *attString1;
+    NSMutableAttributedString *attString2;
+
+    NSString *text1;
+    NSString *text2;
     text1 = @"Learning Review: ";
     text2 = self.category;
     attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
@@ -182,6 +186,87 @@
 
     [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
     titleTextView.attributedText = attString1;
+
+    [summaryTextView addSubview:btn];
+    [summaryTextView addSubview:figureImageView];
+    [summaryTextView addSubview:titleTextView];
+    [summaryTextView addSubview:clockImageView];
+    [summaryTextView addSubview:clockTextView];
+    [summaryTextView addSubview:questionsImageView];
+    [summaryTextView addSubview:questionsTextView];
+    [summaryTextView addSubview:feedbackImageView];
+    [summaryTextView addSubview:feedbackTextView];
+
+    [self showStastics];
+    // configure frames of summaryTextView's subview components
+    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 50.0f, ICON_WIDTH, ICON_HEIGHT)];
+    [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, textHeight)];
+
+    [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
+    float x=10, y = 50 + ICON_HEIGHT + verticalDistance;
+
+    [clockImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [clockTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
+
+    x = x + imageWidth + horizonDistance - 10; // TODO workaround
+    [questionsImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [questionsTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
+
+    x = x + imageWidth + horizonDistance;
+    [feedbackImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [feedbackTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
+
+    float summaryTextViewHeight = y + imageHeight + textHeight;
+    
+    summaryTextViewHeight += imageHeight; // TODO, workaround here
+    
+    [summaryTextView setFrame:CGRectMake(0, 0,
+                                         self.view.frame.size.width,
+                                          summaryTextViewHeight)];
+
+    // add score to Coin
+    NSInteger score = [UserProfile scoreByCategory:self.category];
+    [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+                          fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_SCORE_TEXT];
+
+    // Add tableview for questions from history
+    float uitable_height = self.view.frame.size.height - summaryTextView.frame.size.height;
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - uitable_height,
+                                                                     self.view.frame.size.width,
+                                                                     uitable_height)];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+}
+
+- (void)addMenuCompoents
+{
+    //UINavigationBar* appearance = self.navigationController.navigationBar;
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_SHARE;
+    [btn setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
+
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton, nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_SCORE_TEXT];
+    [self showStastics];
+}
+
+- (void)showStastics
+{
+    NSMutableAttributedString *attString1;
+    NSMutableAttributedString *attString2;
+
+    NSString *text1;
+    NSString *text2;
     
     // clock
     clockTextView.backgroundColor = [UIColor clearColor];
@@ -245,80 +330,6 @@
                        range:NSMakeRange (0, [text2 length])];
     [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
     feedbackTextView.attributedText = attString1;
-
-    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"coin2.png"] forState:UIControlStateNormal];
-    self.coinButton = btn;
-
-    [summaryTextView addSubview:btn];
-    [summaryTextView addSubview:figureImageView];
-    [summaryTextView addSubview:titleTextView];
-    [summaryTextView addSubview:clockImageView];
-    [summaryTextView addSubview:clockTextView];
-    [summaryTextView addSubview:questionsImageView];
-    [summaryTextView addSubview:questionsTextView];
-    [summaryTextView addSubview:feedbackImageView];
-    [summaryTextView addSubview:feedbackTextView];
-
-    // configure frames of summaryTextView's subview components
-    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 50.0f, ICON_WIDTH, ICON_HEIGHT)];
-    [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, textHeight)];
-
-    [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
-    float x=10, y = 50 + ICON_HEIGHT + verticalDistance;
-
-    [clockImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
-    [clockTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
-
-    x = x + imageWidth + horizonDistance - 10; // TODO workaround
-    [questionsImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
-    [questionsTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
-
-    x = x + imageWidth + horizonDistance;
-    [feedbackImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
-    [feedbackTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
-
-    float summaryTextViewHeight = y + imageHeight + textHeight;
-    
-    summaryTextViewHeight += imageHeight; // TODO, workaround here
-    
-    [summaryTextView setFrame:CGRectMake(0, 0,
-                                         self.view.frame.size.width,
-                                          summaryTextViewHeight)];
-
-    // add score to Coin
-    NSInteger score = [UserProfile scoreByCategory:self.category];
-    [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
-                          fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_SCORE_TEXT];
-
-    // Add tableview for questions from history
-    float uitable_height = self.view.frame.size.height - summaryTextView.frame.size.height;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - uitable_height,
-                                                                     self.view.frame.size.width,
-                                                                     uitable_height)];
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
-}
-
-- (void)addMenuCompoents
-{
-    //UINavigationBar* appearance = self.navigationController.navigationBar;
-    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_SHARE;
-    [btn setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
-
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton, nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_SCORE_TEXT];
 }
 
 @end
