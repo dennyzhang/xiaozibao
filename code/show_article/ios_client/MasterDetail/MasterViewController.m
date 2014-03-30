@@ -36,6 +36,7 @@
 {
     [super viewDidLoad];
 
+    NSLog(@"MasterViewController load");
     UIButton* btn;
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
@@ -73,7 +74,7 @@
         self.coinButton = btn;
         NSInteger score = [UserProfile scoreByCategory:self.category];
         [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
-                              fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_SCORE_TEXT];
+                              fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
         UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
         
         self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
@@ -702,4 +703,10 @@
         }
     }
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+}
+
 @end

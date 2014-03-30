@@ -46,6 +46,7 @@
 #define TAG_SWITCH_HIDE_READ_POST 1005
 #define TAG_SWITCH_EDITOR_MODE 1006
 #define TAG_VOTEUP_TEXT 1007
+#define TAG_MASTERVIEW_SCORE_TEXT 1008
 
 #define CLEAN_CACHE @"Clean cache"
 #define FOLLOW_TWITTER @"Follow us on Twitter"
