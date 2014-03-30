@@ -95,9 +95,18 @@
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
+    //swipe guesture
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
+    [self.tableView addGestureRecognizer:swipe];
+    swipe.delegate = self;
+
 }
 
 - (void) showMenuViewController:(id)sender
+{
+  [self showMenuView];
+}
+- (void) showMenuView
 {
     SWRevealViewController* rvc = self.revealViewController;
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
@@ -682,6 +691,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+}
+
+-(void) textWithSwipe:(UISwipeGestureRecognizer*)recognizer {
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionRight){
+      [self showMenuView];
+    }
 }
 
 @end
