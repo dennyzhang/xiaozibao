@@ -19,7 +19,7 @@
 @implementation DetailViewController
 @synthesize detailItem;
 @synthesize detailUITextView, imageView, titleTextView, linkTextView;
-@synthesize coinButton, shouldShowCoin;
+@synthesize coinButton, shouldShowCoin, contentPrefix;
 
 - (void)viewDidLoad
 {
@@ -31,9 +31,13 @@
     if ([self.detailItem.readcount intValue] == 1){
       [UserProfile addInteger:self.detailItem.category key:POST_VISIT_KEY offset:1];
     }
-    //self.detailUITextView.contentInset = UIEdgeInsetsMake(0, 10, 0, 10);
-    //self.detailUITextView.contentSize = CGSizeMake(self.detailUITextView.frame.size.width - 20,
-    //                                           self.detailUITextView.frame.size.height);
+    contentPrefix = @"\n\n\n\n\n\n\n"; // TODO workaround
+    if (!self.detailUITextView) {
+      self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,
+                                                                           self.view.frame.size.height)];
+      contentPrefix = @"\n\n\n\n\n\n\n\n\n\n"; // TODO workaround
+      [self.view addSubview:self.detailUITextView];
+    }
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
@@ -55,7 +59,6 @@
     
     // refreshComponentsLayout
     [self refreshComponentsLayout];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -251,7 +254,7 @@
 {
     if (detailItem != newDetailItem) {
         detailItem = newDetailItem;
-        [self configureView];
+        //[self configureView];
     }
 }
 
@@ -259,8 +262,7 @@
 {
     // Update the user interface for the detail item.
     if (self.detailItem) {
-        // TODO: here
-      self.detailUITextView.text = [self getContent:self.detailItem.content];
+        self.detailUITextView.text = [self getContent:self.detailItem.content];
         self.titleTextView.text = self.detailItem.title;
         NSString* shortUrl = [self shortUrl:self.detailItem.source];
         NSString* prefix = @"Link:  ";
@@ -366,6 +368,7 @@
     self.detailUITextView.scrollEnabled = YES;
     self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
     //self.detailUITextView.delegate = self;
+
 }
 
 - (void)refreshComponentsLayout
@@ -417,14 +420,13 @@
 
 -(NSString*) getContent:(NSString*) content
 {
-  NSString* prefix = @"\n\n\n\n\n\n\n";
   NSString* ret;
   if ([content length] > MAX_POST_CONTENT){
-    ret = [NSString stringWithFormat:@"%@%@... ...", prefix,
+    ret = [NSString stringWithFormat:@"%@%@... ...", contentPrefix,
                     [content substringWithRange:NSMakeRange(0, MAX_POST_CONTENT)]];
   }
   else {
-    ret = [NSString stringWithFormat:@"%@%@", prefix, content];
+    ret = [NSString stringWithFormat:@"%@%@", contentPrefix, content];
   }
   return ret;
 }

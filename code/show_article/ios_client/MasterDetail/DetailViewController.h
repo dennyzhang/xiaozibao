@@ -22,7 +22,7 @@
 #define TAG_BUTTON_COIN_DETAILVIEW 2006
 #define TAG_SCORE_TEXT_DETAILVIEW 2007
 
-#define MAX_POST_CONTENT 1700
+#define MAX_POST_CONTENT 1500
 #define INVALID_STRING @"INVALID_STRING"
 #define FEEDBACK_ENVOTEUP @"tag envoteup"
 #define FEEDBACK_ENVOTEDOWN @"tag envotedown"
@@ -39,4 +39,8 @@
 @property (retain, nonatomic) IBOutlet UITextView *linkTextView;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (atomic, retain) NSNumber* shouldShowCoin;
+@property (atomic, retain) NSString* contentPrefix;
+
+- (void)setDetailItem:(Posts*)newDetailItem;
+- (void)configureView;
 @end

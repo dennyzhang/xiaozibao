@@ -10,6 +10,7 @@
 #import "UserProfile.h"
 #import "ComponentUtil.h"
 #import "PostsSqlite.h"
+#import "DetailViewController.h"
 
 #import <UIKit/UIKit.h>
 

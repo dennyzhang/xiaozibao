@@ -79,6 +79,23 @@
   return questions.count;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"indexPath:%@", indexPath);
+    // Determine if row is selectable based on the NSIndexPath.
+
+    Posts *post = questions[indexPath.row];
+    NSLog(@"post:%@",post);
+    DetailViewController *detailviewcontroller = [[DetailViewController alloc]init];
+    self.navigationController.navigationBarHidden = NO;
+
+    [detailviewcontroller setDetailItem:post];
+
+    [self.navigationController pushViewController:detailviewcontroller animated:YES];
+
+    return nil;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // return cell
