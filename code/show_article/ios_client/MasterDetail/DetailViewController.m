@@ -10,8 +10,9 @@
 #import "AFJSONRequestOperation.h"
 #import "AFHTTPClient.h"
 
-@interface DetailViewController ()
-
+@interface DetailViewController () {
+  NSTimeInterval startTime;
+}
 - (void)configureView;
 - (void)refreshComponentsLayout;
 @end
@@ -433,9 +434,24 @@
   return ret;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"viewWillAppear");
+    startTime = [NSDate timeIntervalSinceReferenceDate];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     NSLog(@"viewWillDisappear");
+    int seconds = (int)ceilf([NSDate timeIntervalSinceReferenceDate] - startTime);
+    
+    if (seconds > MAX_SECONDS_FOR_VALID_STAY) {
+      NSLog(@"Skip caculating: stay in the post for %d, which is over %d seconds",
+            seconds, MAX_SECONDS_FOR_VALID_STAY);
+    }
+    else {
+      NSLog(@"Stay for ove %d seconds", seconds);
+      [UserProfile addInteger:self.detailItem.category key:POST_STAY_SECONDS_KEY offset:seconds];
+    }
 }
-
 @end

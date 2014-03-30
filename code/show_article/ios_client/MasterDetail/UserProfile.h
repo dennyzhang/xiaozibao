@@ -10,10 +10,11 @@
 
 @interface UserProfile:NSObject
 
-#define POST_VISIT_KEY @"post_visit_count"
-#define POST_VOTEUP_KEY @"post_voteup_count"
-#define POST_VOTEDOWN_KEY @"post_VOTEDOW_count"
-#define POST_FAVORITE_KEY @"post_FAVORITE_count"
+#define POST_VISIT_KEY @"POST_VISIT_COUNT"
+#define POST_VOTEUP_KEY @"POST_VOTEUP_COUNT"
+#define POST_VOTEDOWN_KEY @"POST_VOTEDOW_COUNT"
+#define POST_FAVORITE_KEY @"POST_FAVORITE_COUNT"
+#define POST_STAY_SECONDS_KEY @"STAY_SECONDS"
 
 +(NSInteger) integerForKey:(NSString* )category key:(NSString*)key;
 +(void) addInteger:(NSString* )category key:(NSString*)key offset:(NSInteger)offset;

@@ -186,8 +186,8 @@
     // clock
     clockTextView.backgroundColor = [UIColor clearColor];
     text1 = [NSString stringWithFormat: @"%d",
-                      [UserProfile integerForKey:self.category key:POST_VISIT_KEY]];
-    text2 = @"minutes spent";
+                      [UserProfile integerForKey:self.category key:POST_STAY_SECONDS_KEY]];
+    text2 = @"sec spent";
     attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
     attString2 = [[NSMutableAttributedString alloc] initWithString:text2];
     
