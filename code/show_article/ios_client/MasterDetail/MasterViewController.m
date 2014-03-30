@@ -468,13 +468,10 @@
         [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
         [textView setBackgroundColor:[UIColor clearColor]];
         [textView setTag:TAG_TEXTVIEW_IN_CELL];
-        [textView setEditable:NO];
-        textView.selectable = NO;
-        textView.scrollEnabled = NO;
         textView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:textView];
         [textView setText:post.title];
-        [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), 44.0f)];
+        [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), 100.0f)];
         
         UITextView *metadataTextView = [[UITextView alloc] initWithFrame:CGRectZero];
         [metadataTextView setTextColor:[UIColor blackColor]];
@@ -546,7 +543,7 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if ([self.navigationItem.title isEqualToString:APP_SETTING]){
+    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite questions?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
             
