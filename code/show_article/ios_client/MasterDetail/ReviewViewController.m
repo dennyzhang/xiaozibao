@@ -139,12 +139,15 @@
 
     UIImageView *clockImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hourglass.png"]];
     clockTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    clockTextView.backgroundColor = [UIColor clearColor];
 
     UIImageView *questionsImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"question.png"]];
     questionsTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    questionsTextView.backgroundColor = [UIColor clearColor];
 
     UIImageView *feedbackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback.png"]];
     feedbackTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    feedbackTextView.backgroundColor = [UIColor clearColor];
 
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[UIImage imageNamed:@"coin2.png"] forState:UIControlStateNormal];
@@ -250,19 +253,11 @@
     [self showStastics];
 }
 
-- (void)showStastics
+- (NSMutableAttributedString *) buildAttributedText:(NSString*) text1 text2:(NSString*) text2
 {
     NSMutableAttributedString *attString1;
     NSMutableAttributedString *attString2;
 
-    NSString *text1;
-    NSString *text2;
-    
-    // clock
-    clockTextView.backgroundColor = [UIColor clearColor];
-    text1 = [NSString stringWithFormat: @"%d",
-                      [UserProfile integerForKey:self.category key:POST_STAY_SECONDS_KEY]];
-    text2 = @"sec spent";
     attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
     attString2 = [[NSMutableAttributedString alloc] initWithString:text2];
     
@@ -276,50 +271,40 @@
                        value:[UIFont systemFontOfSize:FONT_TINY2]
                        range:NSMakeRange (0, [text2 length])];
     [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
-    clockTextView.attributedText = attString1;
+    return attString1;
+
+}
+- (void)showStastics
+{
+    NSString *text1;
+    NSString *text2;
+
+    // clock
+    int seconds = [UserProfile integerForKey:self.category key:POST_STAY_SECONDS_KEY];
+    if (seconds < 100) {
+        text1 = [NSString stringWithFormat: @"%d", seconds];
+        text2 = @"sec spent";
+    }
+    else {
+        text1 = [NSString stringWithFormat: @"%d", (int)ceilf(seconds/60.0f)];
+        text2 = @"min spent";
+    }
+    clockTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 
     // questions
-    questionsTextView.backgroundColor = [UIColor clearColor];
     text1 = [NSString stringWithFormat: @"%d",
                       [UserProfile integerForKey:self.category key:POST_VISIT_KEY]];
     text2 = @"questions learned";
-    attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
-    attString2 = [[NSMutableAttributedString alloc] initWithString:text2];
-    
-    [attString1 addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}
-                range:NSMakeRange (0, [text1 length])];
-    [attString1 addAttribute:NSFontAttributeName
-                       value:[UIFont systemFontOfSize:FONT_NORMAL]
-                       range:NSMakeRange (0, [text1 length])];
-    
-    [attString2 addAttribute:NSFontAttributeName
-                       value:[UIFont systemFontOfSize:FONT_TINY2]
-                       range:NSMakeRange (0, [text2 length])];
-    [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
-    questionsTextView.attributedText = attString1;
+    questionsTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 
     // feedback
-    feedbackTextView.backgroundColor = [UIColor clearColor];
     text1 = [NSString stringWithFormat: @"%d",
                       [UserProfile integerForKey:self.category key:POST_VOTEUP_KEY]
                      +[UserProfile integerForKey:self.category key:POST_VOTEDOWN_KEY]
                      +[UserProfile integerForKey:self.category key:POST_FAVORITE_KEY]
              ];
     text2 = @"feedback contributed";
-    attString1 = [[NSMutableAttributedString alloc] initWithString:text1];
-    attString2 = [[NSMutableAttributedString alloc] initWithString:text2];
-    
-    [attString1 addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}
-                range:NSMakeRange (0, [text1 length])];
-    [attString1 addAttribute:NSFontAttributeName
-                       value:[UIFont systemFontOfSize:FONT_NORMAL]
-                       range:NSMakeRange (0, [text1 length])];
-    
-    [attString2 addAttribute:NSFontAttributeName
-                       value:[UIFont systemFontOfSize:FONT_TINY2]
-                       range:NSMakeRange (0, [text2 length])];
-    [attString1 insertAttributedString:attString2 atIndex:[text1 length]];
-    feedbackTextView.attributedText = attString1;
+    feedbackTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 }
 
 @end
