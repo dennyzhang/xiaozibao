@@ -81,11 +81,9 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"indexPath:%@", indexPath);
     // Determine if row is selectable based on the NSIndexPath.
 
     Posts *post = questions[indexPath.row];
-    NSLog(@"post:%@",post);
     DetailViewController *detailviewcontroller = [[DetailViewController alloc]init];
     self.navigationController.navigationBarHidden = NO;
 
