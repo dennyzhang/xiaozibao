@@ -33,6 +33,7 @@
     }
     contentPrefix = @"\n\n\n\n\n\n\n"; // TODO workaround
     if (!self.detailUITextView) {
+      NSLog(@"here!");
       self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,
                                                                            self.view.frame.size.height)];
       contentPrefix = @"\n\n\n\n\n\n\n\n\n\n"; // TODO workaround
@@ -422,8 +423,9 @@
 {
   NSString* ret;
   if ([content length] > MAX_POST_CONTENT){
-    ret = [NSString stringWithFormat:@"%@%@... ...", contentPrefix,
-                    [content substringWithRange:NSMakeRange(0, MAX_POST_CONTENT)]];
+    // ret = [NSString stringWithFormat:@"%@%@... ...", contentPrefix,
+    //                 [content substringWithRange:NSMakeRange(0, MAX_POST_CONTENT)]];
+    ret = [NSString stringWithFormat:@"%@%@", contentPrefix, content];
   }
   else {
     ret = [NSString stringWithFormat:@"%@%@", contentPrefix, content];
