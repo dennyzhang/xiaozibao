@@ -46,6 +46,7 @@
   [UserProfile setInteger:category key:POST_VOTEUP_KEY value:0];
   [UserProfile setInteger:category key:POST_VOTEDOWN_KEY value:0];
   [UserProfile setInteger:category key:POST_FAVORITE_KEY value:0];
+  [UserProfile setInteger:category key:POST_STAY_SECONDS_KEY value:0];
   [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

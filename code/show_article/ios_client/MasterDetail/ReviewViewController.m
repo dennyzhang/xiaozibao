@@ -283,18 +283,18 @@
     int seconds = [UserProfile integerForKey:self.category key:POST_STAY_SECONDS_KEY];
     if (seconds < 100) {
         text1 = [NSString stringWithFormat: @"%d", seconds];
-        text2 = @"sec spent";
+        text2 = @" sec spent";
     }
     else {
         text1 = [NSString stringWithFormat: @"%d", (int)ceilf(seconds/60.0f)];
-        text2 = @"min spent";
+        text2 = @" min spent";
     }
     clockTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 
     // questions
     text1 = [NSString stringWithFormat: @"%d",
                       [UserProfile integerForKey:self.category key:POST_VISIT_KEY]];
-    text2 = @"questions learned";
+    text2 = @" questions learned";
     questionsTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 
     // feedback
@@ -303,7 +303,7 @@
                      +[UserProfile integerForKey:self.category key:POST_VOTEDOWN_KEY]
                      +[UserProfile integerForKey:self.category key:POST_FAVORITE_KEY]
              ];
-    text2 = @"feedback contributed";
+    text2 = @" feedback contributed";
     feedbackTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 }
 
