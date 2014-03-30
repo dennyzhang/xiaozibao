@@ -96,22 +96,33 @@
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     //swipe guesture
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe:)];
     [self.view addGestureRecognizer:swipe];
     swipe.delegate = self;
+    //swipe guesture
+    UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
+    leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:leftswipe];
+    leftswipe.delegate = self;
+
 }
 
 - (void) showMenuViewController:(id)sender
 {
-  [self showMenuView];
+  [self showMenuView:TRUE];
 }
-- (void) showMenuView
+
+- (void) showMenuView:(BOOL)shouldShow
 {
     SWRevealViewController* rvc = self.revealViewController;
-    MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-    [menuvc load_category_list];
-
-    [rvc revealToggleAnimated:YES];
+    if (shouldShow) {
+      MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
+      [menuvc load_category_list];
+      [rvc revealToggleAnimated:YES];
+    }
+    else {
+      [rvc rightRevealToggleAnimated:YES];
+    }
 }
 
 - (void)init_data:(NSString*)username_t
@@ -692,11 +703,15 @@
     [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
 }
 
--(void) textWithSwipe:(UISwipeGestureRecognizer*)recognizer {
-  NSLog(@"MasterViewController textWithSwipe");
-    if (recognizer.direction == UISwipeGestureRecognizerDirectionRight){
-      [self showMenuView];
-    }
+-(void) rightSwipe:(UISwipeGestureRecognizer*)recognizer {
+  NSLog(@"MasterViewController rightSwipe");
+  [self showMenuView:TRUE];
+}
+
+-(void) leftSwipe:(UISwipeGestureRecognizer*)recognizer {
+  NSLog(@"MasterViewController leftSwipe");
+
+  [self showMenuView:FALSE];
 }
 
 @end

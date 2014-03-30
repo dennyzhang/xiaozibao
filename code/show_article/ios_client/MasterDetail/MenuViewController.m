@@ -16,6 +16,21 @@
 
 @implementation MenuViewController
 
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    self.sectionArray = [NSArray arrayWithObjects:@" Questions", @" Preference",nil];
+    [self load_category_list];
+}
+
 - (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
 {
     NSLog(@"MenuViewController segue identifier: %@", [segue identifier]);
@@ -77,26 +92,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
-    self.sectionArray = [NSArray arrayWithObjects:@" Questions", @" Preference",nil];
-    [self load_category_list];
-
-    //swipe guesture
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
-    [self.view addGestureRecognizer:swipe];
-    swipe.delegate = self;
-
 }
 
 - (void)load_category_list
@@ -201,11 +196,6 @@
     // return [str
     //            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
    return [text capitalizedString];
-}
-
--(void) textWithSwipe:(UISwipeGestureRecognizer*)recognizer {
-  NSLog(@"here");
-
 }
 
 @end
