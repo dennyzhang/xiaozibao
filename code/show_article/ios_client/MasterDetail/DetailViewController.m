@@ -370,7 +370,7 @@
     self.detailUITextView.selectable = NO;
 
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
-    [self.detailUITextView addGestureRecognizer:swipe];
+    [self.view addGestureRecognizer:swipe];
     swipe.delegate = self;
 }
 

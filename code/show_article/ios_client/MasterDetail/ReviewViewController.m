@@ -127,7 +127,7 @@
     self.summaryTextView.scrollEnabled = NO;
 
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
-    [self.summaryTextView addGestureRecognizer:swipe];
+    [self.view addGestureRecognizer:swipe];
     swipe.delegate = self;
 
     self.summaryTextView.backgroundColor = [UIColor clearColor];
@@ -241,9 +241,6 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
 
-    UISwipeGestureRecognizer *swipeTableView = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
-    [self.tableView addGestureRecognizer:swipeTableView];
-    swipeTableView.delegate = self;
 }
 
 - (void)addMenuCompoents

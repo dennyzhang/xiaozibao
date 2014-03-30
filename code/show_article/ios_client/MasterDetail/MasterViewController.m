@@ -97,9 +97,8 @@
     
     //swipe guesture
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
-    [self.tableView addGestureRecognizer:swipe];
+    [self.view addGestureRecognizer:swipe];
     swipe.delegate = self;
-
 }
 
 - (void) showMenuViewController:(id)sender
@@ -440,7 +439,7 @@
         cell.textLabel.text = @"";
         
         NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
-        NSLog(@"url:%@, iconPath:%@", post.source, iconPath);
+        //NSLog(@"url:%@, iconPath:%@", post.source, iconPath);
         //NSString* iconPath = @"stackexchange.com.png";
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
         
@@ -694,6 +693,7 @@
 }
 
 -(void) textWithSwipe:(UISwipeGestureRecognizer*)recognizer {
+  NSLog(@"MasterViewController textWithSwipe");
     if (recognizer.direction == UISwipeGestureRecognizerDirectionRight){
       [self showMenuView];
     }

@@ -91,6 +91,12 @@
 
     self.sectionArray = [NSArray arrayWithObjects:@" Questions", @" Preference",nil];
     [self load_category_list];
+
+    //swipe guesture
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
+    [self.view addGestureRecognizer:swipe];
+    swipe.delegate = self;
+
 }
 
 - (void)load_category_list
@@ -195,6 +201,11 @@
     // return [str
     //            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
    return [text capitalizedString];
+}
+
+-(void) textWithSwipe:(UISwipeGestureRecognizer*)recognizer {
+  NSLog(@"here");
+
 }
 
 @end
