@@ -316,4 +316,9 @@
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton, nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_SCORE_TEXT];
+}
+
 @end

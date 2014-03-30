@@ -437,6 +437,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSLog(@"viewWillAppear");
+    [ComponentUtil updateScoreText:self.detailItem.category btn:self.coinButton tag:TAG_SCORE_TEXT];
+
     startTime = [NSDate timeIntervalSinceReferenceDate];
 }
 
