@@ -393,7 +393,7 @@ NSLock *lock;
 
 + (sqlite3 *)openSqlite:(NSString*) dbPath
 {
-    sqlite3* postsDB;
+    sqlite3* postsDB = NULL;
 
     //if ([filemgr fileExistsAtPath: dbPath ] == NO)
     if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {

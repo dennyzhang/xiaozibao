@@ -108,24 +108,6 @@
 
 }
 
-- (void) showMenuViewController:(id)sender
-{
-  [self showMenuView:TRUE];
-}
-
-- (void) showMenuView:(BOOL)shouldShow
-{
-    SWRevealViewController* rvc = self.revealViewController;
-    if (shouldShow) {
-      MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-      [menuvc load_category_list];
-      [rvc revealToggleAnimated:YES];
-    }
-    else {
-      [rvc rightRevealToggleAnimated:YES];
-    }
-}
-
 - (void)init_data:(NSString*)username_t
        category_t:(NSString*)category_t
   navigationTitle:(NSString*)navigationTitle
@@ -134,11 +116,7 @@
     NSLog(@"navigationTitle: %@", navigationTitle);
     self.navigationItem.title = navigationTitle;
     
-    if ([navigationTitle isEqualToString:MORE_CATEGORY]) {
-        return;
-    }
-    
-    if ([navigationTitle isEqualToString:APP_SETTING]) {
+    if ([navigationTitle isEqualToString:MORE_CATEGORY] || [navigationTitle isEqualToString:APP_SETTING]) {
         return;
     }
     
@@ -151,7 +129,6 @@
     dbPath = [PostsSqlite getDBPath];
     postsDB = [PostsSqlite openSqlite:dbPath];
 
-    userDefaults = [NSUserDefaults standardUserDefaults];
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
                    objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     
@@ -161,7 +138,67 @@
           shouldAppendHead:YES]; // TODO
 }
 
-- (void)fetchArticleList:(NSString*) userid
+- (bool)addToTableView:(int)index
+                marray:(NSMutableArray *)marray
+                object:(Posts*)object
+{
+    NSInteger myInteger = [userDefaults integerForKey:@"HideReadPosts"];
+    if (myInteger == 1) {
+        if (object.readcount.intValue !=0 )
+            return YES;
+    }
+    
+    bool ret = YES;
+    [marray insertObject:object atIndex:index];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    return ret;
+}
+
+- (void)fetchJson:(NSMutableArray*) listObject
+           urlStr:(NSString*)urlStr
+ shouldAppendHead:(bool)shouldAppendHead
+{
+    
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        Posts* post = [[Posts alloc] init];
+        [post setPostid:[JSON valueForKeyPath:@"id"]];
+        [post setTitle:[JSON valueForKeyPath:@"title"]];
+        [post setSummary:[JSON valueForKeyPath:@"summary"]];
+        [post setCategory:[JSON valueForKeyPath:@"category"]];
+        [post setContent:[JSON valueForKeyPath:@"content"]];
+        [post setSource:[JSON valueForKeyPath:@"source"]];
+        [post set_metadata:[JSON valueForKeyPath:@"metadata"]];
+        [post setReadcount:[NSNumber numberWithInt:0]];
+        
+        if ([PostsSqlite savePost:postsDB dbPath:dbPath
+                           postId:post.postid summary:post.summary category:post.category
+                            title:post.title source:post.source content:post.content
+                         metadata:post.metadata] == NO) {
+            NSLog(@"Error: insert posts. id:%@, title:%@", post.postid, post.title);
+        }
+        
+        int index = 0;
+        if (shouldAppendHead != YES){
+            index = [listObject count];
+        }
+        [self addToTableView:index marray:listObject object:post];
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
+    }];
+    
+    [operation start];
+    // [operation setSuccessCallbackQueue:backgroundQueue];
+    //[[myAFAPIClient sharedClient].operationQueue addOperation:operation];
+}
+
+
+- (void)fetchArticleList:(NSString*)userid
               category_t:(NSString*)category_t
                start_num:(NSNumber*)start_num
                    count:(NSNumber*)count
@@ -231,63 +268,22 @@
     [operation start];
 }
 
-- (bool)addToTableView:(int)index
-                marray:(NSMutableArray *)marray
-                object:(Posts*)object
+- (void) showMenuViewController:(id)sender
 {
-    NSInteger myInteger = [userDefaults integerForKey:@"HideReadPosts"];
-    if (myInteger == 1) {
-        if (object.readcount.intValue !=0 )
-            return YES;
-    }
-    
-    bool ret = YES;
-    [marray insertObject:object atIndex:index];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    return ret;
+  [self showMenuView:TRUE];
 }
 
-- (void)fetchJson:(NSMutableArray*) listObject
-           urlStr:(NSString*)urlStr
- shouldAppendHead:(bool)shouldAppendHead
+- (void) showMenuView:(BOOL)shouldShow
 {
-    
-    NSURL *url = [NSURL URLWithString:urlStr];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        Posts* post = [[Posts alloc] init];
-        [post setPostid:[JSON valueForKeyPath:@"id"]];
-        [post setTitle:[JSON valueForKeyPath:@"title"]];
-        [post setSummary:[JSON valueForKeyPath:@"summary"]];
-        [post setCategory:[JSON valueForKeyPath:@"category"]];
-        [post setContent:[JSON valueForKeyPath:@"content"]];
-        [post setSource:[JSON valueForKeyPath:@"source"]];
-        [post set_metadata:[JSON valueForKeyPath:@"metadata"]];
-        [post setReadcount:[NSNumber numberWithInt:0]];
-        
-        if ([PostsSqlite savePost:postsDB dbPath:dbPath
-                           postId:post.postid summary:post.summary category:post.category
-                            title:post.title source:post.source content:post.content
-                         metadata:post.metadata] == NO) {
-            NSLog(@"Error: insert posts. id:%@, title:%@", post.postid, post.title);
-        }
-        
-        int index = 0;
-        if (shouldAppendHead != YES){
-            index = [listObject count];
-        }
-        [self addToTableView:index marray:listObject object:post];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
-    }];
-    
-    [operation start];
-    // [operation setSuccessCallbackQueue:backgroundQueue];
-    //[[myAFAPIClient sharedClient].operationQueue addOperation:operation];
+    SWRevealViewController* rvc = self.revealViewController;
+    if (shouldShow) {
+      MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
+      [menuvc load_category_list];
+      [rvc revealToggleAnimated:YES];
+    }
+    else {
+      [rvc rightRevealToggleAnimated:YES];
+    }
 }
 
 - (void)awakeFromNib

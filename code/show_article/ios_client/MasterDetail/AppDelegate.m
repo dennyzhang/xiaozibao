@@ -34,8 +34,12 @@
 
    
    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-   NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-   NSLog(basePath);
+    NSString *basePath = nil;
+    if ([paths count] > 0){
+        basePath = (NSString *)[paths objectAtIndex:0];
+    }
+
+    NSLog(@"basePath:%@", basePath);
 
     self.window.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
