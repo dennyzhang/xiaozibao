@@ -21,7 +21,6 @@
     NSMutableArray *_objects;
     sqlite3 *postsDB;
     NSString *dbPath;
-    NSUserDefaults *userDefaults;
     NSNumber *bottom_num;
     NSNumber *page_count;
 }
@@ -54,7 +53,7 @@
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
     
-    userDefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (![userDefaults stringForKey:@"CategoryList"]) {
         [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"CategoryList"];
     }
@@ -112,6 +111,7 @@
        category_t:(NSString*)category_t
   navigationTitle:(NSString*)navigationTitle
 {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.category=category_t;
     NSLog(@"navigationTitle: %@", navigationTitle);
     self.navigationItem.title = navigationTitle;
@@ -129,6 +129,10 @@
     dbPath = [PostsSqlite getDBPath];
     postsDB = [PostsSqlite openSqlite:dbPath];
 
+    if (!userDefaults) {
+      userDefaults = [NSUserDefaults standardUserDefaults];
+    }
+
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
                    objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     
@@ -142,7 +146,7 @@
                 marray:(NSMutableArray *)marray
                 object:(Posts*)object
 {
-    NSInteger myInteger = [userDefaults integerForKey:@"HideReadPosts"];
+    NSInteger myInteger = [[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"];
     if (myInteger == 1) {
         if (object.readcount.intValue !=0 )
             return YES;
@@ -211,7 +215,7 @@
     // TODO: voteup defined by users
     NSString *sortMethod;
     NSString *urlStr;
-    if ([userDefaults integerForKey:@"IsEditorMode"] == 0) {
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 0) {
         sortMethod = @"hotest";
         // If anyone votedown, it's not shown
         urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
@@ -400,6 +404,7 @@
 
 - (void) appSettingRows:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath
 {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -539,7 +544,7 @@
         NSLog(@"clean cache");
         
         [PostsSqlite cleanCache:postsDB dbPath:dbPath];
-        if ([userDefaults integerForKey:@"IsEditorMode"] == 1) {
+        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 1) {
           [UserProfile cleanAllCategoryKey];
         }
     }
@@ -676,6 +681,7 @@
 
 - (void) hideSwitchChanged:(id)sender {
     if ([sender isKindOfClass:[UISwitch class]]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         UISwitch* switchControl = sender;
         if (switchControl.tag == TAG_SWITCH_HIDE_READ_POST) {
             if (switchControl.on == true) {

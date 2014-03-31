@@ -96,8 +96,7 @@
 
 - (void)load_category_list
 {
-  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-  NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
+  NSString* categoryList = [[NSUserDefaults standardUserDefaults] stringForKey:@"CategoryList"];
   NSLog(@"load_category_list:%@", categoryList);
   NSString* category;
   NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
