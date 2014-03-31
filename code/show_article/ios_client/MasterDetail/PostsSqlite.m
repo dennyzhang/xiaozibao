@@ -124,19 +124,6 @@ NSLock *lock;
 
 }
 
-+ (Posts*)getPost: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-           postId:(NSString *)postId
-{
-    Posts* post = nil;
-    NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE POSTID=\"%@\"", postId];
-    NSMutableArray* posts = [PostsSqlite getPostsBySql:postsDB dbPath:dbPath querySQL:querySQL];
-    if ([posts count] == 1) {
-      post = posts[0];
-    }
-    return post;
-}
-
 + (bool)savePost: (sqlite3 *)postsDB
           dbPath:(NSString *) dbPath
           postId:(NSString *)postId
@@ -181,6 +168,20 @@ NSLock *lock;
     return ret;
 }
 
+
++ (Posts*)getPost: (sqlite3 *)postsDB
+           dbPath:(NSString *) dbPath
+           postId:(NSString *)postId
+{
+    Posts* post = nil;
+    NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE POSTID=\"%@\"", postId];
+    NSMutableArray* posts = [PostsSqlite getPostsBySql:postsDB dbPath:dbPath querySQL:querySQL];
+    if ([posts count] == 1) {
+      post = posts[0];
+    }
+    return post;
+}
+
 + (bool)loadPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
             category:(NSString *)category
@@ -190,8 +191,6 @@ NSLock *lock;
 {
     NSLog(@"loadposts, category:%@, hideReadPosts:%d",category, hideReadPosts);
     bool ret = NO;
-    const char *dbpath = [dbPath UTF8String];
-    sqlite3_stmt *statement;
     NSString *querySQL;
     if ([category isEqualToString:SAVED_QUESTIONS]) {
       querySQL = @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10";
@@ -224,8 +223,6 @@ NSLock *lock;
         tableview:(UITableView *)tableview
 {
     bool ret = NO;
-    const char *dbpath = [dbPath UTF8String];
-    sqlite3_stmt *statement;
     NSString *querySQL;
     querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE CATEGORY =\"%@\" ORDER BY ISFAVORITE DESC, READCOUNT DESC, ISVOTEUP DESC, ISVOTEDOWN ASC, ID DESC LIMIT 10", category];
 
@@ -325,15 +322,12 @@ NSLock *lock;
     NSString* docsDir;
     NSString* dbPath;
     // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(
-                                                   NSDocumentDirectory, NSUserDomainMask, YES);
-    
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     docsDir = [dirPaths objectAtIndex:0];
     
     // Build the path to the database file
     dbPath = [[NSString alloc]
-                    initWithString: [docsDir stringByAppendingPathComponent:
-                                     @"posts.db"]];  
+                    initWithString: [docsDir stringByAppendingPathComponent: @"posts.db"]];  
     return dbPath;
 }
 
