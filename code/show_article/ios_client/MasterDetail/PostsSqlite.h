@@ -21,6 +21,10 @@
 + (bool)initDB: (sqlite3 *)postsDB
         dbPath:(NSString *) dbPath;
 
++ (NSMutableArray*)getPostsBySql: (sqlite3 *)postsDB
+           dbPath:(NSString *) dbPath
+           querySQL:(NSString *)querySQL;
+
 + (Posts*)getPost: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
            postId:(NSString *)postId;
