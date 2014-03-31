@@ -50,4 +50,14 @@
   [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(void) cleanAllCategoryKey
+{
+  NSString* categoryList = [[NSUserDefaults standardUserDefaults] stringForKey:@"CategoryList"];
+  NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
+  for (int i=0; i < [stringArray count]; i++)
+    {
+      [UserProfile cleanCategoryKey:stringArray[i]];
+    }
+}
+
 @end

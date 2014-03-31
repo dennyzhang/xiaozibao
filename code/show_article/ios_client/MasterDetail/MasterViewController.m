@@ -30,7 +30,8 @@
 
 @implementation MasterViewController
 
-@synthesize locationManager, category, username, bottom_num, page_count;
+@synthesize locationManager, category, username;
+@synthesize bottom_num, page_count;
 
 - (void)viewDidLoad
 {
@@ -333,6 +334,22 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+}
+
+-(void) rightSwipe:(UISwipeGestureRecognizer*)recognizer {
+  NSLog(@"MasterViewController rightSwipe");
+  [self showMenuView:TRUE];
+}
+
+-(void) leftSwipe:(UISwipeGestureRecognizer*)recognizer {
+  NSLog(@"MasterViewController leftSwipe");
+
+  [self showMenuView:FALSE];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -471,16 +488,13 @@
         textView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:textView];
         [textView setText:post.title];
-        [textView setFrame:CGRectMake(10, 10, cell.frame.size.width - 50, 100.0f)];
+        [textView setFrame:CGRectMake(10, 10, cell.frame.size.width - 50, 120.0f)];
         
         UITextView *metadataTextView = [[UITextView alloc] initWithFrame:CGRectZero];
         [metadataTextView setTextColor:[UIColor blackColor]];
         [metadataTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY]];
         [metadataTextView setBackgroundColor:[UIColor clearColor]];
         [metadataTextView setTag:TAG_METADATA_IN_CELL];
-        [metadataTextView setEditable:NO];
-        metadataTextView.selectable = NO;
-        metadataTextView.scrollEnabled = NO;
         metadataTextView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:metadataTextView];
         //[metadataTextView setText:post.metadata];
@@ -530,12 +544,7 @@
         
         [PostsSqlite cleanCache:postsDB dbPath:dbPath];
         if ([userDefaults integerForKey:@"IsEditorMode"] == 1) {
-            NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
-            NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-            for (int i=0; i < [stringArray count]; i++)
-            {
-                [UserProfile cleanCategoryKey:stringArray[i]];
-            }
+          [UserProfile cleanAllCategoryKey];
         }
     }
 }
@@ -693,22 +702,6 @@
             NSLog(@"IsEditorMode:%d", [userDefaults integerForKey:@"IsEditorMode"]);
         }
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
-}
-
--(void) rightSwipe:(UISwipeGestureRecognizer*)recognizer {
-  NSLog(@"MasterViewController rightSwipe");
-  [self showMenuView:TRUE];
-}
-
--(void) leftSwipe:(UISwipeGestureRecognizer*)recognizer {
-  NSLog(@"MasterViewController leftSwipe");
-
-  [self showMenuView:FALSE];
 }
 
 @end

@@ -21,4 +21,5 @@
 +(void) setInteger:(NSString* )category key:(NSString*)key value:(NSInteger)value;
 +(NSInteger) scoreByCategory:(NSString* )category;
 +(void) cleanCategoryKey:(NSString* )category;
++(void) cleanAllCategoryKey;
 @end
