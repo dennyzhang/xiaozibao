@@ -8,6 +8,8 @@
 
 #import "ReviewViewController.h"
 
+#import <Twitter/Twitter.h>
+
 @interface ReviewViewController () {
     sqlite3 *postsDB;
     NSString *dbPath;
@@ -114,6 +116,39 @@
   // TODO
   NSString* msg = @"Coming Soon.\n\nShare to friends, Or\n twitter, wechat, etc";
   [ComponentUtil infoMessage:nil msg:msg];
+    
+    // http://www.guilmo.com/how-to-post-to-twitter-in-ios-5-or-greater/
+    // // Set the Twitter Class
+    // Class tweeterClass = NSClassFromString(@"TWTweetComposeViewController");
+    // if(tweeterClass != nil) {  // check for Twitter integration
+    //     // check Twitter accessibility and at least one account is setup
+    //     if([TWTweetComposeViewController canSendTweet]) {
+    //         TWTweetComposeViewController *tweetViewController = [[TWTweetComposeViewController alloc] init]; // Init the Twitter Controller
+    //         [tweetViewController setInitialText:@"I highly recommend checking out Guilmo.com website for the latest iOS development tips!"];
+    //         [tweetViewController addURL:[NSURL URLWithString:@"http://www.guilmo.com"]];
+            
+    //         tweetViewController.completionHandler = ^(TWTweetComposeViewControllerResult result) {
+    //             if(result == TWTweetComposeViewControllerResultDone) {
+    //                 // the user finished composing a tweet
+    //                 NSLog(@"Tweet Done!");
+    //             } else if(result == TWTweetComposeViewControllerResultCancelled) {
+    //                 // the user cancelled composing a tweet
+    //                 NSLog(@"User cancelled Tweet");
+    //             }
+    //             // Hides the tweet controller
+    //             [self dismissViewControllerAnimated:YES completion:nil];
+    //         };
+    //         // Shows the tweet box
+    //         [self presentViewController:tweetViewController animated:YES completion:nil];
+    //     } else {
+    //         // Twitter is not accessible or the user has not setup an account in the Settings Apps
+    //         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"No twitter account setup or error connecting to twitter" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    //         [ alert show ];
+    //     }
+    // } else {
+    //     // no Twitter integration; default to third-party Twitter framework
+    // }
+    
 }
 
 #pragma mark - private function

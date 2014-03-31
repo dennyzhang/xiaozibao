@@ -16,6 +16,7 @@
 		0411B25318E364EC00428AB1 /* www.quora.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B25018E364EC00428AB1 /* www.quora.com.png */; };
 		0411B25418E364EC00428AB1 /* www.reddit.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B25118E364EC00428AB1 /* www.reddit.com.png */; };
 		0411B25618E39F4200428AB1 /* thumbs_up2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B25518E39F4200428AB1 /* thumbs_up2.png */; };
+		0436CDE818E9EB5300130F79 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0436CDE718E9EB5300130F79 /* Twitter.framework */; };
 		04409A5318DB69670021F9C3 /* comments-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4E18DB69670021F9C3 /* comments-512.png */; };
 		04409A5418DB69670021F9C3 /* hearts-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4F18DB69670021F9C3 /* hearts-512.png */; };
 		04409A5518DB69670021F9C3 /* more-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A5018DB69670021F9C3 /* more-512.png */; };
@@ -81,6 +82,7 @@
 		0411B25018E364EC00428AB1 /* www.quora.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.quora.com.png; sourceTree = "<group>"; };
 		0411B25118E364EC00428AB1 /* www.reddit.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.reddit.com.png; sourceTree = "<group>"; };
 		0411B25518E39F4200428AB1 /* thumbs_up2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbs_up2.png; sourceTree = "<group>"; };
+		0436CDE718E9EB5300130F79 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		04409A4E18DB69670021F9C3 /* comments-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments-512.png"; sourceTree = "<group>"; };
 		04409A4F18DB69670021F9C3 /* hearts-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hearts-512.png"; sourceTree = "<group>"; };
 		04409A5018DB69670021F9C3 /* more-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-512.png"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0436CDE818E9EB5300130F79 /* Twitter.framework in Frameworks */,
 				04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */,
 				04C2689C1868118E004C46BC /* libPods.a in Frameworks */,
 				04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */,
@@ -232,6 +235,7 @@
 		04E893D9179130C400E9573C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0436CDE718E9EB5300130F79 /* Twitter.framework */,
 				04C2689B1868118E004C46BC /* libPods.a */,
 				04C24E831867FFB200184A3E /* libsqlite3.dylib */,
 				04C24E811867FF8100184A3E /* libsqlite3.dylib */,

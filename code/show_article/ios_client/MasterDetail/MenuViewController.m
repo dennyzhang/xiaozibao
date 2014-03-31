@@ -54,7 +54,7 @@
             }
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
-            [dstViewController init_data:userid category_t:category 
+            [dstViewController init_data:userid category_t:category
                          navigationTitle:c.textLabel.text];
             [dstViewController view];
         }

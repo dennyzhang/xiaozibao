@@ -62,8 +62,8 @@
         NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
         NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
         NSString* default_category = stringArray[0];
-        NSString* category_t = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [self init_data:@"denny" category_t:category_t navigationTitle:category_t];
+        default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [self init_data:@"denny" category_t:default_category navigationTitle:default_category];
     }
     if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -113,14 +113,13 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.category=category_t;
-    NSLog(@"navigationTitle: %@", navigationTitle);
     self.navigationItem.title = navigationTitle;
     
     if ([navigationTitle isEqualToString:MORE_CATEGORY] || [navigationTitle isEqualToString:APP_SETTING]) {
         return;
     }
     
-    self.bottom_num = [NSNumber numberWithInt:20];
+    self.bottom_num = [NSNumber numberWithInt:10];
     self.page_count = [NSNumber numberWithInt:10];
     
     self.username=username_t;
@@ -136,10 +135,10 @@
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
                    objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     
-    [self fetchArticleList:username category_t:category_t
-                 start_num:[NSNumber numberWithInt: 10]
+    [self fetchArticleList:username category:self.category
+                 start_num:[NSNumber numberWithInt: 0]
                      count:self.page_count
-          shouldAppendHead:YES]; // TODO
+          shouldAppendHead:YES];
 }
 
 - (bool)addToTableView:(int)index
@@ -201,9 +200,32 @@
     //[[myAFAPIClient sharedClient].operationQueue addOperation:operation];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([self.navigationItem.title isEqualToString:APP_SETTING])
+        return;
+    
+    // when reach the top
+    if (scrollView.contentOffset.y == 0)
+    {
+        NSLog(@"top is reached");
+        [self fetchArticleList:username category:self.category
+                     start_num:[NSNumber numberWithInt:0]
+                         count:self.page_count
+              shouldAppendHead:YES]; // TODO
+    }
+    
+    // when reaching the bottom
+    if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
+    {
+        NSLog(@"bottom is reached");
+        [self fetchArticleList:username category:self.category
+                     start_num:self.bottom_num count:self.page_count
+              shouldAppendHead:NO]; // TODO
+    }
+}
 
 - (void)fetchArticleList:(NSString*)userid
-              category_t:(NSString*)category_t
+              category:(NSString*)category
                start_num:(NSNumber*)start_num
                    count:(NSNumber*)count
         shouldAppendHead:(bool)shouldAppendHead
@@ -219,12 +241,12 @@
         sortMethod = @"hotest";
         // If anyone votedown, it's not shown
         urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
-                 urlPrefix, userid, category_t, [start_num intValue], [count intValue], sortMethod];
+                 urlPrefix, userid, category, [start_num intValue], [count intValue], sortMethod];
     }
     else {
         sortMethod = @"latest";
         urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
-                 urlPrefix, userid, category_t, [start_num intValue], [count intValue], sortMethod];
+                 urlPrefix, userid, category, [start_num intValue], [count intValue], sortMethod];
         
     }
     
@@ -629,30 +651,6 @@
     if ([self.navigationItem.title isEqualToString:APP_SETTING])
         return 30;
     return 0;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([self.navigationItem.title isEqualToString:APP_SETTING])
-        return;
-    
-    // when reach the top
-    if (scrollView.contentOffset.y == 0)
-    {
-        NSLog(@"top is reached");
-        [self fetchArticleList:username category_t:self.category
-                     start_num:[NSNumber numberWithInt:0]
-                         count:self.page_count
-              shouldAppendHead:YES]; // TODO
-    }
-    
-    // when reaching the bottom
-    if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
-    {
-        NSLog(@"bottom is reached");
-        [self fetchArticleList:username category_t:self.category
-                     start_num:self.bottom_num count:self.page_count
-              shouldAppendHead:NO]; // TODO
-    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

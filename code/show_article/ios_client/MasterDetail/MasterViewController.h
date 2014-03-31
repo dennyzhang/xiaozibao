@@ -35,7 +35,7 @@
 
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 
-- (void)init_data:(NSString*)username_t
+- (void)init_data:(NSString*)username
           category_t:(NSString*)category_t
      navigationTitle:(NSString*)navigationTitle;
 
