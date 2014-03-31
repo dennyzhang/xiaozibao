@@ -240,7 +240,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
-
 }
 
 - (void)addMenuCompoents
@@ -296,8 +295,14 @@
         text2 = @" sec spent";
     }
     else {
+      if (seconds < 60*100) {
         text1 = [NSString stringWithFormat: @"%d", (int)ceilf(seconds/60.0f)];
         text2 = @" min spent";
+      }
+      else {
+        text1 = [NSString stringWithFormat: @"%d", (int)ceilf(seconds/(60*60.0f))];
+        text2 = @" hour spent";
+      }
     }
     clockTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 

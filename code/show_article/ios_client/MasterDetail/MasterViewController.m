@@ -471,7 +471,7 @@
         textView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:textView];
         [textView setText:post.title];
-        [textView setFrame:CGRectMake(10, 10, 320 - (10 * 2), 100.0f)];
+        [textView setFrame:CGRectMake(10, 10, cell.frame.size.width - 50, 100.0f)];
         
         UITextView *metadataTextView = [[UITextView alloc] initWithFrame:CGRectZero];
         [metadataTextView setTextColor:[UIColor blackColor]];
