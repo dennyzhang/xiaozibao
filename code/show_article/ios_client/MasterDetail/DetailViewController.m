@@ -35,7 +35,7 @@
     [barButtonItem setAction: @selector( test: )];
     
     NSLog(@"self.detailItem.readcount: %d", [self.detailItem.readcount intValue]);
-    if ([self.detailItem.readcount intValue] == 0){
+    if ([self.detailItem.readcount intValue] == 1){
       [UserProfile addInteger:self.detailItem.category key:POST_VISIT_KEY offset:1];
     }
     // update readcount
