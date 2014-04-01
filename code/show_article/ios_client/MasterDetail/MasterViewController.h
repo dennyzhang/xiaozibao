@@ -53,5 +53,5 @@
 #define FOLLOW_MAILTO @"Mail to us"
 
 #define PAGE_COUNT 10
-#define ROW_HEIGHT 140.0f
+#define ROW_HEIGHT 160.0f
 @end
