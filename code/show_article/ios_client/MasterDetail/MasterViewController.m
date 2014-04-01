@@ -52,8 +52,13 @@
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (![userDefaults stringForKey:@"CategoryList"]) {
-        [userDefaults setObject:@"linux,concept,cloud,security,algorithm,product" forKey:@"CategoryList"];
+    // set default value
+    if (![userDefaults objectForKey:@"HideReadPosts"]) {
+      [userDefaults setInteger:1 forKey:@"HideReadPosts"];
+    }
+
+    if (![userDefaults objectForKey:@"CategoryList"]) {
+      [userDefaults setObject:@"linux,concept,cloud,security,algorithm,product" forKey:@"CategoryList"];
     }
     
     if (self.category == nil) {
