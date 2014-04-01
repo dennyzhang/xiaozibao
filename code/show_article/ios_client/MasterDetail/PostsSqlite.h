@@ -67,6 +67,12 @@
                   fieldName:(NSString*)fieldName
                    category:(NSString *)category;
 
++ (bool)updatePostMetadata:(sqlite3 *)postsDB
+                    dbPath:(NSString *) dbPath
+                    postId:(NSString *)postId
+                  metadata:(NSString*)metadata
+                  category:(NSString *)category;
+
 + (sqlite3 *)openSqlite:(NSString*) dbPath;
 + (NSString *)getDBPath;
 @end

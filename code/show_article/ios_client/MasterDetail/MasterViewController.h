@@ -29,8 +29,7 @@
 
 @property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSString* username;
-@property (atomic, retain) NSNumber* bottom_num;
-@property (atomic, retain) NSNumber* page_count;
+@property (nonatomic, retain) NSMutableArray *objects;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
@@ -53,5 +52,6 @@
 #define FOLLOW_WEIBO @"Follow us on Weibo"
 #define FOLLOW_MAILTO @"Mail to us"
 
+#define PAGE_COUNT 10
 #define ROW_HEIGHT 140.0f
 @end

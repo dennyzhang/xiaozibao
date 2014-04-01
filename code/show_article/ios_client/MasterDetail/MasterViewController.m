@@ -18,11 +18,9 @@
 #import <CoreFoundation/CFUUID.h>
 
 @interface MasterViewController () {
-    NSMutableArray *_objects;
     sqlite3 *postsDB;
     NSString *dbPath;
-    NSNumber *bottom_num;
-    NSNumber *page_count;
+    int bottom_num;
 }
 
 @end
@@ -30,7 +28,7 @@
 @implementation MasterViewController
 
 @synthesize locationManager, category, username;
-@synthesize bottom_num, page_count;
+@synthesize objects;
 
 - (void)viewDidLoad
 {
@@ -55,7 +53,7 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (![userDefaults stringForKey:@"CategoryList"]) {
-        [userDefaults setObject:@"concept,cloud,security,algorithm,product,linux" forKey:@"CategoryList"];
+        [userDefaults setObject:@"linux,concept,cloud,security,algorithm,product" forKey:@"CategoryList"];
     }
     
     if (self.category == nil) {
@@ -104,7 +102,6 @@
     leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:leftswipe];
     leftswipe.delegate = self;
-
 }
 
 - (void)init_data:(NSString*)username_t
@@ -119,44 +116,152 @@
         return;
     }
     
-    self.bottom_num = [NSNumber numberWithInt:10];
-    self.page_count = [NSNumber numberWithInt:10];
-    
+    self->bottom_num = 1;
     self.username=username_t;
     
-    _objects = [[NSMutableArray alloc] init];
-    dbPath = [PostsSqlite getDBPath];
-    postsDB = [PostsSqlite openSqlite:dbPath];
+    objects = [[NSMutableArray alloc] init];
+    self->postsDB = [PostsSqlite openSqlite:dbPath];
+    self->dbPath = [PostsSqlite getDBPath];
+    NSLog(@"init_data, dbPath:%@", self->dbPath);
 
     if (!userDefaults) {
       userDefaults = [NSUserDefaults standardUserDefaults];
     }
 
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
-                   objects:_objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
+                   objects:objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     
-    [self fetchArticleList:username category:self.category
-                 start_num:[NSNumber numberWithInt: 0]
-                     count:self.page_count
+    [self fetchArticleList:username category_t:self.category
+                 start_num_t:0 shouldAppendHead:YES];
+}
+
+- (void) refreshTableHead
+{
+    [self fetchArticleList:username category_t:self.category
+               start_num_t:0
           shouldAppendHead:YES];
 }
 
-- (bool)addToTableView:(int)index
-                marray:(NSMutableArray *)marray
-                object:(Posts*)object
+- (void) refreshTableTail
 {
-    NSInteger myInteger = [[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"];
-    if (myInteger == 1) {
-        if (object.readcount.intValue !=0 )
+    [self fetchArticleList:username category_t:self.category
+               start_num_t:self->bottom_num * PAGE_COUNT
+          shouldAppendHead:NO];
+}
+
+- (bool)addToTableView:(int)index
+                post:(Posts*)post
+{
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"] == 1) {
+        if (post.readcount.intValue !=0 )
             return YES;
     }
     
     bool ret = YES;
-    [marray insertObject:object atIndex:index];
+    [objects insertObject:post atIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     return ret;
+}
+
+- (void)fetchArticleList:(NSString*)userid
+              category_t:(NSString*)category_t
+               start_num_t:(int)start_num_t
+        shouldAppendHead:(bool)shouldAppendHead
+{
+    if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
+        return;
+    
+    NSLog(@"fetchArticleList category_t:%@, start_num_t:%d, shouldAppendHead:%d",
+          category_t, start_num_t, shouldAppendHead);
+    NSString *urlPrefix=SERVERURL;
+    // TODO: voteup defined by users
+    NSString *sortMethod;
+    NSString *urlStr;
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 0) {
+        // If anyone votedown, it's not shown
+        sortMethod = @"hotest";
+        urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
+                 urlPrefix, userid, category_t, start_num_t, PAGE_COUNT, sortMethod];
+    }
+    else {
+        sortMethod = @"latest";
+        urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
+                 urlPrefix, userid, category_t, start_num_t, PAGE_COUNT, sortMethod];
+    }
+    
+    NSLog(@"fetchArticleList, url:%@", urlStr);
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        NSArray *idList = [JSON valueForKeyPath:@"postid"];
+        NSArray *metadataList = [JSON valueForKeyPath:@"metadata"];
+        Posts *post = nil;
+        int i, count = [idList count];
+
+        NSLog(@"merge result dbPath: %@", dbPath);
+
+        //NSLog(@"merge result");
+        // bypass sqlite lock problem
+        if (shouldAppendHead) {
+          // TODO remove code duplication
+          for(i=count-1; i>=0; i--) {
+            //NSLog(@"fetchArticleList i:%d, id:%@, metadata:%@", i, idList[i], metadataList[i]);
+            if ([Posts containId:self.objects postId:idList[i]] == NO) {
+              post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
+              if (post == nil) {
+                [self fetchJson:self.objects
+                         urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
+                      shouldAppendHead:shouldAppendHead];
+              }
+              else {
+                int index = 0;
+                if (shouldAppendHead != YES){
+                  index = [self.objects count];
+                }
+                [self addToTableView:index post:post];
+              }
+            }
+          }
+        }
+        else{
+          for(i=0; i<count; i++) {
+            if ([Posts containId:self.objects postId:idList[i]] == NO) {
+              post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
+              if (post == nil) {
+                [self fetchJson:self.objects
+                         urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
+                      shouldAppendHead:shouldAppendHead];
+              }
+              else {
+                int index = 0;
+                if (shouldAppendHead != YES){
+                  index = [self.objects count];
+                }
+                [self addToTableView:index post:post];
+              }
+            }
+          }
+        }
+        for(i=0; i<count; i++) {
+          [PostsSqlite updatePostMetadata:postsDB dbPath:dbPath
+                                   postId:idList[i] metadata:metadataList[i]
+                                 category:self.category];
+
+        }
+        if (shouldAppendHead == NO) {
+            self->bottom_num = 1 + self->bottom_num;
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
+        // NSString* title = @"Server request error";
+        // NSString* msg = @"Fail to get post list.\nPleaese check network or app version.\nReport the issue by mail, twitter, etc";
+        // [ComponentUtil infoMessage:title msg:msg];
+    }];
+    
+    [operation start];
 }
 
 - (void)fetchJson:(NSMutableArray*) listObject
@@ -184,20 +289,18 @@
                          metadata:post.metadata] == NO) {
             NSLog(@"Error: insert posts. id:%@, title:%@", post.postid, post.title);
         }
-        
+
         int index = 0;
         if (shouldAppendHead != YES){
             index = [listObject count];
         }
-        [self addToTableView:index marray:listObject object:post];
+        [self addToTableView:index post:post];
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
     }];
     
     [operation start];
-    // [operation setSuccessCallbackQueue:backgroundQueue];
-    //[[myAFAPIClient sharedClient].operationQueue addOperation:operation];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -208,90 +311,14 @@
     if (scrollView.contentOffset.y == 0)
     {
         NSLog(@"top is reached");
-        [self fetchArticleList:username category:self.category
-                     start_num:[NSNumber numberWithInt:0]
-                         count:self.page_count
-              shouldAppendHead:YES]; // TODO
+        [self refreshTableHead];
     }
     
     // when reaching the bottom
     if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
     {
-        NSLog(@"bottom is reached");
-        [self fetchArticleList:username category:self.category
-                     start_num:self.bottom_num count:self.page_count
-              shouldAppendHead:NO]; // TODO
+      [self refreshTableTail];
     }
-}
-
-- (void)fetchArticleList:(NSString*)userid
-              category:(NSString*)category
-               start_num:(NSNumber*)start_num
-                   count:(NSNumber*)count
-        shouldAppendHead:(bool)shouldAppendHead
-{
-    if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
-        return;
-    
-    NSString *urlPrefix=SERVERURL;
-    // TODO: voteup defined by users
-    NSString *sortMethod;
-    NSString *urlStr;
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 0) {
-        sortMethod = @"hotest";
-        // If anyone votedown, it's not shown
-        urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
-                 urlPrefix, userid, category, [start_num intValue], [count intValue], sortMethod];
-    }
-    else {
-        sortMethod = @"latest";
-        urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
-                 urlPrefix, userid, category, [start_num intValue], [count intValue], sortMethod];
-        
-    }
-    
-    NSLog(@"fetchArticleList, url:%@", urlStr);
-    NSURL *url = [NSURL URLWithString:urlStr];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        NSMutableArray *idMArray;
-        NSArray *idList = [JSON valueForKeyPath:@"postid"];
-        idMArray = [idMArray initWithArray:idList];
-        Posts *post = nil;
-        NSUInteger i, count = [idList count];
-        // bypass sqlite lock problem
-        for(i=0; i<count; i++) {
-            if ([Posts containId:_objects postId:idList[i]] == NO) {
-                post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
-                if (post == nil) {
-                    [self fetchJson:_objects
-                             urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
-                   shouldAppendHead:shouldAppendHead];
-                }
-                else {
-                    int index = 0;
-                    if (shouldAppendHead != YES){
-                        index = [_objects count];
-                    }
-                    [self addToTableView:index marray:_objects object:post];
-                }
-            }
-        }
-        if (shouldAppendHead == NO) {
-            self.bottom_num = [NSNumber numberWithInt: [self.page_count intValue] + [self.bottom_num intValue]];
-            //NSLog(@"should change here");
-        }
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
-        // NSString* title = @"Server request error";
-        // NSString* msg = @"Fail to get post list.\nPleaese check network or app version.\nReport the issue by mail, twitter, etc";
-        // [ComponentUtil infoMessage:title msg:msg];
-    }];
-    
-    [operation start];
 }
 
 - (void) showMenuViewController:(id)sender
@@ -421,7 +448,7 @@
         return 0;
     }
     else
-        return _objects.count;
+        return objects.count;
 }
 
 - (void) appSettingRows:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath
@@ -482,7 +509,7 @@
         return cell;
     }
     else {
-        Posts *post = _objects[indexPath.row];
+        Posts *post = objects[indexPath.row];
         [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
         [[cell.contentView viewWithTag:TAG_METADATA_IN_CELL]removeFromSuperview];
         [[cell.contentView viewWithTag:TAG_ICON_IN_CELL]removeFromSuperview];
@@ -562,9 +589,10 @@
         NSLog(@"He press Cancel");
     }
     else {
+        NSLog(@"clean cache, dbPath:%@", dbPath);
+        self->dbPath = [PostsSqlite getDBPath]; // TODO why we need this?
         [PostsSqlite openSqlite:dbPath];
-        NSLog(@"clean cache");
-        
+
         [PostsSqlite cleanCache:postsDB dbPath:dbPath];
         if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 1) {
           [UserProfile cleanAllCategoryKey];
@@ -640,7 +668,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
+        [objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
@@ -662,11 +690,10 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSLog(@"increate visit count, for category:%@. previous key:%d", self.category,
               [UserProfile integerForKey:self.category key:POST_VISIT_KEY]);
-        Posts *post = _objects[indexPath.row];
+        Posts *post = objects[indexPath.row];
         
-        //post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
+        post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [self markCellAsRead:cell post:post];
-        self.bottom_num = [NSNumber numberWithInt:20];
         if ([self.category isEqualToString:SAVED_QUESTIONS]) {
           [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:0]];
         }

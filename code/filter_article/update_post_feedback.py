@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-03-29 14:40:00>
+## Updated: Time-stamp: <2014-03-31 23:42:24>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -36,7 +36,7 @@ DB_USERNAME="user_2013"
 DB_PWD="ilovechina"
 DB_NAME="xzb"
 
-EDITOR_UID_LIST = ["denny", "749A51E0-50F4-49AD-A5D5-BDCBA787EF29", "0DD7936F-629C-4E9E-B458-821B3964EA3E"]
+EDITOR_UID_LIST = ["denny", "749A51E0-50F4-49AD-A5D5-BDCBA787EF29", "0DD7936F-629C-4E9E-B458-821B3964EA3E", "5686F12E-5047-4E68-BDF0-083C31A63FF8"]
 
 FIELD_SEPARATOR="&$!"
 FEEDBACK_ENVOTEUP="tag envoteup"

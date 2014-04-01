@@ -76,7 +76,7 @@ NSLock *lock;
     NSMutableArray* posts = [[NSMutableArray alloc] init];
     const char *dbpath = [dbPath UTF8String];
     sqlite3_stmt *statement;
-    NSLog(@"getPostsBySql querySQL: %@", querySQL);
+    //NSLog(@"getPostsBySql querySQL: %@", querySQL);
     const char *query_stmt = [querySQL UTF8String];
     [lock lock];
 
@@ -206,7 +206,7 @@ NSLock *lock;
     NSLog(@"sql: %@", querySQL);
     NSMutableArray* posts = [PostsSqlite getPostsBySql:postsDB dbPath:dbPath querySQL:querySQL];
 
-    for(int i=0; i<[posts count]; i++) {
+    for(int i=[posts count] - 1; i>=0; i--) {
       [objects insertObject:posts[i] atIndex:0];
                 
       NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -253,6 +253,43 @@ NSLock *lock;
                            stringWithFormat:
                            @"UPDATE POSTS SET readcount=readcount+1 WHERE postid=\"%@\" and category=\"%@\"",
                            postId, category];
+    const char *sql_stmt = [updateSql UTF8String];
+    
+    [lock lock];
+    if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
+    {
+        sqlite3_prepare_v2(postsDB, sql_stmt, -1, &statement, NULL);
+        
+        if (sqlite3_step(statement) != SQLITE_DONE) {
+            NSLog(@"%@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)]);
+            ret = NO;
+        }
+        else
+            ret = YES;
+    }
+    else {
+        ret = NO;
+    }
+    
+    sqlite3_finalize(statement);
+    sqlite3_close(postsDB);
+    [lock unlock];
+    return ret;
+}
+
++ (bool)updatePostMetadata:(sqlite3 *)postsDB
+                    dbPath:(NSString *) dbPath
+                    postId:(NSString *)postId
+                  metadata:(NSString*)metadata
+                  category:(NSString *)category
+{
+    bool ret;
+    const char *dbpath = [dbPath UTF8String];
+    sqlite3_stmt *statement = NULL;
+    NSString *updateSql = [NSString
+                           stringWithFormat:
+                           @"UPDATE POSTS SET METADATA=\"%@\" WHERE postid=\"%@\" and category=\"%@\"",
+                            metadata, postId, category];
     const char *sql_stmt = [updateSql UTF8String];
     
     [lock lock];
