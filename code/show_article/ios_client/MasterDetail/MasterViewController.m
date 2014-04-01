@@ -617,8 +617,8 @@
         
         if([cell.textLabel.text isEqualToString:FOLLOW_MAILTO]) {
             NSString* to=@"denny.zhang001@gmail.com";
-            NSString* subject=@"Feedback for CoderPuzzle";
-            NSString* body=@"hi CoderPuzzle\n";
+            NSString* subject=@"Feedback for CoderQuiz";
+            NSString* body=@"hi CoderQuiz\n";
             NSString* mailString = [NSString stringWithFormat:@"mailto:?to=%@&subject=%@&body=%@",
                                     [to stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
                                     
