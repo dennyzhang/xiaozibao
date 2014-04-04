@@ -25,5 +25,5 @@
 +(void)timedAlert:(UIAlertView *) alertView;
 +(void)dismissAlert:(UIAlertView *) alertView;
 +(NSString*) getLogoIcon:(NSString* )url;
-
++(UIImage *) resizeImage:(UIImage *)orginalImage resizeSize:(CGSize)size;
 @end

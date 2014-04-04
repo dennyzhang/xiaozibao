@@ -110,45 +110,49 @@
     return customLabel;
 }
 
+
 #pragma mark - user defined event selectors
 -(IBAction) barButtonEvent:(id)sender
 {
   // TODO
-  NSString* msg = @"Coming Soon.\n\nShare to friends, Or\n twitter, wechat, etc";
-  [ComponentUtil infoMessage:nil msg:msg];
+  // NSString* msg = @"Coming Soon.\n\nShare to friends, Or\n twitter, wechat, etc";
+  // [ComponentUtil infoMessage:nil msg:msg];
     
-    // http://www.guilmo.com/how-to-post-to-twitter-in-ios-5-or-greater/
-    // // Set the Twitter Class
-    // Class tweeterClass = NSClassFromString(@"TWTweetComposeViewController");
-    // if(tweeterClass != nil) {  // check for Twitter integration
-    //     // check Twitter accessibility and at least one account is setup
-    //     if([TWTweetComposeViewController canSendTweet]) {
-    //         TWTweetComposeViewController *tweetViewController = [[TWTweetComposeViewController alloc] init]; // Init the Twitter Controller
-    //         [tweetViewController setInitialText:@"I highly recommend checking out Guilmo.com website for the latest iOS development tips!"];
-    //         [tweetViewController addURL:[NSURL URLWithString:@"http://www.guilmo.com"]];
-            
-    //         tweetViewController.completionHandler = ^(TWTweetComposeViewControllerResult result) {
-    //             if(result == TWTweetComposeViewControllerResultDone) {
-    //                 // the user finished composing a tweet
-    //                 NSLog(@"Tweet Done!");
-    //             } else if(result == TWTweetComposeViewControllerResultCancelled) {
-    //                 // the user cancelled composing a tweet
-    //                 NSLog(@"User cancelled Tweet");
-    //             }
-    //             // Hides the tweet controller
-    //             [self dismissViewControllerAnimated:YES completion:nil];
-    //         };
-    //         // Shows the tweet box
-    //         [self presentViewController:tweetViewController animated:YES completion:nil];
-    //     } else {
-    //         // Twitter is not accessible or the user has not setup an account in the Settings Apps
-    //         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"No twitter account setup or error connecting to twitter" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    //         [ alert show ];
-    //     }
-    // } else {
-    //     // no Twitter integration; default to third-party Twitter framework
-    // }
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+    else
+        UIGraphicsBeginImageContext(self.view.bounds.size);
+
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+        
+    float scale_rate = 0.8f;
     
+    UIImage *small=[ComponentUtil resizeImage:image resizeSize:CGSizeMake(image.size.width*scale_rate,
+                                                                  image.size.height*scale_rate)];
+
+    NSData * data = UIImagePNGRepresentation(small);
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,
+                                                         YES);
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"foo.png"];
+    NSLog(@"uniquePath:%@", uniquePath);
+    if ([data writeToFile:uniquePath atomically:YES]) {
+        NSLog(@"write %@ successfully", uniquePath);
+    }
+
+    //NSURL *url = [self fileToURL:[NSString stringWithFormat:@"file:/%@ ", uniquePath]];
+    NSArray *objectsToShare = @[[NSURL fileURLWithPath:uniquePath]];
+    
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+
+    // Exclude all activities except AirDrop.
+    NSArray *excludedActivities = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard];
+    controller.excludedActivityTypes = excludedActivities;
+
+    // Present the controller
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark - private function
