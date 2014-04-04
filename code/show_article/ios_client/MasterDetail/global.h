@@ -1,4 +1,4 @@
-#define SERVERURL @"http://50.198.76.251:9180/"
+#define SERVERURL @"http://www.dennyzhang.com:9180/"
 //#define SERVERURL @"http://10.0.0.20:9180/"
 
 #define MORE_CATEGORY @"Manage Subscription"
