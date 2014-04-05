@@ -375,6 +375,7 @@
 
 - (void)refreshComponentsLayout:(CGFloat)contentOffset_y
 {
+    //NSLog(@"refreshComponentsLayout contentOffset_y:%f", contentOffset_y);
     CGFloat height = INIT_HEADER_HEIGHT;
     CGFloat width = self.detailUITextView.frame.size.width;
 
