@@ -30,6 +30,21 @@
     return self;
 }
 
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_SCORE_TEXT];
+    [self showStastics];
+
+
+    self.navigationItem.title = @"Statistics";
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -310,21 +325,6 @@
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton, nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_SCORE_TEXT];
-    [self showStastics];
-
-
-    //[self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-
-- (void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    //[self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (NSMutableAttributedString *) buildAttributedText:(NSString*) text1 text2:(NSString*) text2

@@ -1,6 +1,7 @@
 #define SERVERURL @"http://www.dennyzhang.com:9180/"
 //#define SERVERURL @"http://10.0.0.20:9180/"
 
+#define APP_NAME @"CoderQuiz"
 #define MORE_CATEGORY @"Manage Subscription"
 #define APP_SETTING @"App Setting"
 #define SAVED_QUESTIONS @"Saved Questions"
