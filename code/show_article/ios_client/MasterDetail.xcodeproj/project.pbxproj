@@ -27,6 +27,7 @@
 		0416B68C18F0892F00397C7D /* header_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416B68118F0892F00397C7D /* header_7.png */; };
 		0416B68D18F0892F00397C7D /* header_8.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416B68218F0892F00397C7D /* header_8.png */; };
 		0416B68E18F0892F00397C7D /* header_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416B68318F0892F00397C7D /* header_9.png */; };
+		0416B69018F094DF00397C7D /* header_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416B68F18F094DF00397C7D /* header_12.png */; };
 		0436CDE818E9EB5300130F79 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0436CDE718E9EB5300130F79 /* Twitter.framework */; };
 		0436CDEB18EB131600130F79 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0436CDE918EB127D00130F79 /* libPods.a */; };
 		04409A5318DB69670021F9C3 /* comments-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4E18DB69670021F9C3 /* comments-512.png */; };
@@ -104,6 +105,7 @@
 		0416B68118F0892F00397C7D /* header_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_7.png; sourceTree = "<group>"; };
 		0416B68218F0892F00397C7D /* header_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_8.png; sourceTree = "<group>"; };
 		0416B68318F0892F00397C7D /* header_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_9.png; sourceTree = "<group>"; };
+		0416B68F18F094DF00397C7D /* header_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_12.png; sourceTree = "<group>"; };
 		0436CDE718E9EB5300130F79 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		0436CDE918EB127D00130F79 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../../../../../../../Library/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		04409A4E18DB69670021F9C3 /* comments-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments-512.png"; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			children = (
 				0416B67918F0892F00397C7D /* header_1.png */,
 				0416B67A18F0892F00397C7D /* header_10.png */,
+				0416B68F18F094DF00397C7D /* header_12.png */,
 				0416B67B18F0892F00397C7D /* header_11.png */,
 				0416B67C18F0892F00397C7D /* header_2.png */,
 				0416B67D18F0892F00397C7D /* header_3.png */,
@@ -465,6 +468,7 @@
 				0416B68418F0892F00397C7D /* header_1.png in Resources */,
 				0416B68E18F0892F00397C7D /* header_9.png in Resources */,
 				0416B68C18F0892F00397C7D /* header_7.png in Resources */,
+				0416B69018F094DF00397C7D /* header_12.png in Resources */,
 				0416B68B18F0892F00397C7D /* header_6.png in Resources */,
 				04409A5718DB69670021F9C3 /* thumb_up-512.png in Resources */,
 				0411B25318E364EC00428AB1 /* www.quora.com.png in Resources */,

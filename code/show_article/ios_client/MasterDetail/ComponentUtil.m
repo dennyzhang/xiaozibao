@@ -87,8 +87,8 @@
 
 +(NSString*) getPostHeaderImg
 {
-  // TODO
-  return [NSString stringWithFormat:@"header_%d.png", arc4random() % 11 + 1];
+  // TODO remove hard code
+  return [NSString stringWithFormat:@"header_%d.png", arc4random() % 12 + 1];
 }
 
 +(NSString*) getLogoIcon:(NSString* )url
