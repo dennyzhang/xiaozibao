@@ -402,6 +402,12 @@
     NSURLRequest *nsrequest = [NSURLRequest requestWithURL:nsurl];
     [webView loadRequest:nsrequest];
     [webViewController.view addSubview:webView];
+    webViewController.navigationItem.title = @"Original Webpage";
+
+    // enable swipe right
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
+    [webView addGestureRecognizer:swipe];
+
     [self.navigationController pushViewController:webViewController  animated:YES];
 }
 
