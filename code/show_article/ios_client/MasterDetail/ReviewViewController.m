@@ -114,10 +114,6 @@
 #pragma mark - user defined event selectors
 -(IBAction) barButtonEvent:(id)sender
 {
-  // TODO
-  // NSString* msg = @"Coming Soon.\n\nShare to friends, Or\n twitter, wechat, etc";
-  // [ComponentUtil infoMessage:nil msg:msg enforceMsgBox:TRUE];
-    
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
         UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
     else
@@ -127,12 +123,20 @@
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
         
-    float scale_rate = 0.8f;
+    float scale_rate = 1.0f;
     
     UIImage *small=[ComponentUtil resizeImage:image resizeSize:CGSizeMake(image.size.width*scale_rate,
                                                                   image.size.height*scale_rate)];
 
-    NSData * data = UIImagePNGRepresentation(small);
+    //TODO crop UIImage as a workaround
+    float offset = 45.0f;
+    CGRect rect = CGRectMake(0, offset,
+                             self.view.bounds.size.width, 
+                             self.view.bounds.size.height - offset);
+    CGImageRef imageRef = CGImageCreateWithImageInRect([small CGImage], rect);
+    UIImage *newImg = [UIImage imageWithCGImage:imageRef];
+    
+    NSData * data = UIImagePNGRepresentation(newImg);
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,
                                                          YES);
@@ -312,6 +316,15 @@
     [super viewWillAppear:animated];
     [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_SCORE_TEXT];
     [self showStastics];
+
+
+    //[self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //[self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (NSMutableAttributedString *) buildAttributedText:(NSString*) text1 text2:(NSString*) text2
@@ -384,4 +397,5 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
 @end
