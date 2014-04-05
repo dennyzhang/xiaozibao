@@ -48,6 +48,9 @@
 #define TAG_VOTEUP_TEXT 1008
 #define TAG_MASTERVIEW_SCORE_TEXT 1009
 
+#define TAG_TABLE_HEADER_INDIACTOR 1010
+#define TAG_TABLE_FOOTER_INDIACTOR 1011
+
 #define CLEAN_CACHE @"Clean cache"
 #define FOLLOW_TWITTER @"Follow us on Twitter"
 #define FOLLOW_WEIBO @"Follow us on Weibo"

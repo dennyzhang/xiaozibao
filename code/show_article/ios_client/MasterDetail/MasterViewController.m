@@ -21,6 +21,8 @@
     sqlite3 *postsDB;
     NSString *dbPath;
     int bottom_num;
+    UIView* footerView;
+    UIView* headerView;
 }
 
 @end
@@ -33,6 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initTableIndicatorView];
 
     NSLog(@"MasterViewController load");
     UIButton* btn;
@@ -134,6 +137,7 @@
 
 - (void) refreshTableHead
 {
+    [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
     [self fetchArticleList:username category_t:self.category
                start_num_t:0
           shouldAppendHead:YES];
@@ -141,6 +145,7 @@
 
 - (void) refreshTableTail
 {
+    [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
     [self fetchArticleList:username category_t:self.category
                start_num_t:self->bottom_num * PAGE_COUNT
           shouldAppendHead:NO];
@@ -160,6 +165,15 @@
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     return ret;
+}
+
+- (void)stopActivityIndicator:(bool)shouldAppendHead {
+  if (shouldAppendHead == TRUE) {
+    [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] stopAnimating];
+  }
+  else {
+    [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] stopAnimating];
+  }
 }
 
 - (void)fetchArticleList:(NSString*)userid
@@ -193,6 +207,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        [self stopActivityIndicator:shouldAppendHead];
         NSArray *idList = [JSON valueForKeyPath:@"postid"];
         NSArray *metadataList = [JSON valueForKeyPath:@"metadata"];
         Posts *post = nil;
@@ -252,6 +267,7 @@
             self->bottom_num = 1 + self->bottom_num;
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [self stopActivityIndicator:shouldAppendHead];
         [ComponentUtil infoMessage:@"Error to get specific post list"
                                msg:[NSString stringWithFormat:@"url:%@, error:%@", urlStr, error]
                      enforceMsgBox:FALSE];
@@ -304,23 +320,6 @@
     [operation start];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([self.navigationItem.title isEqualToString:APP_SETTING])
-        return;
-    
-    // when reach the top
-    if (scrollView.contentOffset.y == 0)
-    {
-        NSLog(@"top is reached");
-        [self refreshTableHead];
-    }
-    
-    // when reaching the bottom
-    if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
-    {
-      [self refreshTableTail];
-    }
-}
 
 - (void) showMenuViewController:(id)sender
 {
@@ -745,6 +744,69 @@
             }
             [userDefaults synchronize];
         }
+    }
+}
+
+-(void)initTableIndicatorView
+ {
+    // headerView
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 10.0)];
+    UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
+                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    actIndHeader.tag = TAG_TABLE_HEADER_INDIACTOR;
+    actIndHeader.frame = CGRectMake(150.0, 5.0, 20.0, 10.0);
+
+    actIndHeader.hidesWhenStopped = YES;
+
+    [headerView addSubview:actIndHeader];
+
+    self.tableView.tableHeaderView = headerView;
+
+    // footerView
+    footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
+
+    UIActivityIndicatorView * actIndFooter = [[UIActivityIndicatorView alloc]
+                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    actIndFooter.tag = TAG_TABLE_FOOTER_INDIACTOR;
+    actIndFooter.frame = CGRectMake(150.0, 5.0, 20.0, 20.0);
+
+    actIndFooter.hidesWhenStopped = YES;
+
+    [footerView addSubview:actIndFooter];
+    self.tableView.tableFooterView = footerView;
+ }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([self.navigationItem.title isEqualToString:APP_SETTING])
+        return;
+    // when reach the top
+    if (scrollView.contentOffset.y <= 0)
+    {
+    [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+    }
+
+    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+    {
+      [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+    }
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+
+    if ([self.navigationItem.title isEqualToString:APP_SETTING])
+        return;
+
+    // when reach the top
+    if (scrollView.contentOffset.y <= 0)
+    {
+        [self refreshTableHead];
+    }
+    
+    // when reaching the bottom
+    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+    {
+      [self refreshTableTail];
     }
 }
 
