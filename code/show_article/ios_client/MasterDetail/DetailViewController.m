@@ -20,7 +20,7 @@
 
 @implementation DetailViewController
 @synthesize detailItem;
-@synthesize detailUITextView, imageView, titleTextView, linkTextView;
+@synthesize detailUITextView, imageView, titleTextView, linkImageView;
 @synthesize coinButton, shouldShowCoin, contentPrefix;
 
 - (void)viewDidLoad
@@ -282,7 +282,7 @@
                            range:NSMakeRange ([prefix length], [shortUrl length])];
         [attString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor]
                           range:NSMakeRange ([prefix length], [shortUrl length])];
-        self.linkTextView.attributedText = attString;
+        //self.linkTextView.attributedText = attString;
     }
 }
 
@@ -347,7 +347,8 @@
 
 - (void)addPostHeaderComponents
 {
-    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg ]]];
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg]]];
+    self.imageView.userInteractionEnabled = TRUE;
     
     [self.imageView setFrame:CGRectZero];
     [self.detailUITextView addSubview:self.imageView];
@@ -358,18 +359,14 @@
     [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
     [self.imageView addSubview:self.titleTextView];
     
-    self.linkTextView = [[UITextView alloc] initWithFrame:CGRectZero];
-    self.linkTextView.editable = NO;
-    self.linkTextView.textColor = [UIColor greenColor];
-    
-    self.linkTextView.backgroundColor = [UIColor clearColor];
-    self.linkTextView.dataDetectorTypes = UIDataDetectorTypeNone;
-    
+    self.linkImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"info.png"]];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
     singleTap.numberOfTapsRequired = 1;
-    [self.linkTextView addGestureRecognizer:singleTap];
-    
-    [self.imageView addSubview:self.linkTextView];
+    [self.linkImageView addGestureRecognizer:singleTap];
+    self.linkImageView.multipleTouchEnabled = TRUE;
+    self.linkImageView.userInteractionEnabled = TRUE;
+
+    [self.imageView addSubview:self.linkImageView];
 
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
     [self.view addGestureRecognizer:swipe];
@@ -386,10 +383,10 @@
     self.imageView.frame =  CGRectMake(0.0f, contentOffset_y, width, height);
 
     self.titleTextView.frame =  CGRectMake(10, 10, width - 20, 100);
-    self.linkTextView.frame =  CGRectMake(width - 200,
-                                          self.imageView.frame.size.height - 40,
-                                          200, 40);
-
+    float icon_height, icon_width;
+    icon_height = 60;
+    icon_width = 60;
+    self.linkImageView.frame = CGRectMake(width-icon_width-10, height-icon_height-10, icon_width, icon_height);
 }
 
 - (void)browseWebPage:(NSString*)url

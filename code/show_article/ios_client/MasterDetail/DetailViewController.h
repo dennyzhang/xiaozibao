@@ -41,7 +41,7 @@
 @property (retain, nonatomic) IBOutlet UITextView *detailUITextView;
 @property (retain, nonatomic) IBOutlet UIImageView *imageView;
 @property (retain, nonatomic) IBOutlet UITextView *titleTextView;
-@property (retain, nonatomic) IBOutlet UITextView *linkTextView;
+@property (retain, nonatomic) IBOutlet UIImageView *linkImageView;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (atomic, retain) NSNumber* shouldShowCoin;
 @property (atomic, retain) NSString* contentPrefix;

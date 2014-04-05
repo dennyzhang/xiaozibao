@@ -89,7 +89,7 @@
 {
   // TODO remove hard code
   NSString* ret = [NSString stringWithFormat:@"header_%d.png", arc4random() % 22 + 1];
-  NSLog(@"getPostHeaderImg:%@", ret);
+  //NSLog(@"getPostHeaderImg:%@", ret);
   return ret;
   //return [NSString stringWithFormat:@"header_%d.png", 13];
 }
