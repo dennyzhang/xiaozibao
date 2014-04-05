@@ -130,7 +130,7 @@
             // exclusive check
             if ((detailItem.isvoteup == FALSE) && (detailItem.isvotedown == TRUE)) {
                 NSString* msg = @"You can only either voteup or votedown the same post.";
-                [ComponentUtil infoMessage:nil msg:msg];
+                [ComponentUtil infoMessage:nil msg:msg enforceMsgBox:TRUE];
                 return;
             }
 
@@ -150,7 +150,7 @@
             // exclusive check
             if ((detailItem.isvotedown == FALSE) && (detailItem.isvoteup == TRUE)) {
                 NSString* msg = @"You can only either voteup or votedown the same post.";
-                [ComponentUtil infoMessage:nil msg:msg];
+                [ComponentUtil infoMessage:nil msg:msg enforceMsgBox:TRUE];
                 return;
             }
 
@@ -196,7 +196,7 @@
             if (detailItem.isfavorite == NO) {
                 msg = @"Unsave the question";
             }
-            [ComponentUtil infoMessage:nil msg:msg];
+            [ComponentUtil infoMessage:nil msg:msg enforceMsgBox:TRUE];
         }
 
     }

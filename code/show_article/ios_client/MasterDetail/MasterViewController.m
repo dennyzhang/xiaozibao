@@ -252,10 +252,9 @@
             self->bottom_num = 1 + self->bottom_num;
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
-        // NSString* title = @"Server request error";
-        // NSString* msg = @"Fail to get post list.\nPleaese check network or app version.\nReport the issue by mail, twitter, etc";
-        // [ComponentUtil infoMessage:title msg:msg];
+        [ComponentUtil infoMessage:@"Error to get specific post list"
+                               msg:[NSString stringWithFormat:@"url:%@, error:%@", urlStr, error]
+                     enforceMsgBox:FALSE];
     }];
     
     [operation start];
@@ -284,7 +283,9 @@
                            postId:post.postid summary:post.summary category:post.category
                             title:post.title source:post.source content:post.content
                          metadata:post.metadata] == NO) {
-            NSLog(@"Error: insert posts. id:%@, title:%@", post.postid, post.title);
+            [ComponentUtil infoMessage:@"Error to insert post"
+                                   msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
+                     enforceMsgBox:FALSE];
         }
 
         int index = 0;
@@ -294,7 +295,10 @@
         [self addToTableView:index post:post];
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
+        [ComponentUtil infoMessage:@"Error to get specific post"
+                               msg:[NSString stringWithFormat:@"url:%@, error:%@", urlStr, error]
+                     enforceMsgBox:FALSE];
+
     }];
     
     [operation start];
@@ -386,13 +390,10 @@
 }
 
 -(void) rightSwipe:(UISwipeGestureRecognizer*)recognizer {
-  NSLog(@"MasterViewController rightSwipe");
   [self showMenuView:TRUE];
 }
 
 -(void) leftSwipe:(UISwipeGestureRecognizer*)recognizer {
-  NSLog(@"MasterViewController leftSwipe");
-
   [self showMenuView:FALSE];
 }
 
@@ -437,7 +438,7 @@
 {
     if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         if (section == 0) {
-            return 3;
+            return 4;
         }
         if (section == 1) {
             return 2;
@@ -481,6 +482,20 @@
             }
         }
         if (indexPath.row == 2) {
+            UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            aSwitch.on = YES;
+            aSwitch.tag = TAG_SWITCH_DEBUG_MODE;
+            [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.textLabel.text = @"Show verbose errmsg";
+            cell.accessoryView = aSwitch;
+            if ([userDefaults integerForKey:@"IsDebugMode"] == 0) {
+                aSwitch.on = false;
+            }
+            else {
+                aSwitch.on = true;
+            }
+        }
+        if (indexPath.row == 3) {
             cell.textLabel.text = CLEAN_CACHE;
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
@@ -514,8 +529,6 @@
         cell.textLabel.text = @"";
         
         NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
-        //NSLog(@"url:%@, iconPath:%@", post.source, iconPath);
-        //NSString* iconPath = @"stackexchange.com.png";
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
         
         [imageView setFrame:CGRectMake(cell.frame.size.width - 75,
@@ -713,7 +726,6 @@
                 [userDefaults setInteger:0 forKey:@"HideReadPosts"];
             }
             [userDefaults synchronize];
-            NSLog(@"HideReadPosts:%d", [userDefaults integerForKey:@"HideReadPosts"]);
         }
         if (switchControl.tag == TAG_SWITCH_EDITOR_MODE) {
             if (switchControl.on == true) {
@@ -723,7 +735,15 @@
                 [userDefaults setInteger:0 forKey:@"IsEditorMode"];
             }
             [userDefaults synchronize];
-            NSLog(@"IsEditorMode:%d", [userDefaults integerForKey:@"IsEditorMode"]);
+        }
+        if (switchControl.tag == TAG_SWITCH_DEBUG_MODE) {
+            if (switchControl.on == true) {
+                [userDefaults setInteger:1 forKey:@"IsDebugMode"];
+            }
+            else {
+                [userDefaults setInteger:0 forKey:@"IsDebugMode"];
+            }
+            [userDefaults synchronize];
         }
     }
 }

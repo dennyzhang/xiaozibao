@@ -58,14 +58,21 @@
 
 +(void)infoMessage:(NSString *) title
                msg:(NSString *) msg
+     enforceMsgBox:(BOOL)enforceMsgBox
 {
+  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+  if (enforceMsgBox || ([userDefaults integerForKey:@"IsDebugMode"] == 1)) {
+    NSLog(@"title:%@, msg:%@", title, msg);
     UIAlertView *alert = [[UIAlertView alloc]
                                       initWithTitle:title message:msg delegate:self
                                   cancelButtonTitle:nil
                                   otherButtonTitles:nil, nil];
     [alert show];
     [ComponentUtil timedAlert:alert];
-
+  }
+  else {
+        NSLog(@"title:%@, msg:%@", title, msg);
+  }
 }
 
 +(void)timedAlert:(UIAlertView *) alertView
@@ -130,8 +137,17 @@
       [userDefaults setInteger:1 forKey:@"HideReadPosts"];
     }
 
+    if (![userDefaults objectForKey:@"IsDebugMode"]) {
+      [userDefaults setInteger:0 forKey:@"IsEditorMode"];
+    }
+
+    if (![userDefaults objectForKey:@"IsEditorMode"]) {
+      [userDefaults setInteger:0 forKey:@"IsEditorMode"];
+    }
+
     if (![userDefaults objectForKey:@"CategoryList"]) {
       [userDefaults setObject:@"linux,concept,cloud,security,algorithm,product" forKey:@"CategoryList"];
     }
+
 }
 @end

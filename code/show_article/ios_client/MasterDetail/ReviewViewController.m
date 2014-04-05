@@ -116,7 +116,7 @@
 {
   // TODO
   // NSString* msg = @"Coming Soon.\n\nShare to friends, Or\n twitter, wechat, etc";
-  // [ComponentUtil infoMessage:nil msg:msg];
+  // [ComponentUtil infoMessage:nil msg:msg enforceMsgBox:TRUE];
     
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
         UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
