@@ -244,7 +244,10 @@
         }
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"error to fetch url: %@. error: %@", urlStr, error);
+        [ComponentUtil infoMessage:@"Error to send feed back"
+                               msg:[NSString stringWithFormat:@"url:%@, error:%@", urlStr, error]
+                     enforceMsgBox:FALSE];
+
     }];
     [operation start];
 }
