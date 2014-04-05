@@ -122,4 +122,16 @@
     return orginalImage;
 }
 
++(void) setDefaultConf
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    // set default value
+    if (![userDefaults objectForKey:@"HideReadPosts"]) {
+      [userDefaults setInteger:1 forKey:@"HideReadPosts"];
+    }
+
+    if (![userDefaults objectForKey:@"CategoryList"]) {
+      [userDefaults setObject:@"linux,concept,cloud,security,algorithm,product" forKey:@"CategoryList"];
+    }
+}
 @end

@@ -51,16 +51,8 @@
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
     
+    [ComponentUtil setDefaultConf];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    // set default value
-    if (![userDefaults objectForKey:@"HideReadPosts"]) {
-      [userDefaults setInteger:1 forKey:@"HideReadPosts"];
-    }
-
-    if (![userDefaults objectForKey:@"CategoryList"]) {
-      [userDefaults setObject:@"linux,concept,cloud,security,algorithm,product" forKey:@"CategoryList"];
-    }
-    
     if (self.category == nil) {
         NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
         NSArray *stringArray = [categoryList componentsSeparatedByString: @","];

@@ -142,17 +142,30 @@
         NSLog(@"write %@ successfully", uniquePath);
     }
 
-    //NSURL *url = [self fileToURL:[NSString stringWithFormat:@"file:/%@ ", uniquePath]];
-    NSArray *objectsToShare = @[[NSURL fileURLWithPath:uniquePath]];
+    // set activity indicator to workaround for the first slow start of UIActivityViewController
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]
+                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    [self.view addSubview: activityView];
     
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+    [activityView startAnimating];
+    
+    // create new dispatch queue in background
+    dispatch_queue_t queue = dispatch_queue_create("openActivityIndicatorQueue", NULL);
+    
+    // send initialization of UIActivityViewController in background
+    dispatch_async(queue, ^{
+        NSArray *dataToShare =  @[[NSURL fileURLWithPath:uniquePath]];
 
-    // Exclude all activities except AirDrop.
-    NSArray *excludedActivities = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard];
-    controller.excludedActivityTypes = excludedActivities;
-
-    // Present the controller
-    [self presentViewController:controller animated:YES completion:nil];
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare
+                                                                                             applicationActivities:nil];
+        // when UIActivityViewController is finally initialized,
+        // hide indicator and present it on main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [activityView stopAnimating];
+            [self presentViewController:activityViewController animated:YES completion:nil];
+        });
+    });
 }
 
 #pragma mark - private function
