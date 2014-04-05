@@ -777,7 +777,8 @@
  }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([self.navigationItem.title isEqualToString:APP_SETTING])
+    if ([self.navigationItem.title isEqualToString:APP_SETTING] ||
+        [self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
         return;
     // when reach the top
     if (scrollView.contentOffset.y <= 0)
@@ -793,8 +794,8 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-
-    if ([self.navigationItem.title isEqualToString:APP_SETTING])
+    if ([self.navigationItem.title isEqualToString:APP_SETTING] ||
+        [self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
         return;
 
     // when reach the top

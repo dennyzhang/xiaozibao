@@ -343,7 +343,7 @@
 
 - (void)addPostHeaderComponents
 {
-    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header.png"]];
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg ]]];
     
     [self.imageView setFrame:CGRectZero];
     [self.detailUITextView addSubview:self.imageView];

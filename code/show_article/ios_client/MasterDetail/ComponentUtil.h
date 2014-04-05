@@ -10,6 +10,7 @@
 
 #import "UserProfile.h"
 #import "global.h"
+#include <stdlib.h>
 
 @interface ComponentUtil : NSObject
 + (void) addTextToButton:(UIButton*) btn text:(NSString*)text
@@ -27,7 +28,8 @@
 
 +(void)timedAlert:(UIAlertView *) alertView;
 +(void)dismissAlert:(UIAlertView *) alertView;
-+(NSString*) getLogoIcon:(NSString* )url;
 +(UIImage *) resizeImage:(UIImage *)orginalImage resizeSize:(CGSize)size;
 +(void) setDefaultConf;
++(NSString*) getLogoIcon:(NSString* )url;
++(NSString*) getPostHeaderImg;
 @end

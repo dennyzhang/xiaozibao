@@ -85,6 +85,12 @@
     [alertView dismissWithClickedButtonIndex:0 animated:YES];
 }
 
++(NSString*) getPostHeaderImg
+{
+  // TODO
+  return [NSString stringWithFormat:@"header_%d.png", arc4random() % 11 + 1];
+}
+
 +(NSString*) getLogoIcon:(NSString* )url
 {
   if ([url rangeOfString:@"stackexchange.com"].location != NSNotFound) {
