@@ -55,6 +55,10 @@
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
     self.detailUITextView.delegate = self;
+    self.detailUITextView.scrollEnabled = YES;
+    self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    self.detailUITextView.selectable = NO;
+
     [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
     self.title = @"";
     self.detailUITextView.editable = false;
@@ -352,7 +356,7 @@
     self.titleTextView.editable = NO;
     self.titleTextView.backgroundColor = [UIColor clearColor];
     [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
-    [self.detailUITextView addSubview:self.titleTextView];
+    [self.imageView addSubview:self.titleTextView];
     
     self.linkTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     self.linkTextView.editable = NO;
@@ -365,12 +369,7 @@
     singleTap.numberOfTapsRequired = 1;
     [self.linkTextView addGestureRecognizer:singleTap];
     
-    
-    [self.detailUITextView addSubview:self.linkTextView];
-    
-    self.detailUITextView.scrollEnabled = YES;
-    self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    self.detailUITextView.selectable = NO;
+    [self.imageView addSubview:self.linkTextView];
 
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
     [self.view addGestureRecognizer:swipe];
@@ -385,10 +384,12 @@
     height = height - contentOffset_y;
     //CGFloat height = self.detailUITextView.frame.size.height;
     self.imageView.frame =  CGRectMake(0.0f, contentOffset_y, width, height);
-    self.titleTextView.frame =  CGRectMake(10, contentOffset_y+10, width - 20, 100);
+
+    self.titleTextView.frame =  CGRectMake(10, 10, width - 20, 100);
     self.linkTextView.frame =  CGRectMake(width - 200,
-                                          contentOffset_y + self.imageView.frame.size.height - 40,
+                                          self.imageView.frame.size.height - 40,
                                           200, 40);
+
 }
 
 - (void)browseWebPage:(NSString*)url
