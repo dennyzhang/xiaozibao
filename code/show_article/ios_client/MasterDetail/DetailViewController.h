@@ -23,6 +23,10 @@
 #define TAG_SCORE_TEXT_DETAILVIEW 2007
 
 #define MAX_POST_CONTENT 1500
+
+#define MAX_HEADER_HEIGHT 400
+#define INIT_HEADER_HEIGHT 200
+
 #define INVALID_STRING @"INVALID_STRING"
 #define FEEDBACK_ENVOTEUP @"tag envoteup"
 #define FEEDBACK_ENVOTEDOWN @"tag envotedown"
@@ -43,4 +47,5 @@
 
 - (void)setDetailItem:(Posts*)newDetailItem;
 - (void)configureView;
+- (void)refreshComponentsLayout:(CGFloat)contentOffset_y;
 @end

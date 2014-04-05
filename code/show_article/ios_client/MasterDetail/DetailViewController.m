@@ -16,7 +16,6 @@
   NSString *dbPath;
 }
 - (void)configureView;
-- (void)refreshComponentsLayout;
 @end
 
 @implementation DetailViewController
@@ -55,6 +54,7 @@
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
+    self.detailUITextView.delegate = self;
     [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
     self.title = @"";
     self.detailUITextView.editable = false;
@@ -63,7 +63,7 @@
     //self.detailUITextView.frame =  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     
     [self addMenuCompoents];
-    [self addPostHeaderCompoents];
+    [self addPostHeaderComponents];
     
     [self configureView];
     // hide and show navigation bar
@@ -72,7 +72,7 @@
     [self.detailUITextView addGestureRecognizer:singleTap];
     
     // refreshComponentsLayout
-    [self refreshComponentsLayout];
+    [self refreshComponentsLayout:0];
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,7 +89,7 @@
     if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         NSLog(@"Landscape orientattion");
     }
-    [self refreshComponentsLayout];
+    [self refreshComponentsLayout:0];
 }
 
 - (void)linkTextSingleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
@@ -338,7 +338,7 @@
     }
 }
 
-- (void)addPostHeaderCompoents
+- (void)addPostHeaderComponents
 {
     self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header.png"]];
     
@@ -374,14 +374,17 @@
     swipe.delegate = self;
 }
 
-- (void)refreshComponentsLayout
+- (void)refreshComponentsLayout:(CGFloat)contentOffset_y
 {
+    CGFloat height = INIT_HEADER_HEIGHT;
     CGFloat width = self.detailUITextView.frame.size.width;
+
+    height = height - contentOffset_y;
     //CGFloat height = self.detailUITextView.frame.size.height;
-    self.imageView.frame =  CGRectMake(0.0f, 0.0f, width, 200.0f);
-    self.titleTextView.frame =  CGRectMake(10, 10, width - 20, 100);
+    self.imageView.frame =  CGRectMake(0.0f, contentOffset_y, width, height);
+    self.titleTextView.frame =  CGRectMake(10, contentOffset_y+10, width - 20, 100);
     self.linkTextView.frame =  CGRectMake(width - 200,
-                                          self.imageView.frame.size.height - 40,
+                                          contentOffset_y + self.imageView.frame.size.height - 40,
                                           200, 40);
 }
 
@@ -473,6 +476,22 @@
     if (recognizer.direction == UISwipeGestureRecognizerDirectionRight){
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+   NSLog(@"scrollViewDidScroll, scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
+   if (scrollView.contentOffset.y <= MAX_HEADER_HEIGHT){
+     [self refreshComponentsLayout:scrollView.contentOffset.y];
+   }
+    // if (scrollView.contentOffset.y <= 0)
+    // {
+    // [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+    // }
+
+    // if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+    // {
+    //   [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+    // }
 }
 
 @end
