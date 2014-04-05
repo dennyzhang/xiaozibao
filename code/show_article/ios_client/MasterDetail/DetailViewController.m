@@ -483,18 +483,10 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
    NSLog(@"scrollViewDidScroll, scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
-   if (scrollView.contentOffset.y <= MAX_HEADER_HEIGHT){
+   if (scrollView.contentOffset.y >= -MAX_HEADER_HEIGHT &&
+       scrollView.contentOffset.y < MIN_HEADER_HEIGHT){
      [self refreshComponentsLayout:scrollView.contentOffset.y];
    }
-    // if (scrollView.contentOffset.y <= 0)
-    // {
-    // [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
-    // }
-
-    // if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
-    // {
-    //   [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
-    // }
 }
 
 @end
