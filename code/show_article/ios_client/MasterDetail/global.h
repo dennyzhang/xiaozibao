@@ -9,7 +9,7 @@
 
 #define FONT_BIG 22
 #define FONT_NORMAL 17
-#define FONT_SIZE_TITLE 19
+#define FONT_SIZE_TITLE 24
 #define FONT_SMALL 13
 #define FONT_TINY 10
 #define FONT_TINY2 8

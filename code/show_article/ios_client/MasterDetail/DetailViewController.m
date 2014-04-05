@@ -382,7 +382,11 @@
     //CGFloat height = self.detailUITextView.frame.size.height;
     self.imageView.frame =  CGRectMake(0.0f, contentOffset_y, width, height);
 
-    self.titleTextView.frame =  CGRectMake(10, 10, width - 20, 100);
+    self.titleTextView.frame =  CGRectMake(10, 10, width - 20, height - 10);
+    
+    float font_size = roundf(FONT_SIZE_TITLE * height /INIT_HEADER_HEIGHT);
+    [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:font_size]];
+
     float icon_height, icon_width;
     icon_height = 60;
     icon_width = 60;
