@@ -12,6 +12,7 @@
 		040AAB1418F19134006ACA84 /* header_25.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB0F18F19134006ACA84 /* header_25.png */; };
 		040AAB1518F19134006ACA84 /* header_26.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB1018F19134006ACA84 /* header_26.png */; };
 		040AAB1618F19134006ACA84 /* header_27.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB1118F19134006ACA84 /* header_27.png */; };
+		040AAB1818F1BDA8006ACA84 /* report_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB1718F1BDA8006ACA84 /* report_background.png */; };
 		040E856418DF776000FD3E56 /* stackexchange.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856018DF776000FD3E56 /* stackexchange.com.png */; };
 		040E856518DF776000FD3E56 /* stackoverflow.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856118DF776000FD3E56 /* stackoverflow.com.png */; };
 		040E856618DF776000FD3E56 /* www.careercup.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856218DF776000FD3E56 /* www.careercup.com.png */; };
@@ -104,6 +105,7 @@
 		040AAB0F18F19134006ACA84 /* header_25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_25.png; sourceTree = "<group>"; };
 		040AAB1018F19134006ACA84 /* header_26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_26.png; sourceTree = "<group>"; };
 		040AAB1118F19134006ACA84 /* header_27.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_27.png; sourceTree = "<group>"; };
+		040AAB1718F1BDA8006ACA84 /* report_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = report_background.png; sourceTree = "<group>"; };
 		040E856018DF776000FD3E56 /* stackexchange.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stackexchange.com.png; sourceTree = "<group>"; };
 		040E856118DF776000FD3E56 /* stackoverflow.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stackoverflow.com.png; sourceTree = "<group>"; };
 		040E856218DF776000FD3E56 /* www.careercup.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.careercup.com.png; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				0416B6A718F0B14F00397C7D /* info.png */,
 				0473C99718DCE1B800AC4DCD /* navigation_header.png */,
 				0448466618E47A2E00C3FEC7 /* figure.png */,
+				040AAB1718F1BDA8006ACA84 /* report_background.png */,
 				0448466A18E5CAC200C3FEC7 /* home.png */,
 				0448466818E4B21100C3FEC7 /* coin2.png */,
 				0416B67818F0892F00397C7D /* post_header */,
@@ -519,6 +522,7 @@
 				04E893EE179130C400E9573C /* Main_iPhone.storyboard in Resources */,
 				046E471118E0BFF900ACC618 /* coin.png in Resources */,
 				0416B69518F0A5B100397C7D /* header_14.png in Resources */,
+				040AAB1818F1BDA8006ACA84 /* report_background.png in Resources */,
 				0416B6A018F0AB0000397C7D /* header_18.png in Resources */,
 				0448466318E4700D00C3FEC7 /* question.png in Resources */,
 				0416B68418F0892F00397C7D /* header_1.png in Resources */,

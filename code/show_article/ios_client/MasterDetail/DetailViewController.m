@@ -28,10 +28,6 @@
     [super viewDidLoad];
     dbPath = [PostsSqlite getDBPath];
     postsDB = [PostsSqlite openSqlite:dbPath];
-
-    UIBarButtonItem* barButtonItem = self.navigationItem.leftBarButtonItem;
-    [barButtonItem setTarget: self];
-    [barButtonItem setAction: @selector( test: )];
     
     NSLog(@"self.detailItem.readcount: %d", [self.detailItem.readcount intValue]);
     if ([self.detailItem.readcount intValue] == 1){
@@ -46,9 +42,7 @@
     contentPrefix = @"\n\n\n\n\n\n\n\n"; // TODO workaround
     if (!self.detailUITextView) {
       NSLog(@"here!");
-      self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,
-                                                                           self.view.frame.size.height)];
-      contentPrefix = @"\n\n\n\n\n\n\n\n\n\n\n\n\n"; // TODO workaround
+      self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectZero];
       [self.view addSubview:self.detailUITextView];
     }
 
@@ -59,9 +53,14 @@
     self.detailUITextView.scrollEnabled = YES;
     self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
     self.detailUITextView.selectable = NO;
-
+       
     [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
 
+    NSLog(@"self.detailUITextView.superview: %@", self.detailUITextView.superview);
+    NSLog(@"parentViewController: %@", self.parentViewController);
+    
+    NSLog(@"navigationBar height: %f",
+          self.navigationController.navigationBar.frame.size.height);
     NSLog(@"self.view.frame.size.height: %f", self.view.frame.size.height);
     NSLog(@"self.detailUITextView.frame.origin.x: %f", self.detailUITextView.frame.origin.x);
     NSLog(@"self.detailUITextView.frame.origin.y: %f", self.detailUITextView.frame.origin.y);
@@ -69,6 +68,11 @@
     NSLog(@"self.detailUITextView.frame.size.height: %f", self.detailUITextView.frame.size.height);
     NSLog(@"self.detailUITextView.font:%@", self.detailUITextView.font);
 
+    UIView* superview = (UIView*)self.detailUITextView.superview;
+    NSLog(@"superview frame y:%f", superview.frame.origin.y);
+
+    //NSLog(@"detailUITextView.layoutManager:%@", detailUITextView.layoutManager);
+    
     self.title = @"";
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
@@ -114,6 +118,7 @@
 
 - (void)singleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
     NSLog(@"single tap");
+
     if (self.navigationController.navigationBarHidden == YES) {
         self.navigationController.navigationBarHidden = NO;
     }
@@ -440,11 +445,6 @@
     return ret;
 }
 
--(IBAction) test:(id)sender
-{
-  NSLog(@"test");
-}
-
 -(NSString*) getContent:(NSString*) content
 {
   NSString* ret;
@@ -463,6 +463,14 @@
     [super viewWillAppear:animated];
     NSLog(@"viewWillAppear");
     [self.navigationController setToolbarHidden:YES animated:YES];
+
+    float navigationbar_height =  self.navigationController.navigationBar.frame.size.height;
+      
+    self.detailUITextView.frame = CGRectMake(0, 0,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height - navigationbar_height - 20 -64);
+
+
     [ComponentUtil updateScoreText:self.detailItem.category btn:self.coinButton tag:TAG_SCORE_TEXT];
 
     startTime = [NSDate timeIntervalSinceReferenceDate];
@@ -471,6 +479,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     NSLog(@"viewWillDisappear");
+
     int seconds = (int)ceilf([NSDate timeIntervalSinceReferenceDate] - startTime);
     
     if (seconds > MAX_SECONDS_FOR_VALID_STAY) {

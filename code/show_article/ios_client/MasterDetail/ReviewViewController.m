@@ -196,12 +196,15 @@
 
     self.summaryTextView.selectable = NO;
     self.summaryTextView.scrollEnabled = NO;
-
+    
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
     [self.view addGestureRecognizer:swipe];
     swipe.delegate = self;
 
-    self.summaryTextView.backgroundColor = [UIColor clearColor];
+    self.summaryTextView.backgroundColor =
+        [UIColor colorWithPatternImage:[UIImage imageNamed:@"report_background.png"]];
+
+    
     [self.summaryTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     [self.view addSubview:summaryTextView];
 
