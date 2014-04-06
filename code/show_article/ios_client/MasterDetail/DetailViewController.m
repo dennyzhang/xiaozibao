@@ -41,41 +41,43 @@
 
     contentPrefix = @"\n\n\n\n\n\n\n\n"; // TODO workaround
     if (!self.detailUITextView) {
-      NSLog(@"here!");
+      // NSLog(@"here!");
       self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectZero];
       [self.view addSubview:self.detailUITextView];
     }
 
+    // NSLog(@"navigationBar: %@", self.navigationController.navigationBar);
+    
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
     self.detailUITextView.delegate = self;
     self.detailUITextView.scrollEnabled = YES;
     self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    self.detailUITextView.selectable = NO;
+    //self.detailUITextView.selectable = NO;
        
     [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
 
-    NSLog(@"self.detailUITextView.superview: %@", self.detailUITextView.superview);
-    NSLog(@"parentViewController: %@", self.parentViewController);
+    // NSLog(@"self.detailUITextView.superview: %@", self.detailUITextView.superview);
+    // NSLog(@"parentViewController: %@", self.parentViewController);
     
-    NSLog(@"navigationBar height: %f",
-          self.navigationController.navigationBar.frame.size.height);
-    NSLog(@"self.view.frame.size.height: %f", self.view.frame.size.height);
-    NSLog(@"self.detailUITextView.frame.origin.x: %f", self.detailUITextView.frame.origin.x);
-    NSLog(@"self.detailUITextView.frame.origin.y: %f", self.detailUITextView.frame.origin.y);
-    NSLog(@"self.detailUITextView.frame.size.width: %f", self.detailUITextView.frame.size.width);
-    NSLog(@"self.detailUITextView.frame.size.height: %f", self.detailUITextView.frame.size.height);
-    NSLog(@"self.detailUITextView.font:%@", self.detailUITextView.font);
+    // NSLog(@"navigationBar height: %f",
+    //       self.navigationController.navigationBar.frame.size.height);
+    // NSLog(@"self.view.frame.size.height: %f", self.view.frame.size.height);
+    // NSLog(@"self.detailUITextView.frame.origin.x: %f", self.detailUITextView.frame.origin.x);
+    // NSLog(@"self.detailUITextView.frame.origin.y: %f", self.detailUITextView.frame.origin.y);
+    // NSLog(@"self.detailUITextView.frame.size.width: %f", self.detailUITextView.frame.size.width);
+    // NSLog(@"self.detailUITextView.frame.size.height: %f", self.detailUITextView.frame.size.height);
+    // NSLog(@"self.detailUITextView.font:%@", self.detailUITextView.font);
 
-    UIView* superview = (UIView*)self.detailUITextView.superview;
-    NSLog(@"superview frame y:%f", superview.frame.origin.y);
+    // UIView* superview = (UIView*)self.detailUITextView.superview;
+    // NSLog(@"superview frame y:%f", superview.frame.origin.y);
 
     //NSLog(@"detailUITextView.layoutManager:%@", detailUITextView.layoutManager);
     
     self.title = @"";
     self.detailUITextView.editable = false;
-    self.detailUITextView.selectable = false;
+
     // TODO, when jump to webView, the bottom doesn't look natural
     //self.detailUITextView.frame =  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     
@@ -284,6 +286,8 @@
     // Update the user interface for the detail item.
     if (self.detailItem) {
         self.detailUITextView.text = [self getContent:self.detailItem.content];
+        //[self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
+
         self.titleTextView.text = self.detailItem.title;
         NSString* shortUrl = [self shortUrl:self.detailItem.source];
         NSString* prefix = @"Link:  ";
@@ -389,7 +393,7 @@
 
 - (void)refreshComponentsLayout:(CGFloat)contentOffset_y
 {
-    //NSLog(@"refreshComponentsLayout contentOffset_y:%f", contentOffset_y);
+    NSLog(@"refreshComponentsLayout contentOffset_y:%f", contentOffset_y);
     CGFloat height = INIT_HEADER_HEIGHT;
     CGFloat width = self.detailUITextView.frame.size.width;
 
@@ -398,9 +402,10 @@
     self.imageView.frame =  CGRectMake(0.0f, contentOffset_y, width, height);
 
     self.titleTextView.frame =  CGRectMake(10, 10, width - 20, height - 10);
-    
     float font_size = roundf(FONT_SIZE_TITLE * height /INIT_HEADER_HEIGHT);
-    [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:font_size]];
+    // NSLog(@"font_size: %f", font_size);
+    self.titleTextView.font = [UIFont fontWithName:FONT_NAME_TITLE size:font_size];
+    // NSLog(@"self.titleTextView.font: %@", self.titleTextView.font);
 
     float icon_height, icon_width;
     icon_height = 60;
@@ -507,7 +512,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-   NSLog(@"scrollViewDidScroll, scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
+   // NSLog(@"scrollViewDidScroll, scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
    if (scrollView.contentOffset.y >= -MAX_HEADER_HEIGHT &&
        scrollView.contentOffset.y < MIN_HEADER_HEIGHT){
      [self refreshComponentsLayout:scrollView.contentOffset.y];
