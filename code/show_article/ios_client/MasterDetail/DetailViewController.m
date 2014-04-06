@@ -470,8 +470,10 @@
                                              self.view.frame.size.width,
                                              self.view.frame.size.height - navigationbar_height - 20 -64);
 
-
-    [ComponentUtil updateScoreText:self.detailItem.category btn:self.coinButton tag:TAG_SCORE_TEXT];
+    self.detailUITextView.textContainerInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
+    
+    [ComponentUtil updateScoreText:self.detailItem.category 
+                               btn:self.coinButton tag:TAG_SCORE_TEXT];
 
     startTime = [NSDate timeIntervalSinceReferenceDate];
 }

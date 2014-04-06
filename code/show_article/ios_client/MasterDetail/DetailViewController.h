@@ -28,6 +28,8 @@
 #define MAX_HEADER_HEIGHT 400
 #define INIT_HEADER_HEIGHT 230
 
+#define CONTENT_MARGIN_OFFSET 5
+
 #define INVALID_STRING @"INVALID_STRING"
 #define FEEDBACK_ENVOTEUP @"tag envoteup"
 #define FEEDBACK_ENVOTEDOWN @"tag envotedown"
