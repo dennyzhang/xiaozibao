@@ -39,12 +39,24 @@
     [PostsSqlite addPostReadCount:postsDB dbPath:dbPath
                            postId:self.detailItem.postid category:self.detailItem.category];
 
+    // hide navigationbar
+    [self.navigationController setToolbarHidden:YES animated:YES];
+
     contentPrefix = @"\n\n\n\n\n\n\n\n"; // TODO workaround
     if (!self.detailUITextView) {
-      // NSLog(@"here!");
+      contentPrefix = @"\n\n\n\n\n\n\n\n\n\n\n\n";
+      NSLog(@"various workaround for ReviewViewController");
       self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectZero];
       [self.view addSubview:self.detailUITextView];
+
+      float navigationbar_height =  self.navigationController.navigationBar.frame.size.height;
+      self.detailUITextView.frame = CGRectMake(0, 64,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height - 64);
+
     }
+
+    self.detailUITextView.textContainerInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
 
     // NSLog(@"navigationBar: %@", self.navigationController.navigationBar);
     
@@ -54,7 +66,7 @@
     self.detailUITextView.delegate = self;
     self.detailUITextView.scrollEnabled = YES;
     self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    //self.detailUITextView.selectable = NO;
+    self.detailUITextView.selectable = NO;
        
     [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
 
@@ -85,10 +97,11 @@
     [self addPostHeaderComponents];
     
     [self configureView];
+
     // hide and show navigation bar
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapRecognized:)];
-    singleTap.numberOfTapsRequired = 1;
-    [self.detailUITextView addGestureRecognizer:singleTap];
+    // UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapRecognized:)];
+    // singleTap.numberOfTapsRequired = 1;
+    // [self.detailUITextView addGestureRecognizer:singleTap];
     
     // refreshComponentsLayout
     [self refreshComponentsLayout:0];
@@ -118,16 +131,16 @@
 
 #pragma mark - Hide/Show navigationBar
 
-- (void)singleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
-    NSLog(@"single tap");
+// - (void)singleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
+//     NSLog(@"single tap");
 
-    if (self.navigationController.navigationBarHidden == YES) {
-        self.navigationController.navigationBarHidden = NO;
-    }
-    else{
-        self.navigationController.navigationBarHidden = YES;
-    }
-}
+//     if (self.navigationController.navigationBarHidden == YES) {
+//         self.navigationController.navigationBarHidden = NO;
+//     }
+//     else{
+//         self.navigationController.navigationBarHidden = YES;
+//     }
+// }
 
 #pragma mark - user defined event selectors
 -(IBAction) barButtonEvent:(id)sender
@@ -286,7 +299,7 @@
     // Update the user interface for the detail item.
     if (self.detailItem) {
         self.detailUITextView.text = [self getContent:self.detailItem.content];
-        //[self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
+        [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
 
         self.titleTextView.text = self.detailItem.title;
         NSString* shortUrl = [self shortUrl:self.detailItem.source];
@@ -468,14 +481,6 @@
     [super viewWillAppear:animated];
     NSLog(@"viewWillAppear");
     [self.navigationController setToolbarHidden:YES animated:YES];
-
-    float navigationbar_height =  self.navigationController.navigationBar.frame.size.height;
-      
-    self.detailUITextView.frame = CGRectMake(0, 0,
-                                             self.view.frame.size.width,
-                                             self.view.frame.size.height - navigationbar_height - 20 -64);
-
-    self.detailUITextView.textContainerInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
     
     [ComponentUtil updateScoreText:self.detailItem.category 
                                btn:self.coinButton tag:TAG_SCORE_TEXT];
@@ -512,7 +517,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-   // NSLog(@"scrollViewDidScroll, scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
+   NSLog(@"scrollViewDidScroll, scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
    if (scrollView.contentOffset.y >= -MAX_HEADER_HEIGHT &&
        scrollView.contentOffset.y < MIN_HEADER_HEIGHT){
      [self refreshComponentsLayout:scrollView.contentOffset.y];
