@@ -48,9 +48,10 @@
       NSLog(@"here!");
       self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,
                                                                            self.view.frame.size.height)];
-      contentPrefix = @"\n\n\n\n\n\n\n\n\n\n"; // TODO workaround
+      contentPrefix = @"\n\n\n\n\n\n\n\n\n\n\n\n\n"; // TODO workaround
       [self.view addSubview:self.detailUITextView];
     }
+
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.detailUITextView.clipsToBounds = NO;
     self.detailUITextView.backgroundColor = [UIColor clearColor];
@@ -60,6 +61,14 @@
     self.detailUITextView.selectable = NO;
 
     [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
+
+    NSLog(@"self.view.frame.size.height: %f", self.view.frame.size.height);
+    NSLog(@"self.detailUITextView.frame.origin.x: %f", self.detailUITextView.frame.origin.x);
+    NSLog(@"self.detailUITextView.frame.origin.y: %f", self.detailUITextView.frame.origin.y);
+    NSLog(@"self.detailUITextView.frame.size.width: %f", self.detailUITextView.frame.size.width);
+    NSLog(@"self.detailUITextView.frame.size.height: %f", self.detailUITextView.frame.size.height);
+    NSLog(@"self.detailUITextView.font:%@", self.detailUITextView.font);
+
     self.title = @"";
     self.detailUITextView.editable = false;
     self.detailUITextView.selectable = false;
@@ -453,6 +462,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSLog(@"viewWillAppear");
+    [self.navigationController setToolbarHidden:YES animated:YES];
     [ComponentUtil updateScoreText:self.detailItem.category btn:self.coinButton tag:TAG_SCORE_TEXT];
 
     startTime = [NSDate timeIntervalSinceReferenceDate];
