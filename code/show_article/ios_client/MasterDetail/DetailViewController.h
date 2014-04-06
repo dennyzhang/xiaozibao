@@ -30,6 +30,8 @@
 
 #define CONTENT_MARGIN_OFFSET 5
 
+#define FIELD_SEPARATOR @"&$!"
+
 #define INVALID_STRING @"INVALID_STRING"
 #define FEEDBACK_ENVOTEUP @"tag envoteup"
 #define FEEDBACK_ENVOTEDOWN @"tag envotedown"

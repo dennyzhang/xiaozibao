@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-03-31 23:42:24>
+## Updated: Time-stamp: <2014-04-06 19:49:10>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -37,6 +37,8 @@ DB_PWD="ilovechina"
 DB_NAME="xzb"
 
 EDITOR_UID_LIST = ["denny", "749A51E0-50F4-49AD-A5D5-BDCBA787EF29", "0DD7936F-629C-4E9E-B458-821B3964EA3E", "5686F12E-5047-4E68-BDF0-083C31A63FF8"]
+
+SCORE_THRESHOLD = 100
 
 FIELD_SEPARATOR="&$!"
 FEEDBACK_ENVOTEUP="tag envoteup"
@@ -182,9 +184,11 @@ def caculate_meta(dict_file, dict_log):
     comment = dict_log["comment"]
     uid = dict_log["uid"]
 
-    effect_rate = 1
-    if not (uid in EDITOR_UID_LIST):
-        effect_rate = 0
+    effect_rate = 0
+    if (uid in EDITOR_UID_LIST):
+        effect_rate = 1
+    if dict_log.has_key("score") and (int(dict_log["score"]) >= SCORE_THRESHOLD):
+        effect_rate = 1
 
     postid = dict_log["postid"]
     category = dict_log["category"]

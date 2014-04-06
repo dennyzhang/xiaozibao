@@ -248,14 +248,26 @@
     
     NSString* comment = INVALID_STRING;
     if (btn.tag == TAG_BUTTON_VOTEUP) {
-        comment = @"tag envoteup" ;
+       if (detailItem.isvoteup)
+         comment = FEEDBACK_ENVOTEUP;
+       else
+         comment = FEEDBACK_DEVOTEUP;
     }
     if (btn.tag == TAG_BUTTON_VOTEDOWN) {
-        comment = @"tag envotedown" ;
+       if (detailItem.isvotedown)
+         comment = FEEDBACK_ENVOTEDOWN;
+       else
+         comment = FEEDBACK_DEVOTEDOWN;
     }
     if (btn.tag == TAG_BUTTON_FAVORITE) {
-        comment = @"tag enfavorite" ;
+       if (detailItem.isfavorite)
+         comment = FEEDBACK_ENFAVORITE;
+       else
+         comment = FEEDBACK_DEFAVORITE;
     }
+
+    comment = [NSString stringWithFormat:@"%@%@score=%d", comment, FIELD_SEPARATOR,
+                        [UserProfile scoreByCategory:self.detailItem.category]];
 
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             userid, @"uid", postid, @"postid",
