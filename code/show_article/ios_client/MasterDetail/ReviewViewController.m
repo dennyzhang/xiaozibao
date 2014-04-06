@@ -275,7 +275,7 @@
 
     [self showStastics];
     // configure frames of summaryTextView's subview components
-    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 60, 50.0f, ICON_WIDTH, ICON_HEIGHT)];
+    [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 80, 60.0f, ICON_WIDTH, ICON_HEIGHT)];
     [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, textHeight)];
 
     [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
