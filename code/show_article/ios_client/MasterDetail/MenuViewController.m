@@ -29,6 +29,13 @@
 
     self.sectionArray = [NSArray arrayWithObjects:@" Questions", @" Preference",nil];
     [self load_category_list];
+
+    //swipe guesture
+    UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
+    leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:leftswipe];
+    leftswipe.delegate = self;
+
 }
 
 - (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
@@ -195,6 +202,11 @@
     // return [str
     //            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
    return [text capitalizedString];
+}
+
+-(void) leftSwipe:(UISwipeGestureRecognizer*)recognizer {
+    SWRevealViewController* rvc = self.revealViewController;
+    [rvc rightRevealToggleAnimated:YES];
 }
 
 @end
