@@ -43,7 +43,7 @@
     [PostsSqlite addPostReadCount:postsDB dbPath:dbPath
                            postId:self.detailItem.postid category:self.detailItem.category];
 
-    contentPrefix = @"\n\n\n\n\n\n\n\n\n\n"; // TODO workaround
+    contentPrefix = @"\n\n\n\n\n\n\n\n"; // TODO workaround
     if (!self.detailUITextView) {
       NSLog(@"here!");
       self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,

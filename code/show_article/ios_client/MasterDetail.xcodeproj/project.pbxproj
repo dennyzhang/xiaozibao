@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040AAB1218F19134006ACA84 /* header_23.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB0D18F19134006ACA84 /* header_23.png */; };
+		040AAB1318F19134006ACA84 /* header_24.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB0E18F19134006ACA84 /* header_24.png */; };
+		040AAB1418F19134006ACA84 /* header_25.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB0F18F19134006ACA84 /* header_25.png */; };
+		040AAB1518F19134006ACA84 /* header_26.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB1018F19134006ACA84 /* header_26.png */; };
+		040AAB1618F19134006ACA84 /* header_27.png in Resources */ = {isa = PBXBuildFile; fileRef = 040AAB1118F19134006ACA84 /* header_27.png */; };
 		040E856418DF776000FD3E56 /* stackexchange.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856018DF776000FD3E56 /* stackexchange.com.png */; };
 		040E856518DF776000FD3E56 /* stackoverflow.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856118DF776000FD3E56 /* stackoverflow.com.png */; };
 		040E856618DF776000FD3E56 /* www.careercup.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856218DF776000FD3E56 /* www.careercup.com.png */; };
@@ -94,6 +99,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040AAB0D18F19134006ACA84 /* header_23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_23.png; sourceTree = "<group>"; };
+		040AAB0E18F19134006ACA84 /* header_24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_24.png; sourceTree = "<group>"; };
+		040AAB0F18F19134006ACA84 /* header_25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_25.png; sourceTree = "<group>"; };
+		040AAB1018F19134006ACA84 /* header_26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_26.png; sourceTree = "<group>"; };
+		040AAB1118F19134006ACA84 /* header_27.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_27.png; sourceTree = "<group>"; };
 		040E856018DF776000FD3E56 /* stackexchange.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stackexchange.com.png; sourceTree = "<group>"; };
 		040E856118DF776000FD3E56 /* stackoverflow.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stackoverflow.com.png; sourceTree = "<group>"; };
 		040E856218DF776000FD3E56 /* www.careercup.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.careercup.com.png; sourceTree = "<group>"; };
@@ -235,6 +245,11 @@
 				0416B67918F0892F00397C7D /* header_1.png */,
 				0416B67A18F0892F00397C7D /* header_10.png */,
 				0416B6A518F0AE8500397C7D /* header_21.png */,
+				040AAB0D18F19134006ACA84 /* header_23.png */,
+				040AAB0E18F19134006ACA84 /* header_24.png */,
+				040AAB0F18F19134006ACA84 /* header_25.png */,
+				040AAB1018F19134006ACA84 /* header_26.png */,
+				040AAB1118F19134006ACA84 /* header_27.png */,
 				0416B69718F0AB0000397C7D /* header_16.png */,
 				0416B69818F0AB0000397C7D /* header_17.png */,
 				0416B69918F0AB0000397C7D /* header_18.png */,
@@ -481,6 +496,7 @@
 				0416B6A818F0B14F00397C7D /* info.png in Resources */,
 				04409A5518DB69670021F9C3 /* more-512.png in Resources */,
 				0448466718E47A2E00C3FEC7 /* figure.png in Resources */,
+				040AAB1518F19134006ACA84 /* header_26.png in Resources */,
 				0416B68518F0892F00397C7D /* header_10.png in Resources */,
 				0416B69418F0A5B100397C7D /* header_13.png in Resources */,
 				0448466518E4784C00C3FEC7 /* icon.png in Resources */,
@@ -511,14 +527,18 @@
 				0416B69018F094DF00397C7D /* header_12.png in Resources */,
 				0416B68B18F0892F00397C7D /* header_6.png in Resources */,
 				04409A5718DB69670021F9C3 /* thumb_up-512.png in Resources */,
+				040AAB1218F19134006ACA84 /* header_23.png in Resources */,
 				0411B25318E364EC00428AB1 /* www.quora.com.png in Resources */,
 				0416B68718F0892F00397C7D /* header_2.png in Resources */,
+				040AAB1318F19134006ACA84 /* header_24.png in Resources */,
 				040E856718DF776000FD3E56 /* www.v2ex.com.png in Resources */,
 				04E893E5179130C400E9573C /* InfoPlist.strings in Resources */,
 				0416B6A218F0AB0000397C7D /* header_20.png in Resources */,
 				04409A5418DB69670021F9C3 /* hearts-512.png in Resources */,
 				040E856518DF776000FD3E56 /* stackoverflow.com.png in Resources */,
+				040AAB1618F19134006ACA84 /* header_27.png in Resources */,
 				0416B68D18F0892F00397C7D /* header_8.png in Resources */,
+				040AAB1418F19134006ACA84 /* header_25.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
