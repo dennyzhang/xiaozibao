@@ -500,6 +500,7 @@
 }
 
 -(void) textWithSwipe:(UISwipeGestureRecognizer*)recognizer {
+    NSLog(@"textWithSwipe is triggered");
     if (recognizer.direction == UISwipeGestureRecognizerDirectionRight){
         [self.navigationController popViewControllerAnimated:YES];
     }
