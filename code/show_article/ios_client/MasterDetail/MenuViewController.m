@@ -195,4 +195,10 @@
     [rvc rightRevealToggleAnimated:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [Posts updateCategoryList:[NSUserDefaults standardUserDefaults]];
+    self.category_list = [ComponentUtil getCategoryList];
+    [self.tableView reloadData];
+}
+
 @end

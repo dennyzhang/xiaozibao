@@ -39,11 +39,6 @@
     
     NSLog(@"MasterViewController load");
     
-    // load menu category list
-    SWRevealViewController* rvc = self.revealViewController;
-    MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-    [Posts updateCategoryList:[NSUserDefaults standardUserDefaults]];
-    
     // components
     [self addCompoents];
     
@@ -74,9 +69,8 @@
     [self configureNavigationTitle];
     self.titleLabel.text = navigationTitle;
     
-    if ([navigationTitle isEqualToString:MORE_CATEGORY] || [navigationTitle isEqualToString:APP_SETTING]) {
+    if (![self isQuestionChannel])
         return;
-    }
     
     self->bottom_num = 1;
     self.username=username_t;
@@ -353,7 +347,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    // update score
     self.navigationController.navigationBarHidden = NO;
     [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
 }
@@ -363,8 +357,8 @@
     
     SWRevealViewController* rvc = self.revealViewController;
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-    NSLog(@"rightSwipe. rvc.frontViewPosition:%d",
-          rvc.frontViewPosition);
+    NSLog(@"rightSwipe. rvc.frontViewPosition:%d, menuvc:%@",
+          rvc.frontViewPosition, menuvc);
     
     if (rvc.frontViewPosition == FrontViewPositionRight) // menu is shown
     {
@@ -374,9 +368,8 @@
     NSString* new_category;
     NSMutableArray* category_list;
     int index, count;
-    
-    if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS] ||
-        [self.navigationItem.title isEqualToString:APP_SETTING]) {
+
+    if (![self isQuestionChannel]) {
         index = 0;
     }
     else {
@@ -384,7 +377,7 @@
         count = [category_list count];
         index = [category_list indexOfObject:self.category];
     }
-    if (index == -1 || index == 0) {
+    if (index == NSNotFound || index == 0) {
         // show menu
         [self showMenuView:TRUE];
     }
@@ -392,7 +385,7 @@
         // show previous category
         new_category = [category_list objectAtIndex:(index-1)];
         [self init_data:userid category_t:new_category
-        navigationTitle:[menuvc textToValue:new_category]];
+              navigationTitle:[menuvc textToValue:new_category]];
     }
 }
 
@@ -411,8 +404,7 @@
         NSString* new_category;
         NSMutableArray* category_list;
         int index, count;
-        if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS] ||
-            [self.navigationItem.title isEqualToString:APP_SETTING]) {
+    if (![self isQuestionChannel]) {
             index = 0;
         }
         else {
@@ -810,8 +802,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([self.navigationItem.title isEqualToString:APP_SETTING] ||
-        [self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
+    if (![self isQuestionChannel])
         return;
     // when reach the top
     if (scrollView.contentOffset.y <= 0)
@@ -827,8 +818,7 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if ([self.navigationItem.title isEqualToString:APP_SETTING] ||
-        [self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
+    if (![self isQuestionChannel])
         return;
     
     // when reach the top
@@ -906,8 +896,7 @@
 - (void)configureNavigationTitle
 {
     NSLog(@"configureNavigationTitle self.navigationItem.title: %@", self.navigationItem.title);
-    if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS] ||
-        [self.navigationItem.title isEqualToString:APP_SETTING])
+    if (![self isQuestionChannel])
         return;
     
     if (!self.titleLabel) {
@@ -963,4 +952,9 @@
     [self.dotImageView setImage:[UIImage imageNamed:imageName]];
 }
 
+- (BOOL) isQuestionChannel
+{
+    return (![self.navigationItem.title isEqualToString:SAVED_QUESTIONS] &&
+            ![self.navigationItem.title isEqualToString:APP_SETTING]);
+}
 @end
