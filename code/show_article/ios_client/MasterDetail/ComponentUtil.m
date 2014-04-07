@@ -158,5 +158,11 @@
       [userDefaults setObject:@"linux,concept,cloud,security,algorithm,product" forKey:@"CategoryList"];
     }
 
+    if (![userDefaults stringForKey:@"Userid"]) {
+      CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+      NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
+      [userDefaults setObject:uuidString forKey:@"Userid"];
+      CFRelease(uuidRef);
+    }
 }
 @end

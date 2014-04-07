@@ -38,29 +38,6 @@
     [self initTableIndicatorView];
     
     NSLog(@"MasterViewController load");
-    
-    // show image
-    UIImage *image = [UIImage imageNamed: @"dot1.png"];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage: image];
-
-    // label
-    UILabel *tmpTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    
-    tmpTitleLabel.text = @"Mannschaft";
-    tmpTitleLabel.backgroundColor = [UIColor clearColor];
-    tmpTitleLabel.textColor = [UIColor whiteColor];
-    
-    UIView* newView = [[UIView alloc] initWithFrame:CGRectZero];
-
-    [newView addSubview:imageView];
-    [newView addSubview:tmpTitleLabel];
-    self.navigationItem.titleView = newView;
-    newView.frame = CGRectMake(0, 0, 100,
-                               self.navigationController.navigationBar.frame.size.height);
-    tmpTitleLabel.frame = CGRectMake(0, 0, 100, 35);
-    imageView.frame = CGRectMake(30, 15, 35, 35);
-    
-    self.titleLabel = tmpTitleLabel;
 
     // load menu category list
     SWRevealViewController* rvc = self.revealViewController;
@@ -68,59 +45,10 @@
     [menuvc load_category_list];
     
     // components
-    UIButton* btn;
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    
-    [self.tableView setRowHeight:ROW_HEIGHT];
-    UINavigationBar* appearance = self.navigationController.navigationBar;
-    
-    appearance.tintColor = [UIColor whiteColor];
-    [appearance setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
-    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               [UIColor whiteColor],
-                                               NSForegroundColorAttributeName,
-                                               [UIFont fontWithName:FONT_NAME1 size:FONT_BIG],
-                                               NSFontAttributeName,
-                                               nil];
-    [appearance setTitleTextAttributes:navbarTitleTextAttributes];
-    
+    [self addCompoents];
+
+    // set UserDefaults
     [ComponentUtil setDefaultConf];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (self.category == nil) {
-        NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
-        NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-        NSString* default_category = stringArray[0];
-        default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
-        [self init_data:userid category_t:default_category navigationTitle:default_category];
-    }
-    if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
-        btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-        [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-        btn.tag = TAG_BUTTON_COIN;
-        [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
-        self.coinButton = btn;
-        NSInteger score = [UserProfile scoreByCategory:self.category];
-        [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
-                              fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
-        UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-        
-        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
-    }
-    
-    if (![userDefaults stringForKey:@"Userid"]) {
-        [userDefaults setObject:uuidString forKey:@"Userid"];
-    }
-    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
-    [btn addTarget:self action:@selector(showMenuViewController:)
-  forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.leftBarButtonItem = settingButton;
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
@@ -899,6 +827,84 @@
     {
         [self refreshTableTail];
     }
+}
+
+- (void)addCompoents
+{
+    // show image
+    UIImage *image = [UIImage imageNamed: @"dot1.png"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage: image];
+
+    // label
+    UILabel *tmpTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    tmpTitleLabel.text = @"Mannschaft";
+    tmpTitleLabel.backgroundColor = [UIColor clearColor];
+    tmpTitleLabel.textColor = [UIColor whiteColor];
+    
+    UIView* newView = [[UIView alloc] initWithFrame:CGRectZero];
+
+    [newView addSubview:imageView];
+    [newView addSubview:tmpTitleLabel];
+    self.navigationItem.titleView = newView;
+    newView.frame = CGRectMake(0, 0, 100,
+                               self.navigationController.navigationBar.frame.size.height);
+    tmpTitleLabel.frame = CGRectMake(0, 0, 100, 35);
+    imageView.frame = CGRectMake(30, 15, 35, 35);
+    
+    self.titleLabel = tmpTitleLabel;
+
+    // set header of navigation bar
+    UIButton* btn;
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    
+    [self.tableView setRowHeight:ROW_HEIGHT];
+    UINavigationBar* appearance = self.navigationController.navigationBar;
+    
+    appearance.tintColor = [UIColor whiteColor];
+    [appearance setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor whiteColor],
+                                               NSForegroundColorAttributeName,
+                                               [UIFont fontWithName:FONT_NAME1 size:FONT_BIG],
+                                               NSFontAttributeName,
+                                               nil];
+    [appearance setTitleTextAttributes:navbarTitleTextAttributes];
+
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (self.category == nil) {
+        NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
+        NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
+        NSString* default_category = stringArray[0];
+        default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+        [self init_data:userid category_t:default_category navigationTitle:default_category];
+    }
+    if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
+        btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+        [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = TAG_BUTTON_COIN;
+        [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+        self.coinButton = btn;
+        NSInteger score = [UserProfile scoreByCategory:self.category];
+        [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+                              fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
+        UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
+    }
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
+    [btn addTarget:self action:@selector(showMenuViewController:)
+  forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.leftBarButtonItem = settingButton;
+
 }
 
 @end

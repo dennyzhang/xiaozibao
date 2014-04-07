@@ -28,12 +28,7 @@
 
     [Posts getCategoryList:[NSUserDefaults standardUserDefaults]];
 
-    CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
-    uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
-    CFRelease(uuidRef);
-
-   
-   NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = nil;
     if ([paths count] > 0){
         basePath = (NSString *)[paths objectAtIndex:0];

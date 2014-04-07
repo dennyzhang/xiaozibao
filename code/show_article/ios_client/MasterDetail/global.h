@@ -35,5 +35,3 @@
 #define DEFAULT_BACKGROUND_COLOR [UIColor colorWithRed:246.0f/255.0f green:244.0f/255.0f blue:231.0f/255.0f alpha:1.0f]
 
 #define MAX_SECONDS_FOR_VALID_STAY 120
-
-NSString* uuidString;
