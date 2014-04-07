@@ -155,7 +155,7 @@
     }
 
     if (![userDefaults objectForKey:@"CategoryList"]) {
-      [userDefaults setObject:@"linux,concept,cloud,security,algorithm,product" forKey:@"CategoryList"];
+      [userDefaults setObject:@"linux,concept,cloud,security,algorithm" forKey:@"CategoryList"];
     }
 
     if (![userDefaults stringForKey:@"Userid"]) {
