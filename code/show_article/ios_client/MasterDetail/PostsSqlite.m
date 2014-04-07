@@ -18,7 +18,7 @@ NSLock *lock;
     
     char *errMsg;
     const char *dbpath = [dbPath UTF8String];
-    NSLog(@"initDB");
+    //NSLog(@"initDB");
     //drop table posts;
     const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, METADATA TEXT, SOURCE TEXT, READCOUNT INT DEFAULT 0, ISFAVORITE INT DEFAULT 0, ISVOTEUP INT DEFAULT 0, ISVOTEDOWN INT DEFAULT 0)";
     //const char *sql_stmt = "drop table posts";

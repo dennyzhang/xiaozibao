@@ -42,7 +42,7 @@
     // load menu category list
     SWRevealViewController* rvc = self.revealViewController;
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-    [menuvc load_category_list];
+    [Posts updateCategoryList:[NSUserDefaults standardUserDefaults]];
     
     // components
     [self addCompoents];
@@ -95,7 +95,7 @@
     
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
-    NSLog(@"init_data, dbPath:%@", self->dbPath);
+    //NSLog(@"init_data, dbPath:%@", self->dbPath);
     
     if (!userDefaults) {
         userDefaults = [NSUserDefaults standardUserDefaults];
@@ -380,7 +380,7 @@
         index = 0;
     }
     else {
-        category_list = [self getCategoryList];
+        category_list = [ComponentUtil getCategoryList];
         count = [category_list count];
         index = [category_list indexOfObject:self.category];
     }
@@ -416,7 +416,7 @@
             index = 0;
         }
         else {
-            category_list = [self getCategoryList];
+            category_list = [ComponentUtil getCategoryList];
             count = [category_list count];
             index = [category_list indexOfObject:self.category];
             if (index < count-1) {
@@ -905,7 +905,7 @@
 
 - (void)configureNavigationTitle
 {
-    NSLog(@"configureDotImageView self.navigationItem.title: %@", self.navigationItem.title);
+    NSLog(@"configureNavigationTitle self.navigationItem.title: %@", self.navigationItem.title);
     if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS] ||
         [self.navigationItem.title isEqualToString:APP_SETTING])
         return;
@@ -941,8 +941,8 @@
 
 - (void)configureDotImageView
 {
+    NSMutableArray* category_list = [ComponentUtil getCategoryList];
     
-    NSMutableArray* category_list = [self getCategoryList];
     int index, count;
     count = [category_list count];
     index = [category_list indexOfObject:self.category];
@@ -959,14 +959,8 @@
                 imageName = @"dot3.png";
         }
     }
-    NSLog(@"configureDotImageView imageName:%@", imageName);
+    //NSLog(@"configureDotImageView imageName:%@, category_list:%@", imageName, category_list);
     [self.dotImageView setImage:[UIImage imageNamed:imageName]];
 }
 
-- (NSMutableArray*) getCategoryList
-{
-    SWRevealViewController* rvc = self.revealViewController;
-    MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-    return menuvc.category_list;
-}
 @end

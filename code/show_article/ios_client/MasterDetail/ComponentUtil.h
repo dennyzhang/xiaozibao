@@ -32,4 +32,5 @@
 +(void) setDefaultConf;
 +(NSString*) getLogoIcon:(NSString* )url;
 +(NSString*) getPostHeaderImg;
++(NSMutableArray*) getCategoryList;
 @end

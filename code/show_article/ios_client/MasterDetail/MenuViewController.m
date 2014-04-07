@@ -29,7 +29,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     self.sectionArray = [NSArray arrayWithObjects:@" Questions", @" Preference",nil];
-    [self load_category_list];
+    self.category_list = [ComponentUtil getCategoryList];
 
     //swipe guesture
     UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
@@ -41,7 +41,7 @@
 
 - (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
 {
-    NSLog(@"MenuViewController segue identifier: %@", [segue identifier]);
+    //NSLog(@"MenuViewController segue identifier: %@", [segue identifier]);
     // configure the destination view controller:
     if ( [segue.destinationViewController isKindOfClass: [MasterViewController class]] &&
         [sender isKindOfClass:[UITableViewCell class]] )
@@ -100,21 +100,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)load_category_list
-{
-  NSString* categoryList = [[NSUserDefaults standardUserDefaults] stringForKey:@"CategoryList"];
-  NSLog(@"load_category_list:%@", categoryList);
-  NSString* category;
-  NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-  self.category_list = [[NSMutableArray alloc] init];
-  for (int i=0; i < [stringArray count]; i++)
-  {
-      category = stringArray[i];
-      category = [category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-      [self.category_list addObject:category];
-  }
 }
 
 - (void)didReceiveMemoryWarning

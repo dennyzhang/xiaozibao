@@ -165,4 +165,19 @@
       CFRelease(uuidRef);
     }
 }
+
++(NSMutableArray*) getCategoryList
+{
+  NSMutableArray* category_list = [[NSMutableArray alloc] init];
+  NSString* categoryList = [[NSUserDefaults standardUserDefaults] stringForKey:@"CategoryList"];
+  NSString* category;
+  NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
+  for (int i=0; i < [stringArray count]; i++)
+  {
+      category = stringArray[i];
+      category = [category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+      [category_list addObject:category];
+  }
+  return category_list;
+}
 @end

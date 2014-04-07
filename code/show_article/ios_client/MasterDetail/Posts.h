@@ -29,5 +29,5 @@
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;
 
-+ (void)getCategoryList:(NSUserDefaults *)userDefaults;
++ (void)updateCategoryList:(NSUserDefaults *)userDefaults;
 @end

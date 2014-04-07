@@ -57,7 +57,7 @@
   //NSLog(@"self.metadataDictionary:%@", self.metadataDictionary);
 }
 
-+ (void)getCategoryList:(NSUserDefaults *)userDefaults
++ (void)updateCategoryList:(NSUserDefaults *)userDefaults
 {
      NSString *urlPrefix=SERVERURL;
      NSString *urlStr= [NSString stringWithFormat: @"%@api_list_topic", urlPrefix];
