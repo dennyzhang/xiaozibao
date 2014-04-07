@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-04-07 16:19:55>
+## Updated: Time-stamp: <2014-04-07 19:35:50>
 ##-------------------------------------------------------------------
 from flask import Flask
 from flask import render_template
@@ -100,6 +100,14 @@ def list_topic():
     # content = content[1:]
     # TODO: remove test(test), product(chinese)
     content = 'linux,concept,algorithm,cloud,security'
+    resp = make_response(content, 200)
+    resp.headers['Content-type'] = 'application/json; charset=utf-8'
+    return resp
+
+@app.route("/apple_privacy", methods=['GET', 'POST'])
+def apple_privacy():
+    log.info("apple_privacy is called")
+    content = 'ok'
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
