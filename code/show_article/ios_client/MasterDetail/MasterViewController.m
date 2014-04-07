@@ -69,7 +69,7 @@
     [self configureNavigationTitle];
     self.titleLabel.text = navigationTitle;
     
-    if (![self isQuestionChannel])
+    if ([self.navigationItem.title isEqualToString:APP_SETTING])
         return;
     
     self->bottom_num = 1;
