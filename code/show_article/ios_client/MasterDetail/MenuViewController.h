@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MenuViewController : UITableViewController
+@interface MenuViewController : UITableViewController <UIGestureRecognizerDelegate>
 @property (atomic, retain) NSMutableArray* category_list;
 @property (atomic, retain) NSArray* sectionArray;
 - (void)load_category_list;

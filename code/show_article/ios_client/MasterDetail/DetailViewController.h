@@ -13,7 +13,7 @@
 #import "UserProfile.h"
 #import "ComponentUtil.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
 #define TAG_BUTTON_VOTEUP 2001
 #define TAG_BUTTON_VOTEDOWN 2002
 #define TAG_BUTTON_FAVORITE 2003

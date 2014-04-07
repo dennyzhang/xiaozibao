@@ -49,7 +49,7 @@
       self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectZero];
       [self.view addSubview:self.detailUITextView];
 
-      float navigationbar_height =  self.navigationController.navigationBar.frame.size.height;
+      //float navigationbar_height =  self.navigationController.navigationBar.frame.size.height;
       self.detailUITextView.frame = CGRectMake(0, 64,
                                              self.view.frame.size.width,
                                              self.view.frame.size.height - 64);

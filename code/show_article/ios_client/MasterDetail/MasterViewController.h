@@ -20,7 +20,7 @@
 
 @class DetailViewController;
 
-@interface MasterViewController : UITableViewController
+@interface MasterViewController : UITableViewController <UIGestureRecognizerDelegate>
 
 #define TAG_BUTTON_COIN 4001
 

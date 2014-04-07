@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ReviewViewController : UIViewController <UITableViewDelegate, 
-        UITableViewDataSource>
+        UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property (retain, nonatomic) IBOutlet UITextView *summaryTextView;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
