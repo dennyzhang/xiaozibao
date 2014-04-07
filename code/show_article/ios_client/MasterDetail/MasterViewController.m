@@ -73,8 +73,6 @@
     [self configureNavigationTitle];
     self.titleLabel.text = navigationTitle;
     
-    NSLog(@"\n\nself.titleLabel.text: %@", self.titleLabel.text);
-    
     if ([navigationTitle isEqualToString:MORE_CATEGORY] || [navigationTitle isEqualToString:APP_SETTING]) {
         return;
     }
@@ -864,7 +862,7 @@
         MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
         
         [self init_data:userid category_t:default_category
-        navigationTitle:[menuvc textToValue:default_category]];
+              navigationTitle:[menuvc textToValue:default_category]];
     }
     if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
