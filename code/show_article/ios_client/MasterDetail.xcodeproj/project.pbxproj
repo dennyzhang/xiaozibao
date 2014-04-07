@@ -70,6 +70,9 @@
 		049FE34E18E1168D009FDB39 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FE34D18E1168D009FDB39 /* share.png */; };
 		049FE35118E12CFF009FDB39 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FE35018E12CFF009FDB39 /* UserProfile.m */; };
 		04BF8F8B18F2FE4A00D0A2CB /* dot1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8918F2FE4A00D0A2CB /* dot1.png */; };
+		04BF8F8F18F3170200D0A2CB /* dot2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8C18F3170200D0A2CB /* dot2.png */; };
+		04BF8F9018F3170200D0A2CB /* dot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8D18F3170200D0A2CB /* dot3.png */; };
+		04BF8F9118F3170200D0A2CB /* dot4.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8E18F3170200D0A2CB /* dot4.png */; };
 		04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
 		04E893DB179130C400E9573C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DA179130C400E9573C /* Foundation.framework */; };
 		04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DC179130C400E9573C /* CoreGraphics.framework */; };
@@ -169,6 +172,9 @@
 		04A7BDEB179EA84700E9D0BC /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		04A7BDEC179EA84700E9D0BC /* MenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		04BF8F8918F2FE4A00D0A2CB /* dot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot1.png; sourceTree = "<group>"; };
+		04BF8F8C18F3170200D0A2CB /* dot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot2.png; sourceTree = "<group>"; };
+		04BF8F8D18F3170200D0A2CB /* dot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot3.png; sourceTree = "<group>"; };
+		04BF8F8E18F3170200D0A2CB /* dot4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot4.png; sourceTree = "<group>"; };
 		04C24E7E1867FEC500184A3E /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		04C24E811867FF8100184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		04C24E831867FFB200184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = "../../../../../../../../../../../Applications/Xcode5-DP2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libsqlite3.dylib"; sourceTree = "<group>"; };
@@ -281,6 +287,9 @@
 			isa = PBXGroup;
 			children = (
 				04BF8F8918F2FE4A00D0A2CB /* dot1.png */,
+				04BF8F8C18F3170200D0A2CB /* dot2.png */,
+				04BF8F8D18F3170200D0A2CB /* dot3.png */,
+				04BF8F8E18F3170200D0A2CB /* dot4.png */,
 			);
 			path = dots;
 			sourceTree = "<group>";
@@ -506,6 +515,7 @@
 				0416B69618F0A5B100397C7D /* header_15.png in Resources */,
 				0416B68818F0892F00397C7D /* header_3.png in Resources */,
 				0411B25218E364EC00428AB1 /* news.ycombinator.com.png in Resources */,
+				04BF8F9118F3170200D0A2CB /* dot4.png in Resources */,
 				0411B25418E364EC00428AB1 /* www.reddit.com.png in Resources */,
 				0416B6A818F0B14F00397C7D /* info.png in Resources */,
 				04409A5518DB69670021F9C3 /* more-512.png in Resources */,
@@ -515,6 +525,7 @@
 				0416B69418F0A5B100397C7D /* header_13.png in Resources */,
 				0448466518E4784C00C3FEC7 /* icon.png in Resources */,
 				0416B6A418F0AB0000397C7D /* header_22.png in Resources */,
+				04BF8F8F18F3170200D0A2CB /* dot2.png in Resources */,
 				0416B68918F0892F00397C7D /* header_4.png in Resources */,
 				04E893F1179130C400E9573C /* Main_iPad.storyboard in Resources */,
 				0416B69E18F0AB0000397C7D /* header_16.png in Resources */,
@@ -547,6 +558,7 @@
 				0411B25318E364EC00428AB1 /* www.quora.com.png in Resources */,
 				0416B68718F0892F00397C7D /* header_2.png in Resources */,
 				040AAB1318F19134006ACA84 /* header_24.png in Resources */,
+				04BF8F9018F3170200D0A2CB /* dot3.png in Resources */,
 				040E856718DF776000FD3E56 /* www.v2ex.com.png in Resources */,
 				04E893E5179130C400E9573C /* InfoPlist.strings in Resources */,
 				0416B6A218F0AB0000397C7D /* header_20.png in Resources */,
