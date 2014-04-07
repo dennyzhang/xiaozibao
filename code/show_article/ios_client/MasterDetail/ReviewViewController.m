@@ -120,7 +120,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *customLabel = [[UILabel alloc] init];
     //customLabel.text = @" Top 10 Questions By Your History";
-    customLabel.text = @" Top 10 Questions Customzied for You";
+    customLabel.text = @" Top 10 Questions Selected For You";
     customLabel.textColor = [UIColor whiteColor];
     customLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigation_header.png"]];
     return customLabel;
