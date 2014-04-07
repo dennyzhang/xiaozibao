@@ -69,6 +69,7 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.category=category_t;
+    self.navigationItem.title = navigationTitle;
     
     [self configureNavigationTitle];
     self.titleLabel.text = navigationTitle;
@@ -290,7 +291,6 @@
     [operation start];
 }
 
-
 - (void) showMenuViewController:(id)sender
 {
     [self showMenuView:TRUE];
@@ -372,11 +372,18 @@
     }
     
     NSString* new_category;
-    NSMutableArray* category_list = [self getCategoryList];
+    NSMutableArray* category_list;
     int index, count;
-    count = [category_list count];
-    index = [category_list indexOfObject:self.category];
-    NSLog(@"index:%d", index);
+    
+    if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS] ||
+        [self.navigationItem.title isEqualToString:APP_SETTING]) {
+        index = 0;
+    }
+    else {
+        category_list = [self getCategoryList];
+        count = [category_list count];
+        index = [category_list indexOfObject:self.category];
+    }
     if (index == -1 || index == 0) {
         // show menu
         [self showMenuView:TRUE];
@@ -402,15 +409,22 @@
     }
     else {
         NSString* new_category;
-        NSMutableArray* category_list = [self getCategoryList];
+        NSMutableArray* category_list;
         int index, count;
-        count = [category_list count];
-        index = [category_list indexOfObject:self.category];
-        if (index < count-1) {
-            // show next category
-            new_category = [category_list objectAtIndex:(index+1)];
-            [self init_data:userid category_t:new_category
-            navigationTitle:[menuvc textToValue:new_category]];
+        if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS] ||
+            [self.navigationItem.title isEqualToString:APP_SETTING]) {
+            index = 0;
+        }
+        else {
+            category_list = [self getCategoryList];
+            count = [category_list count];
+            index = [category_list indexOfObject:self.category];
+            if (index < count-1) {
+                // show next category
+                new_category = [category_list objectAtIndex:(index+1)];
+                [self init_data:userid category_t:new_category
+                navigationTitle:[menuvc textToValue:new_category]];
+            }
         }
     }
 }
@@ -862,7 +876,7 @@
         MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
         
         [self init_data:userid category_t:default_category
-              navigationTitle:[menuvc textToValue:default_category]];
+        navigationTitle:[menuvc textToValue:default_category]];
     }
     if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -891,6 +905,11 @@
 
 - (void)configureNavigationTitle
 {
+    NSLog(@"configureDotImageView self.navigationItem.title: %@", self.navigationItem.title);
+    if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS] ||
+        [self.navigationItem.title isEqualToString:APP_SETTING])
+        return;
+    
     if (!self.titleLabel) {
         // show image
         UIImage *image = [UIImage imageNamed: @"dot1.png"];
@@ -922,6 +941,7 @@
 
 - (void)configureDotImageView
 {
+    
     NSMutableArray* category_list = [self getCategoryList];
     int index, count;
     count = [category_list count];
