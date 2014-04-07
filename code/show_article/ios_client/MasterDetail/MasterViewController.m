@@ -913,7 +913,7 @@
         float titleView_height = 50;
         newView.frame = CGRectMake(0, 0, titleView_width, titleView_height);
         tmpTitleLabel.frame = CGRectMake(0, 0, titleView_width, 40);
-        tmpTitleLabel.textAlignment = UITextAlignmentCenter;
+        tmpTitleLabel.textAlignment = NSTextAlignmentCenter;
         imageView.frame = CGRectMake(titleView_width/2 - 12, 32, 24, 8);
         
         self.titleLabel = tmpTitleLabel;
