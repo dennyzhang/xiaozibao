@@ -32,6 +32,7 @@
 @property (nonatomic, retain) NSMutableArray *objects;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
+@property (retain, nonatomic) IBOutlet UIImageView *dotImageView;
 
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 

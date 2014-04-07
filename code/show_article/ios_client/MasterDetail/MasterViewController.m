@@ -38,7 +38,7 @@
     [self initTableIndicatorView];
     
     NSLog(@"MasterViewController load");
-
+    
     // load menu category list
     SWRevealViewController* rvc = self.revealViewController;
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
@@ -46,7 +46,7 @@
     
     // components
     [self addCompoents];
-
+    
     // set UserDefaults
     [ComponentUtil setDefaultConf];
     
@@ -69,11 +69,12 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.category=category_t;
-
+    
     [self configureNavigationTitle];
     self.titleLabel.text = navigationTitle;
+    
     NSLog(@"\n\nself.titleLabel.text: %@", self.titleLabel.text);
-
+    
     if ([navigationTitle isEqualToString:MORE_CATEGORY] || [navigationTitle isEqualToString:APP_SETTING]) {
         return;
     }
@@ -366,14 +367,14 @@
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
     NSLog(@"rightSwipe. rvc.frontViewPosition:%d",
           rvc.frontViewPosition);
-
+    
     if (rvc.frontViewPosition == FrontViewPositionRight) // menu is shown
     {
         return;
     }
     
     NSString* new_category;
-    NSMutableArray* category_list = menuvc.category_list;
+    NSMutableArray* category_list = [self getCategoryList];
     int index, count;
     count = [category_list count];
     index = [category_list indexOfObject:self.category];
@@ -386,7 +387,7 @@
         // show previous category
         new_category = [category_list objectAtIndex:(index-1)];
         [self init_data:userid category_t:new_category
-              navigationTitle:[menuvc textToValue:new_category]];
+        navigationTitle:[menuvc textToValue:new_category]];
     }
 }
 
@@ -395,7 +396,6 @@
     
     SWRevealViewController* rvc = self.revealViewController;
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-
     NSLog(@"leftSiwpe. rvc.frontViewPosition:%d", rvc.frontViewPosition);
     
     if (rvc.frontViewPosition == FrontViewPositionRight) // menu is already shown
@@ -404,7 +404,7 @@
     }
     else {
         NSString* new_category;
-        NSMutableArray* category_list = menuvc.category_list;
+        NSMutableArray* category_list = [self getCategoryList];
         int index, count;
         count = [category_list count];
         index = [category_list indexOfObject:self.category];
@@ -412,7 +412,7 @@
             // show next category
             new_category = [category_list objectAtIndex:(index+1)];
             [self init_data:userid category_t:new_category
-                  navigationTitle:[menuvc textToValue:new_category]];
+            navigationTitle:[menuvc textToValue:new_category]];
         }
     }
 }
@@ -850,8 +850,8 @@
                                                NSFontAttributeName,
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
-
-
+    
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (self.category == nil) {
         NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
@@ -859,12 +859,12 @@
         NSString* default_category = stringArray[0];
         default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
-
+        
         SWRevealViewController* rvc = self.revealViewController;
         MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-
+        
         [self init_data:userid category_t:default_category
-              navigationTitle:[menuvc textToValue:default_category]];
+        navigationTitle:[menuvc textToValue:default_category]];
     }
     if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -880,7 +880,7 @@
         
         self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
     }
-
+    
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
     [btn addTarget:self action:@selector(showMenuViewController:)
@@ -893,33 +893,62 @@
 
 - (void)configureNavigationTitle
 {
-    NSLog(@"\n\nconfigureNavigationTitle. self.navigationItem:%@", self.navigationItem);
-  if (!self.titleLabel) {
-    // show image
-    UIImage *image = [UIImage imageNamed: @"dot1.png"];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage: image];
+    if (!self.titleLabel) {
+        // show image
+        UIImage *image = [UIImage imageNamed: @"dot1.png"];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage: image];
+        
+        // label
+        UILabel *tmpTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        tmpTitleLabel.backgroundColor = [UIColor clearColor];
+        tmpTitleLabel.textColor = [UIColor whiteColor];
+        
+        UIView* newView = [[UIView alloc] initWithFrame:CGRectZero];
+        
+        [newView addSubview:imageView];
+        [newView addSubview:tmpTitleLabel];
+        self.navigationItem.titleView = newView;
+        
+        float titleView_width = self.view.frame.size.width - 80;
+        float titleView_height = 50;
+        newView.frame = CGRectMake(0, 0, titleView_width, titleView_height);
+        tmpTitleLabel.frame = CGRectMake(0, 0, titleView_width, 40);
+        tmpTitleLabel.textAlignment = UITextAlignmentCenter;
+        imageView.frame = CGRectMake(titleView_width/2 - 12, 32, 24, 8);
+        
+        self.titleLabel = tmpTitleLabel;
+        self.dotImageView = imageView;
+    }
+    [self configureDotImageView];
+}
 
-    // label
-    UILabel *tmpTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+- (void)configureDotImageView
+{
+    NSMutableArray* category_list = [self getCategoryList];
+    int index, count;
+    count = [category_list count];
+    index = [category_list indexOfObject:self.category];
+    NSString* imageName;
+    if (index == 0)
+        imageName = @"dot1.png";
+    else {
+        if (index == (count -1))
+            imageName = @"dot4.png";
+        else {
+            if (index < count /2)
+                imageName = @"dot2.png";
+            else
+                imageName = @"dot3.png";
+        }
+    }
+    NSLog(@"configureDotImageView imageName:%@", imageName);
+    [self.dotImageView setImage:[UIImage imageNamed:imageName]];
+}
 
-    tmpTitleLabel.backgroundColor = [UIColor clearColor];
-    tmpTitleLabel.textColor = [UIColor whiteColor];
-    
-    UIView* newView = [[UIView alloc] initWithFrame:CGRectZero];
-
-    [newView addSubview:imageView];
-    [newView addSubview:tmpTitleLabel];
-    self.navigationItem.titleView = newView;
-
-    float titleView_width = self.view.frame.size.width - 80;
-    float titleView_height = 50;
-    newView.frame = CGRectMake(0, 0, titleView_width, titleView_height);
-    tmpTitleLabel.frame = CGRectMake(0, 0, titleView_width, 40);
-    tmpTitleLabel.textAlignment = UITextAlignmentCenter;
-    imageView.frame = CGRectMake(titleView_width/2 - 12, 32, 24, 8);
-    
-    self.titleLabel = tmpTitleLabel;
-    self.titleLabel.text = @"134";
-  }
+- (NSMutableArray*) getCategoryList
+{
+    SWRevealViewController* rvc = self.revealViewController;
+    MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
+    return menuvc.category_list;
 }
 @end
