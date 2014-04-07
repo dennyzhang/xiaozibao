@@ -99,7 +99,7 @@ def list_topic():
 
     # content = content[1:]
     # TODO: remove test(test), product(chinese)
-    content = 'linux,concept,algorithm,cloud,security'
+    content = 'linux,product,algorithm,cloud,security'
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
