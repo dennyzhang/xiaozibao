@@ -38,8 +38,30 @@
     [self initTableIndicatorView];
     
     NSLog(@"MasterViewController load");
-    //objects = [[NSMutableArray alloc] init];
     
+    // show image
+    UIImage *image = [UIImage imageNamed: @"dot1.png"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage: image];
+
+    // label
+    UILabel *tmpTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    tmpTitleLabel.text = @"Mannschaft";
+    tmpTitleLabel.backgroundColor = [UIColor clearColor];
+    tmpTitleLabel.textColor = [UIColor whiteColor];
+    
+    UIView* newView = [[UIView alloc] initWithFrame:CGRectZero];
+
+    [newView addSubview:imageView];
+    [newView addSubview:tmpTitleLabel];
+    self.navigationItem.titleView = newView;
+    newView.frame = CGRectMake(0, 0, 100,
+                               self.navigationController.navigationBar.frame.size.height);
+    tmpTitleLabel.frame = CGRectMake(0, 0, 100, 35);
+    imageView.frame = CGRectMake(30, 15, 35, 35);
+    
+    self.titleLabel = tmpTitleLabel;
+
     // load menu category list
     SWRevealViewController* rvc = self.revealViewController;
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
@@ -119,7 +141,7 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.category=category_t;
-    self.navigationItem.title = navigationTitle;
+    self.titleLabel.text = navigationTitle;
     
     if ([navigationTitle isEqualToString:MORE_CATEGORY] || [navigationTitle isEqualToString:APP_SETTING]) {
         return;

@@ -69,6 +69,7 @@
 		049FE34C18E0C252009FDB39 /* ReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FE34B18E0C252009FDB39 /* ReviewViewController.m */; };
 		049FE34E18E1168D009FDB39 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FE34D18E1168D009FDB39 /* share.png */; };
 		049FE35118E12CFF009FDB39 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FE35018E12CFF009FDB39 /* UserProfile.m */; };
+		04BF8F8B18F2FE4A00D0A2CB /* dot1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8918F2FE4A00D0A2CB /* dot1.png */; };
 		04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
 		04E893DB179130C400E9573C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DA179130C400E9573C /* Foundation.framework */; };
 		04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DC179130C400E9573C /* CoreGraphics.framework */; };
@@ -167,6 +168,7 @@
 		049FE35018E12CFF009FDB39 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
 		04A7BDEB179EA84700E9D0BC /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		04A7BDEC179EA84700E9D0BC /* MenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		04BF8F8918F2FE4A00D0A2CB /* dot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot1.png; sourceTree = "<group>"; };
 		04C24E7E1867FEC500184A3E /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		04C24E811867FF8100184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		04C24E831867FFB200184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = "../../../../../../../../../../../Applications/Xcode5-DP2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libsqlite3.dylib"; sourceTree = "<group>"; };
@@ -275,11 +277,20 @@
 			path = post_header;
 			sourceTree = "<group>";
 		};
+		04BF8F8718F2FE4A00D0A2CB /* dots */ = {
+			isa = PBXGroup;
+			children = (
+				04BF8F8918F2FE4A00D0A2CB /* dot1.png */,
+			);
+			path = dots;
+			sourceTree = "<group>";
+		};
 		04D0427D17A360C300593E18 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				0416B6A718F0B14F00397C7D /* info.png */,
 				0473C99718DCE1B800AC4DCD /* navigation_header.png */,
+				04BF8F8718F2FE4A00D0A2CB /* dots */,
 				0448466618E47A2E00C3FEC7 /* figure.png */,
 				040AAB1718F1BDA8006ACA84 /* report_background.png */,
 				0448466A18E5CAC200C3FEC7 /* home.png */,
@@ -526,6 +537,7 @@
 				0416B6A018F0AB0000397C7D /* header_18.png in Resources */,
 				0448466318E4700D00C3FEC7 /* question.png in Resources */,
 				0416B68418F0892F00397C7D /* header_1.png in Resources */,
+				04BF8F8B18F2FE4A00D0A2CB /* dot1.png in Resources */,
 				0416B68E18F0892F00397C7D /* header_9.png in Resources */,
 				0416B68C18F0892F00397C7D /* header_7.png in Resources */,
 				0416B69018F094DF00397C7D /* header_12.png in Resources */,

@@ -31,6 +31,7 @@
 @property (nonatomic, retain) NSString* username;
 @property (nonatomic, retain) NSMutableArray *objects;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
+@property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 
