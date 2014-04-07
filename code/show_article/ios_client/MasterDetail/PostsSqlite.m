@@ -207,8 +207,7 @@ NSLock *lock;
     NSMutableArray* posts = [PostsSqlite getPostsBySql:postsDB dbPath:dbPath querySQL:querySQL];
 
     for(int i=[posts count] - 1; i>=0; i--) {
-      [objects insertObject:posts[i] atIndex:0];
-                
+      [objects insertObject:posts[i] atIndex:0];                
       NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
       [tableview insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
       ret = YES;

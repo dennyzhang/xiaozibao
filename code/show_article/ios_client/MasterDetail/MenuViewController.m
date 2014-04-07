@@ -21,6 +21,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -107,12 +108,12 @@
   NSLog(@"load_category_list:%@", categoryList);
   NSString* category;
   NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-  self._objects = [[NSMutableArray alloc] init];
+  self.category_list = [[NSMutableArray alloc] init];
   for (int i=0; i < [stringArray count]; i++)
   {
       category = stringArray[i];
       category = [category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-      [self._objects addObject:category];
+      [self.category_list addObject:category];
   }
 }
 
@@ -140,7 +141,7 @@
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return self._objects.count;
+        return self.category_list.count;
     }
     if (section == 1) {
         return 2;
@@ -155,7 +156,7 @@
     NSString* value = @"";
     cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     if (indexPath.section == 0) {
-      value = self._objects[indexPath.row];
+      value = self.category_list[indexPath.row];
     }
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {

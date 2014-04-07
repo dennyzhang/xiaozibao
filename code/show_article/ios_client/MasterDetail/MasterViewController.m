@@ -38,6 +38,14 @@
     [self initTableIndicatorView];
 
     NSLog(@"MasterViewController load");
+    //objects = [[NSMutableArray alloc] init];
+
+    // load menu category list
+    SWRevealViewController* rvc = self.revealViewController;
+    MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
+    [menuvc load_category_list];
+
+    // components
     UIButton* btn;
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
@@ -61,7 +69,8 @@
         NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
         NSString* default_category = stringArray[0];
         default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [self init_data:@"denny" category_t:default_category navigationTitle:default_category];
+        NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+        [self init_data:userid category_t:default_category navigationTitle:default_category];
     }
     if (!([self.category isEqualToString:NONE_QUESTION_CATEGORY] || [self.category isEqualToString:SAVED_QUESTIONS])) {
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -118,8 +127,19 @@
     
     self->bottom_num = 1;
     self.username=username_t;
+
+    if (!objects){
+        objects = [[NSMutableArray alloc] init];
+
+    }
     
-    objects = [[NSMutableArray alloc] init];
+    NSIndexPath *indexPath;
+    for (int i=0; i<[objects count]; i++) {
+        [objects removeObjectAtIndex:0];
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
     NSLog(@"init_data, dbPath:%@", self->dbPath);
@@ -130,9 +150,7 @@
 
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
                    objects:objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
-    
-    [self fetchArticleList:username category_t:self.category
-                 start_num_t:0 shouldAppendHead:YES];
+    [self fetchArticleList:username category_t:self.category start_num_t:0 shouldAppendHead:YES];
 }
 
 - (void) refreshTableHead
@@ -330,8 +348,6 @@
 {
     SWRevealViewController* rvc = self.revealViewController;
     if (shouldShow) {
-      MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-      [menuvc load_category_list];
       [rvc revealToggleAnimated:YES];
     }
     else {
@@ -391,7 +407,16 @@
 }
 
 -(void) rightSwipe:(UISwipeGestureRecognizer*)recognizer {
-  [self showMenuView:TRUE];
+  // TODO check status
+  // [self showMenuView:TRUE];
+  NSLog(@"rightSwipe");
+  NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+
+  SWRevealViewController* rvc = self.revealViewController;
+  MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
+  NSLog(@"count: %d", [menuvc.category_list count]);
+
+  [self init_data:userid category_t:@"cloud" navigationTitle:@"Cloud"];
 }
 
 -(void) leftSwipe:(UISwipeGestureRecognizer*)recognizer {
