@@ -498,6 +498,8 @@
                                btn:self.coinButton tag:TAG_SCORE_TEXT];
 
     startTime = [NSDate timeIntervalSinceReferenceDate];
+    
+    self.navigationItem.leftBarButtonItem.title = self.detailItem.category;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
