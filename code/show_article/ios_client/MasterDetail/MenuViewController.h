@@ -12,4 +12,5 @@
 @property (atomic, retain) NSMutableArray* category_list;
 @property (atomic, retain) NSArray* sectionArray;
 - (void)load_category_list;
+- (NSString *)textToValue:(NSString*) text;
 @end

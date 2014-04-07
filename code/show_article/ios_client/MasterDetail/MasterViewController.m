@@ -36,15 +36,15 @@
 {
     [super viewDidLoad];
     [self initTableIndicatorView];
-
+    
     NSLog(@"MasterViewController load");
     //objects = [[NSMutableArray alloc] init];
-
+    
     // load menu category list
     SWRevealViewController* rvc = self.revealViewController;
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
     [menuvc load_category_list];
-
+    
     // components
     UIButton* btn;
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
@@ -93,11 +93,11 @@
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
-    [btn addTarget:self action:@selector(showMenuViewController:) 
-            forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(showMenuViewController:)
+  forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-
+    
     self.navigationItem.leftBarButtonItem = settingButton;
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
@@ -127,10 +127,10 @@
     
     self->bottom_num = 1;
     self.username=username_t;
-
+    
     if (!objects){
         objects = [[NSMutableArray alloc] init];
-
+        
     }
     
     NSIndexPath *indexPath;
@@ -143,11 +143,11 @@
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
     NSLog(@"init_data, dbPath:%@", self->dbPath);
-
+    
     if (!userDefaults) {
-      userDefaults = [NSUserDefaults standardUserDefaults];
+        userDefaults = [NSUserDefaults standardUserDefaults];
     }
-
+    
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
                    objects:objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
     [self fetchArticleList:username category_t:self.category start_num_t:0 shouldAppendHead:YES];
@@ -170,7 +170,7 @@
 }
 
 - (bool)addToTableView:(int)index
-                post:(Posts*)post
+                  post:(Posts*)post
 {
     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"] == 1) {
         if (post.readcount.intValue !=0 )
@@ -186,17 +186,17 @@
 }
 
 - (void)stopActivityIndicator:(bool)shouldAppendHead {
-  if (shouldAppendHead == TRUE) {
-    [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] stopAnimating];
-  }
-  else {
-    [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] stopAnimating];
-  }
+    if (shouldAppendHead == TRUE) {
+        [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] stopAnimating];
+    }
+    else {
+        [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] stopAnimating];
+    }
 }
 
 - (void)fetchArticleList:(NSString*)userid
               category_t:(NSString*)category_t
-               start_num_t:(int)start_num_t
+             start_num_t:(int)start_num_t
         shouldAppendHead:(bool)shouldAppendHead
 {
     if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
@@ -230,56 +230,56 @@
         NSArray *metadataList = [JSON valueForKeyPath:@"metadata"];
         Posts *post = nil;
         int i, count = [idList count];
-
+        
         NSLog(@"merge result dbPath: %@", dbPath);
-
+        
         //NSLog(@"merge result");
         // bypass sqlite lock problem
         if (shouldAppendHead) {
-          // TODO remove code duplication
-          for(i=count-1; i>=0; i--) {
-            //NSLog(@"fetchArticleList i:%d, id:%@, metadata:%@", i, idList[i], metadataList[i]);
-            if ([Posts containId:self.objects postId:idList[i]] == NO) {
-              post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
-              if (post == nil) {
-                [self fetchJson:self.objects
-                         urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
-                      shouldAppendHead:shouldAppendHead];
-              }
-              else {
-                int index = 0;
-                if (shouldAppendHead != YES){
-                  index = [self.objects count];
+            // TODO remove code duplication
+            for(i=count-1; i>=0; i--) {
+                //NSLog(@"fetchArticleList i:%d, id:%@, metadata:%@", i, idList[i], metadataList[i]);
+                if ([Posts containId:self.objects postId:idList[i]] == NO) {
+                    post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
+                    if (post == nil) {
+                        [self fetchJson:self.objects
+                                 urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
+                       shouldAppendHead:shouldAppendHead];
+                    }
+                    else {
+                        int index = 0;
+                        if (shouldAppendHead != YES){
+                            index = [self.objects count];
+                        }
+                        [self addToTableView:index post:post];
+                    }
                 }
-                [self addToTableView:index post:post];
-              }
             }
-          }
         }
         else{
-          for(i=0; i<count; i++) {
-            if ([Posts containId:self.objects postId:idList[i]] == NO) {
-              post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
-              if (post == nil) {
-                [self fetchJson:self.objects
-                         urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
-                      shouldAppendHead:shouldAppendHead];
-              }
-              else {
-                int index = 0;
-                if (shouldAppendHead != YES){
-                  index = [self.objects count];
+            for(i=0; i<count; i++) {
+                if ([Posts containId:self.objects postId:idList[i]] == NO) {
+                    post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
+                    if (post == nil) {
+                        [self fetchJson:self.objects
+                                 urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
+                       shouldAppendHead:shouldAppendHead];
+                    }
+                    else {
+                        int index = 0;
+                        if (shouldAppendHead != YES){
+                            index = [self.objects count];
+                        }
+                        [self addToTableView:index post:post];
+                    }
                 }
-                [self addToTableView:index post:post];
-              }
             }
-          }
         }
         for(i=0; i<count; i++) {
-          [PostsSqlite updatePostMetadata:postsDB dbPath:dbPath
-                                   postId:idList[i] metadata:metadataList[i]
-                                 category:self.category];
-
+            [PostsSqlite updatePostMetadata:postsDB dbPath:dbPath
+                                     postId:idList[i] metadata:metadataList[i]
+                                   category:self.category];
+            
         }
         if (shouldAppendHead == NO) {
             self->bottom_num = 1 + self->bottom_num;
@@ -319,9 +319,9 @@
                          metadata:post.metadata] == NO) {
             [ComponentUtil infoMessage:@"Error to insert post"
                                    msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
-                     enforceMsgBox:FALSE];
+                         enforceMsgBox:FALSE];
         }
-
+        
         int index = 0;
         if (shouldAppendHead != YES){
             index = [listObject count];
@@ -332,7 +332,7 @@
         [ComponentUtil infoMessage:@"Error to get specific post"
                                msg:[NSString stringWithFormat:@"url:%@, error:%@", urlStr, error]
                      enforceMsgBox:FALSE];
-
+        
     }];
     
     [operation start];
@@ -341,17 +341,17 @@
 
 - (void) showMenuViewController:(id)sender
 {
-  [self showMenuView:TRUE];
+    [self showMenuView:TRUE];
 }
 
 - (void) showMenuView:(BOOL)shouldShow
 {
     SWRevealViewController* rvc = self.revealViewController;
     if (shouldShow) {
-      [rvc revealToggleAnimated:YES];
+        [rvc revealToggleAnimated:YES];
     }
     else {
-      [rvc rightRevealToggleAnimated:YES];
+        [rvc rightRevealToggleAnimated:YES];
     }
 }
 
@@ -401,26 +401,67 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    
     self.navigationController.navigationBarHidden = NO;
     [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
 }
 
 -(void) rightSwipe:(UISwipeGestureRecognizer*)recognizer {
-  // TODO check status
-  // [self showMenuView:TRUE];
-  NSLog(@"rightSwipe");
-  NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+    NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+    
+    SWRevealViewController* rvc = self.revealViewController;
+    MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
+    NSLog(@"rightSwipe. rvc.frontViewPosition:%d",
+          rvc.frontViewPosition);
 
-  SWRevealViewController* rvc = self.revealViewController;
-  MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-  NSLog(@"count: %d", [menuvc.category_list count]);
-
-  [self init_data:userid category_t:@"cloud" navigationTitle:@"Cloud"];
+    if (rvc.frontViewPosition == FrontViewPositionRight) // menu is shown
+    {
+        return;
+    }
+    
+    NSString* new_category;
+    NSMutableArray* category_list = menuvc.category_list;
+    int index, count;
+    count = [category_list count];
+    index = [category_list indexOfObject:self.category];
+    NSLog(@"index:%d", index);
+    if (index == -1 || index == 0) {
+        // show menu
+        [self showMenuView:TRUE];
+    }
+    else {
+        // show previous category
+        new_category = [category_list objectAtIndex:(index-1)];
+        [self init_data:userid category_t:new_category
+              navigationTitle:[menuvc textToValue:new_category]];
+    }
 }
 
 -(void) leftSwipe:(UISwipeGestureRecognizer*)recognizer {
-  [self showMenuView:FALSE];
+    NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+    
+    SWRevealViewController* rvc = self.revealViewController;
+    MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
+
+    NSLog(@"leftSiwpe. rvc.frontViewPosition:%d", rvc.frontViewPosition);
+    
+    if (rvc.frontViewPosition == FrontViewPositionRight) // menu is already shown
+    {
+        [self showMenuView:FALSE];
+    }
+    else {
+        NSString* new_category;
+        NSMutableArray* category_list = menuvc.category_list;
+        int index, count;
+        count = [category_list count];
+        index = [category_list indexOfObject:self.category];
+        if (index < count-1) {
+            // show next category
+            new_category = [category_list objectAtIndex:(index+1)];
+            [self init_data:userid category_t:new_category
+                  navigationTitle:[menuvc textToValue:new_category]];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -585,21 +626,21 @@
         [[cell contentView] addSubview:metadataTextView];
         //[metadataTextView setText:post.metadata];
         [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - 50, 100, 50)];
-
+        
         NSString* voteupStr = [post.metadataDictionary objectForKey:@"voteup"];
         NSInteger voteup = [voteupStr intValue];
         if (voteup > 0) {
-          UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-          [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-          btn.tag = TAG_VOTEUP_IN_CELL;
-          [btn setImage:[UIImage imageNamed:@"thumbs_up2.png"] forState:UIControlStateNormal];
-          NSString* text = voteupStr;
-          [ComponentUtil addTextToButton:btn text:text
-                                fontSize:FONT_TINY2 chWidth:9 chHeight:17 tag:TAG_VOTEUP_TEXT];
-
-          [metadataTextView addSubview:btn];
+            UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+            btn.tag = TAG_VOTEUP_IN_CELL;
+            [btn setImage:[UIImage imageNamed:@"thumbs_up2.png"] forState:UIControlStateNormal];
+            NSString* text = voteupStr;
+            [ComponentUtil addTextToButton:btn text:text
+                                  fontSize:FONT_TINY2 chWidth:9 chHeight:17 tag:TAG_VOTEUP_TEXT];
+            
+            [metadataTextView addSubview:btn];
         }
-
+        
         [self markCellAsRead:cell post:post];
         
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -628,10 +669,10 @@
         NSLog(@"clean cache, dbPath:%@", dbPath);
         self->dbPath = [PostsSqlite getDBPath]; // TODO why we need this?
         [PostsSqlite openSqlite:dbPath];
-
+        
         [PostsSqlite cleanCache:postsDB dbPath:dbPath];
         if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 1) {
-          [UserProfile cleanAllCategoryKey];
+            [UserProfile cleanAllCategoryKey];
         }
     }
 }
@@ -731,10 +772,10 @@
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         [self markCellAsRead:cell post:post];
         if ([self.category isEqualToString:SAVED_QUESTIONS]) {
-          [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:0]];
+            [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:0]];
         }
         else {
-          [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:1]];
+            [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:1]];
         }
         [[segue destinationViewController] setDetailItem:post];
     }
@@ -775,33 +816,33 @@
 }
 
 -(void)initTableIndicatorView
- {
+{
     // headerView
     headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 10.0)];
     UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
-                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     actIndHeader.tag = TAG_TABLE_HEADER_INDIACTOR;
     actIndHeader.frame = CGRectMake(150.0, 5.0, 20.0, 10.0);
-
+    
     actIndHeader.hidesWhenStopped = YES;
-
+    
     [headerView addSubview:actIndHeader];
-
+    
     self.tableView.tableHeaderView = headerView;
-
+    
     // footerView
     footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
-
+    
     UIActivityIndicatorView * actIndFooter = [[UIActivityIndicatorView alloc]
-                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     actIndFooter.tag = TAG_TABLE_FOOTER_INDIACTOR;
     actIndFooter.frame = CGRectMake(150.0, 5.0, 20.0, 20.0);
-
+    
     actIndFooter.hidesWhenStopped = YES;
-
+    
     [footerView addSubview:actIndFooter];
     self.tableView.tableFooterView = footerView;
- }
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if ([self.navigationItem.title isEqualToString:APP_SETTING] ||
@@ -810,12 +851,12 @@
     // when reach the top
     if (scrollView.contentOffset.y <= 0)
     {
-    [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+        [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
     }
-
+    
     if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
     {
-      [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+        [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
     }
 }
 
@@ -824,7 +865,7 @@
     if ([self.navigationItem.title isEqualToString:APP_SETTING] ||
         [self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
         return;
-
+    
     // when reach the top
     if (scrollView.contentOffset.y <= 0)
     {
@@ -834,7 +875,7 @@
     // when reaching the bottom
     if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
     {
-      [self refreshTableTail];
+        [self refreshTableTail];
     }
 }
 
