@@ -62,6 +62,7 @@
 		0448466718E47A2E00C3FEC7 /* figure.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448466618E47A2E00C3FEC7 /* figure.png */; };
 		0448466918E4B21100C3FEC7 /* coin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448466818E4B21100C3FEC7 /* coin2.png */; };
 		0448466B18E5CAC200C3FEC7 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448466A18E5CAC200C3FEC7 /* home.png */; };
+		0455B41318F6EF0A00A178D9 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0455B41218F6EF0A00A178D9 /* iAd.framework */; };
 		046E471118E0BFF900ACC618 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 046E471018E0BFF900ACC618 /* coin.png */; };
 		0473C99818DCE1B800AC4DCD /* navigation_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 0473C99718DCE1B800AC4DCD /* navigation_header.png */; };
 		047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A7BDEC179EA84700E9D0BC /* MenuViewController.m */; };
@@ -160,6 +161,7 @@
 		0448466618E47A2E00C3FEC7 /* figure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figure.png; sourceTree = "<group>"; };
 		0448466818E4B21100C3FEC7 /* coin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin2.png; sourceTree = "<group>"; };
 		0448466A18E5CAC200C3FEC7 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		0455B41218F6EF0A00A178D9 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		046E471018E0BFF900ACC618 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
 		0473C99718DCE1B800AC4DCD /* navigation_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_header.png; sourceTree = "<group>"; };
 		049B22F5179D7D2800F82187 /* Posts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Posts.h; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0455B41318F6EF0A00A178D9 /* iAd.framework in Frameworks */,
 				0436CDEB18EB131600130F79 /* libPods.a in Frameworks */,
 				0436CDE818E9EB5300130F79 /* Twitter.framework in Frameworks */,
 				04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */,
@@ -348,6 +351,7 @@
 		04E893D9179130C400E9573C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0455B41218F6EF0A00A178D9 /* iAd.framework */,
 				0436CDE918EB127D00130F79 /* libPods.a */,
 				0436CDE718E9EB5300130F79 /* Twitter.framework */,
 				04C2689B1868118E004C46BC /* libPods.a */,

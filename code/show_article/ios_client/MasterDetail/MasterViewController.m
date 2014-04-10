@@ -36,7 +36,7 @@
 {
     [super viewDidLoad];
     [self initTableIndicatorView];
-    
+
     NSLog(@"MasterViewController load");
     
     // components
@@ -784,9 +784,9 @@
     actIndHeader.hidesWhenStopped = YES;
     
     [headerView addSubview:actIndHeader];
-    
+
     self.tableView.tableHeaderView = headerView;
-    
+
     // footerView
     footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
     
@@ -798,6 +798,7 @@
     actIndFooter.hidesWhenStopped = YES;
     
     [footerView addSubview:actIndFooter];
+
     self.tableView.tableFooterView = footerView;
 }
 

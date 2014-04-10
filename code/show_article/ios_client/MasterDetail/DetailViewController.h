@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
+
 #import "Posts.h"
 #import "PostsSqlite.h"
 #import "ReviewViewController.h"
 #import "UserProfile.h"
 #import "ComponentUtil.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate,
+                                                    UITextViewDelegate, UIGestureRecognizerDelegate,
+                                                    ADBannerViewDelegate>
 #define TAG_BUTTON_VOTEUP 2001
 #define TAG_BUTTON_VOTEDOWN 2002
 #define TAG_BUTTON_FAVORITE 2003
@@ -42,6 +46,7 @@
 
 @property (strong, nonatomic) Posts* detailItem;
 
+@property (retain, nonatomic) IBOutlet ADBannerView *adView;
 @property (retain, nonatomic) IBOutlet UITextView *detailUITextView;
 @property (retain, nonatomic) IBOutlet UIImageView *imageView;
 @property (retain, nonatomic) IBOutlet UITextView *titleTextView;

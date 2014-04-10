@@ -19,13 +19,15 @@
 @end
 
 @implementation DetailViewController
-@synthesize detailItem;
+@synthesize detailItem, adView;
 @synthesize detailUITextView, imageView, titleTextView, linkImageView;
 @synthesize coinButton, shouldShowCoin, contentPrefix;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    //
     dbPath = [PostsSqlite getDBPath];
     postsDB = [PostsSqlite openSqlite:dbPath];
     
@@ -105,6 +107,9 @@
     
     // refreshComponentsLayout
     [self refreshComponentsLayout:0];
+
+    // Add iAd
+    [self addIAd];
 }
 
 - (void)didReceiveMemoryWarning
@@ -536,6 +541,16 @@
        scrollView.contentOffset.y < MIN_HEADER_HEIGHT){
      [self refreshComponentsLayout:scrollView.contentOffset.y];
    }
+}
+
+- (void)addIAd
+{
+    // add iAd
+  if(!adView) {
+    adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+    [adView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [self.view addSubview:adView];
+  }
 }
 
 @end
