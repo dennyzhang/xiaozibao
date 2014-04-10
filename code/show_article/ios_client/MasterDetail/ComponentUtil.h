@@ -33,4 +33,9 @@
 +(NSString*) getLogoIcon:(NSString* )url;
 +(NSString*) getPostHeaderImg;
 +(NSMutableArray*) getCategoryList;
+
++(void) showImageInAnimation:(UIImageView *)image
+                    duration:(NSTimeInterval)duration
+                       delay:(NSTimeInterval)delay
+                       scale:(CGFloat)scale;
 @end

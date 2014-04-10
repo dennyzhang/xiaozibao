@@ -314,39 +314,10 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     
-    
-    UIImageView * image;
-
-    image = clockImageView;
-    image.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    [UIView animateWithDuration:0.5 delay:0.5
-                        options:UIViewAnimationOptionCurveEaseOut animations:^{
-        // animate it to the identity transform (100% scale)
-        image.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished){
-        // if you want to do something once the animation finishes, put it here
-    }];
-
-    image = questionsImageView;
-    image.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    [UIView animateWithDuration:0.5 delay:1
-                        options:UIViewAnimationOptionCurveEaseOut animations:^{
-        // animate it to the identity transform (100% scale)
-        image.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished){
-        // if you want to do something once the animation finishes, put it here
-    }];
-
-    image = feedbackImageView;
-    image.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    [UIView animateWithDuration:0.5 delay:1.5
-                        options:UIViewAnimationOptionCurveEaseOut animations:^{
-        // animate it to the identity transform (100% scale)
-        image.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished){
-        // if you want to do something once the animation finishes, put it here
-    }];
-    
+        
+    [ComponentUtil showImageInAnimation:clockImageView duration:1 delay:0.5 scale:1.3];
+    [ComponentUtil showImageInAnimation:questionsImageView duration:1 delay:1.5 scale:1.3];
+    [ComponentUtil showImageInAnimation:feedbackImageView duration:1 delay:2.5 scale:1.3];
 }
 
 - (void)addMenuCompoents
