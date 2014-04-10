@@ -921,7 +921,7 @@
         newView.frame = CGRectMake(0, 0, titleView_width, titleView_height);
         tmpTitleLabel.frame = CGRectMake(0, 0, titleView_width, 40);
         tmpTitleLabel.textAlignment = NSTextAlignmentCenter;
-        imageView.frame = CGRectMake(titleView_width/2 - 12, 32, 24, 8);
+        imageView.frame = CGRectMake(titleView_width/2 - 12, 32, 24, 6);
         
         self.titleLabel = tmpTitleLabel;
         self.dotImageView = imageView;
