@@ -34,7 +34,7 @@
 +(NSString*) getPostHeaderImg;
 +(NSMutableArray*) getCategoryList;
 
-+(void) showImageInAnimation:(UIImageView *)image
++(void) showViewInAnimation:(UIView *)view
                     duration:(NSTimeInterval)duration
                        delay:(NSTimeInterval)delay
                        scale:(CGFloat)scale;

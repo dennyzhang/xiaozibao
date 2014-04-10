@@ -314,10 +314,9 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     
-        
-    [ComponentUtil showImageInAnimation:clockImageView duration:1 delay:0.5 scale:1.3];
-    [ComponentUtil showImageInAnimation:questionsImageView duration:1 delay:1.5 scale:1.3];
-    [ComponentUtil showImageInAnimation:feedbackImageView duration:1 delay:2.5 scale:1.3];
+    [ComponentUtil showViewInAnimation:clockImageView duration:1 delay:0.5 scale:1.3];
+    [ComponentUtil showViewInAnimation:questionsImageView duration:1 delay:1.5 scale:1.3];
+    [ComponentUtil showViewInAnimation:feedbackImageView duration:1 delay:2.5 scale:1.3];
 }
 
 - (void)addMenuCompoents

@@ -181,7 +181,7 @@
   return category_list;
 }
 
-+(void) showImageInAnimation:(UIImageView *)image
++(void) showViewInAnimation:(UIView *)view
                     duration:(NSTimeInterval)duration
                        delay:(NSTimeInterval)delay
                        scale:(CGFloat)scale
@@ -189,12 +189,12 @@
     NSTimeInterval step_duration = duration/2;
     [UIView animateWithDuration:step_duration delay:delay
                         options:UIViewAnimationOptionCurveEaseOut animations:^{
-        image.transform = CGAffineTransformMakeScale(scale, scale);
+        view.transform = CGAffineTransformMakeScale(scale, scale);
     } completion:^(BOOL finished){
            [UIView animateWithDuration:step_duration delay:0
                                options:UIViewAnimationOptionCurveEaseOut animations:^{
                // animate it to the identity transform (100% scale)
-               image.transform = CGAffineTransformIdentity;
+               view.transform = CGAffineTransformIdentity;
            } completion:^(BOOL finished){
                // if you want to do something once the animation finishes, put it here
            }];
