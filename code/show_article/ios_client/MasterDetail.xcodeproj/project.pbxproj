@@ -57,12 +57,15 @@
 		04409A6918DB6B240021F9C3 /* heart-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A6818DB6B240021F9C3 /* heart-512.png */; };
 		0448466118E4700D00C3FEC7 /* feedback.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448465E18E4700D00C3FEC7 /* feedback.png */; };
 		0448466218E4700D00C3FEC7 /* hourglass.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448465F18E4700D00C3FEC7 /* hourglass.png */; };
-		0448466318E4700D00C3FEC7 /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448466018E4700D00C3FEC7 /* question.png */; };
 		0448466518E4784C00C3FEC7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448466418E4784C00C3FEC7 /* icon.png */; };
 		0448466718E47A2E00C3FEC7 /* figure.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448466618E47A2E00C3FEC7 /* figure.png */; };
 		0448466918E4B21100C3FEC7 /* coin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448466818E4B21100C3FEC7 /* coin2.png */; };
 		0448466B18E5CAC200C3FEC7 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448466A18E5CAC200C3FEC7 /* home.png */; };
 		0455B41318F6EF0A00A178D9 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0455B41218F6EF0A00A178D9 /* iAd.framework */; };
+		0455B41818F73F3700A178D9 /* feedback_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455B41418F73F3700A178D9 /* feedback_highlighted.png */; };
+		0455B41918F73F3700A178D9 /* hourglass_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455B41518F73F3700A178D9 /* hourglass_highlighted.png */; };
+		0455B41A18F73F3700A178D9 /* questions_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455B41618F73F3700A178D9 /* questions_highlighted.png */; };
+		0455B41B18F73F3700A178D9 /* questions.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455B41718F73F3700A178D9 /* questions.png */; };
 		046E471118E0BFF900ACC618 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 046E471018E0BFF900ACC618 /* coin.png */; };
 		0473C99818DCE1B800AC4DCD /* navigation_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 0473C99718DCE1B800AC4DCD /* navigation_header.png */; };
 		047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A7BDEC179EA84700E9D0BC /* MenuViewController.m */; };
@@ -156,12 +159,15 @@
 		04409A6818DB6B240021F9C3 /* heart-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-512.png"; sourceTree = "<group>"; };
 		0448465E18E4700D00C3FEC7 /* feedback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback.png; sourceTree = "<group>"; };
 		0448465F18E4700D00C3FEC7 /* hourglass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hourglass.png; sourceTree = "<group>"; };
-		0448466018E4700D00C3FEC7 /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
 		0448466418E4784C00C3FEC7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		0448466618E47A2E00C3FEC7 /* figure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figure.png; sourceTree = "<group>"; };
 		0448466818E4B21100C3FEC7 /* coin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin2.png; sourceTree = "<group>"; };
 		0448466A18E5CAC200C3FEC7 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		0455B41218F6EF0A00A178D9 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		0455B41418F73F3700A178D9 /* feedback_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_highlighted.png; sourceTree = "<group>"; };
+		0455B41518F73F3700A178D9 /* hourglass_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hourglass_highlighted.png; sourceTree = "<group>"; };
+		0455B41618F73F3700A178D9 /* questions_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = questions_highlighted.png; sourceTree = "<group>"; };
+		0455B41718F73F3700A178D9 /* questions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = questions.png; sourceTree = "<group>"; };
 		046E471018E0BFF900ACC618 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
 		0473C99718DCE1B800AC4DCD /* navigation_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_header.png; sourceTree = "<group>"; };
 		049B22F5179D7D2800F82187 /* Posts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Posts.h; sourceTree = "<group>"; };
@@ -306,12 +312,15 @@
 				0448466618E47A2E00C3FEC7 /* figure.png */,
 				040AAB1718F1BDA8006ACA84 /* report_background.png */,
 				0448466A18E5CAC200C3FEC7 /* home.png */,
+				0455B41418F73F3700A178D9 /* feedback_highlighted.png */,
+				0455B41518F73F3700A178D9 /* hourglass_highlighted.png */,
+				0455B41618F73F3700A178D9 /* questions_highlighted.png */,
+				0455B41718F73F3700A178D9 /* questions.png */,
 				0448466818E4B21100C3FEC7 /* coin2.png */,
 				0416B67818F0892F00397C7D /* post_header */,
 				0448466418E4784C00C3FEC7 /* icon.png */,
 				0448465E18E4700D00C3FEC7 /* feedback.png */,
 				0448465F18E4700D00C3FEC7 /* hourglass.png */,
-				0448466018E4700D00C3FEC7 /* question.png */,
 				0411B25518E39F4200428AB1 /* thumbs_up2.png */,
 				049FE34D18E1168D009FDB39 /* share.png */,
 				040E855F18DF776000FD3E56 /* logo */,
@@ -508,9 +517,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0455B41818F73F3700A178D9 /* feedback_highlighted.png in Resources */,
 				04409A5318DB69670021F9C3 /* comments-512.png in Resources */,
 				04409A6218DB6A8B0021F9C3 /* thumbs_down-512.png in Resources */,
 				0411B25618E39F4200428AB1 /* thumbs_up2.png in Resources */,
+				0455B41918F73F3700A178D9 /* hourglass_highlighted.png in Resources */,
 				04409A5618DB69670021F9C3 /* thumb_down-512.png in Resources */,
 				0416B6A118F0AB0000397C7D /* header_19.png in Resources */,
 				0416B68618F0892F00397C7D /* header_11.png in Resources */,
@@ -549,8 +560,8 @@
 				046E471118E0BFF900ACC618 /* coin.png in Resources */,
 				0416B69518F0A5B100397C7D /* header_14.png in Resources */,
 				040AAB1818F1BDA8006ACA84 /* report_background.png in Resources */,
+				0455B41B18F73F3700A178D9 /* questions.png in Resources */,
 				0416B6A018F0AB0000397C7D /* header_18.png in Resources */,
-				0448466318E4700D00C3FEC7 /* question.png in Resources */,
 				0416B68418F0892F00397C7D /* header_1.png in Resources */,
 				04BF8F8B18F2FE4A00D0A2CB /* dot1.png in Resources */,
 				0416B68E18F0892F00397C7D /* header_9.png in Resources */,
@@ -560,6 +571,7 @@
 				04409A5718DB69670021F9C3 /* thumb_up-512.png in Resources */,
 				040AAB1218F19134006ACA84 /* header_23.png in Resources */,
 				0411B25318E364EC00428AB1 /* www.quora.com.png in Resources */,
+				0455B41A18F73F3700A178D9 /* questions_highlighted.png in Resources */,
 				0416B68718F0892F00397C7D /* header_2.png in Resources */,
 				040AAB1318F19134006ACA84 /* header_24.png in Resources */,
 				04BF8F9018F3170200D0A2CB /* dot3.png in Resources */,

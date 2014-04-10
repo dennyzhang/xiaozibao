@@ -50,7 +50,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     // Do any additional setup after loading the view.
-    [self addCompoents];
+    [self addCompnents];
     [self addMenuCompoents];
     self.questions = [[NSMutableArray alloc] init];
 
@@ -138,10 +138,7 @@
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
         
-    float scale_rate = 1.0f;
-    
-    UIImage *small=[ComponentUtil resizeImage:image resizeSize:CGSizeMake(image.size.width*scale_rate,
-                                                                  image.size.height*scale_rate)];
+    UIImage *small=[ComponentUtil resizeImage:image scale:1.0f];
 
     //TODO crop UIImage as a workaround
     float offset = 45.0f;
@@ -189,7 +186,7 @@
 
 #pragma mark - private function
 
-- (void)addCompoents
+- (void)addCompnents
 {
      // add summaryTextView
     summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -216,21 +213,25 @@
     UITextView* titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     UIImageView *figureImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"figure.png"]]; // TODO
 
-    UIImageView *clockImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hourglass.png"]];
+    UIButton* clockBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [clockBtn setImage:[UIImage imageNamed:@"hourglass.png"] forState:UIControlStateNormal];
+    [clockBtn setImage:[UIImage imageNamed:@"hourglass_highlighted.png"] forState:UIControlStateHighlighted];
     clockTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     clockTextView.backgroundColor = [UIColor clearColor];
-    [clockTextView setUserInteractionEnabled:NO]; 
 
-    UIImageView *questionsImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"question.png"]];
+    UIButton* questionsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [questionsBtn setImage:[UIImage imageNamed:@"questions.png"] forState:UIControlStateNormal];
+    [questionsBtn setImage:[UIImage imageNamed:@"questions_highlighted.png"] forState:UIControlStateHighlighted];
     questionsTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     questionsTextView.backgroundColor = [UIColor clearColor];
-    [questionsTextView setUserInteractionEnabled:NO];
 
-    UIImageView *feedbackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback.png"]];
+    UIButton* feedbackBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [feedbackBtn setImage:[UIImage imageNamed:@"feedback.png"] forState:UIControlStateNormal];
+    [feedbackBtn setImage:[UIImage imageNamed:@"feedback_highlighted.png"] forState:UIControlStateHighlighted];
     feedbackTextView = [[UITextView alloc] initWithFrame:CGRectZero];
     feedbackTextView.backgroundColor = [UIColor clearColor];
-    [feedbackTextView setUserInteractionEnabled:NO];
 
+    // add coin
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[UIImage imageNamed:@"coin2.png"] forState:UIControlStateNormal];
     self.coinButton = btn;
@@ -265,32 +266,39 @@
     [summaryTextView addSubview:btn];
     [summaryTextView addSubview:figureImageView];
     [summaryTextView addSubview:titleTextView];
-    [summaryTextView addSubview:clockImageView];
+    [summaryTextView addSubview:clockBtn];
     [summaryTextView addSubview:clockTextView];
-    [summaryTextView addSubview:questionsImageView];
+    [summaryTextView addSubview:questionsBtn];
     [summaryTextView addSubview:questionsTextView];
-    [summaryTextView addSubview:feedbackImageView];
+    [summaryTextView addSubview:feedbackBtn];
     [summaryTextView addSubview:feedbackTextView];
 
     [self showStastics];
     // configure frames of summaryTextView's subview components
     [btn setFrame:CGRectMake(summaryTextView.frame.size.width - 40, 60.0f, ICON_WIDTH, ICON_HEIGHT)];
     [titleTextView setFrame:CGRectMake(45, 10, self.view.frame.size.width, textHeight)];
-
+    titleTextView.userInteractionEnabled = NO;
+    
     [figureImageView setFrame:CGRectMake(15, 10, ICON_WIDTH, ICON_HEIGHT)];
     float x=10, y = 50 + ICON_HEIGHT + verticalDistance;
 
-    [clockImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
-    [clockTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
+    [clockBtn setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [clockTextView setFrame:CGRectMake(x, y + imageHeight, 
+                                       self.view.frame.size.width, textHeight)];
+    clockTextView.userInteractionEnabled = NO;
 
     x = x + imageWidth + horizonDistance - 10; // TODO workaround
-    [questionsImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
-    [questionsTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
-
+    [questionsBtn setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [questionsTextView setFrame:CGRectMake(x, y + imageHeight, 
+                                           self.view.frame.size.width, textHeight)];
+    questionsTextView.userInteractionEnabled = NO;
+    
     x = x + imageWidth + horizonDistance;
-    [feedbackImageView setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
-    [feedbackTextView setFrame:CGRectMake(x, y + imageHeight, self.view.frame.size.width, textHeight)];
-
+    [feedbackBtn setFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+    [feedbackTextView setFrame:CGRectMake(x, y + imageHeight, 
+                                          self.view.frame.size.width, textHeight)];
+    feedbackTextView.userInteractionEnabled = NO;
+    
     float summaryTextViewHeight = y + imageHeight + textHeight;
     
     summaryTextViewHeight += imageHeight; // TODO, workaround here
@@ -298,6 +306,11 @@
     [summaryTextView setFrame:CGRectMake(0, 0,
                                          self.view.frame.size.width,
                                           summaryTextViewHeight)];
+
+    // set animation
+    [ComponentUtil showViewInAnimation:clockBtn duration:1 delay:0.5 scale:1.3];
+    [ComponentUtil showViewInAnimation:questionsBtn duration:1 delay:1.5 scale:1.3];
+    [ComponentUtil showViewInAnimation:feedbackBtn duration:1 delay:2.5 scale:1.3];
 
     // add score to Coin
     NSInteger score = [UserProfile scoreByCategory:self.category];
@@ -313,10 +326,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
-    
-    [ComponentUtil showViewInAnimation:clockImageView duration:1 delay:0.5 scale:1.3];
-    [ComponentUtil showViewInAnimation:questionsImageView duration:1 delay:1.5 scale:1.3];
-    [ComponentUtil showViewInAnimation:feedbackImageView duration:1 delay:2.5 scale:1.3];
+
 }
 
 - (void)addMenuCompoents

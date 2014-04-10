@@ -107,35 +107,12 @@
   return ret;
 }
 
-+(UIImage *) resizeImage:(UIImage *)orginalImage resizeSize:(CGSize)size
++(UIImage *) resizeImage:(UIImage *)orginalImage scale:(CGFloat)scale
 {
-    CGFloat actualHeight = orginalImage.size.height;
-    CGFloat actualWidth = orginalImage.size.width;
-    //  if(actualWidth <= size.width && actualHeight<=size.height)
-    //  {
-    //      return orginalImage;
-    //  }
-    float oldRatio = actualWidth/actualHeight;
-    float newRatio = size.width/size.height;
-    if(oldRatio < newRatio)
-    {
-        oldRatio = size.height/actualHeight;
-        actualWidth = oldRatio * actualWidth;
-        actualHeight = size.height;
-    }
-    else
-    {
-        oldRatio = size.width/actualWidth;
-        actualHeight = oldRatio * actualHeight;
-        actualWidth = size.width;
-    }
-    
-    CGRect rect = CGRectMake(0.0,0.0,actualWidth,actualHeight);
-    UIGraphicsBeginImageContext(rect.size);
-    [orginalImage drawInRect:rect];
-    orginalImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return orginalImage;
+    // TODO doesn't seem to work
+    NSData * data = UIImagePNGRepresentation(orginalImage);
+    UIImage* newImage = [[UIImage alloc] initWithData:data scale:scale];
+    return newImage;
 }
 
 +(void) setDefaultConf

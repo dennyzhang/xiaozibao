@@ -40,7 +40,7 @@
     NSLog(@"MasterViewController load");
     
     // components
-    [self addCompoents];
+    [self addCompnents];
     
     // set UserDefaults
     [ComponentUtil setDefaultConf];
@@ -835,7 +835,7 @@
     }
 }
 
-- (void)addCompoents
+- (void)addCompnents
 {
     // set header of navigation bar
     UIButton* btn;

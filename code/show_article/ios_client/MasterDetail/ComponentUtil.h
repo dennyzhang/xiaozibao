@@ -28,7 +28,7 @@
 
 +(void)timedAlert:(UIAlertView *) alertView;
 +(void)dismissAlert:(UIAlertView *) alertView;
-+(UIImage *) resizeImage:(UIImage *)orginalImage resizeSize:(CGSize)size;
++(UIImage *) resizeImage:(UIImage *)orginalImage scale:(CGFloat)scale;
 +(void) setDefaultConf;
 +(NSString*) getLogoIcon:(NSString* )url;
 +(NSString*) getPostHeaderImg;
