@@ -311,6 +311,7 @@
     [ComponentUtil showViewInAnimation:clockBtn duration:1 delay:0.5 scale:1.3];
     [ComponentUtil showViewInAnimation:questionsBtn duration:1 delay:1.5 scale:1.3];
     [ComponentUtil showViewInAnimation:feedbackBtn duration:1 delay:2.5 scale:1.3];
+    [ComponentUtil showViewInAnimation:coinButton duration:1 delay:3.5 scale:1.3];
 
     // add score to Coin
     NSInteger score = [UserProfile scoreByCategory:self.category];
