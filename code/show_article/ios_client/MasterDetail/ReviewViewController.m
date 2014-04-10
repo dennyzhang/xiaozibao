@@ -119,7 +119,6 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *customLabel = [[UILabel alloc] init];
-    //customLabel.text = @" Top 10 Questions By Your History";
     customLabel.text = @" Top 10 Questions Selected For You";
     customLabel.textColor = [UIColor whiteColor];
     customLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigation_header.png"]];
@@ -204,7 +203,6 @@
 
     self.summaryTextView.backgroundColor =
         [UIColor colorWithPatternImage:[UIImage imageNamed:@"report_background.png"]];
-
     
     [self.summaryTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     [self.view addSubview:summaryTextView];
@@ -315,6 +313,40 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
+    
+    
+    UIImageView * image;
+
+    image = clockImageView;
+    image.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.5 delay:0.5
+                        options:UIViewAnimationOptionCurveEaseOut animations:^{
+        // animate it to the identity transform (100% scale)
+        image.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished){
+        // if you want to do something once the animation finishes, put it here
+    }];
+
+    image = questionsImageView;
+    image.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.5 delay:1
+                        options:UIViewAnimationOptionCurveEaseOut animations:^{
+        // animate it to the identity transform (100% scale)
+        image.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished){
+        // if you want to do something once the animation finishes, put it here
+    }];
+
+    image = feedbackImageView;
+    image.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.5 delay:1.5
+                        options:UIViewAnimationOptionCurveEaseOut animations:^{
+        // animate it to the identity transform (100% scale)
+        image.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished){
+        // if you want to do something once the animation finishes, put it here
+    }];
+    
 }
 
 - (void)addMenuCompoents
