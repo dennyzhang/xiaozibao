@@ -65,6 +65,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.category=category_t;
     self.navigationItem.title = navigationTitle;
+    [ComponentUtil updateScoreText:self.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
     
     [self configureNavigationTitle];
     self.titleLabel.text = navigationTitle;
