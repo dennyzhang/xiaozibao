@@ -108,8 +108,8 @@
     // refreshComponentsLayout
     [self refreshComponentsLayout:0];
 
-    // Add iAd
-    [self addIAd];
+    // TODO Add iAd
+    //[self addIAd];
 }
 
 - (void)didReceiveMemoryWarning

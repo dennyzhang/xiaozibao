@@ -94,6 +94,7 @@
 		04E89402179130C500E9573C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DE179130C400E9573C /* UIKit.framework */; };
 		04E8940A179130C500E9573C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04E89408179130C500E9573C /* InfoPlist.strings */; };
 		04E8940C179130C500E9573C /* MasterDetailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8940B179130C500E9573C /* MasterDetailTests.m */; };
+		04EE1B5018F79161007AEE0A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EE1B4F18F79161007AEE0A /* StoreKit.framework */; };
 		04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8F2C179BE20300D28058 /* PostsSqlite.m */; };
 /* End PBXBuildFile section */
 
@@ -210,6 +211,7 @@
 		04E89407179130C500E9573C /* MasterDetailTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MasterDetailTests-Info.plist"; sourceTree = "<group>"; };
 		04E89409179130C500E9573C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		04E8940B179130C500E9573C /* MasterDetailTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterDetailTests.m; sourceTree = "<group>"; };
+		04EE1B4F18F79161007AEE0A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04FA8F27179BE08200D28058 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		04FA8F2B179BE1F800D28058 /* PostsSqlite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostsSqlite.h; sourceTree = "<group>"; };
 		04FA8F2C179BE20300D28058 /* PostsSqlite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostsSqlite.m; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04EE1B5018F79161007AEE0A /* StoreKit.framework in Frameworks */,
 				0455B41318F6EF0A00A178D9 /* iAd.framework in Frameworks */,
 				0436CDEB18EB131600130F79 /* libPods.a in Frameworks */,
 				0436CDE818E9EB5300130F79 /* Twitter.framework in Frameworks */,
@@ -360,6 +363,7 @@
 		04E893D9179130C400E9573C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04EE1B4F18F79161007AEE0A /* StoreKit.framework */,
 				0455B41218F6EF0A00A178D9 /* iAd.framework */,
 				0436CDE918EB127D00130F79 /* libPods.a */,
 				0436CDE718E9EB5300130F79 /* Twitter.framework */,
