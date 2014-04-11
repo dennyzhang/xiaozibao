@@ -76,6 +76,8 @@ func main() {
 var root_dir string = os.Getenv("XZB_HOME") + "/webcrawler_data/"
 var dst_dir string = ""
 var shall_generator bool = false
+var overwrite_existing = false
+var overwrite_edited = false
 var fetch_url string = ""
 var data_separator="--text follows this line--"
 var debug = false
@@ -181,6 +183,10 @@ func parse_opt(args []string) bool {
 			i = i + 1
 		case "--shall_generator":
 			shall_generator = true
+		case "--overwrite_existing":
+			overwrite_existing = true
+		case "--overwrite_edited":
+			overwrite_edited = true
 		case "--debug":
 			debug = true
 			webcrawler.Change_debug(debug)
