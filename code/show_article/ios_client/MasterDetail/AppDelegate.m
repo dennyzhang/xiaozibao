@@ -26,6 +26,9 @@
    // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
    //Mixpanel *mixpanel = [Mixpanel sharedInstance];
 
+    // set UserDefaults
+    [ComponentUtil setDefaultConf];
+
     [Posts updateCategoryList:[NSUserDefaults standardUserDefaults]];
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

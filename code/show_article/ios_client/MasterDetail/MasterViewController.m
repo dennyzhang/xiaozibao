@@ -38,12 +38,9 @@
     [self initTableIndicatorView];
 
     NSLog(@"MasterViewController load");
-    
+
     // components
     [self addCompnents];
-    
-    // set UserDefaults
-    [ComponentUtil setDefaultConf];
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
@@ -855,7 +852,7 @@
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
     
-    
+    NSLog(@"addCompnents self.category:%@", self.category);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (self.category == nil) {
         NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];

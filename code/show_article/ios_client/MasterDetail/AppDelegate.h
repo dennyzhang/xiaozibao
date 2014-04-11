@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "global.h"
 #import "posts.h"
+#import "ComponentUtil.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

@@ -132,7 +132,7 @@
     }
 
     if (![userDefaults objectForKey:@"CategoryList"]) {
-      [userDefaults setObject:@"linux,concept,cloud,security,algorithm" forKey:@"CategoryList"];
+      [userDefaults setObject:@"cloud,concept,linux,security,algorithm" forKey:@"CategoryList"];
     }
 
     if (![userDefaults stringForKey:@"Userid"]) {
