@@ -358,7 +358,7 @@
     NSLog(@"rightSwipe. rvc.frontViewPosition:%d, menuvc:%@",
           rvc.frontViewPosition, menuvc);
     
-    if (rvc.frontViewPosition == FrontViewPositionRight) // menu is shown
+    if ([self isMenuShown])
     {
         return;
     }
@@ -394,7 +394,7 @@
     MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
     NSLog(@"leftSiwpe. rvc.frontViewPosition:%d", rvc.frontViewPosition);
     
-    if (rvc.frontViewPosition == FrontViewPositionRight) // menu is already shown
+    if ([self isMenuShown])
     {
         [self showMenuView:FALSE];
     }
@@ -634,6 +634,9 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([self isMenuShown])
+      return nil;
+
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
@@ -955,5 +958,11 @@
 {
     return (![self.navigationItem.title isEqualToString:SAVED_QUESTIONS] &&
             ![self.navigationItem.title isEqualToString:APP_SETTING]);
+}
+
+- (BOOL) isMenuShown
+{
+    SWRevealViewController* rvc = self.revealViewController;
+    return (rvc.frontViewPosition == FrontViewPositionRight);
 }
 @end
