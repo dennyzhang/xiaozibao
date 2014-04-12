@@ -7,9 +7,11 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-04-11 16:21:41>
+## Updated: Time-stamp: <2014-04-12 09:19:25>
 ##-------------------------------------------------------------------
 from flask import Flask
+from datetime import timedelta
+from flask import session, app
 from flask import render_template
 from flask import make_response
 from flask import request
@@ -41,6 +43,7 @@ def index():
 ## sample: http://127.0.0.1:9180/api_get_post?postid=0fa410a29c294cf498c768b0cebc99c0
 @app.route("/api_get_post", methods=['GET'])
 def get_post():
+    session.permanent = True # TODO
     # TODO defensive code
     postid = request.args.get('postid', '')
     post = data.get_post(postid)
@@ -71,6 +74,7 @@ def get_post():
 ## http://127.0.0.1:9180/api_list_posts_in_topic?topic=concept&start_num=0&count=10
 @app.route("/api_list_posts_in_topic", methods=['GET'])
 def list_posts_in_topic():
+    session.permanent = True # TODO
     # TODO defensive code
     topic = request.args.get('topic', '')
     start_num = request.args.get('start_num', 0)
@@ -89,6 +93,7 @@ def list_posts_in_topic():
 ## http://127.0.0.1:9180/api_list_topic
 @app.route("/api_list_topic", methods=['GET'])
 def list_topic():
+    session.permanent = True # TODO
     # TODO: temporarily hack the list
     # category_list = os.listdir(config.DATA_BASEDIR)
     # content = ""
@@ -106,6 +111,7 @@ def list_topic():
 
 @app.route("/apple_privacy", methods=['GET', 'POST'])
 def apple_privacy():
+    session.permanent = True # TODO
     log.info("apple_privacy is called")
     content = 'ok'
     resp = make_response(content, 200)
@@ -114,6 +120,7 @@ def apple_privacy():
 
 @app.route("/api_feedback_post", methods=['POST'])
 def feedback_post():
+    session.permanent = True # TODO
     # TODO defensive code
     data = request.form
     uid = data["uid"]
@@ -161,5 +168,6 @@ def handle_feedback(uid, category, postid, comment, clientip):
 if __name__ == "__main__":
     data.create_db_engine()
     app.debug = True
+    app.permanent_session_lifetime = timedelta(seconds=10)
     app.run(host="0.0.0.0", port = int(config.FLASK_SERVER_PORT))
 ## File : server.py
