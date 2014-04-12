@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-04-12 09:19:25>
+## Updated: Time-stamp: <2014-04-12 09:33:42>
 ##-------------------------------------------------------------------
 from flask import Flask
 from datetime import timedelta
@@ -168,6 +168,8 @@ def handle_feedback(uid, category, postid, comment, clientip):
 if __name__ == "__main__":
     data.create_db_engine()
     app.debug = True
+    # Generate a secret random key for the session
+    app.secret_key = os.urandom(24)
     app.permanent_session_lifetime = timedelta(seconds=10)
-    app.run(host="0.0.0.0", port = int(config.FLASK_SERVER_PORT))
+    app.run(host="0.0.0.0", port = int(config.FLASK_SERVER_PORT), threaded=True)
 ## File : server.py
