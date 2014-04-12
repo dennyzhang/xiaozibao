@@ -484,9 +484,9 @@
 {
   NSString* ret;
   if ([content length] > MAX_POST_CONTENT){
-    // ret = [NSString stringWithFormat:@"%@%@... ...", contentPrefix,
-    //                 [content substringWithRange:NSMakeRange(0, MAX_POST_CONTENT)]];
-    ret = [NSString stringWithFormat:@"%@%@", contentPrefix, content];
+    ret = [NSString stringWithFormat:@"%@%@... ...", contentPrefix,
+                    [content substringWithRange:NSMakeRange(0, MAX_POST_CONTENT)]];
+    //ret = [NSString stringWithFormat:@"%@%@", contentPrefix, content];
   }
   else {
     ret = [NSString stringWithFormat:@"%@%@", contentPrefix, content];
