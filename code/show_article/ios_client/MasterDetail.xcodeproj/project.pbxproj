@@ -795,6 +795,7 @@
 					"\"${PODS_ROOT}/Headers/SWRevealViewController\"",
 				);
 				INFOPLIST_FILE = "MasterDetail/MasterDetail-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos7.0]" = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib;
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator7.0]" = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/;
@@ -820,6 +821,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MasterDetail/MasterDetail-Prefix.pch";
 				INFOPLIST_FILE = "MasterDetail/MasterDetail-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[arch=*]" = "";
 				ONLY_ACTIVE_ARCH = NO;
