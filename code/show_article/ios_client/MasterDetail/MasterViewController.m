@@ -32,11 +32,6 @@
 @synthesize locationManager, category, username;
 @synthesize objects, coinButton;
 
--(IBAction) tooltipEvent:(id)sender
-{
-  [[MyToolTip singleton] toolTipAction:sender];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -63,19 +58,8 @@
     leftswipe.delegate = self;
 
     // configure tooltip
-    [self performSelector:@selector(tooltipEvent:) withObject:self.coinButton afterDelay:0.5];
-    [self performSelector:@selector(tooltipEvent:) 
-               withObject:self.navigationItem.leftBarButtonItem
-               afterDelay:1.5];
-
-//    [self performSelector:@selector(tooltipEvent:)
-//               withObject:self.tableView.tableFooterView
-//               afterDelay:2.5];
-    
-//    [self performSelector:@selector(tooltipEvent:)
-//               withObject:self.tableView.tableFooterView
-//               afterDelay:2.5];
-    
+    [[MyToolTip singleton] addToolTip:self.coinButton];    
+    //[self performSelector:@selector(tooltipEvent:) withObject:self.navigationItem.leftBarButtonItem afterDelay:1.5];
 }
 
 - (void)init_data:(NSString*)username_t
