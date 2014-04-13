@@ -85,14 +85,14 @@
   return [self.titles objectForKey:key];
 }
 
-- (void)reset
+-(void)reset:(UIView*)view
 {
-	while ([self.visiblePopTipViews count] > 0) {
-		CMPopTipView *popTipView = [self.visiblePopTipViews objectAtIndex:0];
-		[popTipView dismissAnimated:YES];
-		[self.visiblePopTipViews removeObjectAtIndex:0];
-	}
-
+  self.popView = view;
+  while ([self.visiblePopTipViews count] > 0) {
+    CMPopTipView *popTipView = [self.visiblePopTipViews objectAtIndex:0];
+    [popTipView dismissAnimated:YES];
+    [self.visiblePopTipViews removeObjectAtIndex:0];
+  }
 }
 
 -(void)removeObject:(CMPopTipView *)popTipView
@@ -105,7 +105,7 @@
   [self.visiblePopTipViews addObject:popTipView];
 }
 
-- (IBAction)toolTipAction:(id)sender view:(UIView*) view
+- (IBAction)toolTipAction:(id)sender
 {
 
 	if (sender == self.currentPopTipViewTarget) {
@@ -124,8 +124,9 @@
 			contentMessage = content;
 		}
 		else {
-			contentMessage = @"A CMPopTipView can automatically point to any view or bar button item.";
+			contentMessage = @"Show some tooltip information.";
 		}
+
                 NSArray *colorScheme = [[MyToolTip singleton] getColorSchmeme];
 		UIColor *backgroundColor = [colorScheme objectAtIndex:0];
 		UIColor *textColor = [colorScheme objectAtIndex:1];
@@ -159,7 +160,7 @@
 
 		if ([sender isKindOfClass:[UIButton class]]) {
 			UIButton *button = (UIButton *)sender;
-			[popTipView presentPointingAtView:button inView:view animated:YES];
+			[popTipView presentPointingAtView:button inView:self.popView animated:YES];
 		}
 		else {
 			UIBarButtonItem *barButtonItem = (UIBarButtonItem *)sender;

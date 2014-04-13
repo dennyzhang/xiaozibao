@@ -30,7 +30,12 @@
 @implementation MasterViewController
 
 @synthesize locationManager, category, username;
-@synthesize objects;
+@synthesize objects, coinButton;
+
+-(IBAction) tooltipEvent:(id)sender
+{
+  [[MyToolTip singleton] toolTipAction:sender];
+}
 
 - (void)viewDidLoad
 {
@@ -38,10 +43,9 @@
     [self initTableIndicatorView];
 
     NSLog(@"MasterViewController load");
-
-
-    // init PopTipView
-    [[MyToolTip singleton] reset];
+    
+    // reset popTipView
+    [[MyToolTip singleton] reset:self.view];
 
     // components
     [self addCompnents];
@@ -57,6 +61,21 @@
     leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:leftswipe];
     leftswipe.delegate = self;
+
+    // configure tooltip
+    [self performSelector:@selector(tooltipEvent:) withObject:self.coinButton afterDelay:0.5];
+    [self performSelector:@selector(tooltipEvent:) 
+               withObject:self.navigationItem.leftBarButtonItem
+               afterDelay:1.5];
+
+//    [self performSelector:@selector(tooltipEvent:)
+//               withObject:self.tableView.tableFooterView
+//               afterDelay:2.5];
+    
+//    [self performSelector:@selector(tooltipEvent:)
+//               withObject:self.tableView.tableFooterView
+//               afterDelay:2.5];
+    
 }
 
 - (void)init_data:(NSString*)username_t
@@ -432,7 +451,7 @@
 -(IBAction) barButtonEvent:(id)sender
 {
     // ToolTip events
-    [[MyToolTip singleton] toolTipAction:sender view:self.view];
+  [[MyToolTip singleton] toolTipAction:sender];
 
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {

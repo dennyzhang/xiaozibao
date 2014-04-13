@@ -11,20 +11,21 @@
 
 @interface MyToolTip : NSObject <CMPopTipViewDelegate>
 
-@property (nonatomic, strong) NSDictionary *contents;
-@property (nonatomic, strong) NSArray      *colorSchemes;
-@property (nonatomic, strong) NSDictionary	*titles;
-@property (nonatomic, strong)	NSMutableArray	*visiblePopTipViews;
-@property (nonatomic, strong)	id              currentPopTipViewTarget;
+@property (nonatomic, strong) NSDictionary    *contents;
+@property (nonatomic, strong) NSArray         *colorSchemes;
+@property (nonatomic, strong) NSDictionary    *titles;
+@property (nonatomic, strong) NSMutableArray  *visiblePopTipViews;
+@property (nonatomic, strong) id              currentPopTipViewTarget;
+@property (retain, nonatomic) IBOutlet UIView *popView;
 
 +(MyToolTip *)singleton;
 
 -(NSArray*) getColorSchmeme;
 -(NSString*) getContentByKey:(NSNumber*) key;
 -(NSString*) getTitleByKey:(NSNumber*) key;
--(void)reset;
+-(void)reset:(UIView*)view;
 -(void)removeObject:(CMPopTipView *)popTipView;
 -(void)addObject:(CMPopTipView *)popTipView;
 
-- (IBAction)toolTipAction:(id)sender view:(UIView*) view;
+- (IBAction)toolTipAction:(id)sender;
 @end
