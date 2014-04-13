@@ -17,10 +17,12 @@
 #import "ComponentUtil.h"
 #import "UserProfile.h"
 #import "MenuViewController.h"
+#import "CMPopTipView.h"
+#import "MyToolTip.h"
 
 @class DetailViewController;
 
-@interface MasterViewController : UITableViewController <UIGestureRecognizerDelegate>
+@interface MasterViewController : UITableViewController <UIGestureRecognizerDelegate, CMPopTipViewDelegate>
 
 #define TAG_BUTTON_COIN 4001
 

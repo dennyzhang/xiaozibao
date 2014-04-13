@@ -1,4 +1,5 @@
 platform :ios, '7.0'
 pod 'AFNetworking', '~> 1.3'
 pod 'SWRevealViewController'
+pod 'CMPopTipView'
 xcodeproj './MasterDetail.xcodeproj'

@@ -25,6 +25,9 @@
     UIView* headerView;
 }
 
+@property (nonatomic, strong)	NSMutableArray	*visiblePopTipViews;
+@property (nonatomic, strong)	id              currentPopTipViewTarget;
+
 @end
 
 @implementation MasterViewController
@@ -39,6 +42,8 @@
 
     NSLog(@"MasterViewController load");
 
+    // init PopTipView
+    [self viewLoadPopTipView];
     // components
     [self addCompnents];
     
@@ -427,6 +432,7 @@
 
 -(IBAction) barButtonEvent:(id)sender
 {
+    [self buttonAction:sender];
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {
         ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
@@ -965,4 +971,115 @@
     SWRevealViewController* rvc = self.revealViewController;
     return (rvc.frontViewPosition == FrontViewPositionRight);
 }
+
+- (void)dismissAllPopTipViews
+{
+	while ([self.visiblePopTipViews count] > 0) {
+		CMPopTipView *popTipView = [self.visiblePopTipViews objectAtIndex:0];
+		[popTipView dismissAnimated:YES];
+		[self.visiblePopTipViews removeObjectAtIndex:0];
+	}
+}
+
+- (IBAction)buttonAction:(id)sender
+{
+	[self dismissAllPopTipViews];
+	
+	if (sender == self.currentPopTipViewTarget) {
+		// Dismiss the popTipView and that is all
+		self.currentPopTipViewTarget = nil;
+	}
+	else {
+		NSString *contentMessage = nil;
+		UIView *contentView = nil;
+		NSNumber *key = [NSNumber numberWithInteger:[(UIView *)sender tag]];
+                id content = [[MyToolTip singleton] getContentByKey:key];
+		if ([content isKindOfClass:[UIView class]]) {
+			contentView = content;
+		}
+		else if ([content isKindOfClass:[NSString class]]) {
+			contentMessage = content;
+		}
+		else {
+			contentMessage = @"A CMPopTipView can automatically point to any view or bar button item.";
+		}
+                NSArray *colorScheme = [[MyToolTip singleton] getColorSchmeme];
+		UIColor *backgroundColor = [colorScheme objectAtIndex:0];
+		UIColor *textColor = [colorScheme objectAtIndex:1];
+		
+		NSString *title = [[MyToolTip singleton] getTitleByKey:key];
+		
+		CMPopTipView *popTipView;
+		if (contentView) {
+			popTipView = [[CMPopTipView alloc] initWithCustomView:contentView];
+		}
+		else if (title) {
+			popTipView = [[CMPopTipView alloc] initWithTitle:title message:contentMessage];
+		}
+		else {
+			popTipView = [[CMPopTipView alloc] initWithMessage:contentMessage];
+		}
+		popTipView.delegate = self;
+		if (backgroundColor && ![backgroundColor isEqual:[NSNull null]]) {
+			popTipView.backgroundColor = backgroundColor;
+		}
+		if (textColor && ![textColor isEqual:[NSNull null]]) {
+			popTipView.textColor = textColor;
+		}
+        
+                popTipView.animation = arc4random() % 2;
+                popTipView.has3DStyle = (BOOL)(arc4random() % 2);
+		
+		popTipView.dismissTapAnywhere = YES;
+                // auto dismiss after several seconds
+                [popTipView autoDismissAnimated:YES atTimeInterval:3.0];
+
+		if ([sender isKindOfClass:[UIButton class]]) {
+			UIButton *button = (UIButton *)sender;
+			[popTipView presentPointingAtView:button inView:self.view animated:YES];
+		}
+		else {
+			UIBarButtonItem *barButtonItem = (UIBarButtonItem *)sender;
+			[popTipView presentPointingAtBarButtonItem:barButtonItem animated:YES];
+		}
+		
+		[self.visiblePopTipViews addObject:popTipView];
+		self.currentPopTipViewTarget = sender;
+	}
+}
+
+
+#pragma mark - CMPopTipViewDelegate methods
+
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
+{
+	[self.visiblePopTipViews removeObject:popTipView];
+	self.currentPopTipViewTarget = nil;
+}
+
+
+#pragma mark - UIViewController methods
+
+- (void)willAnimateRotationToInterfaceOrientation:(__unused UIInterfaceOrientation)toInterfaceOrientation duration:(__unused NSTimeInterval)duration
+{
+	for (CMPopTipView *popTipView in self.visiblePopTipViews) {
+		id targetObject = popTipView.targetObject;
+		[popTipView dismissAnimated:NO];
+		
+		if ([targetObject isKindOfClass:[UIButton class]]) {
+			UIButton *button = (UIButton *)targetObject;
+			[popTipView presentPointingAtView:button inView:self.view animated:NO];
+		}
+		else {
+			UIBarButtonItem *barButtonItem = (UIBarButtonItem *)targetObject;
+			[popTipView presentPointingAtBarButtonItem:barButtonItem animated:NO];
+		}
+	}
+}
+
+- (void)viewLoadPopTipView
+{
+	self.visiblePopTipViews = [NSMutableArray array];
+}
+
 @end

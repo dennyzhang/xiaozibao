@@ -78,6 +78,8 @@
 		04BF8F9018F3170200D0A2CB /* dot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8D18F3170200D0A2CB /* dot3.png */; };
 		04BF8F9118F3170200D0A2CB /* dot4.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8E18F3170200D0A2CB /* dot4.png */; };
 		04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
+		04E47F6F18FAF4DD001E09EE /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E47F6E18FAF4DD001E09EE /* CMPopTipView.m */; };
+		04E47F7218FAFB93001E09EE /* MyToolTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E47F7118FAFB93001E09EE /* MyToolTip.m */; };
 		04E893DB179130C400E9573C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DA179130C400E9573C /* Foundation.framework */; };
 		04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DC179130C400E9573C /* CoreGraphics.framework */; };
 		04E893DF179130C400E9573C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DE179130C400E9573C /* UIKit.framework */; };
@@ -189,6 +191,10 @@
 		04C24E831867FFB200184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = "../../../../../../../../../../../Applications/Xcode5-DP2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libsqlite3.dylib"; sourceTree = "<group>"; };
 		04C2689B1868118E004C46BC /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		04D77FCC18B4636300643F3C /* global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		04E47F6D18FAF4DD001E09EE /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
+		04E47F6E18FAF4DD001E09EE /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
+		04E47F7018FAFB93001E09EE /* MyToolTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyToolTip.h; sourceTree = "<group>"; };
+		04E47F7118FAFB93001E09EE /* MyToolTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyToolTip.m; sourceTree = "<group>"; };
 		04E893D7179130C400E9573C /* MasterDetail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterDetail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E893DA179130C400E9573C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E893DC179130C400E9573C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -387,6 +393,10 @@
 				049FE34B18E0C252009FDB39 /* ReviewViewController.m */,
 				04D77FCC18B4636300643F3C /* global.h */,
 				0411B24C18E2F98600428AB1 /* ComponentUtil.h */,
+				04E47F6D18FAF4DD001E09EE /* CMPopTipView.h */,
+				04E47F6E18FAF4DD001E09EE /* CMPopTipView.m */,
+				04E47F7018FAFB93001E09EE /* MyToolTip.h */,
+				04E47F7118FAFB93001E09EE /* MyToolTip.m */,
 				0411B24D18E2F98600428AB1 /* ComponentUtil.m */,
 				04D0427D17A360C300593E18 /* Images */,
 				04E893E9179130C400E9573C /* AppDelegate.h */,
@@ -646,8 +656,10 @@
 				04E893EB179130C400E9573C /* AppDelegate.m in Sources */,
 				04E893F4179130C400E9573C /* MasterViewController.m in Sources */,
 				0411B24E18E2F98600428AB1 /* ComponentUtil.m in Sources */,
+				04E47F6F18FAF4DD001E09EE /* CMPopTipView.m in Sources */,
 				04E893E7179130C400E9573C /* main.m in Sources */,
 				04E893F7179130C400E9573C /* DetailViewController.m in Sources */,
+				04E47F7218FAFB93001E09EE /* MyToolTip.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
