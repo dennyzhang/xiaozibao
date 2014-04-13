@@ -12,6 +12,15 @@
 
 @implementation MyToolTip
 
+#pragma mark - CMPopTipViewDelegate methods
+
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView
+{
+    [[MyToolTip singleton] removeObject:popTipView];
+    self.currentPopTipViewTarget = nil;
+}
+
+#pragma mark - methods
 +(MyToolTip *)singleton {
  static MyToolTip *shared = nil;
  
@@ -22,6 +31,7 @@
  return shared;
 }
 
+#pragma mark - private methods
 -(void) init_data
 {
   self.contents = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -57,7 +67,7 @@
                                [NSArray arrayWithObjects:[UIColor colorWithRed:220.0/255.0 green:0.0/255.0
                                                                           blue:0.0/255.0 alpha:1.0], [NSNull null], nil],
                                nil];
-
+  self.visiblePopTipViews = [NSMutableArray array];
 }
 
 - (NSArray*) getColorSchmeme
@@ -74,4 +84,91 @@
 {
   return [self.titles objectForKey:key];
 }
+
+- (void)reset
+{
+	while ([self.visiblePopTipViews count] > 0) {
+		CMPopTipView *popTipView = [self.visiblePopTipViews objectAtIndex:0];
+		[popTipView dismissAnimated:YES];
+		[self.visiblePopTipViews removeObjectAtIndex:0];
+	}
+
+}
+
+-(void)removeObject:(CMPopTipView *)popTipView
+{
+  [self.visiblePopTipViews removeObject:popTipView];
+}
+
+-(void)addObject:(CMPopTipView *)popTipView
+{
+  [self.visiblePopTipViews addObject:popTipView];
+}
+
+- (IBAction)toolTipAction:(id)sender view:(UIView*) view
+{
+
+	if (sender == self.currentPopTipViewTarget) {
+		// Dismiss the popTipView and that is all
+		self.currentPopTipViewTarget = nil;
+	}
+	else {
+		NSString *contentMessage = nil;
+		UIView *contentView = nil;
+		NSNumber *key = [NSNumber numberWithInteger:[(UIView *)sender tag]];
+                id content = [[MyToolTip singleton] getContentByKey:key];
+		if ([content isKindOfClass:[UIView class]]) {
+			contentView = content;
+		}
+		else if ([content isKindOfClass:[NSString class]]) {
+			contentMessage = content;
+		}
+		else {
+			contentMessage = @"A CMPopTipView can automatically point to any view or bar button item.";
+		}
+                NSArray *colorScheme = [[MyToolTip singleton] getColorSchmeme];
+		UIColor *backgroundColor = [colorScheme objectAtIndex:0];
+		UIColor *textColor = [colorScheme objectAtIndex:1];
+		
+		NSString *title = [[MyToolTip singleton] getTitleByKey:key];
+		
+		CMPopTipView *popTipView;
+		if (contentView) {
+			popTipView = [[CMPopTipView alloc] initWithCustomView:contentView];
+		}
+		else if (title) {
+			popTipView = [[CMPopTipView alloc] initWithTitle:title message:contentMessage];
+		}
+		else {
+			popTipView = [[CMPopTipView alloc] initWithMessage:contentMessage];
+		}
+		popTipView.delegate = [MyToolTip singleton];
+		if (backgroundColor && ![backgroundColor isEqual:[NSNull null]]) {
+			popTipView.backgroundColor = backgroundColor;
+		}
+		if (textColor && ![textColor isEqual:[NSNull null]]) {
+			popTipView.textColor = textColor;
+		}
+        
+                popTipView.animation = arc4random() % 2;
+                popTipView.has3DStyle = (BOOL)(arc4random() % 2);
+		
+		popTipView.dismissTapAnywhere = YES;
+                // auto dismiss after several seconds
+                [popTipView autoDismissAnimated:YES atTimeInterval:3.0];
+
+		if ([sender isKindOfClass:[UIButton class]]) {
+			UIButton *button = (UIButton *)sender;
+			[popTipView presentPointingAtView:button inView:view animated:YES];
+		}
+		else {
+			UIBarButtonItem *barButtonItem = (UIBarButtonItem *)sender;
+			[popTipView presentPointingAtBarButtonItem:barButtonItem animated:YES];
+		}
+		
+                [[MyToolTip singleton] addObject:popTipView];
+                self.currentPopTipViewTarget = sender;
+	}
+}
+
 @end

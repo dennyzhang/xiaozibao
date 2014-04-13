@@ -7,15 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CMPopTipView.h"
 
-@interface MyToolTip : NSObject
+@interface MyToolTip : NSObject <CMPopTipViewDelegate>
 
 @property (nonatomic, strong) NSDictionary *contents;
 @property (nonatomic, strong) NSArray      *colorSchemes;
 @property (nonatomic, strong) NSDictionary	*titles;
+@property (nonatomic, strong)	NSMutableArray	*visiblePopTipViews;
+@property (nonatomic, strong)	id              currentPopTipViewTarget;
 
 +(MyToolTip *)singleton;
+
 -(NSArray*) getColorSchmeme;
 -(NSString*) getContentByKey:(NSNumber*) key;
 -(NSString*) getTitleByKey:(NSNumber*) key;
+-(void)reset;
+-(void)removeObject:(CMPopTipView *)popTipView;
+-(void)addObject:(CMPopTipView *)popTipView;
+
+- (IBAction)toolTipAction:(id)sender view:(UIView*) view;
 @end
