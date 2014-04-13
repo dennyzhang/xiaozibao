@@ -36,7 +36,23 @@
     leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:leftswipe];
     leftswipe.delegate = self;
+    
+    // when tap on empty area, hide menu
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
+                                            initWithTarget:self action:@selector(handleSingleTapOnFooter:)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.delegate = self;
+    [self.tableView addGestureRecognizer:singleTap];
+}
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+  return (![NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]);
+}
+
+- (IBAction) handleSingleTapOnFooter: (UIGestureRecognizer *) sender {
+    // hide menu
+    SWRevealViewController* rvc = self.revealViewController;
+    [rvc rightRevealToggleAnimated:YES];
 }
 
 - (void) prepareForSegue: (UIStoryboardSegue *) segue sender: (id) sender
@@ -200,5 +216,6 @@
     self.category_list = [ComponentUtil getCategoryList];
     [self.tableView reloadData];
 }
+
 
 @end
