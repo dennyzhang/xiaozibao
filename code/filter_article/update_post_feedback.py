@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-04-06 19:49:10>
+## Updated: Time-stamp: <2014-04-14 13:35:44>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -65,7 +65,7 @@ def get_post_filename_byid(postid, category):
 def parse_feedback_logfile(logfile):
     with open(logfile, 'r') as f:
         for row in f:
-            if row == "\n":
+            if row == "\n" or row.startswith("#"):
                 continue
             metadata_dict = {}
             for field in row.split(FIELD_SEPARATOR):
