@@ -244,6 +244,7 @@
     // post header
     UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg]]];
     [imageView setFrame:CGRectMake(0.0f, 0.0f, frame_width, INIT_HEADER_HEIGHT)];
+    imageView.userInteractionEnabled = TRUE;
     [scrollView addSubview:imageView];
     
     self.questionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 5.0f,
@@ -255,9 +256,13 @@
     [imageView addSubview:questionTextView];
     
     UIImageView* linkImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"info.png"]];
-    [linkImageView setFrame:CGRectMake(imageView.frame.size.width - ICON_WIDTH2 - 10,
-                                       imageView.frame.size.height - ICON_HEIGHT2 - 10,
-                                       ICON_WIDTH2, ICON_HEIGHT2)];
+    float icon_height, icon_width;
+    icon_height = 60;
+    icon_width = 60;
+    linkImageView.userInteractionEnabled = TRUE;
+    [linkImageView setFrame:CGRectMake(imageView.frame.size.width - icon_width - 10,
+                                       imageView.frame.size.height - icon_height - 10,
+                                       icon_width, icon_height)];
 
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
