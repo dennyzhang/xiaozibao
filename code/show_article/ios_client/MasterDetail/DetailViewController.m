@@ -249,7 +249,7 @@
     
     self.questionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 5.0f,
                                                                          imageView.frame.size.width - 20.0f,
-                                                                         imageView.frame.size.height)];
+                                                                         imageView.frame.size.height - 10.0f)];
     questionTextView.editable = NO;
     questionTextView.backgroundColor = [UIColor clearColor];
     [questionTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
