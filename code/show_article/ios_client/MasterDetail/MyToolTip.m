@@ -7,6 +7,7 @@
 //
 
 #import "MyToolTip.h"
+#import <CommonCrypto/CommonDigest.h>
 
 #define foo4random() (1.0 * (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX)
 
@@ -24,7 +25,7 @@
 #pragma mark - methods
 +(MyToolTip *)singleton {
     static MyToolTip *shared = nil;
-
+    
     if(shared == nil) {
         shared = [[MyToolTip alloc] init];
         [shared init_data];
@@ -52,15 +53,14 @@
     if (sender == self.currentPopTipViewTarget) {
         // Dismiss the popTipView and that is all
         self.currentPopTipViewTarget = nil;
-        
     }
     else {
         UIView *contentView = nil;
-
+        
         NSArray *colorScheme = [self getColorSchmeme];
         UIColor *backgroundColor = [colorScheme objectAtIndex:0];
         UIColor *textColor = [colorScheme objectAtIndex:1];
-
+        
         CMPopTipView *popTipView;
         if (contentView) {
             popTipView = [[CMPopTipView alloc] initWithCustomView:contentView];
@@ -75,14 +75,14 @@
         if (textColor && ![textColor isEqual:[NSNull null]]) {
             popTipView.textColor = textColor;
         }
-
+        
         popTipView.animation = arc4random() % 2;
         popTipView.has3DStyle = (BOOL)(arc4random() % 2);
-
+        
         popTipView.dismissTapAnywhere = YES;
         // auto dismiss after several seconds
         [popTipView autoDismissAnimated:YES atTimeInterval:20.0];
-
+        
         if ([sender isKindOfClass:[UIButton class]]) {
             UIButton *button = (UIButton *)sender;
             [popTipView presentPointingAtView:button inView:self.popView animated:YES];
@@ -91,11 +91,14 @@
             UIBarButtonItem *barButtonItem = (UIBarButtonItem *)sender;
             [popTipView presentPointingAtBarButtonItem:barButtonItem animated:YES];
         }
-
-        // addObject
         [self.visiblePopTipViews addObject:popTipView];
-
         self.currentPopTipViewTarget = sender;
+        
+        // update visit count
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString* key = [self caculateKey:sender msg:msg];
+        NSInteger value = [userDefaults integerForKey:key];
+        [userDefaults setInteger:(value+1) forKey:key];
     }
 }
 
@@ -103,7 +106,7 @@
 {
     self.messages = [[NSMutableArray alloc] init];
     self.components = [[NSMutableArray alloc] init];
-
+    
     // Array of (backgroundColor, textColor) pairs.
     // NSNull for either means leave as default.
     // A color scheme will be picked randomly per CMPopTipView.
@@ -112,42 +115,59 @@
 
 - (NSArray*) getColorSchmeme
 {
-  NSArray* colorSchemes = [NSArray arrayWithObjects:
-                         [NSArray arrayWithObjects:[NSNull null], [NSNull null], nil],
-                         [NSArray arrayWithObjects:[UIColor colorWithRed:134.0/255.0 green:74.0/255.0
-                                                                    blue:110.0/255.0 alpha:1.0], [NSNull null], nil],
-                         [NSArray arrayWithObjects:[UIColor darkGrayColor], [NSNull null], nil],
-                         [NSArray arrayWithObjects:[UIColor lightGrayColor], [UIColor darkTextColor], nil],
-                         [NSArray arrayWithObjects:[UIColor orangeColor], [UIColor blueColor], nil],
-                         [NSArray arrayWithObjects:[UIColor colorWithRed:220.0/255.0 green:0.0/255.0
-                                                                    blue:0.0/255.0 alpha:1.0], [NSNull null], nil],
-                         nil];
-
+    NSArray* colorSchemes = [NSArray arrayWithObjects:
+                             [NSArray arrayWithObjects:[NSNull null], [NSNull null], nil],
+                             // [NSArray arrayWithObjects:[UIColor colorWithRed:134.0/255.0 green:74.0/255.0
+                             //                                            blue:110.0/255.0 alpha:1.0], [NSNull null], nil],
+                             [NSArray arrayWithObjects:[UIColor darkGrayColor], [NSNull null], nil],
+                             // [NSArray arrayWithObjects:[UIColor lightGrayColor], [UIColor darkTextColor], nil],
+                             // [NSArray arrayWithObjects:[UIColor orangeColor], [UIColor blueColor], nil],
+                             // [NSArray arrayWithObjects:[UIColor colorWithRed:220.0/255.0 green:0.0/255.0
+                             //                                            blue:0.0/255.0 alpha:1.0], [NSNull null], nil],
+                             nil];
+    
     return [colorSchemes objectAtIndex:foo4random()*[colorSchemes count]];
+}
+
+- (NSString *) md5:(NSString *)str {
+    const char *cStr = [str UTF8String];
+    unsigned char result[16];
+    CC_MD5( cStr, strlen(cStr), result );
+    return [NSString stringWithFormat:
+            @"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+            result[0], result[1], result[2], result[3],
+            result[4], result[5], result[6], result[7],
+            result[8], result[9], result[10], result[11],
+            result[12], result[13], result[14], result[15]
+            ];
+}
+
+- (NSString *) caculateKey:(id)withObject msg:(NSString*) msg
+{
+    return [self md5:[NSString stringWithFormat:@"%@%@", [withObject class], msg]];
 }
 
 -(void)addToolTip:(id)withObject msg:(NSString*) msg
 {
-  [self.components addObject:withObject];
-  [self.messages addObject:msg];
+    NSString* key = [self caculateKey:withObject msg:msg];
+    NSLog(@"key:%@", key);
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:key] >= 1)
+        return;
+    [self.components addObject:withObject];
+    [self.messages addObject:msg];
 }
 
 -(void)showToolTip
 {
-  NSLog(@"[messages count]: %d, [components count]:%d",
-          [self.messages count], [self.components count]);
-  if ([self.components count] == 0)
-    return;
-  
-  NSString* msg = [self.messages objectAtIndex:0];
-  id withObject = [self.components objectAtIndex:0];
-  [self.messages removeObjectAtIndex:0];
-  [self.components removeObjectAtIndex:0];
-
-  [self toolTipAction:withObject msg:msg];
+    if ([self.components count] == 0)
+        return;
     
-    NSLog(@"[messages count]: %d, [components count]:%d",
-          [self.messages count], [self.components count]);
+    NSString* msg = [self.messages objectAtIndex:0];
+    id withObject = [self.components objectAtIndex:0];
+    [self.messages removeObjectAtIndex:0];
+    [self.components removeObjectAtIndex:0];
+    
+    [self toolTipAction:withObject msg:msg];
 }
 
 @end

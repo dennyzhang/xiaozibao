@@ -19,7 +19,32 @@
 @implementation ReviewViewController
 @synthesize summaryTextView, tableView, coinButton;
 @synthesize category, questions;
-@synthesize clockTextView, questionsTextView, feedbackTextView;
+@synthesize clockTextView, questionsTextView, feedbackTextView, shareButton;
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    [[MyToolTip singleton] reset:self.view]; // reset popTipView
+
+    // Do any additional setup after loading the view.
+    [self addComponents];
+    [self addMenuCompoents];
+    self.questions = [[NSMutableArray alloc] init];
+
+    dbPath = [PostsSqlite getDBPath];
+    postsDB = [PostsSqlite openSqlite:dbPath];
+
+    // load data
+    [PostsSqlite loadRecommendPosts:postsDB dbPath:dbPath category:self.category
+                   objects:self.questions tableview:self.tableView];
+
+    // configure tooltip
+    [[MyToolTip singleton] addToolTip:self.shareButton 
+                                  msg:@"Forward to friends, twitter, facebook, etc."];
+    [[MyToolTip singleton] showToolTip];
+
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,24 +68,6 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    // Do any additional setup after loading the view.
-    [self addCompnents];
-    [self addMenuCompoents];
-    self.questions = [[NSMutableArray alloc] init];
-
-    dbPath = [PostsSqlite getDBPath];
-    postsDB = [PostsSqlite openSqlite:dbPath];
-
-    // load data
-    [PostsSqlite loadRecommendPosts:postsDB dbPath:dbPath category:self.category
-                   objects:self.questions tableview:self.tableView];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -186,7 +193,7 @@
 
 #pragma mark - private function
 
-- (void)addCompnents
+- (void)addComponents
 {
      // add summaryTextView
     summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -339,7 +346,7 @@
     btn.tag = TAG_BUTTON_SHARE;
     [btn setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
 
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.shareButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton, nil];
 }

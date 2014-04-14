@@ -39,11 +39,10 @@
 
     NSLog(@"MasterViewController load");
     
-    // reset popTipView
-    [[MyToolTip singleton] reset:self.view];
+    [[MyToolTip singleton] reset:self.view]; // reset popTipView
 
     // components
-    [self addCompnents];
+    [self addComponents];
     
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
@@ -58,10 +57,9 @@
     leftswipe.delegate = self;
 
     // configure tooltip
-    
-    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Show coin"];
+    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Tap to see the learning stastics."];
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
-                                  msg:@"navigationItem"];
+                                  msg:@"Tap or swipe to change channel."];
     [[MyToolTip singleton] showToolTip];
 }
 
@@ -846,7 +844,7 @@
     }
 }
 
-- (void)addCompnents
+- (void)addComponents
 {
     // set header of navigation bar
     UIButton* btn;
@@ -865,7 +863,7 @@
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
     
-    NSLog(@"addCompnents self.category:%@", self.category);
+    NSLog(@"addComponents self.category:%@", self.category);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (self.category == nil) {
         NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
