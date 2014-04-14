@@ -216,42 +216,6 @@
 - (void)addMenuCompoents
 {
     UIButton *btn;
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_VOTEUP;
-    if (detailItem.isvoteup == YES) {
-        [btn setImage:[UIImage imageNamed:@"thumbs_up-512.png"] forState:UIControlStateNormal];
-    }
-    else {
-        [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
-    }
-    UIBarButtonItem *voteUpBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_VOTEDOWN;
-    if (detailItem.isvotedown == YES) {
-        [btn setImage:[UIImage imageNamed:@"thumbs_down-512.png"] forState:UIControlStateNormal];
-    }
-    else {
-        [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
-    }
-    UIBarButtonItem *voteDownBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_FAVORITE;
-    if (detailItem.isfavorite == YES) {
-        [btn setImage:[UIImage imageNamed:@"hearts-512.png"] forState:UIControlStateNormal];
-    }
-    else {
-        [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
-    }
-    UIBarButtonItem *saveFavoriteBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-
     if ([self.shouldShowCoin intValue] == 1) {
       btn = [UIButton buttonWithType:UIButtonTypeCustom];
       [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
@@ -265,20 +229,21 @@
 
       UIBarButtonItem* coinBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-      self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, saveFavoriteBarButton, voteDownBarButton, voteUpBarButton, nil];
+      self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinBarButton, nil];
     }
     else {
-        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:saveFavoriteBarButton, voteDownBarButton, voteUpBarButton, nil];
+      self.navigationItem.rightBarButtonItems = nil;
     }
 }
 
 - (void)addPostComponents
 {
     UIButton *btn;
+    float frame_width = self.view.frame.size.width;
 
     // post header
     UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg]]];
-    [imageView setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, INIT_HEADER_HEIGHT)];
+    [imageView setFrame:CGRectMake(0.0f, 0.0f, frame_width, INIT_HEADER_HEIGHT)];
     [scrollView addSubview:imageView];
     
     self.questionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 5.0f,
@@ -311,28 +276,39 @@
     // Add buttons
     UIView* buttonsView = [[UIView alloc] initWithFrame:CGRectZero];
     [buttonsView setFrame:CGRectMake(0.0f, imageView.frame.size.height,
-                                     self.view.frame.size.width,
+                                     frame_width,
                                      105)];
 
     [scrollView addSubview:buttonsView];
+    
+    float icon1_width, icon2_width, icon3_width;
+    icon1_width = icon3_width = 100.0f;
+    icon2_width = 35.0f;
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(40.0f, 0.0f, 100.0f, 100.0f)];
+    [btn setFrame:CGRectMake(frame_width/2 - icon2_width/2 - icon1_width,
+                             0.0f, 100.0f, 100.0f)];
     [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_VOTEDOWN;
     [buttonsView addSubview:btn];
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(130.0f, 20.0f, 70.0f, 70.0f)];
-    [btn setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
+    [btn setFrame:CGRectMake(frame_width/2 - icon2_width/2, 30.0f, 35.0f, 35.0f)];
+    [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_FAVORITE;
     [buttonsView addSubview:btn];
 
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(190.0f, 0.0f, 100.0f, 100.0f)];
+    [btn setFrame:CGRectMake(frame_width/2 + icon2_width/2, 0.0f, 100.0f, 100.0f)];
     [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = TAG_BUTTON_VOTEUP;
     [buttonsView addSubview:btn];
 
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectZero];
-    [lineView setFrame:CGRectMake(30.0f, 100.0f, self.view.bounds.size.width - 60, 1)];
+    [lineView setFrame:CGRectMake(CONTENT_MARGIN_OFFSET, 100.0f, frame_width - CONTENT_MARGIN_OFFSET*2, 1)];
     lineView.backgroundColor = [UIColor grayColor];
     [buttonsView addSubview:lineView];
 
@@ -343,7 +319,7 @@
     [self.detailUITextView setFrame:CGRectMake(0.0f,
                                                buttonsView.frame.origin.y + 
                                                  buttonsView.frame.size.height,
-                                               self.view.frame.size.width,
+                                               frame_width,
                                                100)];
 
     self.detailUITextView.textContainerInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
@@ -355,7 +331,7 @@
     [self.adContainerView setFrame:CGRectMake(10.0f,
                                               self.detailUITextView.frame.origin.y +
                                               self.detailUITextView.frame.size.height,
-                                              self.view.bounds.size.width - 20, 80)];
+                                              frame_width - 20, 80)];
     [scrollView addSubview:self.adContainerView];
 
     ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
