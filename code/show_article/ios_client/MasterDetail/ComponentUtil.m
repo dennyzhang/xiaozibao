@@ -88,7 +88,7 @@
 +(NSString*) getPostHeaderImg
 {
   // TODO remove hard code
-  NSString* ret = [NSString stringWithFormat:@"header_%d.png", arc4random() % 27 + 1];
+  NSString* ret = [NSString stringWithFormat:@"header_%d.png", arc4random() % 4 + 1];
   //NSLog(@"getPostHeaderImg:%@", ret);
   return ret;
   //return [NSString stringWithFormat:@"header_%d.png", 13];
@@ -177,4 +177,16 @@
            }];
     }];
 }
+
++ (NSString*)shortUrl:(NSString*) url
+{
+    if ([url isEqualToString:@""]) {
+        return @"";
+    }
+    int max_len = 25;
+    NSString* ret = [url substringToIndex:max_len];
+    ret = [ret stringByAppendingString:@"..." ];
+    return ret;
+}
+
 @end

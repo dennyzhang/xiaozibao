@@ -9,13 +9,16 @@
 
 #define FONT_BIG 22
 #define FONT_NORMAL 17
-#define FONT_SIZE_TITLE 24
+#define FONT_SIZE_TITLE 18
 #define FONT_SMALL 13
 #define FONT_TINY 10
 #define FONT_TINY2 8
 
 #define FONT_NAME1 @"ArialMT"
-#define FONT_NAME_TITLE @"BradleyHandITCTT-Bold"
+
+#define FONT_NAME_TITLE @"Helvetica Light"
+//BradleyHandITCTT-Bold
+
 #define FONT_NAME_CONTENT @"Helvetica Light"
 
 #define ICON_WIDTH 28.0f

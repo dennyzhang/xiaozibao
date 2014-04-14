@@ -57,7 +57,9 @@
     leftswipe.delegate = self;
 
     // configure tooltip
-    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Tap to see the learning stastics."];
+    if (addToolTip:self.navigationItem.rightBarButtonItem) {
+      [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Tap to see the learning stastics."];
+    }
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
                                   msg:@"Tap or swipe to change channel."];
     [[MyToolTip singleton] showToolTip];
@@ -83,7 +85,6 @@
     
     if (!objects){
         objects = [[NSMutableArray alloc] init];
-        
     }
     
     NSIndexPath *indexPath;

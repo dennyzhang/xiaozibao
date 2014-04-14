@@ -149,6 +149,10 @@
 
 -(void)addToolTip:(id)withObject msg:(NSString*) msg
 {
+    if(!withObject) {
+      NSLog(@"Warning: addToolTip fail, due to withObject is nil");
+      return;
+    }
     NSString* key = [self caculateKey:withObject msg:msg];
     NSLog(@"key:%@", key);
     if ([[NSUserDefaults standardUserDefaults] integerForKey:key] >= 1)

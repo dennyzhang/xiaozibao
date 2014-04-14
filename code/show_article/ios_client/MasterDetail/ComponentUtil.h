@@ -38,4 +38,6 @@
                     duration:(NSTimeInterval)duration
                        delay:(NSTimeInterval)delay
                        scale:(CGFloat)scale;
+
++ (NSString*)shortUrl:(NSString*) url;
 @end
