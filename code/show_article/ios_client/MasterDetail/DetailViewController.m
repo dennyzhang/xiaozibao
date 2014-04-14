@@ -25,6 +25,7 @@
 {
     [super viewDidLoad];
 
+    self.view.backgroundColor = [UIColor whiteColor];
     dbPath = [PostsSqlite getDBPath];
     postsDB = [PostsSqlite openSqlite:dbPath];
     
@@ -337,6 +338,7 @@
 
     // draw text
     self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    self.detailUITextView.backgroundColor = [UIColor whiteColor];
     self.detailUITextView.userInteractionEnabled = NO;
     [self.detailUITextView setFrame:CGRectMake(0.0f,
                                                buttonsView.frame.origin.y + 
@@ -366,7 +368,7 @@
   // configure data
   self.questionTextView.text = [self getQuestion:self.detailItem.content];
   self.detailUITextView.text = [self getContent:self.detailItem.content];
-
+  NSLog(@"here");
   // refresh layout
   CGFloat textViewContentHeight = [ComponentUtil measureHeightOfUITextView:self.detailUITextView];
   NSLog(@"textViewContentHeight: %f, self.detailUITextView.contentSize.height: %f, self.detailUITextView.frame.size.height:%f",

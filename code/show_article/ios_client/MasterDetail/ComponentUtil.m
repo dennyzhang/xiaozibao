@@ -191,7 +191,7 @@
 
 + (CGFloat)measureHeightOfUITextView:(UITextView *)textView
 {
-    if ([textView respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+   if (![textView.text isEqualToString:@""] && [textView respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
     {
         // This is the code for iOS 7. contentSize no longer returns the correct value, so
         // we have to calculate it.
@@ -201,7 +201,6 @@
         // they came from)
 
         CGRect frame = textView.bounds;
-
         // Take account of the padding added around the text.
 
         UIEdgeInsets textContainerInsets = textView.textContainerInset;
@@ -212,7 +211,6 @@
 
         frame.size.width -= leftRightPadding;
         frame.size.height -= topBottomPadding;
-
         NSString *textToMeasure = textView.text;
         if ([textToMeasure hasSuffix:@"\n"])
         {
@@ -224,9 +222,7 @@
 
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
-
-        NSDictionary *attributes = @{ NSFontAttributeName: textView.font, NSParagraphStyleAttributeName : paragraphStyle };
-
+        NSDictionary *attributes = @{ NSFontAttributeName: textView.font, NSParagraphStyleAttributeName: paragraphStyle };
         CGRect size = [textToMeasure boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), MAXFLOAT)
                                                   options:NSStringDrawingUsesLineFragmentOrigin
                                                attributes:attributes
