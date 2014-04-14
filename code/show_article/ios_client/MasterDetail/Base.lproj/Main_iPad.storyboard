@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="EeM-qn-nVR">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -126,6 +127,7 @@
         <!--Detail View Controller - Detail-->
         <scene sceneID="TEU-ju-RKD">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t7I-io-etN" sceneMemberID="firstResponder"/>
                 <viewController title="Detail" id="ZGc-kG-HB3" customClass="DetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ts0-Nt-44X"/>
@@ -162,7 +164,6 @@
                         <outlet property="detailUITextView" destination="a7Y-Tf-Aef" id="IyM-qr-keh"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="t7I-io-etN" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2506" y="-1136"/>
         </scene>

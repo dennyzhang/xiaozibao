@@ -40,4 +40,5 @@
                        scale:(CGFloat)scale;
 
 + (NSString*)shortUrl:(NSString*) url;
++ (CGFloat)measureHeightOfUITextView:(UITextView *)textView;
 @end

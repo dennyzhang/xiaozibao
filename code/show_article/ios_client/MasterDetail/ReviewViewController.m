@@ -102,7 +102,7 @@
     DetailViewController *detailviewcontroller = [[DetailViewController alloc]init];
     self.navigationController.navigationBarHidden = NO;
 
-    [detailviewcontroller setDetailItem:post];
+    detailviewcontroller.detailItem = post;
 
     [self.navigationController pushViewController:detailviewcontroller animated:YES];
 

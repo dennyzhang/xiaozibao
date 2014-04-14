@@ -57,7 +57,7 @@
     leftswipe.delegate = self;
 
     // configure tooltip
-    if (addToolTip:self.navigationItem.rightBarButtonItem) {
+    if (!self.navigationItem.rightBarButtonItem) {
       [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Tap to see the learning stastics."];
     }
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
@@ -744,7 +744,8 @@
         else {
             [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:1]];
         }
-        [[segue destinationViewController] setDetailItem:post];
+        DetailViewController* dvc = [segue destinationViewController];
+        dvc.detailItem = post;
     }
 }
 

@@ -20,17 +20,18 @@
                                                     ADBannerViewDelegate>
 #define TAG_BUTTON_VOTEUP 2001
 #define TAG_BUTTON_VOTEDOWN 2002
-#define TAG_BUTTON_FAVORITE 2003
-#define TAG_BUTTON_MORE 2004
-#define TAG_BUTTON_COMMENT 2005
-#define TAG_BUTTON_COIN_DETAILVIEW 2006
-#define TAG_SCORE_TEXT_DETAILVIEW 2007
+#define TAG_BUTTON_UNDO 2003
+#define TAG_BUTTON_FAVORITE 2004
+#define TAG_BUTTON_MORE 2005
+#define TAG_BUTTON_COMMENT 2006
+#define TAG_BUTTON_COIN_DETAILVIEW 2007
+#define TAG_SCORE_TEXT_DETAILVIEW 2008
 
 #define MAX_POST_CONTENT 700
 
 #define MIN_HEADER_HEIGHT 120
 #define MAX_HEADER_HEIGHT 400
-#define INIT_HEADER_HEIGHT 230
+#define INIT_HEADER_HEIGHT 300
 
 #define CONTENT_MARGIN_OFFSET 5
 
@@ -46,16 +47,12 @@
 
 @property (strong, nonatomic) Posts* detailItem;
 
-@property (retain, nonatomic) IBOutlet ADBannerView *adView;
+@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (retain, nonatomic) IBOutlet UITextView *questionTextView;
 @property (retain, nonatomic) IBOutlet UITextView *detailUITextView;
-@property (retain, nonatomic) IBOutlet UIImageView *imageView;
-@property (retain, nonatomic) IBOutlet UITextView *titleTextView;
-@property (retain, nonatomic) IBOutlet UIImageView *linkImageView;
+@property (retain, nonatomic) IBOutlet UIView *adContainerView;
+
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (atomic, retain) NSNumber* shouldShowCoin;
-@property (atomic, retain) NSString* contentPrefix;
 
-- (void)setDetailItem:(Posts*)newDetailItem;
-- (void)configureView;
-- (void)refreshComponentsLayout:(CGFloat)contentOffset_y;
 @end

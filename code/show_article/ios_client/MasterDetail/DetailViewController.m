@@ -15,23 +15,20 @@
   sqlite3 *postsDB;
   NSString *dbPath;
 }
-- (void)configureView;
 @end
 
 @implementation DetailViewController
-@synthesize detailItem, adView;
-@synthesize detailUITextView, imageView, titleTextView, linkImageView;
-@synthesize coinButton, shouldShowCoin, contentPrefix;
+@synthesize detailItem, scrollView, questionTextView, detailUITextView;
+@synthesize shouldShowCoin, coinButton, adContainerView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    //
     dbPath = [PostsSqlite getDBPath];
     postsDB = [PostsSqlite openSqlite:dbPath];
     
-    NSLog(@"self.detailItem.readcount: %d", [self.detailItem.readcount intValue]);
+    //NSLog(@"self.detailItem.readcount: %d", [self.detailItem.readcount intValue]);
     if ([self.detailItem.readcount intValue] == 1){
       [UserProfile addInteger:self.detailItem.category key:POST_VISIT_KEY offset:1];
     }
@@ -44,72 +41,13 @@
     // hide navigationbar
     [self.navigationController setToolbarHidden:YES animated:YES];
 
-    contentPrefix = @"\n\n\n\n\n\n\n\n"; // TODO workaround
-    if (!self.detailUITextView) {
-      contentPrefix = @"\n\n\n\n\n\n\n\n\n\n\n\n";
-      NSLog(@"various workaround for ReviewViewController");
-      self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectZero];
-      [self.view addSubview:self.detailUITextView];
+    self.scrollView = [[UIScrollView alloc] init];
+    scrollView.frame =CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    [self.view addSubview:scrollView];
 
-      //float navigationbar_height =  self.navigationController.navigationBar.frame.size.height;
-      self.detailUITextView.frame = CGRectMake(0, 64,
-                                             self.view.frame.size.width,
-                                             self.view.frame.size.height - 64);
-
-    }
-
-    self.detailUITextView.textContainerInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
-
-    // NSLog(@"navigationBar: %@", self.navigationController.navigationBar);
-    
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    self.detailUITextView.clipsToBounds = NO;
-    self.detailUITextView.backgroundColor = [UIColor clearColor];
-    self.detailUITextView.delegate = self;
-    self.detailUITextView.scrollEnabled = YES;
-    self.detailUITextView.dataDetectorTypes = UIDataDetectorTypeLink;
-    self.detailUITextView.selectable = NO;
-       
-    [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
-
-    // NSLog(@"self.detailUITextView.superview: %@", self.detailUITextView.superview);
-    // NSLog(@"parentViewController: %@", self.parentViewController);
-    
-    // NSLog(@"navigationBar height: %f",
-    //       self.navigationController.navigationBar.frame.size.height);
-    // NSLog(@"self.view.frame.size.height: %f", self.view.frame.size.height);
-    // NSLog(@"self.detailUITextView.frame.origin.x: %f", self.detailUITextView.frame.origin.x);
-    // NSLog(@"self.detailUITextView.frame.origin.y: %f", self.detailUITextView.frame.origin.y);
-    // NSLog(@"self.detailUITextView.frame.size.width: %f", self.detailUITextView.frame.size.width);
-    // NSLog(@"self.detailUITextView.frame.size.height: %f", self.detailUITextView.frame.size.height);
-    // NSLog(@"self.detailUITextView.font:%@", self.detailUITextView.font);
-
-    // UIView* superview = (UIView*)self.detailUITextView.superview;
-    // NSLog(@"superview frame y:%f", superview.frame.origin.y);
-
-    //NSLog(@"detailUITextView.layoutManager:%@", detailUITextView.layoutManager);
-    
-    self.title = @"";
-    self.detailUITextView.editable = false;
-
-    // TODO, when jump to webView, the bottom doesn't look natural
-    //self.detailUITextView.frame =  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    
     [self addMenuCompoents];
-    [self addPostHeaderComponents];
-    
-    [self configureView];
-
-    // hide and show navigation bar
-    // UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapRecognized:)];
-    // singleTap.numberOfTapsRequired = 1;
-    // [self.detailUITextView addGestureRecognizer:singleTap];
-    
-    // refreshComponentsLayout
-    [self refreshComponentsLayout:0];
-
-    // TODO Add iAd
-    //[self addIAd];
+    [self addPostComponents];
+    [self configureLayout];
 }
 
 - (void)didReceiveMemoryWarning
@@ -117,35 +55,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
--(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
-        NSLog(@"Portrait orientattion");
-    }
-    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-        NSLog(@"Landscape orientattion");
-    }
-    [self refreshComponentsLayout:0];
-}
-
-- (void)linkTextSingleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
-    NSLog(@"loading: %@", self.detailItem.source);
-    [self browseWebPage:self.detailItem.source];
-}
-
-#pragma mark - Hide/Show navigationBar
-
-// - (void)singleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
-//     NSLog(@"single tap");
-
-//     if (self.navigationController.navigationBarHidden == YES) {
-//         self.navigationController.navigationBarHidden = NO;
-//     }
-//     else{
-//         self.navigationController.navigationBarHidden = YES;
-//     }
-// }
 
 #pragma mark - user defined event selectors
 -(IBAction) barButtonEvent:(id)sender
@@ -303,37 +212,6 @@
 }
 
 #pragma mark - Private functions
-- (void)setDetailItem:(Posts*)newDetailItem
-{
-    if (detailItem != newDetailItem) {
-        detailItem = newDetailItem;
-        //[self configureView];
-    }
-}
-
-- (void)configureView
-{
-    // Update the user interface for the detail item.
-    if (self.detailItem) {
-        self.detailUITextView.text = [self getContent:self.detailItem.content];
-        [self.detailUITextView setFont:[UIFont fontWithName:FONT_NAME_CONTENT size:FONT_NORMAL]];
-
-        self.titleTextView.text = self.detailItem.title;
-        NSString* shortUrl = [self shortUrl:self.detailItem.source];
-        NSString* prefix = @"Link:  ";
-        NSString* url =  [[NSString alloc] initWithFormat:@"%@%@", prefix, shortUrl];
-        
-        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc]
-                                                initWithString:url];
-        
-        [attString addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}
-                           range:NSMakeRange ([prefix length], [shortUrl length])];
-        [attString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor]
-                          range:NSMakeRange ([prefix length], [shortUrl length])];
-        //self.linkTextView.attributedText = attString;
-    }
-}
-
 - (void)addMenuCompoents
 {
     UIButton *btn;
@@ -393,54 +271,120 @@
     }
 }
 
-- (void)addPostHeaderComponents
+- (void)addPostComponents
 {
-    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg]]];
-    self.imageView.userInteractionEnabled = TRUE;
+    UIButton *btn;
+
+    // post header
+    UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg]]];
+    [imageView setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, INIT_HEADER_HEIGHT)];
+    [scrollView addSubview:imageView];
     
-    [self.imageView setFrame:CGRectZero];
-    [self.detailUITextView addSubview:self.imageView];
+    self.questionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 5.0f,
+                                                                         imageView.frame.size.width - 20.0f,
+                                                                         imageView.frame.size.height)];
+    questionTextView.editable = NO;
+    questionTextView.backgroundColor = [UIColor clearColor];
+    [questionTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
+    [imageView addSubview:questionTextView];
     
-    self.titleTextView = [[UITextView alloc] initWithFrame:CGRectZero];
-    self.titleTextView.editable = NO;
-    self.titleTextView.backgroundColor = [UIColor clearColor];
-    [self.titleTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
-    [self.imageView addSubview:self.titleTextView];
-    
-    self.linkImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"info.png"]];
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
+    UIImageView* linkImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"info.png"]];
+    [linkImageView setFrame:CGRectMake(imageView.frame.size.width - ICON_WIDTH2 - 10,
+                                       imageView.frame.size.height - ICON_HEIGHT2 - 10,
+                                       ICON_WIDTH2, ICON_HEIGHT2)];
+
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
     singleTap.numberOfTapsRequired = 1;
-    [self.linkImageView addGestureRecognizer:singleTap];
-    self.linkImageView.multipleTouchEnabled = TRUE;
-    self.linkImageView.userInteractionEnabled = TRUE;
+    [linkImageView addGestureRecognizer:singleTap];
+    linkImageView.multipleTouchEnabled = TRUE;
+    linkImageView.userInteractionEnabled = TRUE;
 
-    [self.imageView addSubview:self.linkImageView];
+    [imageView addSubview:linkImageView];
 
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]
+                                        initWithTarget:self action:@selector(textWithSwipe:)];
     [self.view addGestureRecognizer:swipe];
     swipe.delegate = self;
+
+    // Add buttons
+    UIView* buttonsView = [[UIView alloc] initWithFrame:CGRectZero];
+    [buttonsView setFrame:CGRectMake(0.0f, imageView.frame.size.height,
+                                     self.view.frame.size.width,
+                                     105)];
+
+    [scrollView addSubview:buttonsView];
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(40.0f, 0.0f, 100.0f, 100.0f)];
+    [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
+    [buttonsView addSubview:btn];
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(130.0f, 20.0f, 70.0f, 70.0f)];
+    [btn setImage:[UIImage imageNamed:@"undo.png"] forState:UIControlStateNormal];
+    [buttonsView addSubview:btn];
+
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(190.0f, 0.0f, 100.0f, 100.0f)];
+    [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
+    [buttonsView addSubview:btn];
+
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectZero];
+    [lineView setFrame:CGRectMake(30.0f, 100.0f, self.view.bounds.size.width - 60, 1)];
+    lineView.backgroundColor = [UIColor grayColor];
+    [buttonsView addSubview:lineView];
+
+    // draw text
+    self.detailUITextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    self.detailUITextView.userInteractionEnabled = NO;
+    [self.detailUITextView setFrame:CGRectMake(0.0f,
+                                               buttonsView.frame.origin.y + 
+                                                 buttonsView.frame.size.height,
+                                               self.view.frame.size.width,
+                                               100)];
+
+    self.detailUITextView.textContainerInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
+
+    [scrollView addSubview:self.detailUITextView];
+
+    // add iAd
+    self.adContainerView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.adContainerView setFrame:CGRectMake(10.0f,
+                                              self.detailUITextView.frame.origin.y +
+                                              self.detailUITextView.frame.size.height,
+                                              self.view.bounds.size.width - 20, 80)];
+    [scrollView addSubview:self.adContainerView];
+
+    ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+    [adView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [adContainerView addSubview:adView];
 }
 
-- (void)refreshComponentsLayout:(CGFloat)contentOffset_y
+- (void)configureLayout
 {
-    NSLog(@"refreshComponentsLayout contentOffset_y:%f", contentOffset_y);
-    CGFloat height = INIT_HEADER_HEIGHT;
-    CGFloat width = self.detailUITextView.frame.size.width;
+  // configure data
+  self.questionTextView.text = [self getQuestion:self.detailItem.content];
+  self.detailUITextView.text = [self getContent:self.detailItem.content];
 
-    height = height - contentOffset_y;
-    //CGFloat height = self.detailUITextView.frame.size.height;
-    self.imageView.frame =  CGRectMake(0.0f, contentOffset_y, width, height);
+  // refresh layout
+  CGFloat textViewContentHeight = [ComponentUtil measureHeightOfUITextView:self.detailUITextView];
+  NSLog(@"textViewContentHeight: %f, self.detailUITextView.contentSize.height: %f, self.detailUITextView.frame.size.height:%f",
+        textViewContentHeight, self.detailUITextView.contentSize.height, self.detailUITextView.frame.size.height);
 
-    self.titleTextView.frame =  CGRectMake(10, 10, width - 20, height - 10);
-    float font_size = roundf(FONT_SIZE_TITLE * height /INIT_HEADER_HEIGHT);
-    // NSLog(@"font_size: %f", font_size);
-    self.titleTextView.font = [UIFont fontWithName:FONT_NAME_TITLE size:font_size];
-    // NSLog(@"self.titleTextView.font: %@", self.titleTextView.font);
+  [self.detailUITextView setFrame:CGRectMake(self.detailUITextView.frame.origin.x,
+                                             self.detailUITextView.frame.origin.y,
+                                             self.detailUITextView.frame.size.width,
+                                             textViewContentHeight)];
 
-    float icon_height, icon_width;
-    icon_height = 60;
-    icon_width = 60;
-    self.linkImageView.frame = CGRectMake(width-icon_width-10, height-icon_height-10, icon_width, icon_height);
+  [self.adContainerView setFrame:CGRectMake(self.adContainerView.frame.origin.x,
+                                            self.detailUITextView.frame.origin.y +
+                                            self.detailUITextView.frame.size.height,
+                                            self.view.bounds.size.width - 20, 80)];
+
+  self.scrollView.contentSize=CGSizeMake(self.view.frame.size.width,
+                                         self.adContainerView.frame.origin.y +
+                                         self.adContainerView.frame.size.height + 40);
 }
 
 - (void)browseWebPage:(NSString*)url
@@ -466,32 +410,37 @@
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
     [webView addGestureRecognizer:swipe];
 
-    [self.navigationController pushViewController:webViewController  animated:YES];
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
-- (NSString*)shortUrl:(NSString*) url
+-(NSString*) getQuestion:(NSString*) content
 {
-    if ([url isEqualToString:@""]) {
-        return @"";
-    }
-    int max_len = 25;
-    NSString* ret = [url substringToIndex:max_len];
-    ret = [ret stringByAppendingString:@"..." ];
-    return ret;
+  NSString* ret = @"";
+  NSRange range = [content rangeOfString:@"\n-"];
+  if (range.location == NSNotFound) {
+    [ComponentUtil infoMessage:@"Error to find question/answer seperator"
+                           msg:[NSString stringWithFormat:@"range.location:%d", range.location]
+                     enforceMsgBox:FALSE];
+  }
+  else {
+      ret = [content substringToIndex:range.location];
+  }
+  return ret;
 }
 
 -(NSString*) getContent:(NSString*) content
 {
-  NSString* ret;
-  if ([content length] > MAX_POST_CONTENT){
-    ret = [NSString stringWithFormat:@"%@%@... ...", contentPrefix,
-                    [content substringWithRange:NSMakeRange(0, MAX_POST_CONTENT)]];
-    //ret = [NSString stringWithFormat:@"%@%@", contentPrefix, content];
-  }
-  else {
-    ret = [NSString stringWithFormat:@"%@%@", contentPrefix, content];
-  }
-  return ret;
+    NSString* ret = @"";
+    NSRange range = [content rangeOfString:@"\n-"];
+    if (range.location == NSNotFound) {
+        [ComponentUtil infoMessage:@"Error to find question/answer seperator"
+                            msg:[NSString stringWithFormat:@"range.location:%d", range.location]
+                     enforceMsgBox:FALSE];
+    }
+    else {
+        ret = [content substringFromIndex:(range.location + 1)];
+    }
+    return ret;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -523,7 +472,8 @@
     }
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGesture
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGesture
 {
     return YES;
 }
@@ -536,21 +486,12 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-   NSLog(@"scrollViewDidScroll, scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
-   if (scrollView.contentOffset.y >= -MAX_HEADER_HEIGHT &&
-       scrollView.contentOffset.y < MIN_HEADER_HEIGHT){
-     [self refreshComponentsLayout:scrollView.contentOffset.y];
-   }
+
 }
 
-- (void)addIAd
-{
-    // add iAd
-  if(!adView) {
-    adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-    [adView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [self.view addSubview:adView];
-  }
+- (void)linkTextSingleTapRecognized:(UIGestureRecognizer *)gestureRecognizer {
+    NSLog(@"loading: %@", self.detailItem.source);
+    [self browseWebPage:self.detailItem.source];
 }
 
 @end
