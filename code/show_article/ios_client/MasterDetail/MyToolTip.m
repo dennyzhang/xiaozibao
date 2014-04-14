@@ -18,6 +18,7 @@
 {
     [self.visiblePopTipViews removeObject:popTipView];
     self.currentPopTipViewTarget = nil;
+    [self showToolTip];
 }
 
 #pragma mark - methods
@@ -40,28 +41,21 @@
         [popTipView dismissAnimated:YES];
         [self.visiblePopTipViews removeObjectAtIndex:0];
     }
+    // clean up
+    [self.messages removeAllObjects];
+    [self.components removeAllObjects];
 }
 
-- (IBAction)toolTipAction:(id)sender
+-(void)toolTipAction:(id)sender msg:(NSString*)msg
 {
+    NSLog(@"sender:%@", sender);
     if (sender == self.currentPopTipViewTarget) {
         // Dismiss the popTipView and that is all
         self.currentPopTipViewTarget = nil;
+        
     }
     else {
-        NSString *contentMessage = nil;
         UIView *contentView = nil;
-        NSNumber *key = [NSNumber numberWithInteger:[(UIView *)sender tag]];
-        id content = [self getContentByKey:key];
-        if ([content isKindOfClass:[UIView class]]) {
-            contentView = content;
-        }
-        else if ([content isKindOfClass:[NSString class]]) {
-            contentMessage = content;
-        }
-        else {
-            contentMessage = @"Show some tooltip information.";
-        }
 
         NSArray *colorScheme = [self getColorSchmeme];
         UIColor *backgroundColor = [colorScheme objectAtIndex:0];
@@ -72,7 +66,7 @@
             popTipView = [[CMPopTipView alloc] initWithCustomView:contentView];
         }
         else {
-            popTipView = [[CMPopTipView alloc] initWithMessage:contentMessage];
+            popTipView = [[CMPopTipView alloc] initWithMessage:msg];
         }
         popTipView.delegate = self;
         if (backgroundColor && ![backgroundColor isEqual:[NSNull null]]) {
@@ -87,7 +81,7 @@
 
         popTipView.dismissTapAnywhere = YES;
         // auto dismiss after several seconds
-        [popTipView autoDismissAnimated:YES atTimeInterval:3.0];
+        [popTipView autoDismissAnimated:YES atTimeInterval:20.0];
 
         if ([sender isKindOfClass:[UIButton class]]) {
             UIButton *button = (UIButton *)sender;
@@ -107,21 +101,9 @@
 
 -(void) init_data
 {
-    self.contents = [NSDictionary dictionaryWithObjectsAndKeys:
-                     // Rounded rect buttons
-                     @"A CMPopTipView will automatically position itself within the container view.", [NSNumber numberWithInt:11],
-                     @"A CMPopTipView will automatically orient itself above or below the target view based on the available space.", [NSNumber numberWithInt:12],
-                     @"A CMPopTipView always tries to point at the center of the target view.", [NSNumber numberWithInt:13],
-                     @"A CMPopTipView can point to any UIView subclass.", [NSNumber numberWithInt:14],
-                     @"A CMPopTipView will automatically size itself to fit the text message.", [NSNumber numberWithInt:15],
-                     // Nav bar buttons
-                     @"This CMPopTipView is pointing at a leftBarButtonItem of a navigationItem.", [NSNumber numberWithInt:21],
-                     @"Two popup animations are provided: slide and pop. Tap other buttons to see them both.", [NSNumber numberWithInt:22],
-                     // Toolbar buttons
-                     @"CMPopTipView will automatically point at buttons either above or below the containing view.", [NSNumber numberWithInt:31],
-                     @"The arrow is automatically positioned to point to the center of the target button.", [NSNumber numberWithInt:32],
-                     @"CMPopTipView knows how to point automatically to UIBarButtonItems in both nav bars and tool bars.", [NSNumber numberWithInt:33],
-                     nil];
+    self.messages = [[NSMutableArray alloc] init];
+    self.components = [[NSMutableArray alloc] init];
+
     // Array of (backgroundColor, textColor) pairs.
     // NSNull for either means leave as default.
     // A color scheme will be picked randomly per CMPopTipView.
@@ -144,19 +126,28 @@
     return [colorSchemes objectAtIndex:foo4random()*[colorSchemes count]];
 }
 
--(NSString*) getContentByKey:(NSNumber*) key
+-(void)addToolTip:(id)withObject msg:(NSString*) msg
 {
-    return [self.contents objectForKey:key];
-}
-
--(void)addToolTip:(id)withObject
-{
-    [self performSelector:@selector(toolTipAction:) withObject:withObject afterDelay:0.5];
+  [self.components addObject:withObject];
+  [self.messages addObject:msg];
 }
 
 -(void)showToolTip
 {
+  NSLog(@"[messages count]: %d, [components count]:%d",
+          [self.messages count], [self.components count]);
+  if ([self.components count] == 0)
+    return;
+  
+  NSString* msg = [self.messages objectAtIndex:0];
+  id withObject = [self.components objectAtIndex:0];
+  [self.messages removeObjectAtIndex:0];
+  [self.components removeObjectAtIndex:0];
 
+  [self toolTipAction:withObject msg:msg];
+    
+    NSLog(@"[messages count]: %d, [components count]:%d",
+          [self.messages count], [self.components count]);
 }
 
 @end

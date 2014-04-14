@@ -58,8 +58,11 @@
     leftswipe.delegate = self;
 
     // configure tooltip
-    [[MyToolTip singleton] addToolTip:self.coinButton];    
-    //[self performSelector:@selector(tooltipEvent:) withObject:self.navigationItem.leftBarButtonItem afterDelay:1.5];
+    
+    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Show coin"];
+    [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
+                                  msg:@"navigationItem"];
+    [[MyToolTip singleton] showToolTip];
 }
 
 - (void)init_data:(NSString*)username_t
@@ -434,9 +437,6 @@
 
 -(IBAction) barButtonEvent:(id)sender
 {
-    // ToolTip events
-  [[MyToolTip singleton] toolTipAction:sender];
-
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {
         ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
