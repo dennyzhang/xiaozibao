@@ -890,9 +890,9 @@
         NSInteger score = [UserProfile scoreByCategory:self.category];
         [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
                               fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
-        UIBarButtonItem *coinButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        UIBarButtonItem *coinButtonBarItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
         
-        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButton, nil];
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButtonBarItem, nil];
     }
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];

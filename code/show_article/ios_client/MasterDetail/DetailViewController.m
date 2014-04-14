@@ -422,6 +422,11 @@
     }
     else {
         ret = [content substringFromIndex:(range.location + 1)];
+        if ([ret length] > MAX_POST_CONTENT){
+          ret = [NSString stringWithFormat:@"%@... ...", 
+                          [content substringWithRange:NSMakeRange(0, MAX_POST_CONTENT)]];
+          
+        }
     }
     return ret;
 }
