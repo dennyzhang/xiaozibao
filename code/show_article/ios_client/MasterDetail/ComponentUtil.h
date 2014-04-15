@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CommonCrypto/CommonDigest.h>
+#include <stdlib.h>
 
 #import "UserProfile.h"
 #import "global.h"
-#include <stdlib.h>
 
 @interface ComponentUtil : NSObject
 + (void) addTextToButton:(UIButton*) btn text:(NSString*)text
@@ -45,4 +46,5 @@
 + (BOOL)shouldMixpanel;
 + (void)showHintOnce:(id)withObject msg:(NSString*)msg;
 + (NSString *) caculateKey:(id)withObject msg:(NSString*) msg;
++ (NSString *) md5:(NSString *)str;
 @end
