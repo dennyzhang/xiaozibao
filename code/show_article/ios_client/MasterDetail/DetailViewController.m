@@ -53,13 +53,11 @@
 
     // configure tooltip
     [[MyToolTip singleton] addToolTip:(UIButton *)[self.view viewWithTag:TAG_BUTTON_VOTEDOWN]
-                                  msg:@"Click to voteup, votedown, or save the question to local."];
+                                  msg:@"Click to voteup, votedown, or save to local.\n\nDrag above picture also do the rick."];
 
-    // [[MyToolTip singleton] addToolTip:(UIImageView *)[self.view viewWithTag:TAG_IMAGEVIEW_HEADER]
-    //                               msg:@"Drag picture left or right can also vote."];
+    [[MyToolTip singleton] addToolTip:(UIButton *)[self.view viewWithTag:TAG_BUTTON_INFO]
+                                  msg:@"Click to see the original web page link."];
 
-    // [[MyToolTip singleton] addToolTip:(UIImageView* )[self.view viewWithTag:TAG_IMAGEVIEW_LINK]
-    //                               msg:@"Click to see the original web page link."];
     [[MyToolTip singleton] showToolTip];
 
 
@@ -265,7 +263,6 @@
     UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg]]];
     [imageView setFrame:CGRectMake(0.0f, 0.0f, frame_width, INIT_HEADER_HEIGHT)];
     imageView.userInteractionEnabled = TRUE;
-    imageView.tag = TAG_IMAGEVIEW_HEADER;
     [scrollView addSubview:imageView];
     
     self.questionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 5.0f,
@@ -276,24 +273,22 @@
     [questionTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
     [imageView addSubview:questionTextView];
     
-    UIImageView* linkImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"info.png"]];
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[UIImage imageNamed:@"info.png"] forState:UIControlStateNormal];
+    btn.tag = TAG_BUTTON_INFO;
     float icon_height, icon_width;
     icon_height = 60;
     icon_width = 60;
-    linkImageView.tag = TAG_IMAGEVIEW_LINK;
-    linkImageView.userInteractionEnabled = TRUE;
-    [linkImageView setFrame:CGRectMake(imageView.frame.size.width - icon_width - 10,
-                                       imageView.frame.size.height - icon_height - 10,
-                                       icon_width, icon_height)];
+    [btn setFrame:CGRectMake(imageView.frame.size.width - icon_width - 10,
+                             imageView.frame.size.height - icon_height - 10,
+                             icon_width, icon_height)];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
                                          initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
     singleTap.numberOfTapsRequired = 1;
-    [linkImageView addGestureRecognizer:singleTap];
-    linkImageView.multipleTouchEnabled = TRUE;
-    linkImageView.userInteractionEnabled = TRUE;
-    
-    [imageView addSubview:linkImageView];
+    [btn addGestureRecognizer:singleTap];
+
+    [imageView addSubview:btn];
     
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]
                                        initWithTarget:self action:@selector(textWithSwipe:)];
@@ -303,8 +298,7 @@
     // Add buttons
     UIView* buttonsView = [[UIView alloc] initWithFrame:CGRectZero];
     [buttonsView setFrame:CGRectMake(0.0f, imageView.frame.size.height,
-                                     frame_width,
-                                     105)];
+                                     frame_width, 110.0f)];
     
     [scrollView addSubview:buttonsView];
     
@@ -313,8 +307,7 @@
     icon2_width = 35.0f;
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(frame_width/2 - icon2_width/2 - icon1_width,
-                             0.0f, 100.0f, 100.0f)];
+    [btn setFrame:CGRectMake(frame_width/2 - icon2_width/2 - icon1_width, 0.0f, 100.0f, 100.0f)];
     [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_VOTEDOWN;
@@ -335,7 +328,7 @@
     [buttonsView addSubview:btn];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectZero];
-    [lineView setFrame:CGRectMake(CONTENT_MARGIN_OFFSET, 100.0f, frame_width - CONTENT_MARGIN_OFFSET*2, 1)];
+    [lineView setFrame:CGRectMake(CONTENT_MARGIN_OFFSET, 103.0f, frame_width - CONTENT_MARGIN_OFFSET*2, 1)];
     lineView.backgroundColor = [UIColor grayColor];
     [buttonsView addSubview:lineView];
     
@@ -371,11 +364,10 @@
     // configure data
     self.questionTextView.text = [self getQuestion:self.detailItem.content];
     self.detailUITextView.text = [self getContent:self.detailItem.content];
-    NSLog(@"here");
     // refresh layout
     CGFloat textViewContentHeight = [ComponentUtil measureHeightOfUITextView:self.detailUITextView];
-    NSLog(@"textViewContentHeight: %f, self.detailUITextView.contentSize.height: %f, self.detailUITextView.frame.size.height:%f",
-          textViewContentHeight, self.detailUITextView.contentSize.height, self.detailUITextView.frame.size.height);
+    // NSLog(@"textViewContentHeight: %f, self.detailUITextView.contentSize.height: %f, self.detailUITextView.frame.size.height:%f",
+    //       textViewContentHeight, self.detailUITextView.contentSize.height, self.detailUITextView.frame.size.height);
     
     [self.detailUITextView setFrame:CGRectMake(self.detailUITextView.frame.origin.x,
                                                self.detailUITextView.frame.origin.y,

@@ -23,7 +23,7 @@
 @property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSMutableArray* questions;
 
-@property (retain, nonatomic) IBOutlet UIBarButtonItem *shareButton;
+@property (retain, nonatomic) IBOutlet UIButton *shareButton;
 
 @property (retain, nonatomic) IBOutlet UITextView *clockTextView;
 @property (retain, nonatomic) IBOutlet UITextView *questionsTextView;

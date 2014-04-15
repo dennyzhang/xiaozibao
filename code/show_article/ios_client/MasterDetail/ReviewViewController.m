@@ -40,12 +40,11 @@
                    objects:self.questions tableview:self.tableView];
 
     // configure tooltip
-    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem
+    NSLog(@"self.navigationItem.rightBarButtonItem: %@\n\n", self.navigationItem.rightBarButtonItem);
+
+    [[MyToolTip singleton] addToolTip:(UIButton *)self.shareButton
                                   msg:@"Forward to friends, twitter, facebook, etc."];
 
-    // [[MyToolTip singleton] addToolTip:self.coinButton
-    //                               msg:@"hello, world."]; // TODO
-    
     [[MyToolTip singleton] showToolTip];
 
 }
@@ -349,10 +348,11 @@
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_SHARE;
     [btn setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
+    self.shareButton = btn;
 
-    self.shareButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    UIBarButtonItem* shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButton, nil];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:shareButtonItem, nil];
 }
 
 - (NSMutableAttributedString *) buildAttributedText:(NSString*) text1 text2:(NSString*) text2
