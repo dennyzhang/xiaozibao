@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2013-01-25 00:00:00>
-## Updated: Time-stamp: <2014-04-12 09:33:42>
+## Updated: Time-stamp: <2014-04-15 09:15:53>
 ##-------------------------------------------------------------------
 from flask import Flask
 from datetime import timedelta
@@ -104,7 +104,7 @@ def list_topic():
 
     # content = content[1:]
     # TODO: remove test(test), product(chinese)
-    content = 'concept,linux,algorithm,cloud,security'
+    content = 'cloud,concept,linux,algorithm,security'
     resp = make_response(content, 200)
     resp.headers['Content-type'] = 'application/json; charset=utf-8'
     return resp
