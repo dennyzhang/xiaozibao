@@ -40,9 +40,7 @@
                    objects:self.questions tableview:self.tableView];
 
     // configure tooltip
-    NSLog(@"self.navigationItem.rightBarButtonItem: %@\n\n", self.navigationItem.rightBarButtonItem);
-
-    [[MyToolTip singleton] addToolTip:(UIButton *)self.shareButton
+    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem
                                   msg:@"Forward to friends, twitter, facebook, etc."];
 
     [[MyToolTip singleton] showToolTip];
@@ -103,10 +101,7 @@
 
     Posts *post = questions[indexPath.row];
     DetailViewController *detailviewcontroller = [[DetailViewController alloc]init];
-    self.navigationController.navigationBarHidden = NO;
-
     detailviewcontroller.detailItem = post;
-
     [self.navigationController pushViewController:detailviewcontroller animated:YES];
 
     return nil;
