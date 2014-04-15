@@ -42,4 +42,5 @@
 + (NSString*)shortUrl:(NSString*) url;
 + (CGFloat)measureHeightOfUITextView:(UITextView *)textView;
 + (NSString*)getUserId;
++ (BOOL)shouldMixpanel;
 @end

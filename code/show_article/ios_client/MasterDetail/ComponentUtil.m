@@ -242,5 +242,12 @@
   return [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
 }
 
++ (BOOL)shouldMixpanel
+{
+  if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 1) {
+    return NO;
+  }
+  return YES;
+}
 @end
 
