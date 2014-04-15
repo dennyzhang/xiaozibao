@@ -53,6 +53,7 @@
 @property (retain, nonatomic) IBOutlet UITextView *detailUITextView;
 @property (retain, nonatomic) IBOutlet UIView *adContainerView;
 
+@property (nonatomic, assign) BOOL bannerIsVisible;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (atomic, retain) NSNumber* shouldShowCoin;
 

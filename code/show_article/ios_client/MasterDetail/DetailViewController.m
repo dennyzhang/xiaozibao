@@ -20,7 +20,7 @@
 
 @implementation DetailViewController
 @synthesize detailItem, scrollView, questionTextView, detailUITextView;
-@synthesize shouldShowCoin, coinButton, adContainerView;
+@synthesize shouldShowCoin, coinButton, adContainerView, bannerIsVisible;
 
 - (void)viewDidLoad
 {
@@ -61,8 +61,6 @@
                                   msg:@"Click to see the original web page link."];
 
     [[MyToolTip singleton] showToolTip];
-
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -350,15 +348,18 @@
     
     // add iAd
     self.adContainerView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.adContainerView setFrame:CGRectMake(10.0f,
+    [self.adContainerView setFrame:CGRectMake(0.0f,
                                               self.detailUITextView.frame.origin.y +
                                               self.detailUITextView.frame.size.height,
                                               frame_width - 20, 80)];
     [scrollView addSubview:self.adContainerView];
-    
+
     ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
     [adView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    adView.delegate = self;
     [adContainerView addSubview:adView];
+    // hide iAd by default
+    [self displayBanner:adView isDisplay:NO];
 }
 
 - (void)configureLayout
@@ -374,7 +375,7 @@
     [self.detailUITextView setFrame:CGRectMake(self.detailUITextView.frame.origin.x,
                                                self.detailUITextView.frame.origin.y,
                                                self.detailUITextView.frame.size.width,
-                                               textViewContentHeight)];
+                                               textViewContentHeight + 20)];
     
     [self.adContainerView setFrame:CGRectMake(self.adContainerView.frame.origin.x,
                                               self.detailUITextView.frame.origin.y +
@@ -385,7 +386,7 @@
                                            self.adContainerView.frame.origin.y +
                                            self.adContainerView.frame.size.height + 40);
 }
-
+#pragma mark - loading web page
 - (void)browseWebPage:(NSString*)url
 {
     UIViewController *webViewController = [[UIViewController alloc]init];
@@ -394,11 +395,7 @@
                                                                     self.view.frame.size.width,
                                                                     self.view.frame.size.height
                                                                     + self.navigationController.navigationBar.frame.size.height
-                                                                    + 20)];
-    
-    NSLog(@"self.view.frame.size.width:%f, self.view.frame.size.height:%f",
-          self.view.frame.size.width, self.view.frame.size.height);
-    
+                                                                    + 20)];    
     // show activity indicator
     activityIndicator = [[UIActivityIndicatorView alloc]
                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -421,7 +418,6 @@
     // enable swipe right
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
     [webView addGestureRecognizer:swipe];
-   
 
    [self.navigationController pushViewController:webViewController animated:YES];
 }
@@ -435,11 +431,51 @@
 {
     [activityIndicator stopAnimating];
 }
+
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [activityIndicator stopAnimating];
 }
 
+#pragma mark - iAd
+
+-(void) bannerViewDidLoadAd:(ADBannerView *)banner
+{
+  NSLog(@"bannerViewDidLoadAd");
+  if(!self.bannerIsVisible)
+  {
+    [self displayBanner:banner isDisplay:YES];
+    self.bannerIsVisible = YES;
+  }
+}
+ 
+-(void) bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+  NSLog(@"didFailToReceiveAdWithError");
+  if(self.bannerIsVisible)
+  {
+    [self displayBanner:banner isDisplay:NO];
+  }
+  self.bannerIsVisible = NO;
+}
+
+-(void)displayBanner:(ADBannerView *)banner isDisplay:(BOOL)isDisplay
+{
+  if(isDisplay) {
+    [self.adContainerView setFrame:CGRectMake(0.0f,
+                                              self.detailUITextView.frame.origin.y +
+                                              self.detailUITextView.frame.size.height,
+                                              self.view.frame.size.width - 20, 80)];
+    [banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+  }
+  else {
+    banner.frame = CGRectZero;
+    self.adContainerView.frame = CGRectZero;
+  }
+  [self configureLayout];
+}
+
+#pragma mark - private functions
 -(NSString*) getQuestion:(NSString*) content
 {
     NSString* ret = @"";
