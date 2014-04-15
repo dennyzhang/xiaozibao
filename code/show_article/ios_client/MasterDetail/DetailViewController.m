@@ -440,7 +440,12 @@
                                btn:self.coinButton tag:TAG_SCORE_TEXT];
 
     startTime = [NSDate timeIntervalSinceReferenceDate];
-    
+
+    [[Mixpanel sharedInstance] track:@"question_visit_count" properties:@{
+          @"category": self.detailItem.category,
+          @"userid": [ComponentUtil getUserId]
+      }];
+
     self.navigationItem.leftBarButtonItem.title = self.detailItem.category;
 }
 

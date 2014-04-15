@@ -79,7 +79,6 @@
 		04BF8F9018F3170200D0A2CB /* dot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8D18F3170200D0A2CB /* dot3.png */; };
 		04BF8F9118F3170200D0A2CB /* dot4.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8E18F3170200D0A2CB /* dot4.png */; };
 		04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
-		04E47F6F18FAF4DD001E09EE /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E47F6E18FAF4DD001E09EE /* CMPopTipView.m */; };
 		04E47F7218FAFB93001E09EE /* MyToolTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E47F7118FAFB93001E09EE /* MyToolTip.m */; };
 		04E893DB179130C400E9573C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DA179130C400E9573C /* Foundation.framework */; };
 		04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DC179130C400E9573C /* CoreGraphics.framework */; };
@@ -172,6 +171,7 @@
 		0455B41518F73F3700A178D9 /* hourglass_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hourglass_highlighted.png; sourceTree = "<group>"; };
 		0455B41618F73F3700A178D9 /* questions_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = questions_highlighted.png; sourceTree = "<group>"; };
 		0455B41718F73F3700A178D9 /* questions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = questions.png; sourceTree = "<group>"; };
+		04624AA218FD876F006DF4DF /* libPods-Mixpanel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Mixpanel.a"; path = "Pods/build/Debug-iphoneos/libPods-Mixpanel.a"; sourceTree = "<group>"; };
 		046E471018E0BFF900ACC618 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
 		0473C99718DCE1B800AC4DCD /* navigation_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_header.png; sourceTree = "<group>"; };
 		049B22F5179D7D2800F82187 /* Posts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Posts.h; sourceTree = "<group>"; };
@@ -193,8 +193,6 @@
 		04C24E831867FFB200184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = "../../../../../../../../../../../Applications/Xcode5-DP2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libsqlite3.dylib"; sourceTree = "<group>"; };
 		04C2689B1868118E004C46BC /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		04D77FCC18B4636300643F3C /* global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
-		04E47F6D18FAF4DD001E09EE /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
-		04E47F6E18FAF4DD001E09EE /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
 		04E47F7018FAFB93001E09EE /* MyToolTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyToolTip.h; sourceTree = "<group>"; };
 		04E47F7118FAFB93001E09EE /* MyToolTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyToolTip.m; sourceTree = "<group>"; };
 		04E893D7179130C400E9573C /* MasterDetail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterDetail.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -372,6 +370,7 @@
 		04E893D9179130C400E9573C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04624AA218FD876F006DF4DF /* libPods-Mixpanel.a */,
 				04EE1B4F18F79161007AEE0A /* StoreKit.framework */,
 				0455B41218F6EF0A00A178D9 /* iAd.framework */,
 				0436CDE918EB127D00130F79 /* libPods.a */,
@@ -396,8 +395,6 @@
 				049FE34B18E0C252009FDB39 /* ReviewViewController.m */,
 				04D77FCC18B4636300643F3C /* global.h */,
 				0411B24C18E2F98600428AB1 /* ComponentUtil.h */,
-				04E47F6D18FAF4DD001E09EE /* CMPopTipView.h */,
-				04E47F6E18FAF4DD001E09EE /* CMPopTipView.m */,
 				04E47F7018FAFB93001E09EE /* MyToolTip.h */,
 				04E47F7118FAFB93001E09EE /* MyToolTip.m */,
 				0411B24D18E2F98600428AB1 /* ComponentUtil.m */,
@@ -660,7 +657,6 @@
 				04E893EB179130C400E9573C /* AppDelegate.m in Sources */,
 				04E893F4179130C400E9573C /* MasterViewController.m in Sources */,
 				0411B24E18E2F98600428AB1 /* ComponentUtil.m in Sources */,
-				04E47F6F18FAF4DD001E09EE /* CMPopTipView.m in Sources */,
 				04E893E7179130C400E9573C /* main.m in Sources */,
 				04E893F7179130C400E9573C /* DetailViewController.m in Sources */,
 				04E47F7218FAFB93001E09EE /* MyToolTip.m in Sources */,
@@ -812,7 +808,10 @@
 				);
 				INFOPLIST_FILE = "MasterDetail/MasterDetail-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos";
+				LIBRARY_SEARCH_PATHS = (
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos7.0]" = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib;
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator7.0]" = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/;
 				ONLY_ACTIVE_ARCH = YES;
@@ -838,7 +837,10 @@
 				GCC_PREFIX_HEADER = "MasterDetail/MasterDetail-Prefix.pch";
 				INFOPLIST_FILE = "MasterDetail/MasterDetail-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos";
+				LIBRARY_SEARCH_PATHS = (
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				"LIBRARY_SEARCH_PATHS[arch=*]" = "";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = MasterDetail;

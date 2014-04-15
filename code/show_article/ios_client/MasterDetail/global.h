@@ -1,3 +1,5 @@
+#import "Mixpanel.h"
+
 #define SERVERURL @"http://www.dennyzhang.com:9180/"
 //#define SERVERURL @"http://50.198.76.252:9180/"
 
@@ -38,3 +40,4 @@
 #define DEFAULT_BACKGROUND_COLOR [UIColor colorWithRed:246.0f/255.0f green:244.0f/255.0f blue:231.0f/255.0f alpha:1.0f]
 
 #define MAX_SECONDS_FOR_VALID_STAY 120
+#define MIXPANEL_TOKEN @"788d5bfa071188e96a45a2ae30bbbebe"

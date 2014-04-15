@@ -8,12 +8,7 @@
 
 #import "AppDelegate.h"
 
-// #import "Mixpanel.h"
-
-
 @implementation AppDelegate
-// #define MIXPANEL_TOKEN @"e0b419ea09d6c01e60cd3747f6a2ad12"
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -23,11 +18,15 @@
     //     splitViewController.delegate = (id)navigationController.topViewController;
     // }
 
-   // [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
-   //Mixpanel *mixpanel = [Mixpanel sharedInstance];
-
     // set UserDefaults
     [ComponentUtil setDefaultConf];
+
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+
+    [mixpanel track:@"open_count" properties:@{
+          @"userid": [ComponentUtil getUserId]
+     }];
 
     [Posts updateCategoryList:[NSUserDefaults standardUserDefaults]];
 

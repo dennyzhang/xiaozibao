@@ -237,4 +237,10 @@
     }
 }
 
++ (NSString*)getUserId
+{
+  return [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
+}
+
 @end
+

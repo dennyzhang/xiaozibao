@@ -41,4 +41,5 @@
 
 + (NSString*)shortUrl:(NSString*) url;
 + (CGFloat)measureHeightOfUITextView:(UITextView *)textView;
++ (NSString*)getUserId;
 @end

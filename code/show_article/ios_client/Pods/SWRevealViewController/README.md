@@ -2,9 +2,33 @@
 
 A UIViewController subclass for revealing a rear (left and/or right) view controller behind a front controller, inspired by the Facebook app, done right!
 
+## IMPORTANT NOTE: Upgrading to SWRevealViewController version 2.0
+
+* Dropped support for iOS6 and earlier. This version will only work on iOS7
+
+* The method `setFrontViewController:animated:` does no longer behave as previously. Particularly, it does not perform a full reveal animation. Instead it 		  		just replaces the frontViewController at its current position with optional animation. Use the new `pushFrontViewController:animated:` method as a replacement of your previous `setFrontViewController:animated:` calls.
+    
+* Added support for animated replacement of child controllers. The methods `setRearViewController`, `setFrontViewController`, `setRightViewController` now all have animated versions. The default animation is a Cross Dissolve effect. You can set the duration of the view controller replacement animation with `replaceViewAnimationDuration`
+
+* You can create custom viewController transition animations by implementing the UIViewControllerAnimatedTransitioning protocol.
+ 
+* Added the following new delegate methods
+    - (void)revealController:(SWRevealViewController *)revealController willAddViewController:(UIViewController *)viewController     forOperation:(SWRevealControllerOperation)operation animated:(BOOL)animated;
+    - (void)revealController:(SWRevealViewController *)revealController didAddViewController:(UIViewController *)viewController forOperation:(SWRevealControllerOperation)operation animated:(BOOL)animated;
+- (id<UIViewControllerAnimatedTransitioning>)revealController:(SWRevealViewController *)revealController
+    animationControllerForOperation:(SWRevealControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC;
+
+* The examples have been updated to demonstrate the new features.
+All animated calls to of setFrontViewController:animated: have been replaced by pushFrontViewController:animated: 
+The RevealControllerProject example implements a custom Animation Controller performing a slide up transition on the rightViewController.
+The RevealControllerProject3 example uses the default Cross Dissolve animation to set the Front Controller.
+
+
+
 ## Features
 
 * A Reveal view controller implemented using view controller containment.
+* Support for custom viewController transition animations through UIViewControllerAnimatedTransitioning protocol
 * API easier than a UINavigationController.
 * Support for any combination of left/right rear controllers.
 * Correct handling of appearance methods on its child controllers that you can rely on.
@@ -14,6 +38,7 @@ A UIViewController subclass for revealing a rear (left and/or right) view contro
 * Can be deployed as a child of itself to create cascade-like, hierarchical interfaces.
 * Seamless integration of pan gesture recognizer, behaving as smooth as silk.
 * A category method on UIViewController, `revealViewController`, to get the parent `SWRevealViewController` of any child controller, similar to the UIViewController's property `navigationController`.
+* Comprehensive set of delegate methods for getting full state of the controller and implementing your own code hooks for customizing behavior.
 * Lightweight, clean, easy-to-read, self-documenting code that you will enjoy using in your projects.
 
 ## Examples
@@ -21,23 +46,25 @@ A UIViewController subclass for revealing a rear (left and/or right) view contro
 ![Dynamic](https://raw.github.com/John-Lluch/SWRevealViewController/master/SWRevealViewController3.png)
 ![Dynamic](https://raw.github.com/John-Lluch/SWRevealViewController/master/SWRevealViewController.png)
 
-
 ## Requirements
 
-* iOS 5.1 or later.
+* iOS 7.0 or later.
 * ARC memory management.
 
 ## Usage
 
-`SWRevealViewController` can either be installed in your project using [CocoaPods](http://cocoapods.org/) or by copying the following to your project:
+The SWRevealViewController repository attempts to provide an updated cocoaPods file and consistent tag versioning, but it is not actively updated on the cocoapods-specs repository.
+
+The easiest way to install it is by copying the following to your project:
 * SWRevealViewController.h
 * SWRevealViewController.m
 
 * Initialize an instance of a SWRevealViewController passing in a "rear" and a "front" view controllers.
+* Optionaly add a "right" view controller or pass nil as the "rear" view controller.
 * Use the SWRevealViewController instance in your code as you would use any view controller.
 * Deploy as the application window rootViewController, or as a child of other containment controllers.
-* Add the panGestureRecognized provided by the SWRevealViewController to a suitable view of your "front" view controller, for example use the viewDidLoad method of your controller to add the gesture recognizer to a navigationBar.
-* At any time, you can reveal, conceal the "rear" view or replace the "front" view controller, programmatically or based on user actions, with or without animations enabled
+* Get the panGestureRecognized and tapGestureRecognizer provided by the SWRevealViewController. You can leave them as they are for the default behavior or you can add them to a suitable view on your "front" view controller. For example add the panGestureRecognizer to a navigationBar on the viewDidLoad method of your front controller.
+* At any time, you can reveal, conceal the "rear" or "right" views or replace any of the view controllers, programmatically or based on user actions, with or without animations enabled
 
 ## Basic API Description
 
@@ -45,7 +72,7 @@ Initializing a SWRevealViewController:
 
     - (id)initWithRearViewController:(UIViewController *)rearViewController frontViewController:(UIViewController *)frontViewController;
 
-Setting the right view controller:
+Setting a right view controller:
 
 	@property (strong, nonatomic) UIViewController *rightViewController;
 	
@@ -57,27 +84,34 @@ Animating the position of the front view controller. Position can be: `FrontView
 
 	- (void)setFrontViewPosition:(FrontViewPosition)frontViewPosition animated:(BOOL)animated;
 	
-Obtaining a gesture recognizer to add to your front view controller:
+Creating and obtaining a pan gesture recognizer:
 
 	- (UIPanGestureRecognizer*)panGestureRecognizer;
+
+Creating and obtaining a tap gesture recognizer:
+
+	- (UITapGestureRecognizer*)tapGestureRecognizer;
 	
 Other methods are documented in the SWRevealViewController.h header file. 
 
 
-## Release Notes (Including iOS 7 Compatibility Status)
+## Release Notes
 
-Version 1.0.5 (August 30th)
+As of November 15, 2013 Release Notes are updated on the class main header file. Please see `SWRevealViewController.h`
 
-* Added enhanced support for iOS7 (beta 6) by automatically adjusting insets of child controllers which main view is a UIScrollView -such as UITableViewController-. This seems to contradict the iOS7 transition guidelines because child controllers are supposed to deal with their own layout and offsets, however this is consistent with what a UINavigatorController does when it contains a UITableViewController. Now the SWRevealViewController attempts to mimic the behavior of a UINavigationController on this. 
+## Tutorial
 
-* Added a new property `presentFrontViewHierarchically`. You can set it to YES on iOS7 when you add a SWRevealViewController as a child of a UINavigationController (or another SWRevealViewController) and you want the front view controller to be presented below the navigation bar of its UINavigationController grand parent. The rearViewController will still appear full size and blurred behind the navigation bar of its UINavigationController grand parent.
+Some time ago the guys at AppCoda published an online tutorial featuring the SWRevealViewController: "How To Add a Slide-out Sidebar Menu in Your Apps" (thanks for that). You will find it at http://www.appcoda.com/ios-programming-sidebar-navigation-menu/ . Not updated to the last SWRevealViewController version but still worth a read.
 
-Previous Notes
+## Xamarin Binding
 
-* As of July 19th, 2013, the `SWRevealViewController` has been tested on iOS 7 beta 3.
-* The `SWRevealViewController` now works fine on iOS 7 with Apple-provided child view controllers such as `UINavigationController`.
-* The *RevealControllerExample* and *RevealControllerExample2* examples have been updated to use `UINavigationController`s instead of a navigation bar on top of a view. Thus, all child view controller layouts are now correctly handled by the Apple implemented of the `UINavigationController`.
-* According to Apple, iOS 7 transition guidelines, developers are responsible for managing the required view offsets and bar height extensions on custom view controllers depending on the version of iOS. *RevealControllerExample3* has not yet been updated to take iOS 7 layouts and the new status bar into account, so it still defaults to the iOS 6 layout.
+Thanks to Jesper Vandborg for having contributed with a Xamarin Binding project for this controller that is available for download at https://github.com/Vandborg/SWRevealViewController-XamarinBinding.
+
+## Special Mentions
+
+A Special Thank you to Joan Martin who formely worked at http://www.sweetwilliamsl.com and has recently been developing an app for http://www.citizen.tv. He had the original idea and implemented code for generic view deployment/undeployment and replacement of view controllers used in the class. 
+
+Early code and api was inspired on a similar class by Philip Kluz (Philip.Kluz@zuui.org)
 	
 ## License
 
@@ -100,5 +134,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-Early code inspired on a similar class by Philip Kluz (Philip.Kluz@zuui.org)

@@ -6,98 +6,53 @@
 	<dict>
 		<key>Pods-AFNetworking.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CMPopTipView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Mixpanel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-SWRevealViewController.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0950A681D8EF41F7996941A6</key>
+		<key>4263BE0B70E643B09D95311B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1F4B75CC647248DABEA2470B</key>
+		<key>9493A82D71714E5F9BAEA141</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>220F166D72DF476E9238DC0F</key>
+		<key>BB24062261B34FA39C6F6731</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3ED3663CF46A4A47BBF64360</key>
+		<key>C1F3EFA7FC34412EB60A66EC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>55B6B7D0BB7349BBB7215425</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>67E4FD69A5334ED0801868C3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6BF03065EE6F4AE8A2BF9505</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6BFA7C64621A4F33AB8A14DF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6FA2438CCC314390A47E1E96</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>84B58C7B4A81445D8E4657AC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>953882860EEB454592B857FC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B7CB3591617440E6AD6B7C1A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C43F05897A4646A7BE112D59</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F1D3F3D8D9034C93AA13044E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F772D6D2E24E4ACF959ACA29</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F96232B8BC494020BD8152A8</key>
+		<key>D73679EA79CC4B0E9E3E3CC7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
