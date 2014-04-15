@@ -70,6 +70,12 @@
     }
     
     if (btn.tag == TAG_BUTTON_VOTEUP || btn.tag == TAG_BUTTON_VOTEDOWN || btn.tag == TAG_BUTTON_FAVORITE) {
+
+      [[Mixpanel sharedInstance] track:@"question_feedback_count" properties:@{
+          @"category": self.detailItem.category,
+            @"userid": [ComponentUtil getUserId]
+            }];
+
         // mark locally, then send request to remote server
         NSString* imgName = @"";
         NSString* fieldName = @"";
