@@ -784,11 +784,11 @@
 -(void)initTableIndicatorView
 {
     // headerView
-    headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 10.0)];
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)];
     UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     actIndHeader.tag = TAG_TABLE_HEADER_INDIACTOR;
-    actIndHeader.frame = CGRectMake(150.0, 5.0, 20.0, 10.0);
+    actIndHeader.frame = CGRectMake(150.0, 5.0, 20.0, 20.0);
     
     actIndHeader.hidesWhenStopped = YES;
     
