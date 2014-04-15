@@ -1,5 +1,6 @@
 #import "Mixpanel.h"
 #import "ComponentUtil.h"
+#import "MyToolTip.h"
 
 #define SERVERURL @"http://www.dennyzhang.com:9180/"
 //#define SERVERURL @"http://50.198.76.252:9180/"

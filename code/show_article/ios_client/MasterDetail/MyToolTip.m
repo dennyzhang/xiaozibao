@@ -116,10 +116,10 @@
 - (NSArray*) getColorSchmeme
 {
     NSArray* colorSchemes = [NSArray arrayWithObjects:
-                             [NSArray arrayWithObjects:[NSNull null], [NSNull null], nil],
-                             // [NSArray arrayWithObjects:[UIColor colorWithRed:134.0/255.0 green:74.0/255.0
-                             //                                            blue:110.0/255.0 alpha:1.0], [NSNull null], nil],
-                             [NSArray arrayWithObjects:[UIColor darkGrayColor], [NSNull null], nil],
+                                       //[NSArray arrayWithObjects:[NSNull null], [NSNull null], nil],
+                              [NSArray arrayWithObjects:[UIColor colorWithRed:134.0/255.0 green:74.0/255.0
+                                                                         blue:110.0/255.0 alpha:1.0], [NSNull null], nil],
+                             //[NSArray arrayWithObjects:[UIColor darkGrayColor], [NSNull null], nil],
                              // [NSArray arrayWithObjects:[UIColor lightGrayColor], [UIColor darkTextColor], nil],
                              // [NSArray arrayWithObjects:[UIColor orangeColor], [UIColor blueColor], nil],
                              // [NSArray arrayWithObjects:[UIColor colorWithRed:220.0/255.0 green:0.0/255.0
@@ -154,7 +154,6 @@
       return;
     }
     NSString* key = [self caculateKey:withObject msg:msg];
-    NSLog(@"key:%@", key);
     if ([[NSUserDefaults standardUserDefaults] integerForKey:key] >= 1)
         return;
     [self.components addObject:withObject];

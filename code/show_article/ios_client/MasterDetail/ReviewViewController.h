@@ -11,7 +11,6 @@
 #import "ComponentUtil.h"
 #import "PostsSqlite.h"
 #import "DetailViewController.h"
-#import "MyToolTip.h"
 
 #import <UIKit/UIKit.h>
 

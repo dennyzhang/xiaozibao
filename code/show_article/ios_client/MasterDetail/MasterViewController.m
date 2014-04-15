@@ -57,11 +57,9 @@
     leftswipe.delegate = self;
 
     // configure tooltip
-    if (!self.navigationItem.rightBarButtonItem) {
-      [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Tap to see the learning stastics."];
-    }
+    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click the coin to see the learning stastics."];
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
-                                  msg:@"Tap or swipe to change channel."];
+                                  msg:@"Click or swipe to change the question channel."];
     [[MyToolTip singleton] showToolTip];
 }
 

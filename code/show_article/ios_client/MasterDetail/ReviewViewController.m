@@ -40,8 +40,12 @@
                    objects:self.questions tableview:self.tableView];
 
     // configure tooltip
-    [[MyToolTip singleton] addToolTip:self.shareButton 
+    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem
                                   msg:@"Forward to friends, twitter, facebook, etc."];
+
+    // [[MyToolTip singleton] addToolTip:self.coinButton
+    //                               msg:@"hello, world."]; // TODO
+    
     [[MyToolTip singleton] showToolTip];
 
 }

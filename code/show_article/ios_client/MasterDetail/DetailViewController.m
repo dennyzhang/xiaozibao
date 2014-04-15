@@ -24,6 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[MyToolTip singleton] reset:self.view]; // reset popTipView
     
     self.view.backgroundColor = [UIColor whiteColor];
     dbPath = [PostsSqlite getDBPath];
@@ -49,6 +50,19 @@
     [self addMenuCompoents];
     [self addPostComponents];
     [self configureLayout];
+
+    // configure tooltip
+    [[MyToolTip singleton] addToolTip:(UIButton *)[self.view viewWithTag:TAG_BUTTON_VOTEDOWN]
+                                  msg:@"Click to voteup, votedown, or save the question to local."];
+
+    // [[MyToolTip singleton] addToolTip:(UIImageView *)[self.view viewWithTag:TAG_IMAGEVIEW_HEADER]
+    //                               msg:@"Drag picture left or right can also vote."];
+
+    // [[MyToolTip singleton] addToolTip:(UIImageView* )[self.view viewWithTag:TAG_IMAGEVIEW_LINK]
+    //                               msg:@"Click to see the original web page link."];
+    [[MyToolTip singleton] showToolTip];
+
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -251,6 +265,7 @@
     UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[ComponentUtil getPostHeaderImg]]];
     [imageView setFrame:CGRectMake(0.0f, 0.0f, frame_width, INIT_HEADER_HEIGHT)];
     imageView.userInteractionEnabled = TRUE;
+    imageView.tag = TAG_IMAGEVIEW_HEADER;
     [scrollView addSubview:imageView];
     
     self.questionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 5.0f,
@@ -265,6 +280,7 @@
     float icon_height, icon_width;
     icon_height = 60;
     icon_width = 60;
+    linkImageView.tag = TAG_IMAGEVIEW_LINK;
     linkImageView.userInteractionEnabled = TRUE;
     [linkImageView setFrame:CGRectMake(imageView.frame.size.width - icon_width - 10,
                                        imageView.frame.size.height - icon_height - 10,
@@ -393,7 +409,7 @@
     NSURLRequest *nsrequest = [NSURLRequest requestWithURL:nsurl];
     [webView loadRequest:nsrequest];
     [webViewController.view addSubview:webView];
-    webViewController.navigationItem.title = @"Original Webpage";
+    webViewController.navigationItem.title = @"Webpage";
     
     // enable swipe right
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];

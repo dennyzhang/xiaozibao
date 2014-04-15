@@ -17,7 +17,6 @@
 #import "ComponentUtil.h"
 #import "UserProfile.h"
 #import "MenuViewController.h"
-#import "MyToolTip.h"
 
 @class DetailViewController;
 
