@@ -14,6 +14,7 @@
     NSTimeInterval startTime;
     sqlite3 *postsDB;
     NSString *dbPath;
+    UIActivityIndicatorView *activityIndicator;
 }
 @end
 
@@ -276,18 +277,19 @@
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[UIImage imageNamed:@"info.png"] forState:UIControlStateNormal];
     btn.tag = TAG_BUTTON_INFO;
+    btn.multipleTouchEnabled = TRUE;
+    
     float icon_height, icon_width;
     icon_height = 60;
     icon_width = 60;
     [btn setFrame:CGRectMake(imageView.frame.size.width - icon_width - 10,
                              imageView.frame.size.height - icon_height - 10,
                              icon_width, icon_height)];
-    
+
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
                                          initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
     singleTap.numberOfTapsRequired = 1;
     [btn addGestureRecognizer:singleTap];
-
     [imageView addSubview:btn];
     
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]
@@ -394,6 +396,19 @@
                                                                     + self.navigationController.navigationBar.frame.size.height
                                                                     + 20)];
     
+    NSLog(@"self.view.frame.size.width:%f, self.view.frame.size.height:%f",
+          self.view.frame.size.width, self.view.frame.size.height);
+    
+    // show activity indicator
+    activityIndicator = [[UIActivityIndicatorView alloc]
+                         initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.frame = CGRectMake(webView.frame.size.width/2,
+                                         webView.frame.size.height/2,
+                                         20, 20);
+    activityIndicator.hidesWhenStopped = YES;
+    [webView addSubview:activityIndicator];
+    webView.delegate = self;
+    
     self.navigationController.navigationBarHidden = NO;
     webView.scalesPageToFit= YES;
     NSURL *nsurl = [NSURL URLWithString:url];
@@ -406,8 +421,23 @@
     // enable swipe right
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
     [webView addGestureRecognizer:swipe];
-    
-    [self.navigationController pushViewController:webViewController animated:YES];
+   
+
+   [self.navigationController pushViewController:webViewController animated:YES];
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [activityIndicator startAnimating];
+
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [activityIndicator stopAnimating];
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [activityIndicator stopAnimating];
 }
 
 -(NSString*) getQuestion:(NSString*) content

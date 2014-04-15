@@ -17,7 +17,7 @@
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate,
                                                     UITextViewDelegate, UIGestureRecognizerDelegate,
-                                                    ADBannerViewDelegate>
+                                                    UIWebViewDelegate, ADBannerViewDelegate>
 #define TAG_BUTTON_VOTEUP 2001
 #define TAG_BUTTON_VOTEDOWN 2002
 #define TAG_BUTTON_UNDO 2003
