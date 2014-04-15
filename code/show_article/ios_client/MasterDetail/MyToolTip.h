@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "CMPopTipView.h"
+#import "ComponentUtil.h"
 
 @interface MyToolTip : NSObject <CMPopTipViewDelegate>
 

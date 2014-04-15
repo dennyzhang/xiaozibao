@@ -43,4 +43,6 @@
 + (CGFloat)measureHeightOfUITextView:(UITextView *)textView;
 + (NSString*)getUserId;
 + (BOOL)shouldMixpanel;
++ (void)showHintOnce:(id)withObject msg:(NSString*)msg;
++ (NSString *) caculateKey:(id)withObject msg:(NSString*) msg;
 @end

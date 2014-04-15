@@ -96,9 +96,10 @@
         
         // update visit count
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString* key = [self caculateKey:sender msg:msg];
+        NSString* key = [ComponentUtil caculateKey:sender msg:msg];
         NSInteger value = [userDefaults integerForKey:key];
         [userDefaults setInteger:(value+1) forKey:key];
+        [userDefaults synchronize];
     }
 }
 
@@ -142,18 +143,13 @@
             ];
 }
 
-- (NSString *) caculateKey:(id)withObject msg:(NSString*) msg
-{
-    return [self md5:[NSString stringWithFormat:@"%@%@", [withObject class], msg]];
-}
-
 -(void)addToolTip:(id)withObject msg:(NSString*) msg
 {
     if(!withObject) {
       NSLog(@"Warning: addToolTip fail, due to withObject is nil");
       return;
     }
-    NSString* key = [self caculateKey:withObject msg:msg];
+    NSString* key = [ComponentUtil caculateKey:withObject msg:msg];
     if ([[NSUserDefaults standardUserDefaults] integerForKey:key] >= 1)
         return;
     [self.components addObject:withObject];

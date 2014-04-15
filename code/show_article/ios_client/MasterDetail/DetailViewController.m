@@ -163,9 +163,8 @@
             if (detailItem.isfavorite == NO) {
                 msg = @"Unsave the question";
             }
-            [ComponentUtil infoMessage:nil msg:msg enforceMsgBox:TRUE];
+            [ComponentUtil showHintOnce:btn msg:msg];
         }
-        
     }
     [ComponentUtil updateScoreText:self.detailItem.category btn:self.coinButton tag:TAG_SCORE_TEXT];
 }

@@ -249,5 +249,24 @@
   }
   return YES;
 }
+
++ (NSString *) caculateKey:(id)withObject msg:(NSString*) msg
+{
+    return [self md5:[NSString stringWithFormat:@"%@%@", [withObject class], msg]];
+}
+
++ (void)showHintOnce:(id)withObject msg:(NSString*)msg
+{
+    NSString* key = [self caculateKey:withObject msg:msg];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults integerForKey:key] >= 1)
+        return;
+    // show only for the first time
+    [ComponentUtil infoMessage:nil msg:msg enforceMsgBox:TRUE];
+    NSInteger value = [userDefaults integerForKey:key];
+    [userDefaults setInteger:(value+1) forKey:key];
+    [userDefaults synchronize];
+}
+
 @end
 
