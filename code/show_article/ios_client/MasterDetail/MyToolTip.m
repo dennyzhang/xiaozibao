@@ -153,9 +153,9 @@
       NSLog(@"Warning: addToolTip fail, due to withObject is nil");
       return;
     }
-    // NSString* key = [self caculateKey:withObject msg:msg];
-    // if ([[NSUserDefaults standardUserDefaults] integerForKey:key] >= 1)
-    //     return;
+    NSString* key = [self caculateKey:withObject msg:msg];
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:key] >= 1)
+        return;
     [self.components addObject:withObject];
     [self.messages addObject:msg];
 }
