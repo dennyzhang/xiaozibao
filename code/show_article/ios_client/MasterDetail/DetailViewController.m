@@ -54,7 +54,7 @@
 
     // configure tooltip
     [[MyToolTip singleton] addToolTip:(UIButton *)[self.view viewWithTag:TAG_BUTTON_VOTEDOWN]
-                                  msg:@"Click to voteup, votedown, or save to local.\n\nDrag above picture also do the rick."];
+                                  msg:@"Click to voteup, votedown, or save to local."];
 
     [[MyToolTip singleton] addToolTip:(UIButton *)[self.view viewWithTag:TAG_BUTTON_INFO]
                                   msg:@"Click to see the original web page link."];

@@ -40,7 +40,8 @@
                    objects:self.questions tableview:self.tableView];
 
     // configure tooltip
-    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem
+    // TODO workaround, due to fail to show hint on self.shareButton
+    [[MyToolTip singleton] addToolTip:self.coinButton
                                   msg:@"Forward to friends, twitter, facebook, etc."];
 
     [[MyToolTip singleton] showToolTip];
