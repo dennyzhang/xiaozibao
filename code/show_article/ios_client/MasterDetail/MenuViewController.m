@@ -23,7 +23,10 @@
 
     self.tableView.scrollEnabled = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    UIImageView *boxBackView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu-background.png"]];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    UIImageView *boxBackView = [[UIImageView alloc] 
+                                initWithImage:[UIImage imageNamed:@"menu-background.png"]];
     [self.tableView setBackgroundView:boxBackView];
       
     //self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
@@ -173,7 +176,8 @@
             value = APP_SETTING;
         }
     }
-    //cell.accessoryType = UITableViewCellAccessoryDetailButton;
+
+    cell.accessoryType = UITableViewCellAccessoryDetailButton;
     cell.textLabel.text = [self valueToText:value];
     cell.backgroundColor = [UIColor clearColor];
     return cell;
