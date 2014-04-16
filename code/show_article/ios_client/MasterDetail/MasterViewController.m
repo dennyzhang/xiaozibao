@@ -31,7 +31,7 @@
 @implementation MasterViewController
 
 @synthesize locationManager, category, username;
-@synthesize objects, coinButton;
+@synthesize objects, coinButton, myTableView;
 
 - (void)viewDidLoad
 {
@@ -42,6 +42,17 @@
     
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
 
+    // dynamic add tableView
+    self.objects = [[NSMutableArray alloc] init];
+    self.myTableView = [[UITableView alloc] init];
+    [self.myTableView setFrame:CGRectMake(0, 0, 
+                                          self.view.frame.size.width,
+                                          self.view.frame.size.height)];
+    self.myTableView.delegate = self;
+    self.myTableView.dataSource = self;
+    [self.myTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.view addSubview:myTableView];
+    
     // components
     [self addComponents];
     
@@ -49,12 +60,12 @@
     
     //swipe guesture
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe:)];
-    [self.tableView addGestureRecognizer:swipe];
+    [self.myTableView addGestureRecognizer:swipe];
     swipe.delegate = self;
     //swipe guesture
     UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
     leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
-    [self.tableView addGestureRecognizer:leftswipe];
+    [self.myTableView addGestureRecognizer:leftswipe];
     leftswipe.delegate = self;
 
     // configure tooltip
@@ -90,7 +101,7 @@
     for (int i=0; i<[objects count]; i++) {
         [objects removeObjectAtIndex:0];
         indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.myTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
     
     self->postsDB = [PostsSqlite openSqlite:dbPath];
@@ -102,7 +113,7 @@
     }
     
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.category
-                   objects:objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.tableView];
+                   objects:objects hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.myTableView];
     [self fetchArticleList:username category_t:self.category start_num_t:0 shouldAppendHead:YES];
 }
 
@@ -133,7 +144,7 @@
     bool ret = YES;
     [objects insertObject:post atIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.myTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     return ret;
 }
@@ -310,7 +321,7 @@
 - (void)awakeFromNib
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.clearsSelectionOnViewWillAppear = NO;
+        //self.clearsSelectionOnViewWillAppear = NO; // TODO
         self.preferredContentSize= CGSizeMake(320.0, 600.0);
         //self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
     }
@@ -462,6 +473,10 @@
     }
     else
         return nil;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  [self performSegueWithIdentifier:@"showDetail" sender:self];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -645,7 +660,7 @@
     if ([self isMenuShown])
       return nil;
 
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [self.myTableView cellForRowAtIndexPath:indexPath];
     if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite questions?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
@@ -727,8 +742,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"MasterViewController segue identifier: %@", [segue identifier]);
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    NSIndexPath *indexPath = [self.myTableView indexPathForSelectedRow];
+    UITableViewCell *cell = [self.myTableView cellForRowAtIndexPath:indexPath];
     
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSLog(@"increate visit count, for category:%@. previous key:%d", self.category,
@@ -795,7 +810,7 @@
     
     [headerView addSubview:actIndHeader];
 
-    self.tableView.tableHeaderView = headerView;
+    self.myTableView.tableHeaderView = headerView;
 
     // footerView
     footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
@@ -809,7 +824,7 @@
     
     [footerView addSubview:actIndFooter];
 
-    self.tableView.tableFooterView = footerView;
+    self.myTableView.tableFooterView = footerView;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -851,7 +866,7 @@
     UIButton* btn;
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
-    [self.tableView setRowHeight:ROW_HEIGHT];
+    [self.myTableView setRowHeight:ROW_HEIGHT];
     UINavigationBar* appearance = self.navigationController.navigationBar;
     
     appearance.tintColor = [UIColor whiteColor];

@@ -127,7 +127,6 @@
         <!--Detail View Controller - Detail-->
         <scene sceneID="TEU-ju-RKD">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="t7I-io-etN" sceneMemberID="firstResponder"/>
                 <viewController title="Detail" id="ZGc-kG-HB3" customClass="DetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ts0-Nt-44X"/>
@@ -164,6 +163,7 @@
                         <outlet property="detailUITextView" destination="a7Y-Tf-Aef" id="IyM-qr-keh"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t7I-io-etN" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2506" y="-1136"/>
         </scene>

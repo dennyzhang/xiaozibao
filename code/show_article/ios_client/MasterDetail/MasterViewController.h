@@ -20,7 +20,8 @@
 
 @class DetailViewController;
 
-@interface MasterViewController : UITableViewController <UIGestureRecognizerDelegate>
+@interface MasterViewController : UIViewController <UIGestureRecognizerDelegate,
+                                                    UITableViewDelegate, UITableViewDataSource>
 
 #define TAG_BUTTON_COIN 4001
 
@@ -29,10 +30,13 @@
 
 @property (nonatomic, retain) NSString* category;
 @property (nonatomic, retain) NSString* username;
-@property (nonatomic, retain) NSMutableArray *objects;
+
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 @property (retain, nonatomic) IBOutlet UIImageView *dotImageView;
+
+@property (retain, nonatomic) IBOutlet UITableView *myTableView;
+@property (nonatomic, retain) NSMutableArray *objects;
 
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 
