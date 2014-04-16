@@ -244,10 +244,10 @@
 
 + (BOOL)shouldMixpanel
 {
-  if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 1) {
+  if ([[ComponentUtil:getUserId] isEqualToString:@"AA6B312A-E380-477A-A593-3F9484C39E59"])
     return NO;
-  }
-  return YES;
+
+  return ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] != 1)
 }
 
 + (NSString *) md5:(NSString *)str {
