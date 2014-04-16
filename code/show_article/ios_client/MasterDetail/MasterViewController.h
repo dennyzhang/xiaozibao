@@ -12,6 +12,7 @@
 //#import "/usr/include/sqlite3.h"
 #import "/usr/local/opt/sqlite/include/sqlite3.h"
 
+#import "global.h"
 #import "Posts.h"
 #import "PostsSqlite.h"
 #import "ComponentUtil.h"
@@ -28,15 +29,15 @@
 @property (retain, nonatomic) DetailViewController *detailViewController;
 @property (nonatomic, retain) CLLocationManager *locationManager;
 
-@property (nonatomic, retain) NSString* category;
+@property (nonatomic, retain) NSString* currentCategory;
 @property (nonatomic, retain) NSString* username;
 
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 @property (retain, nonatomic) IBOutlet UIImageView *dotImageView;
 
-@property (retain, nonatomic) IBOutlet UITableView *myTableView;
-@property (nonatomic, retain) NSMutableArray *objects;
+@property (retain, nonatomic) IBOutlet UITableView *currentTableView;
+@property (nonatomic, retain) NSMutableArray *currentQuestions;
 
 @property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 
