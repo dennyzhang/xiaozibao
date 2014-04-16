@@ -11,7 +11,8 @@
 #import "DetailViewController.h"
 
 #import "AFJSONRequestOperation.h"
-// #import "Mixpanel.h"
+
+#import "SWRevealViewController.h"
 
 #import "global.h"
 
