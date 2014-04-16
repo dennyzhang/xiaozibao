@@ -21,25 +21,10 @@
 
 @class DetailViewController;
 
-@interface MasterViewController : UIViewController <UIGestureRecognizerDelegate,
+@interface MasterViewController : UIViewController <UIGestureRecognizerDelegate, UIScrollViewDelegate,
                                                     UITableViewDelegate, UITableViewDataSource>
 
 #define TAG_BUTTON_COIN 4001
-
-@property (retain, nonatomic) DetailViewController *detailViewController;
-@property (nonatomic, retain) CLLocationManager *locationManager;
-
-@property (nonatomic, retain) NSString* currentCategory;
-@property (nonatomic, retain) NSString* username;
-
-@property (retain, nonatomic) IBOutlet UIButton *coinButton;
-@property (retain, nonatomic) IBOutlet UILabel *titleLabel;
-@property (retain, nonatomic) IBOutlet UIImageView *dotImageView;
-
-@property (retain, nonatomic) IBOutlet UITableView *currentTableView;
-@property (nonatomic, retain) NSMutableArray *currentQuestions;
-
-@property (retain, nonatomic) IBOutlet UITextField *serverUITextField;
 
 - (void)init_data:(NSString*)username
           category_t:(NSString*)category_t
@@ -65,4 +50,6 @@
 
 #define PAGE_COUNT 10
 #define ROW_HEIGHT 160.0f
+
+- (void) update_category_list;
 @end
