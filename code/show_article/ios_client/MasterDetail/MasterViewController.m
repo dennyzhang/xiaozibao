@@ -32,9 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initTableIndicatorView];
-
     NSLog(@"MasterViewController load");
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
 
@@ -44,11 +43,13 @@
     [self.currentTableView setFrame:CGRectMake(0, 0, 
                                           self.view.frame.size.width,
                                           self.view.frame.size.height)];
+
     self.currentTableView.delegate = self;
     self.currentTableView.dataSource = self;
     [self.currentTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     [self.view addSubview:currentTableView];
-    
+
+    [self initTableIndicatorView];    
     // components
     [self addComponents];
     
@@ -75,6 +76,8 @@
        category_t:(NSString*)category_t
   navigationTitle:(NSString*)navigationTitle
 {
+  category_t = @"linux"; // TODO
+  navigationTitle = @"linux"; //TODO
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.currentCategory=category_t;
     self.navigationItem.title = navigationTitle;
@@ -115,6 +118,7 @@
 
 - (void) refreshTableHead
 {
+    NSLog(@"refreshTableHead");
     [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
     [self fetchArticleList:username category_t:self.currentCategory
                start_num_t:0
@@ -123,6 +127,7 @@
 
 - (void) refreshTableTail
 {
+    NSLog(@"refreshTableTail");
     [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
     [self fetchArticleList:username category_t:self.currentCategory
                start_num_t:self->bottom_num * PAGE_COUNT
@@ -141,7 +146,8 @@
     [self.currentQuestions insertObject:post atIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     [self.currentTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
+    NSLog(@"after addToTableView currentQuestions.count:%d",
+          [self.currentQuestions count]);
     return ret;
 }
 
@@ -985,4 +991,5 @@
     SWRevealViewController* rvc = self.revealViewController;
     return (rvc.frontViewPosition == FrontViewPositionRight);
 }
+
 @end

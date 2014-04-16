@@ -27,7 +27,7 @@
     [super viewDidLoad];
     NSLog(@"DetailViewController load");
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
-    
+
     self.view.backgroundColor = [UIColor whiteColor];
     dbPath = [PostsSqlite getDBPath];
     postsDB = [PostsSqlite openSqlite:dbPath];
