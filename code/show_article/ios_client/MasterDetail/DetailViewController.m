@@ -488,6 +488,7 @@
         [ComponentUtil infoMessage:@"Error to find question/answer seperator"
                                msg:[NSString stringWithFormat:@"range.location:%d", range.location]
                      enforceMsgBox:FALSE];
+        ret = content;
     }
     else {
         ret = [content substringToIndex:range.location];
