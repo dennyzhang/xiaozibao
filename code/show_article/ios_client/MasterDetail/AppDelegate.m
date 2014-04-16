@@ -31,7 +31,7 @@
     
     NSLog(@"basePath:%@", basePath);
     
-    self.window.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    //self.window.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
     return YES;
 }

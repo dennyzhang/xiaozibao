@@ -20,7 +20,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+
+    self.tableView.scrollEnabled = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    UIImageView *boxBackView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu-background.png"]];
+    [self.tableView setBackgroundView:boxBackView];
+      
+    //self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -155,7 +161,7 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSString* value = @"";
-    cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+
     if (indexPath.section == 0) {
       value = self.category_list[indexPath.row];
     }
@@ -169,6 +175,7 @@
     }
     //cell.accessoryType = UITableViewCellAccessoryDetailButton;
     cell.textLabel.text = [self valueToText:value];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
@@ -177,9 +184,6 @@
     UILabel *customLabel = [[UILabel alloc] init];
     customLabel.text = [self tableView:tableView titleForHeaderInSection:section];
     customLabel.textColor = [UIColor whiteColor];
-    customLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigation_header.png"]];
-
-    //customLabel.foregroundColor = [UIColor whiteColor];
     return customLabel;
 }
 
@@ -188,21 +192,10 @@
 }
 
 - (NSString *)valueToText:(NSString*) value {
-    // int width = 30;
-    // int paddingWidth = width - [value length];
-
-    // NSString* ret = [[NSString alloc] initWithFormat:@"%@%@>", [value capitalizedString],
-    //            [@"" stringByPaddingToLength:paddingWidth withString: @" " startingAtIndex:0]];
-    // NSLog(@"value:%@, ret:%@, paddingWidth:%d", value, ret, paddingWidth);
-    // return ret;
   return [value capitalizedString];
 }
 
 - (NSString *)textToValue:(NSString*) text {
-    // NSRange range = NSMakeRange (0, [text length] - 1);
-    // NSString* str = [text substringWithRange:range];
-    // return [str
-    //            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
    return [text capitalizedString];
 }
 

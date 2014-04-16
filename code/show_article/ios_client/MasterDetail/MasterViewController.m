@@ -48,12 +48,12 @@
     
     //swipe guesture
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe:)];
-    [self.view addGestureRecognizer:swipe];
+    [self.tableView addGestureRecognizer:swipe];
     swipe.delegate = self;
     //swipe guesture
     UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
     leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:leftswipe];
+    [self.tableView addGestureRecognizer:leftswipe];
     leftswipe.delegate = self;
 
     // configure tooltip
