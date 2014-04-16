@@ -270,6 +270,8 @@
     questionTextView.editable = NO;
     questionTextView.backgroundColor = [UIColor clearColor];
     [questionTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
+    [ComponentUtil configureVerticalAlign:self.questionTextView];
+
     [imageView addSubview:questionTextView];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -366,8 +368,10 @@
 {
     // configure data
     self.questionTextView.text = [self getQuestion:self.detailItem.content];
+    [ComponentUtil configureVerticalAlign:self.questionTextView];
     self.detailUITextView.text = [self getContent:self.detailItem.content];
     // refresh layout
+
     CGFloat textViewContentHeight = [ComponentUtil measureHeightOfUITextView:self.detailUITextView];
     // NSLog(@"textViewContentHeight: %f, self.detailUITextView.contentSize.height: %f, self.detailUITextView.frame.size.height:%f",
     //       textViewContentHeight, self.detailUITextView.contentSize.height, self.detailUITextView.frame.size.height);

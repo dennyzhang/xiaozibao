@@ -47,4 +47,5 @@
 + (void)showHintOnce:(id)withObject msg:(NSString*)msg;
 + (NSString *) caculateKey:(id)withObject msg:(NSString*) msg;
 + (NSString *) md5:(NSString *)str;
++ (void)configureVerticalAlign:(UITextView*) tv;
 @end

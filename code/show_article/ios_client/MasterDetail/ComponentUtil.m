@@ -282,5 +282,18 @@
     [userDefaults synchronize];
 }
 
++ (void)configureVerticalAlign:(UITextView*) tv
+{
+    //center vertical alignment
+    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+
+   // //Bottom vertical alignment  
+   // CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height);  
+   //  topCorrect = (topCorrect <0.0 ? 0.0 : topCorrect);  
+   //  tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};  
+}
+
 @end
 
