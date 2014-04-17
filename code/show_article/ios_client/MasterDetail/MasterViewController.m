@@ -50,6 +50,52 @@
   return [self.questionCategories objectAtIndex:self.pageControl.currentPage];
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    NSLog(@"MasterViewController load");
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+
+    //init db connection
+    self->postsDB = [PostsSqlite openSqlite:dbPath];
+    self->dbPath = [PostsSqlite getDBPath];
+    
+    [[MyToolTip singleton] reset:self.view]; // reset popTipView
+
+    [self configureScrollView];
+    // init data
+    self.questionCategories = [[NSMutableArray alloc] init];
+
+    // components
+    [self addComponents];
+
+    // load default category
+    [self load_category:0];
+
+    // init table indicator
+    // [self initTableIndicatorView]; // TODO
+
+    //self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    NSLog(@"before guesture");
+    // //swipe guesture
+    // UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe:)];
+    // [self.currentQC.tableView addGestureRecognizer:swipe];
+    // swipe.delegate = self;
+    // //swipe guesture
+    // UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
+    // leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
+    // [self.currentQC.tableView addGestureRecognizer:leftswipe];
+    // leftswipe.delegate = self;
+
+    // configure tooltip
+    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click the coin to see the learning stastics."];
+    [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
+                                  msg:@"Click or swipe to change the question channel."];
+    [[MyToolTip singleton] showToolTip];
+    NSLog(@"after load");
+}
+
 - (void) configureScrollView {
   // load scrollView
   if(!self.scrollView) {
@@ -123,50 +169,6 @@
     [self.navigationController.navigationBar addSubview:self.navbarView];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    NSLog(@"MasterViewController load");
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-
-    //init db connection
-    self->postsDB = [PostsSqlite openSqlite:dbPath];
-    self->dbPath = [PostsSqlite getDBPath];
-    
-    [[MyToolTip singleton] reset:self.view]; // reset popTipView
-
-    [self configureScrollView];
-    // init data
-    self.questionCategories = [[NSMutableArray alloc] init];
-
-    // components
-    [self addComponents];
-
-    // load default category
-    [self load_category:0];
-    // init table indicator
-    // [self initTableIndicatorView]; // TODO
-
-    //self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-    
-    NSLog(@"before guesture");
-    // //swipe guesture
-    // UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe:)];
-    // [self.currentQC.tableView addGestureRecognizer:swipe];
-    // swipe.delegate = self;
-    // //swipe guesture
-    // UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
-    // leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
-    // [self.currentQC.tableView addGestureRecognizer:leftswipe];
-    // leftswipe.delegate = self;
-
-    // configure tooltip
-    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click the coin to see the learning stastics."];
-    [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
-                                  msg:@"Click or swipe to change the question channel."];
-    [[MyToolTip singleton] showToolTip];
-    NSLog(@"after load");
-}
 
 - (void)init_data:(NSString*)username_t
        category_t:(NSString*)category_t
@@ -175,7 +177,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //self.currentQC.category=category_t; // TODO
     self.navigationItem.title = navigationTitle;
-    [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+    [self updateCategory:self.currentQC.category];
     
     [self configureNavigationTitle];
     
@@ -210,6 +212,8 @@
 {
   NSLog(@"load_category, index:%d", index);
   QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:index];
+  [questionCategory.tableView reloadData];
+  [self updateCategory:questionCategory.category];
   // return if already loaded
   if([questionCategory.questions count] >0)
       return;
@@ -282,7 +286,7 @@
 - (bool)addToTableView:(int)index
                   post:(Posts*)post
 {
-  return YES;
+  return YES; // TODO
     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"] == 1) {
         if (post.readcount.intValue !=0 )
             return YES;
@@ -472,6 +476,12 @@
     // update score
     self.navigationController.navigationBarHidden = NO;
     [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -620,7 +630,6 @@
         imageView.userInteractionEnabled = NO;
         [[cell contentView] addSubview:imageView];
         
-        
         UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
         [textView setTextColor:[UIColor blackColor]];
         [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
@@ -757,16 +766,6 @@
 {
     // Return NO if you do not want the specified item to be editable.
     return NO;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.currentQC.questions removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -962,6 +961,11 @@
 {
     SWRevealViewController* rvc = self.revealViewController;
     return (rvc.frontViewPosition == FrontViewPositionRight);
+}
+
+- (void) updateCategory:(NSString*)category
+{
+    [ComponentUtil updateScoreText:category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
 }
 
 @end
