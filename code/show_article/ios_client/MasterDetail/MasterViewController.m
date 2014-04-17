@@ -33,11 +33,7 @@
 @property (nonatomic, retain) NSMutableArray *questionCategories;
 @property (atomic, retain) QuestionCategory *currentQC;
 
-@property (nonatomic, retain) NSMutableArray *titleLabelList;
-@property (nonatomic, retain) NSMutableArray *tableViewList;
 @property (nonatomic, retain) NSMutableArray *questionsList;
-
-
 @end
 
 @implementation MasterViewController
@@ -54,7 +50,6 @@
     return nil;
   }
   return [self.questionCategories objectAtIndex:self.pageControl.currentPage];
-
 }
 
 - (void) configureScrollView {
@@ -91,11 +86,9 @@
     [questionTableView setRowHeight:ROW_HEIGHT];
     questionTableView.dataSource = self;
     [questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-    [self.tableViewList addObject:questionTableView];
 
     UILabel* titleLabel = [UILabel new];
     titleLabel.text = stringArray[i];
-    [self.titleLabelList addObject:titleLabel];
     titleLabel.frame = (CGRect){(0.5+i)*frame_width, 8, 40, 20};
 
     QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
@@ -217,20 +210,18 @@
 
 - (void) load_category:(int) index
 {
-    NSMutableArray * questions = [self.questionsList objectAtIndex:self.pageControl.currentPage];
 
-    // return if already loaded
-    if([questions count] >0)
+  QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:index];
+  // return if already loaded
+  if([questionCategory.questions count] >0)
       return;
     
-    [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.currentQC.category
-                   objects:self.currentQC.questions
-             hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]
-                 tableview:[self.tableViewList objectAtIndex:index]];
-
-    //[self fetchArticleList:self.username category_t:self.currentQC.category start_num_t:0 shouldAppendHead:YES];
-
+  [PostsSqlite loadPosts:postsDB dbPath:dbPath category:questionCategory.category
+                 objects:questionCategory.questions
+           hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]
+               tableview:questionCategory.tableView];
 }
+
 #pragma mark - refresh
 - (void)stopActivityIndicator:(bool)shouldAppendHead {
     if (shouldAppendHead == TRUE) {
@@ -873,7 +864,7 @@
     } else {
         self.pageControl.currentPage = (int)roundf(xOffset/frame_width);
     }
-    //NSLog(@"getCurrentTableView: %@", self.currentQC.tableView);
+    NSLog(@"getCurrentTableView: %@", self.currentQC.tableView);
     NSLog(@"scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
     // load page
     [self load_category:self.pageControl.currentPage];
