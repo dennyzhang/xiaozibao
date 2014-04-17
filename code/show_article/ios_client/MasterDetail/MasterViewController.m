@@ -32,13 +32,11 @@
 
 @property (nonatomic, retain) NSMutableArray *questionCategories;
 @property (atomic, retain) QuestionCategory *currentQC;
-
-@property (nonatomic, retain) NSMutableArray *questionsList;
 @end
 
 @implementation MasterViewController
-@synthesize currentQC = _currentQC;
 
+@synthesize currentQC = _currentQC;
 - (void) setCurrentQC:(QuestionCategory *)qc {
     NSLog(@"setCurrentQC ERROR: should not call here: %@", qc);
 }
@@ -145,7 +143,7 @@
     [self addComponents];
 
     // load default category
-    //[self load_category:self.pageControl.currentPage];
+    [self load_category:0];
     // init table indicator
     // [self initTableIndicatorView]; // TODO
 
@@ -210,7 +208,7 @@
 
 - (void) load_category:(int) index
 {
-
+  NSLog(@"load_category, index:%d", index);
   QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:index];
   // return if already loaded
   if([questionCategory.questions count] >0)
@@ -864,7 +862,7 @@
     } else {
         self.pageControl.currentPage = (int)roundf(xOffset/frame_width);
     }
-    NSLog(@"getCurrentTableView: %@", self.currentQC.tableView);
+    NSLog(@"getCurrentTableView: %@, self.pageControl.currentPage:%d", self.currentQC.tableView, self.pageControl.currentPage);
     NSLog(@"scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
     // load page
     [self load_category:self.pageControl.currentPage];
