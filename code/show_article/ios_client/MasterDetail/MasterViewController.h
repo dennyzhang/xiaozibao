@@ -24,6 +24,7 @@
 @interface MasterViewController : UIViewController <UIGestureRecognizerDelegate, UIScrollViewDelegate,
                                                     UITableViewDelegate, UITableViewDataSource>
 
+#define TAG_UIVIEW_NAVBAR 4000
 #define TAG_BUTTON_COIN 4001
 #define TAG_TEXTVIEW_IN_CELL 1001
 #define TAG_METADATA_IN_CELL 1002
@@ -47,7 +48,5 @@
 #define ROW_HEIGHT 160.0f
 
 @property (nonatomic, retain) NSString* navigationTitle;
-
-- (void) update_category_list;
 
 @end

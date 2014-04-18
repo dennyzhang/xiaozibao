@@ -74,14 +74,16 @@
         [self.currentQC.tableView reloadData];
         [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
         self.questionScrollView.contentOffset =
-        CGPointMake(self.pageControl.currentPage*self.view.frame.size.width, 0);
+        CGPointMake(currentIndex * self.view.frame.size.width, 0);
+        NSLog(@"updateCategory self.pageControl.currentPage:%d, pageControl:%@",
+              self.pageControl.currentPage, self.pageControl);
+        //[self.pageControl updateCurrentPageDisplay];
     }
     else {
         self.navigationItem.title = self.navigationTitle;
         // refresh gui
         currentIndex = 0; // TODO
         [self.currentQC.tableView reloadData];
-        //[self.pageControl setHidden:YES]; // TODO
     }
 }
 
@@ -89,8 +91,15 @@
 {
     [super viewDidLoad];
     NSLog(@"MasterViewController load");
+    // NSLog(@"self.navigationController.navigationBar:%@", self.navigationController.navigationBar);
+    // UIView *oldNavbarView = (UIView *)[self.navigationController.navigationBar viewWithTag:TAG_UIVIEW_NAVBAR];
+    // if(oldNavbarView) {
+    //   NSLog(@"removeFromSuperview");
+    //     [oldNavbarView removeFromSuperview];
+    // }
+
     currentIndex = 0;
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    self.view.backgroundColor = [UIColor clearColor];
     
     //init db connection
     self->postsDB = [PostsSqlite openSqlite:dbPath];
@@ -133,15 +142,16 @@
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
                                   msg:@"Click or swipe to change the question channel."];
     [[MyToolTip singleton] showToolTip];
-    NSLog(@"after load");
     
     [self updateCategory];
-    NSLog(@"after load self.pageControl.currentPage: %d", self.pageControl.currentPage);
+    NSLog(@"after load self.pageControl.currentPage: %d, self.pageControl.numberOfPages:%d",
+          self.pageControl.currentPage, self.self.pageControl.numberOfPages);
 }
 
 - (void) configureScrollView {
     // load scrollView
     if(!self.questionScrollView) {
+        NSLog(@"configureScrollView self.questionScrollView");
         self.questionScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
         self.questionScrollView.pagingEnabled = YES;
         self.questionScrollView.showsHorizontalScrollIndicator = NO;
@@ -158,6 +168,7 @@
     float frame_width = self.view.frame.size.width;
     self.questionScrollView.contentSize = (CGSize){frame_width*count, CGRectGetHeight(self.view.frame)};
     self.navbarView = [[UIView alloc] init];
+    self.navbarView.tag = TAG_UIVIEW_NAVBAR;
     
     for (i = 0; i < count; i ++) {
         QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:i];
@@ -190,17 +201,16 @@
     self.pageControl.currentPage = 0;
     self.pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
     self.pageControl.pageIndicatorTintColor = [UIColor grayColor];
+    //self.pageControl.defersCurrentPageDisplay = YES;
     [self.navbarView addSubview:self.pageControl];
-    
-    [self.navigationController.navigationBar addSubview:self.navbarView];
 }
 
 // - (void)init_data:(NSString*)username_t
 //        category_t:(NSString*)category_t
 //   navigationTitle:(NSString*)navigationTitle
-// {
+// { // TODO
 //     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//     //self.currentQC.category=category_t; // TODO
+//     //self.currentQC.category=category_t;
 //     self.navigationItem.title = navigationTitle;
 //     [self updateCategory:self.currentQC.category];
 
@@ -478,6 +488,12 @@
     [super awakeFromNib];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // Note: self.navigationController may not be set before viewDidLoad
+    [self.navigationController.navigationBar addSubview:self.navbarView];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // update score
@@ -502,11 +518,12 @@
 {
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {
-        ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
+      NSLog(@"self.navigationController:%@", self.navigationController);
+        // ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
         
-        self.navigationController.navigationBarHidden = NO;
-        reviewViewController.category = self.currentQC.category;
-        [self.navigationController pushViewController:reviewViewController animated:YES];
+        // self.navigationController.navigationBarHidden = NO;
+        // reviewViewController.category = self.currentQC.category;
+        // [self.navigationController pushViewController:reviewViewController animated:YES];
     }
 }
 
@@ -845,8 +862,7 @@
         btn.tag = TAG_BUTTON_COIN;
         [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
         self.coinButton = btn;
-        NSInteger score = [UserProfile scoreByCategory:self.currentQC.category];
-        [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+        [ComponentUtil addTextToButton:btn text:@"0"
                               fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
         UIBarButtonItem *coinButtonBarItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
         
@@ -913,13 +929,15 @@
         //CGFloat yOffset = scrollView.contentOffset.y;
         // NSLog(@"scrollViewDidEndDecelerating xOffset:%f, yOffset:%f", xOffset, yOffset);
         // NSLog(@"scrollView:%@", scrollView);
-
+        
         CGFloat frame_width = self.view.frame.size.width;
-        self.pageControl.currentPage = (int)roundf(self.questionScrollView.contentOffset.x/frame_width);
-        currentIndex = self.pageControl.currentPage;
+        currentIndex = (int)roundf(self.questionScrollView.contentOffset.x/frame_width);
+        self.pageControl.currentPage = currentIndex;
+        //[self.pageControl updateCurrentPageDisplay];
         
         // load page
         [self.currentQC.tableView reloadData];
+        //self.navigationItem.title = self.currentQC.category; //TODO
         
         // TODO
         // // vertical scroll
