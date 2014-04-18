@@ -931,9 +931,12 @@
 
     for(i=0; i<count; i++) {
         qc = [self.questionCategories objectAtIndex:i];
-        qc.titleLabel.frame = CGRectMake(labelxOffset + navbar_width*i, 0,
+
+        qc.titleLabel.frame = CGRectMake(labelxOffset, 0,
                                          qc.titleLabel.frame.size.width, 
                                          qc.titleLabel.frame.size.height);
+        
+        labelxOffset = labelxOffset + navbar_width;
         // NSLog(@"after i:%d, qc[i] x:%f, width:%f, height:%f, text:%@",i,
         //       qc.titleLabel.frame.origin.x,
         //       qc.titleLabel.frame.size.width,
@@ -941,6 +944,8 @@
         //       qc.titleLabel.text);
     }
 
+    // change color when scroll
+    
     // self.navTitleLabel1.alpha = 1 - xOffset / 320;
     // if (xOffset <= 320) {
     //     self.navTitleLabel2.alpha = xOffset / 320;

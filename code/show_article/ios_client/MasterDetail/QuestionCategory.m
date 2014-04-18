@@ -59,6 +59,8 @@
         
         UILabel* titleLabel_t = [UILabel new];
         titleLabel_t.text = stringArray[i];
+        titleLabel_t.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
+        titleLabel_t.textColor = [UIColor whiteColor];
         
         QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
         [questionCategory initialize:questionTableView titleLabel:titleLabel_t];
