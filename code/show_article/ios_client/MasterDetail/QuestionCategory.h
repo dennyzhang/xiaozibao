@@ -16,8 +16,15 @@
 @property (retain, nonatomic) IBOutlet UILabel* titleLabel;
 @property (nonatomic, assign) BOOL isloaded;
 
+@property (nonatomic, retain) NSMutableArray *allCategories;
+
++(QuestionCategory *)singleton;
+
 - (void)initialize:(UITableView*)tableView_t
         titleLabel:(UILabel*)titleLabel_t;
+
+- (NSMutableArray*) getAllCategories;
+- (void) refreshAllCategories;
 
 + (void) load_category:(QuestionCategory*) questionCategory
                postsDB:(sqlite3 *)postsDB

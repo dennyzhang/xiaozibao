@@ -76,7 +76,6 @@
         UITableViewCell* c = sender;
         if (c.textLabel.isEnabled == true) {
             MasterViewController* dstViewController = segue.destinationViewController;
-
             NSIndexPath *path = [self.tableView indexPathForCell:c];
             NSString* value = [[self textToValue:c.textLabel.text] lowercaseString];
 
@@ -87,10 +86,7 @@
             if ([value isEqualToString:[SAVED_QUESTIONS lowercaseString]]) {
              category = SAVED_QUESTIONS;
             }
-
-            NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
             dstViewController.navigationTitle = c.textLabel.text;
-            //[dstViewController updateCategory:c.textLabel.text];
             [dstViewController view];
         }
         else { // disable actions

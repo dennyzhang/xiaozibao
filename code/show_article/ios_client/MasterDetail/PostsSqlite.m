@@ -190,7 +190,6 @@ NSLock *lock;
         tableview:(UITableView *)tableview
 {
     NSLog(@"loadposts, category:%@, hideReadPosts:%d",category, hideReadPosts);
-    NSLog(@"here tableView:%@", tableview);
     bool ret = NO;
     NSString *querySQL;
     if ([category isEqualToString:SAVED_QUESTIONS]) {

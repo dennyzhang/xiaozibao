@@ -24,13 +24,13 @@
     int currentIndex;
 }
 
+@property (nonatomic, retain) NSMutableArray *questionCategories;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 
 @property (nonatomic, strong) UIScrollView *questionScrollView;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIView *navbarView;
 
-@property (nonatomic, retain) NSMutableArray *questionCategories;
 @property (atomic, retain) QuestionCategory *currentQC;
 @end
 
@@ -54,19 +54,19 @@
 
 - (void) updateCategory
 {
-  NSLog(@"updateCategory navigationTitle:%@", self.navigationTitle);
-  if ([self isQuestionChannel]) {
-    // TODO
-    self.navigationItem.title = @"";
-    currentIndex = 1;
-    [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
-  }
-  else {
-    self.navigationItem.title = self.navigationTitle;
-  }
-  currentIndex = 0;
-  [self.currentQC.tableView reloadData];
-  self.pageControl.currentPage = currentIndex;
+    NSLog(@"updateCategory navigationTitle:%@", self.navigationTitle);
+    if ([self isQuestionChannel]) {
+        // TODO
+        self.navigationItem.title = @"";
+        currentIndex = 1;
+        [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+    }
+    else {
+        self.navigationItem.title = self.navigationTitle;
+    }
+    currentIndex = 0;
+    [self.currentQC.tableView reloadData];
+    self.pageControl.currentPage = currentIndex;
 }
 
 - (void)viewDidLoad
@@ -83,19 +83,19 @@
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
     
     [self configureScrollView];
-    // init data
-    self.questionCategories = [[NSMutableArray alloc] init];
+    [self configureNavigationBar];
     
-    // components
-    [self addComponents];
+    // init data
+    self.questionCategories = [[QuestionCategory singleton] getAllCategories];
+    [self layoutCategoryList];
     
     // load all default category from db
     for(int i=[self.questionCategories count] -1; i>=0; i--) {
-      currentIndex =i;
-      [QuestionCategory load_category:[self.questionCategories objectAtIndex:i]
-                            postsDB:postsDB dbPath:dbPath];
+        currentIndex =i;
+        [QuestionCategory load_category:[self.questionCategories objectAtIndex:i]
+                                postsDB:postsDB dbPath:dbPath];
     }
-
+    
     // init table indicator
     // [self initTableIndicatorView]; // TODO
     
@@ -118,7 +118,7 @@
                                   msg:@"Click or swipe to change the question channel."];
     [[MyToolTip singleton] showToolTip];
     NSLog(@"after load");
-
+    
     [self updateCategory];
 }
 
@@ -134,41 +134,26 @@
     }
 }
 
-- (void) update_category_list {
+- (void) layoutCategoryList {
     int i, count;
-    [self.questionCategories removeAllObjects];
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
-    NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-    
-    count = [stringArray count];
+    count = [self.questionCategories count];
     float frame_width = self.view.frame.size.width;
     self.questionScrollView.contentSize = (CGSize){frame_width*count, CGRectGetHeight(self.view.frame)};
-    
-    NSLog(@"update_category_list count:%d", count);
+    self.navbarView = [[UIView alloc] init];
     
     for (i = 0; i < count; i ++) {
-        // init tableView
-        UITableView* questionTableView = [[UITableView alloc] init];
+        QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:i];
+        UITableView* questionTableView = questionCategory.tableView;
         questionTableView.delegate = self;
         [questionTableView setRowHeight:ROW_HEIGHT];
         questionTableView.dataSource = self;
         [questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
         
-        UILabel* titleLabel = [UILabel new];
-        titleLabel.text = stringArray[i];
+        UILabel* titleLabel = questionCategory.titleLabel;
+        titleLabel.text = questionCategory.category;
         titleLabel.frame = (CGRect){(0.5+i)*frame_width, 8, 100, 20};
         
-        QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
-        [questionCategory initialize:questionTableView titleLabel:titleLabel];
-        [self.questionCategories addObject:questionCategory];
-    }
-    
-    self.navbarView = [[UIView alloc] init];
-    
-    for (i = 0; i < count; i ++) {
-        QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:i];
         UIView *pageView = [UIView new];
         pageView.backgroundColor = [UIColor colorWithWhite:0.5 * i alpha:1.0];
         pageView.frame = (CGRect){frame_width * i, 0, frame_width, CGRectGetHeight(self.view.frame)};
@@ -201,31 +186,31 @@
 //     //self.currentQC.category=category_t; // TODO
 //     self.navigationItem.title = navigationTitle;
 //     [self updateCategory:self.currentQC.category];
-    
+
 //     [self configureNavigationTitle];
-    
+
 //     if ([self.navigationItem.title isEqualToString:APP_SETTING])
 //         return;
-    
+
 //     self->bottom_num = 1;
 //     self.username=username_t;
-    
+
 //     NSIndexPath *indexPath;
 //     for (int i=0; i<[self.currentQC.questions count]; i++) {
 //         [self.currentQC.questions removeObjectAtIndex:0];
 //         indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 //         [self.currentQC.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 //     }
-    
+
 //     self->postsDB = [PostsSqlite openSqlite:dbPath];
 //     self->dbPath = [PostsSqlite getDBPath];
 //     //NSLog(@"init_data, dbPath:%@", self->dbPath);
 //     return;
-    
+
 //     if (!userDefaults) {
 //         userDefaults = [NSUserDefaults standardUserDefaults];
 //     }
-    
+
 //     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.currentQC.category
 //                    objects:self.currentQC.questions hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.currentQC.tableView];
 //     [self fetchArticleList:self.username category_t:self.currentQC.category start_num_t:0 shouldAppendHead:YES];
@@ -620,11 +605,11 @@
         return cell;
     }
     else {
-      if (indexPath.row> [self.currentQC.questions count]) { // TODO
-        NSLog(@"Error cellForRowAtIndexPath. indexPath.row:%d, questions count:%d, current page:%d",
-              indexPath.row, [self.currentQC.questions count], self.pageControl.currentPage);
-        return nil;
-      }
+        if (indexPath.row> [self.currentQC.questions count]) { // TODO
+            NSLog(@"Error cellForRowAtIndexPath. indexPath.row:%d, questions count:%d, current page:%d",
+                  indexPath.row, [self.currentQC.questions count], self.pageControl.currentPage);
+            return nil;
+        }
         Posts *post = self.currentQC.questions[indexPath.row];
         [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
         [[cell.contentView viewWithTag:TAG_METADATA_IN_CELL]removeFromSuperview];
@@ -874,10 +859,10 @@
     // NSLog(@"scrollView:%@", scrollView);
     self.pageControl.currentPage = (int)roundf(self.questionScrollView.contentOffset.x/frame_width);
     currentIndex = self.pageControl.currentPage;
-
+    
     // load page
     [self.currentQC.tableView reloadData];
-
+    
     // TODO
     // // vertical scroll
     // // when reach the top
@@ -893,10 +878,10 @@
     // }
 }
 
-- (void)addComponents
+- (void)configureNavigationBar
 {
-    // set header of navigation bar
     UIButton* btn;
+    // set header of navigation bar
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UINavigationBar* appearance = self.navigationController.navigationBar;
     
@@ -909,29 +894,18 @@
                                                NSFontAttributeName,
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
-
-    NSString* category = nil;
-    if([self.questionCategories count] != 0) {
-        category = self.currentQC.category;
-    }
+    // configure leftBarButton
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
+    [btn addTarget:self action:@selector(showMenuViewController:)
+  forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
-    NSLog(@"addComponents self.category:%@", category);
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (!category) {
-        [self update_category_list];
-        NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
-        NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-        NSString* default_category = stringArray[0];
-        default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
-        SWRevealViewController* rvc = self.revealViewController;
-        MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-
-        // TODO
-        // [self init_data:userid category_t:default_category
-        // navigationTitle:[menuvc textToValue:default_category]];
-    }
-    if (!([category isEqualToString:NONE_QUESTION_CATEGORY] || [category isEqualToString:SAVED_QUESTIONS])) {
+    self.navigationItem.leftBarButtonItem = settingButton;
+    
+    // configure rightBarButton
+    if ([self isQuestionChannel]) {
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
         [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -945,15 +919,6 @@
         
         self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButtonBarItem, nil];
     }
-    
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
-    [btn addTarget:self action:@selector(showMenuViewController:)
-  forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.leftBarButtonItem = settingButton;
 }
 
 - (void)configureNavigationTitle
