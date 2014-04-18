@@ -75,6 +75,7 @@
     {
         UITableViewCell* c = sender;
         if (c.textLabel.isEnabled == true) {
+          // load view
             MasterViewController* dstViewController = segue.destinationViewController;
             dstViewController.navigationTitle = c.textLabel.text;
             [dstViewController view];

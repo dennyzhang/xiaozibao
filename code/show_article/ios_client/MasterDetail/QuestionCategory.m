@@ -57,11 +57,11 @@
         // init tableView
         UITableView* questionTableView = [[UITableView alloc] init];
         
-        UILabel* titleLabel = [UILabel new];
-        titleLabel.text = stringArray[i];
+        UILabel* titleLabel_t = [UILabel new];
+        titleLabel_t.text = stringArray[i];
         
         QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
-        [questionCategory initialize:questionTableView titleLabel:titleLabel];
+        [questionCategory initialize:questionTableView titleLabel:titleLabel_t];
         [self.allCategories addObject:questionCategory];
     }
   return allCategories;

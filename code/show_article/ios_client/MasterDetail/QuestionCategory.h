@@ -24,7 +24,6 @@
         titleLabel:(UILabel*)titleLabel_t;
 
 - (NSMutableArray*) getAllCategories;
-- (void) refreshAllCategories;
 
 + (void) load_category:(QuestionCategory*) questionCategory
                postsDB:(sqlite3 *)postsDB

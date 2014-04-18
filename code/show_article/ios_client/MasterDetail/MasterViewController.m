@@ -91,12 +91,6 @@
 {
     [super viewDidLoad];
     NSLog(@"MasterViewController load");
-    // NSLog(@"self.navigationController.navigationBar:%@", self.navigationController.navigationBar);
-    // UIView *oldNavbarView = (UIView *)[self.navigationController.navigationBar viewWithTag:TAG_UIVIEW_NAVBAR];
-    // if(oldNavbarView) {
-    //   NSLog(@"removeFromSuperview");
-    //     [oldNavbarView removeFromSuperview];
-    // }
 
     currentIndex = 0;
     self.view.backgroundColor = [UIColor clearColor];
@@ -169,40 +163,52 @@
     self.questionScrollView.contentSize = (CGSize){frame_width*count, CGRectGetHeight(self.view.frame)};
     self.navbarView = [[UIView alloc] init];
     self.navbarView.tag = TAG_UIVIEW_NAVBAR;
+    NSLog(@"layoutCategoryList. self.navigationItem:%@", self.navigationItem);
     
     for (i = 0; i < count; i ++) {
-        QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:i];
-        UITableView* questionTableView = questionCategory.tableView;
+        QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
+        UITableView* questionTableView = qc.tableView;
         questionTableView.delegate = self;
         [questionTableView setRowHeight:ROW_HEIGHT];
         questionTableView.dataSource = self;
         [questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-        
-        UILabel* titleLabel = questionCategory.titleLabel;
-        titleLabel.text = questionCategory.category;
-        titleLabel.frame = (CGRect){(0.5+i)*frame_width, 8, 100, 20};
-        
+
         UIView *pageView = [UIView new];
+        [self.questionScrollView addSubview:pageView];
         pageView.backgroundColor = [UIColor colorWithWhite:0.5 * i alpha:1.0];
         pageView.frame = (CGRect){frame_width * i, 0, frame_width, CGRectGetHeight(self.view.frame)};
-        [self.questionScrollView addSubview:pageView];
         
-        [pageView addSubview:questionCategory.tableView];
-        [questionCategory.tableView setFrame:CGRectMake(0, 0,
-                                                        self.questionScrollView.frame.size.width,
-                                                        self.questionScrollView.frame.size.height)];
-        [self.navbarView addSubview:questionCategory.titleLabel];
+        [pageView addSubview:qc.tableView];
+        [self.navbarView addSubview:qc.titleLabel];
     }
     
     // set pageControl
     self.pageControl = [[UIPageControl alloc] init];
-    self.pageControl.frame = (CGRect){frame_width/2, 35, 0, 0};
     self.pageControl.numberOfPages = count;
     self.pageControl.currentPage = 0;
     self.pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
     self.pageControl.pageIndicatorTintColor = [UIColor grayColor];
-    //self.pageControl.defersCurrentPageDisplay = YES;
     [self.navbarView addSubview:self.pageControl];
+
+    // Note: self.navigationController may not be set before viewDidLoad
+    // [self.navigationController.navigationBar addSubview:self.navbarView];
+
+    NSLog(@"self.navigationItem.titleView:%@", self.navigationItem.titleView);
+    self.navigationItem.titleView = self.navbarView;
+    self.navbarView.frame = (CGRect){40, 0, self.view.frame.size.width - 80, 64};
+    self.pageControl.frame = (CGRect){self.navbarView.frame.size.width/2, 35, 0, 0};
+
+    // set frame
+    for (i = 0; i < count; i ++) {
+        // set table frame
+        QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
+        [qc.tableView setFrame:CGRectMake(0, 0,
+                                            self.questionScrollView.frame.size.width,
+                                            self.questionScrollView.frame.size.height)];
+        // set label frame
+        CGFloat navbar_width = self.navbarView.frame.size.width;
+        qc.titleLabel.frame = (CGRect){navbar_width*(i + 0.5) - 40, 0, 100, 40};
+    }
 }
 
 // - (void)init_data:(NSString*)username_t
@@ -490,20 +496,19 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    // Note: self.navigationController may not be set before viewDidLoad
-    [self.navigationController.navigationBar addSubview:self.navbarView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // update score
-    self.navigationController.navigationBarHidden = NO;
+    //self.navigationController.navigationBarHidden = NO;
     [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
     //[self.navbarView setHidden:NO];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
+
     [super viewWillDisappear:animated];
     //[self.navbarView setHidden:YES];
 }
@@ -518,12 +523,11 @@
 {
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {
-      NSLog(@"self.navigationController:%@", self.navigationController);
-        // ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
+        ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
         
-        // self.navigationController.navigationBarHidden = NO;
-        // reviewViewController.category = self.currentQC.category;
-        // [self.navigationController pushViewController:reviewViewController animated:YES];
+        self.navigationController.navigationBarHidden = NO;
+        reviewViewController.category = self.currentQC.category;
+        [self.navigationController pushViewController:reviewViewController animated:YES];
     }
 }
 
@@ -906,6 +910,46 @@
 
 #pragma mark - guesture
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat frame_width = self.view.frame.size.width;
+    CGFloat navbar_width = self.navbarView.frame.size.width;
+    CGFloat xOffset = self.questionScrollView.contentOffset.x;
+    CGFloat labelxOffset;
+    //int index = (int)roundf(xOffset/frame_width);
+    
+    int i, count = [self.questionCategories count];
+
+    QuestionCategory* qc;
+
+    qc = [self.questionCategories objectAtIndex:0];
+    NSLog(@"before qc[0] x:%f", qc.titleLabel.frame.origin.x);
+
+    labelxOffset = (-xOffset * navbar_width) /frame_width + 0.5*navbar_width;
+    labelxOffset = labelxOffset - 20; // align better
+    
+    NSLog(@"scrollViewDidScroll. xOffset:%f, navbar_width:%f, labelxOffset:%f",
+          xOffset, navbar_width, labelxOffset);
+
+    for(i=0; i<count; i++) {
+        qc = [self.questionCategories objectAtIndex:i];
+        qc.titleLabel.frame = CGRectMake(labelxOffset + navbar_width*i, 0,
+                                         qc.titleLabel.frame.size.width, 
+                                         qc.titleLabel.frame.size.height);
+        // NSLog(@"after i:%d, qc[i] x:%f, width:%f, height:%f, text:%@",i,
+        //       qc.titleLabel.frame.origin.x,
+        //       qc.titleLabel.frame.size.width,
+        //       qc.titleLabel.frame.size.height,
+        //       qc.titleLabel.text);
+    }
+
+    // self.navTitleLabel1.alpha = 1 - xOffset / 320;
+    // if (xOffset <= 320) {
+    //     self.navTitleLabel2.alpha = xOffset / 320;
+    // } else {
+    //     self.navTitleLabel2.alpha = 1 - (xOffset - 320) / 320;
+    // }
+    // self.navTitleLabel3.alpha = (xOffset - 320) / 320;
+
+
     // if (![self isQuestionChannel])
     //     return;
     // // when reach the top
