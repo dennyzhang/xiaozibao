@@ -58,7 +58,7 @@
         UITableView* questionTableView = [[UITableView alloc] init];
         
         UILabel* titleLabel_t = [UILabel new];
-        titleLabel_t.text = stringArray[i];
+        titleLabel_t.text = [stringArray[i] capitalizedString];
         titleLabel_t.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
         titleLabel_t.textColor = [UIColor whiteColor];
         

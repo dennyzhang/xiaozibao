@@ -196,7 +196,8 @@
     NSLog(@"self.navigationItem.titleView:%@", self.navigationItem.titleView);
     self.navigationItem.titleView = self.navbarView;
     self.navbarView.frame = (CGRect){40, 0, self.view.frame.size.width - 80, 64};
-    self.pageControl.frame = (CGRect){self.navbarView.frame.size.width/2, 35, 0, 0};
+    self.pageControl.frame = (CGRect){self.navbarView.frame.size.width/2,
+                                      self.navbarView.frame.size.height - 20, 0, 0};
 
     // set frame
     for (i = 0; i < count; i ++) {
@@ -207,7 +208,7 @@
                                             self.questionScrollView.frame.size.height)];
         // set label frame
         CGFloat navbar_width = self.navbarView.frame.size.width;
-        qc.titleLabel.frame = (CGRect){navbar_width*(i + 0.5) - 40, 0, 100, 40};
+        qc.titleLabel.frame = (CGRect){navbar_width*(i + 0.5) - 40, 5, 100, 40};
     }
 }
 
@@ -932,7 +933,8 @@
     for(i=0; i<count; i++) {
         qc = [self.questionCategories objectAtIndex:i];
 
-        qc.titleLabel.frame = CGRectMake(labelxOffset, 0,
+        qc.titleLabel.frame = CGRectMake(labelxOffset,
+                                         qc.titleLabel.frame.origin.y,
                                          qc.titleLabel.frame.size.width, 
                                          qc.titleLabel.frame.size.height);
         
