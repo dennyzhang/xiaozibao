@@ -90,7 +90,7 @@
 
             NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
             dstViewController.navigationTitle = c.textLabel.text;
-            [dstViewController updateCategory:c.textLabel.text];
+            //[dstViewController updateCategory:c.textLabel.text];
             [dstViewController view];
         }
         else { // disable actions

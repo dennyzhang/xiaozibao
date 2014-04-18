@@ -49,5 +49,4 @@
 @property (nonatomic, retain) NSString* navigationTitle;
 
 - (void) update_category_list;
-- (void) updateCategory:(NSString*)navigationTitle_t;
 @end

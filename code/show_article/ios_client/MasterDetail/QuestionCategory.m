@@ -20,7 +20,7 @@
   self.titleLabel = titleLabel_t;
   self.category = self.titleLabel.text;
   self.isloaded = NO;
-  NSLog(@"initalize self.tableView:%@", self.tableView); //TODO
+  // NSLog(@"initalize self.tableView:%@", self.tableView); //TODO
 }
 
 // TODO: memory leak

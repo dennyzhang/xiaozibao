@@ -24,7 +24,6 @@
     int currentIndex;
 }
 
-@property (nonatomic, retain) NSString* username;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 
 @property (nonatomic, strong) UIScrollView *questionScrollView;
@@ -53,12 +52,12 @@
     return [self.questionCategories objectAtIndex:currentIndex];
 }
 
-- (void) updateCategory:(NSString*)navigationTitle_t
+- (void) updateCategory
 {
-  self.navigationTitle=navigationTitle_t;
-  NSLog(@"caculateCategory navigationTitle:%@", self.navigationTitle);
+  NSLog(@"updateCategory navigationTitle:%@", self.navigationTitle);
   if ([self isQuestionChannel]) {
     // TODO
+    self.navigationItem.title = @"";
     currentIndex = 1;
     [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
   }
@@ -96,7 +95,6 @@
       [QuestionCategory load_category:[self.questionCategories objectAtIndex:i]
                             postsDB:postsDB dbPath:dbPath];
     }
-    [self updateCategory:self.currentQC.category];
 
     // init table indicator
     // [self initTableIndicatorView]; // TODO
@@ -121,7 +119,7 @@
     [[MyToolTip singleton] showToolTip];
     NSLog(@"after load");
 
-    [self updateCategory:self.currentQC.category];
+    [self updateCategory];
 }
 
 - (void) configureScrollView {
@@ -277,7 +275,7 @@
 {
     NSLog(@"refreshTableHead");
     [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
-    [self fetchArticleList:self.username category_t:self.currentQC.category
+    [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
                start_num_t:0
           shouldAppendHead:YES];
 }
@@ -286,7 +284,7 @@
 {
     NSLog(@"refreshTableTail");
     [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
-    [self fetchArticleList:self.username category_t:self.currentQC.category
+    [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
                start_num_t:self->bottom_num * PAGE_COUNT
           shouldAppendHead:NO];
 }
@@ -485,12 +483,13 @@
     // update score
     self.navigationController.navigationBarHidden = NO;
     [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
-    
+    [self.navbarView setHidden:NO];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.navbarView setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -910,6 +909,7 @@
                                                NSFontAttributeName,
                                                nil];
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
+
     NSString* category = nil;
     if([self.questionCategories count] != 0) {
         category = self.currentQC.category;
@@ -923,7 +923,6 @@
         NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
         NSString* default_category = stringArray[0];
         default_category = [default_category stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString* userid = [[NSUserDefaults standardUserDefaults] stringForKey:@"Userid"];
         
         SWRevealViewController* rvc = self.revealViewController;
         MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
