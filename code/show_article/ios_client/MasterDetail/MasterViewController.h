@@ -25,11 +25,6 @@
                                                     UITableViewDelegate, UITableViewDataSource>
 
 #define TAG_BUTTON_COIN 4001
-
-- (void)init_data:(NSString*)username
-          category_t:(NSString*)category_t
-     navigationTitle:(NSString*)navigationTitle;
-
 #define TAG_TEXTVIEW_IN_CELL 1001
 #define TAG_METADATA_IN_CELL 1002
 #define TAG_ICON_IN_CELL 1003
@@ -51,5 +46,8 @@
 #define PAGE_COUNT 10
 #define ROW_HEIGHT 160.0f
 
+@property (nonatomic, retain) NSString* navigationTitle;
+
 - (void) update_category_list;
+- (void) updateCategory:(NSString*)navigationTitle_t;
 @end

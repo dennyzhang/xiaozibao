@@ -37,6 +37,7 @@
 
 @implementation MasterViewController
 
+@synthesize navigationTitle;
 @synthesize currentQC = _currentQC;
 - (void) setCurrentQC:(QuestionCategory *)qc {
     NSLog(@"setCurrentQC ERROR: should not call here: %@", qc);
@@ -50,6 +51,23 @@
     }
     //NSLog(@"currentQC self.pageControl.currentPage:%d", self.pageControl.currentPage);
     return [self.questionCategories objectAtIndex:currentIndex];
+}
+
+- (void) updateCategory:(NSString*)navigationTitle_t
+{
+  self.navigationTitle=navigationTitle_t;
+  NSLog(@"caculateCategory navigationTitle:%@", self.navigationTitle);
+  if ([self isQuestionChannel]) {
+    // TODO
+    currentIndex = 1;
+    [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+  }
+  else {
+    self.navigationItem.title = self.navigationTitle;
+  }
+  currentIndex = 0;
+  [self.currentQC.tableView reloadData];
+  self.pageControl.currentPage = currentIndex;
 }
 
 - (void)viewDidLoad
@@ -102,6 +120,8 @@
                                   msg:@"Click or swipe to change the question channel."];
     [[MyToolTip singleton] showToolTip];
     NSLog(@"after load");
+
+    [self updateCategory:self.currentQC.category];
 }
 
 - (void) configureScrollView {
@@ -175,44 +195,43 @@
     [self.navigationController.navigationBar addSubview:self.navbarView];
 }
 
-
-- (void)init_data:(NSString*)username_t
-       category_t:(NSString*)category_t
-  navigationTitle:(NSString*)navigationTitle
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    //self.currentQC.category=category_t; // TODO
-    self.navigationItem.title = navigationTitle;
-    [self updateCategory:self.currentQC.category];
+// - (void)init_data:(NSString*)username_t
+//        category_t:(NSString*)category_t
+//   navigationTitle:(NSString*)navigationTitle
+// {
+//     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//     //self.currentQC.category=category_t; // TODO
+//     self.navigationItem.title = navigationTitle;
+//     [self updateCategory:self.currentQC.category];
     
-    [self configureNavigationTitle];
+//     [self configureNavigationTitle];
     
-    if ([self.navigationItem.title isEqualToString:APP_SETTING])
-        return;
+//     if ([self.navigationItem.title isEqualToString:APP_SETTING])
+//         return;
     
-    self->bottom_num = 1;
-    self.username=username_t;
+//     self->bottom_num = 1;
+//     self.username=username_t;
     
-    NSIndexPath *indexPath;
-    for (int i=0; i<[self.currentQC.questions count]; i++) {
-        [self.currentQC.questions removeObjectAtIndex:0];
-        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.currentQC.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
+//     NSIndexPath *indexPath;
+//     for (int i=0; i<[self.currentQC.questions count]; i++) {
+//         [self.currentQC.questions removeObjectAtIndex:0];
+//         indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//         [self.currentQC.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//     }
     
-    self->postsDB = [PostsSqlite openSqlite:dbPath];
-    self->dbPath = [PostsSqlite getDBPath];
-    //NSLog(@"init_data, dbPath:%@", self->dbPath);
-    return;
+//     self->postsDB = [PostsSqlite openSqlite:dbPath];
+//     self->dbPath = [PostsSqlite getDBPath];
+//     //NSLog(@"init_data, dbPath:%@", self->dbPath);
+//     return;
     
-    if (!userDefaults) {
-        userDefaults = [NSUserDefaults standardUserDefaults];
-    }
+//     if (!userDefaults) {
+//         userDefaults = [NSUserDefaults standardUserDefaults];
+//     }
     
-    [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.currentQC.category
-                   objects:self.currentQC.questions hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.currentQC.tableView];
-    [self fetchArticleList:self.username category_t:self.currentQC.category start_num_t:0 shouldAppendHead:YES];
-}
+//     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.currentQC.category
+//                    objects:self.currentQC.questions hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.currentQC.tableView];
+//     [self fetchArticleList:self.username category_t:self.currentQC.category start_num_t:0 shouldAppendHead:YES];
+// }
 
 #pragma mark - refresh
 - (void)stopActivityIndicator:(bool)shouldAppendHead {
@@ -849,8 +868,8 @@
         return;
     
     // horizon scroll
-    CGFloat xOffset = scrollView.contentOffset.x;
-    CGFloat yOffset = scrollView.contentOffset.y;
+    //CGFloat xOffset = scrollView.contentOffset.x;
+    //CGFloat yOffset = scrollView.contentOffset.y;
     CGFloat frame_width = self.view.frame.size.width;
     // NSLog(@"scrollViewDidEndDecelerating xOffset:%f, yOffset:%f", xOffset, yOffset);
     // NSLog(@"scrollView:%@", scrollView);
@@ -908,9 +927,10 @@
         
         SWRevealViewController* rvc = self.revealViewController;
         MenuViewController* menuvc = (MenuViewController*)rvc.rearViewController;
-        
-        [self init_data:userid category_t:default_category
-        navigationTitle:[menuvc textToValue:default_category]];
+
+        // TODO
+        // [self init_data:userid category_t:default_category
+        // navigationTitle:[menuvc textToValue:default_category]];
     }
     if (!([category isEqualToString:NONE_QUESTION_CATEGORY] || [category isEqualToString:SAVED_QUESTIONS])) {
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -947,19 +967,14 @@
 #pragma mark - private functions
 - (BOOL) isQuestionChannel
 {
-    return (![self.navigationItem.title isEqualToString:SAVED_QUESTIONS] &&
-            ![self.navigationItem.title isEqualToString:APP_SETTING]);
+    return (![navigationTitle isEqualToString:SAVED_QUESTIONS] &&
+            ![navigationTitle isEqualToString:APP_SETTING]);
 }
 
 - (BOOL) isMenuShown
 {
     SWRevealViewController* rvc = self.revealViewController;
     return (rvc.frontViewPosition == FrontViewPositionRight);
-}
-
-- (void) updateCategory:(NSString*)category
-{
-    [ComponentUtil updateScoreText:category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
 }
 
 @end
