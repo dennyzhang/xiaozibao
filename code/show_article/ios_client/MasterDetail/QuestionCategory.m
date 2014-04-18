@@ -29,14 +29,12 @@
                postsDB:(sqlite3 *)postsDB
              dbPath:(NSString *) dbPath
 {
-    [questionCategory.tableView reloadData];
-
     // return if already loaded
     if(questionCategory.isloaded) {
         NSLog(@"no need to load again");
         return;
     }
-    
+
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:questionCategory.category
                    objects:questionCategory.questions
              hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]

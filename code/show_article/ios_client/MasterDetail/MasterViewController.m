@@ -73,9 +73,8 @@
     [self addComponents];
     
     // load all default category from db
-    for(int i= [self.questionCategories count] -1; i>0; i--) {
-      currentIndex = i;
-      [QuestionCategory load_category:[self.questionCategories objectAtIndex:currentIndex]
+    for(int i=0; i< [self.questionCategories count]; i++) {
+      [QuestionCategory load_category:[self.questionCategories objectAtIndex:i]
                             postsDB:postsDB dbPath:dbPath];
     }
     [self updateCategory:self.currentQC.category];
@@ -829,21 +828,6 @@
 
 #pragma mark - guesture
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    // int nextIndex;
-    // QuestionCategory* nextQC;
-    // nextIndex = (int)roundf(self.questionScrollView.contentOffset.x/self.view.frame.size.width) + 1;
-    // nextQC = [self.questionCategories objectAtIndex:nextIndex];
-    // NSLog(@"scrollViewDidScroll nextIndex:%d, scrollView:%@", nextIndex, scrollView);
-    // if(!nextQC.isloaded) {
-    //   currentIndex = nextIndex;
-    //   [QuestionCategory load_category:nextQC postsDB:postsDB dbPath:dbPath];
-    //   currentIndex = currentIndex -1;
-    //   [self.currentQC.tableView reloadData];
-    // }
-
-    //QuestionCategory* qc1 = [self.questionCategories objectAtIndex:1];
-    //NSLog(@"first QuestionCategory.questions: %@", qc0.questions);
-    //NSLog(@"second QuestionCategory.questions: %@", qc1.questions);
     // if (![self isQuestionChannel])
     //     return;
     // // when reach the top
