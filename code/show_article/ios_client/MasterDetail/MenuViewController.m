@@ -76,16 +76,6 @@
         UITableViewCell* c = sender;
         if (c.textLabel.isEnabled == true) {
             MasterViewController* dstViewController = segue.destinationViewController;
-            NSIndexPath *path = [self.tableView indexPathForCell:c];
-            NSString* value = [[self textToValue:c.textLabel.text] lowercaseString];
-
-            NSString* category = NONE_QUESTION_CATEGORY;
-            if (path.section == 0) {
-              category = value;
-            }
-            if ([value isEqualToString:[SAVED_QUESTIONS lowercaseString]]) {
-             category = SAVED_QUESTIONS;
-            }
             dstViewController.navigationTitle = c.textLabel.text;
             [dstViewController view];
         }

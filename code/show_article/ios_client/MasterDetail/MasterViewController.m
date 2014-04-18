@@ -54,19 +54,35 @@
 
 - (void) updateCategory
 {
-    NSLog(@"updateCategory navigationTitle:%@", self.navigationTitle);
+  NSLog(@"updateCategory navigationTitle:%@", self.navigationTitle);
     if ([self isQuestionChannel]) {
-        // TODO
         self.navigationItem.title = @"";
-        currentIndex = 1;
+        // caculate index by category
+        NSString* category = [self.navigationTitle lowercaseString];
+        int i, count = [self.questionCategories count];
+        currentIndex = 0; // default value
+
+        for(i=0; i<count; i++) {
+          QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
+          if([category isEqualToString:qc.category]) {
+            currentIndex = i;
+            break;
+          }
+        }
+        // refresh gui
+        self.pageControl.currentPage = currentIndex;
+        [self.currentQC.tableView reloadData];
         [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+        self.questionScrollView.contentOffset = 
+            CGPointMake(self.pageControl.currentPage*self.view.frame.size.width, 0);
     }
     else {
         self.navigationItem.title = self.navigationTitle;
+        // refresh gui
+        currentIndex = 0; // TODO
+        [self.currentQC.tableView reloadData];
+        [self.pageControl setHidden:YES];
     }
-    currentIndex = 0;
-    [self.currentQC.tableView reloadData];
-    self.pageControl.currentPage = currentIndex;
 }
 
 - (void)viewDidLoad
@@ -120,6 +136,7 @@
     NSLog(@"after load");
     
     [self updateCategory];
+    NSLog(@"after load self.pageControl.currentPage: %d", self.pageControl.currentPage);
 }
 
 - (void) configureScrollView {
@@ -186,8 +203,6 @@
 //     //self.currentQC.category=category_t; // TODO
 //     self.navigationItem.title = navigationTitle;
 //     [self updateCategory:self.currentQC.category];
-
-//     [self configureNavigationTitle];
 
 //     if ([self.navigationItem.title isEqualToString:APP_SETTING])
 //         return;
@@ -468,13 +483,13 @@
     // update score
     self.navigationController.navigationBarHidden = NO;
     [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
-    [self.navbarView setHidden:NO];
+    //[self.navbarView setHidden:NO];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navbarView setHidden:YES];
+    //[self.navbarView setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -514,7 +529,7 @@
         return nil;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"showDetail" sender:self];
 }
 
@@ -919,13 +934,6 @@
         
         self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButtonBarItem, nil];
     }
-}
-
-- (void)configureNavigationTitle
-{
-    NSLog(@"configureNavigationTitle self.navigationItem.title: %@", self.navigationItem.title);
-    if (![self isQuestionChannel])
-        return;
 }
 
 #pragma mark - private functions

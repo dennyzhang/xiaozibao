@@ -520,6 +520,8 @@
     [super viewWillAppear:animated];
     NSLog(@"viewWillAppear");
     [self.navigationController setToolbarHidden:YES animated:YES];
+
+    self.navigationItem.title = @"Question";
     
     [ComponentUtil updateScoreText:self.detailItem.category
                                btn:self.coinButton tag:TAG_SCORE_TEXT];
