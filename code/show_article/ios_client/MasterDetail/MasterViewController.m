@@ -71,8 +71,10 @@
     [self addComponents];
     
     // load default category
-    [self load_category:0];
-    
+    QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:0];
+    [QuestionCategory load_category:questionCategory postsDB:postsDB dbPath:dbPath];
+    [self updateCategory:questionCategory.category];
+
     // init table indicator
     // [self initTableIndicatorView]; // TODO
     
@@ -136,7 +138,6 @@
         titleLabel.frame = (CGRect){(0.5+i)*frame_width, 8, 100, 20};
         
         QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
-        
         [questionCategory initialize:questionTableView titleLabel:titleLabel];
         [self.questionCategories addObject:questionCategory];
     }
@@ -206,25 +207,6 @@
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:self.currentQC.category
                    objects:self.currentQC.questions hideReadPosts:[userDefaults integerForKey:@"HideReadPosts"] tableview:self.currentQC.tableView];
     [self fetchArticleList:self.username category_t:self.currentQC.category start_num_t:0 shouldAppendHead:YES];
-}
-
-- (void) load_category:(int) index
-{
-    NSLog(@"load_category, index:%d", index);
-    QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:index];
-    [questionCategory.tableView reloadData];
-    [self updateCategory:questionCategory.category];
-    // return if already loaded
-    if([questionCategory.questions count] >0) {
-        NSLog(@"no need to load again");
-        return;
-    }
-    
-    [PostsSqlite loadPosts:postsDB dbPath:dbPath category:questionCategory.category
-                   objects:questionCategory.questions
-             hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]
-                 tableview:questionCategory.tableView];
-    NSLog(@"end load_category");
 }
 
 #pragma mark - refresh
@@ -871,9 +853,12 @@
     self.pageControl.currentPage = (int)roundf(self.questionScrollView.contentOffset.x/frame_width);
 
     // load page
-    [self.currentQC.tableView reloadData];
-    [self load_category:self.pageControl.currentPage];
-    
+    //[self.currentQC.tableView reloadData];
+    QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:self.pageControl.currentPage];
+    [QuestionCategory load_category:questionCategory 
+                            postsDB:postsDB dbPath:dbPath];
+    [self updateCategory:questionCategory.category];
+
     // TODO
     // // vertical scroll
     // // when reach the top

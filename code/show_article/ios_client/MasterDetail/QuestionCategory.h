@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PostsSqlite.h"
 
 @interface QuestionCategory : NSObject
 @property (nonatomic, retain) NSString* category;
@@ -17,4 +18,8 @@
 
 - (void)initialize:(UITableView*)tableView_t
         titleLabel:(UILabel*)titleLabel_t;
+
++ (void) load_category:(QuestionCategory*) questionCategory
+               postsDB:(sqlite3 *)postsDB
+             dbPath:(NSString *)dbPath;
 @end

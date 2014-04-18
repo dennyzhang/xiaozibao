@@ -18,8 +18,29 @@
   self.questions = [[NSMutableArray alloc] init];
   self.tableView = tableView_t;
   self.titleLabel = titleLabel_t;
-  self.category = self.titleLabel.text; 
+  self.category = self.titleLabel.text;
+  self.isloaded = NO;
+  NSLog(@"initalize self.tableView:%@", self.tableView); //TODO
 }
 
 // TODO: memory leak
+
++ (void) load_category:(QuestionCategory*) questionCategory
+               postsDB:(sqlite3 *)postsDB
+             dbPath:(NSString *) dbPath
+{
+    [questionCategory.tableView reloadData];
+    // return if already loaded
+    if(questionCategory.isloaded) {
+        NSLog(@"no need to load again");
+        return;
+    }
+    
+    [PostsSqlite loadPosts:postsDB dbPath:dbPath category:questionCategory.category
+                   objects:questionCategory.questions
+             hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]
+                 tableview:questionCategory.tableView];
+    questionCategory.isloaded = YES;
+}
+
 @end
