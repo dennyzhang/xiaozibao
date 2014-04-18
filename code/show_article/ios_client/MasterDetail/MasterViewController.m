@@ -26,7 +26,7 @@
 @property (nonatomic, retain) NSString* username;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIScrollView *questionScrollView;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIView *navbarView;
 
@@ -43,11 +43,12 @@
 
 - (QuestionCategory *) currentQC
 {
-  if(!self.questionCategories || [self.questionCategories count] == 0) {
-    NSLog(@"error to getQuestionCategory");
-    return nil;
-  }
-  return [self.questionCategories objectAtIndex:self.pageControl.currentPage];
+    if(!self.questionCategories || [self.questionCategories count] == 0) {
+        NSLog(@"error to getQuestionCategory");
+        return nil;
+    }
+    //NSLog(@"currentQC self.pageControl.currentPage:%d", self.pageControl.currentPage);
+    return [self.questionCategories objectAtIndex:self.pageControl.currentPage];
 }
 
 - (void)viewDidLoad
@@ -55,26 +56,26 @@
     [super viewDidLoad];
     NSLog(@"MasterViewController load");
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-
+    
     //init db connection
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
     
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
-
+    
     [self configureScrollView];
     // init data
     self.questionCategories = [[NSMutableArray alloc] init];
-
+    
     // components
     [self addComponents];
-
+    
     // load default category
     [self load_category:0];
-
+    
     // init table indicator
     // [self initTableIndicatorView]; // TODO
-
+    
     //self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     NSLog(@"before guesture");
@@ -87,7 +88,7 @@
     // leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
     // [self.currentQC.tableView addGestureRecognizer:leftswipe];
     // leftswipe.delegate = self;
-
+    
     // configure tooltip
     [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click the coin to see the learning stastics."];
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
@@ -97,75 +98,74 @@
 }
 
 - (void) configureScrollView {
-  // load scrollView
-  if(!self.scrollView) {
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.delegate = self;
-    self.scrollView.bounces = NO;
-    [self.view addSubview:self.scrollView];
-  }
+    // load scrollView
+    if(!self.questionScrollView) {
+        self.questionScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+        self.questionScrollView.pagingEnabled = YES;
+        self.questionScrollView.showsHorizontalScrollIndicator = NO;
+        self.questionScrollView.delegate = self;
+        self.questionScrollView.bounces = NO;
+        [self.view addSubview:self.questionScrollView];
+    }
 }
 
 - (void) update_category_list {
-  int i, count;
-  [self.questionCategories removeAllObjects]; 
-
-  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-  NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
-  NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
-  NSString* default_category = stringArray[0];
-
-  count = [stringArray count];
-  float frame_width = self.view.frame.size.width;
-  self.scrollView.contentSize = (CGSize){frame_width*count, CGRectGetHeight(self.view.frame)};
-
-  NSLog(@"update_category_list count:%d", count);
-
-  for (i = 0; i < count; i ++) {
-    // init tableView
-    UITableView* questionTableView = [[UITableView alloc] init];
-    questionTableView.delegate = self;
-    [questionTableView setRowHeight:ROW_HEIGHT];
-    questionTableView.dataSource = self;
-    [questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-
-    UILabel* titleLabel = [UILabel new];
-    titleLabel.text = stringArray[i];
-    titleLabel.frame = (CGRect){(0.5+i)*frame_width, 8, 40, 20};
-
-    QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
-
-    [questionCategory initialize:questionTableView titleLabel:titleLabel];
-    [self.questionCategories addObject:questionCategory];
-  }
-
-  self.navbarView = [[UIView alloc] init];
-
-  for (i = 0; i < count; i ++) {
-    QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:i];
-    UIView *pageView = [UIView new];
-    pageView.backgroundColor = [UIColor colorWithWhite:0.5 * i alpha:1.0];
-    pageView.frame = (CGRect){frame_width * i, 0, frame_width, CGRectGetHeight(self.view.frame)};
-    [self.scrollView addSubview:pageView];
-
-    [pageView addSubview:questionCategory.tableView];
-    [questionCategory.tableView setFrame:CGRectMake(0, 0, 
-                                           self.scrollView.frame.size.width,
-                                           self.scrollView.frame.size.height)];
-    [self.navbarView addSubview:questionCategory.titleLabel];
-  }
-
+    int i, count;
+    [self.questionCategories removeAllObjects];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
+    NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
+    
+    count = [stringArray count];
+    float frame_width = self.view.frame.size.width;
+    self.questionScrollView.contentSize = (CGSize){frame_width*count, CGRectGetHeight(self.view.frame)};
+    
+    NSLog(@"update_category_list count:%d", count);
+    
+    for (i = 0; i < count; i ++) {
+        // init tableView
+        UITableView* questionTableView = [[UITableView alloc] init];
+        questionTableView.delegate = self;
+        [questionTableView setRowHeight:ROW_HEIGHT];
+        questionTableView.dataSource = self;
+        [questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+        
+        UILabel* titleLabel = [UILabel new];
+        titleLabel.text = stringArray[i];
+        titleLabel.frame = (CGRect){(0.5+i)*frame_width, 8, 100, 20};
+        
+        QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
+        
+        [questionCategory initialize:questionTableView titleLabel:titleLabel];
+        [self.questionCategories addObject:questionCategory];
+    }
+    
+    self.navbarView = [[UIView alloc] init];
+    
+    for (i = 0; i < count; i ++) {
+        QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:i];
+        UIView *pageView = [UIView new];
+        pageView.backgroundColor = [UIColor colorWithWhite:0.5 * i alpha:1.0];
+        pageView.frame = (CGRect){frame_width * i, 0, frame_width, CGRectGetHeight(self.view.frame)};
+        [self.questionScrollView addSubview:pageView];
+        
+        [pageView addSubview:questionCategory.tableView];
+        [questionCategory.tableView setFrame:CGRectMake(0, 0,
+                                                        self.questionScrollView.frame.size.width,
+                                                        self.questionScrollView.frame.size.height)];
+        [self.navbarView addSubview:questionCategory.titleLabel];
+    }
+    
     // set pageControl
     self.pageControl = [[UIPageControl alloc] init];
     self.pageControl.frame = (CGRect){frame_width/2, 35, 0, 0};
     self.pageControl.numberOfPages = count;
     self.pageControl.currentPage = 0;
-    self.pageControl.currentPageIndicatorTintColor = [UIColor redColor];
-    self.pageControl.pageIndicatorTintColor = [UIColor greenColor];
+    self.pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
+    self.pageControl.pageIndicatorTintColor = [UIColor grayColor];
     [self.navbarView addSubview:self.pageControl];
-
+    
     [self.navigationController.navigationBar addSubview:self.navbarView];
 }
 
@@ -186,19 +186,19 @@
     
     self->bottom_num = 1;
     self.username=username_t;
-        
+    
     NSIndexPath *indexPath;
     for (int i=0; i<[self.currentQC.questions count]; i++) {
         [self.currentQC.questions removeObjectAtIndex:0];
         indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.currentQC.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
-
+    
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
     //NSLog(@"init_data, dbPath:%@", self->dbPath);
     return;
-
+    
     if (!userDefaults) {
         userDefaults = [NSUserDefaults standardUserDefaults];
     }
@@ -210,18 +210,21 @@
 
 - (void) load_category:(int) index
 {
-  NSLog(@"load_category, index:%d", index);
-  QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:index];
-  [questionCategory.tableView reloadData];
-  [self updateCategory:questionCategory.category];
-  // return if already loaded
-  if([questionCategory.questions count] >0)
-      return;
+    NSLog(@"load_category, index:%d", index);
+    QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:index];
+    [questionCategory.tableView reloadData];
+    [self updateCategory:questionCategory.category];
+    // return if already loaded
+    if([questionCategory.questions count] >0) {
+        NSLog(@"no need to load again");
+        return;
+    }
     
-  [PostsSqlite loadPosts:postsDB dbPath:dbPath category:questionCategory.category
-                 objects:questionCategory.questions
-           hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]
-               tableview:questionCategory.tableView];
+    [PostsSqlite loadPosts:postsDB dbPath:dbPath category:questionCategory.category
+                   objects:questionCategory.questions
+             hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]
+                 tableview:questionCategory.tableView];
+    NSLog(@"end load_category");
 }
 
 #pragma mark - refresh
@@ -246,9 +249,9 @@
     actIndHeader.hidesWhenStopped = YES;
     
     [headerView addSubview:actIndHeader];
-
+    
     self.currentQC.tableView.tableHeaderView = headerView;
-
+    
     // footerView
     footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
     
@@ -260,7 +263,7 @@
     actIndFooter.hidesWhenStopped = YES;
     
     [footerView addSubview:actIndFooter];
-
+    
     self.currentQC.tableView.tableFooterView = footerView;
 }
 
@@ -286,7 +289,7 @@
 - (bool)addToTableView:(int)index
                   post:(Posts*)post
 {
-  return YES; // TODO
+    return YES; // TODO
     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"] == 1) {
         if (post.readcount.intValue !=0 )
             return YES;
@@ -476,7 +479,7 @@
     // update score
     self.navigationController.navigationBarHidden = NO;
     [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
-
+    
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -522,7 +525,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  [self performSegueWithIdentifier:@"showDetail" sender:self];
+    [self performSegueWithIdentifier:@"showDetail" sender:self];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -612,6 +615,11 @@
         return cell;
     }
     else {
+      if (indexPath.row> [self.currentQC.questions count]) { // TODO
+        NSLog(@"Error cellForRowAtIndexPath. indexPath.row:%d, questions count:%d, current page:%d",
+              indexPath.row, [self.currentQC.questions count], self.pageControl.currentPage);
+        return nil;
+      }
         Posts *post = self.currentQC.questions[indexPath.row];
         [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
         [[cell.contentView viewWithTag:TAG_METADATA_IN_CELL]removeFromSuperview];
@@ -703,8 +711,8 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self isMenuShown])
-      return nil;
-
+        return nil;
+    
     UITableViewCell *cell = [self.currentQC.tableView cellForRowAtIndexPath:indexPath];
     if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
@@ -834,38 +842,38 @@
 
 #pragma mark - guesture
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (![self isQuestionChannel])
-        return;
-    // when reach the top
-    if (scrollView.contentOffset.y <= 0)
-    {
-        [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
-    }
+    // if (![self isQuestionChannel])
+    //     return;
+    // // when reach the top
+    // if (scrollView.contentOffset.y <= 0)
+    // {
+    //     [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+    // }
     
-    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
-    {
-        [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
-    }
+    // if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+    // {
+    //     [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+    // }
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if (![self isQuestionChannel])
         return;
-
+    
     // horizon scroll
     CGFloat xOffset = scrollView.contentOffset.x;
+    CGFloat yOffset = scrollView.contentOffset.y;
     CGFloat frame_width = self.view.frame.size.width;
-    if (xOffset < 1.0) {
-        self.pageControl.currentPage = 0;
-    } else {
-        self.pageControl.currentPage = (int)roundf(xOffset/frame_width);
-    }
-    NSLog(@"getCurrentTableView: %@, self.pageControl.currentPage:%d", self.currentQC.tableView, self.pageControl.currentPage);
-    NSLog(@"scrollView.contentOffset.y:%f", scrollView.contentOffset.y);
-    // load page
-    [self load_category:self.pageControl.currentPage];
+    NSLog(@"scrollViewDidEndDecelerating xOffset:%f, yOffset:%f", 
+          xOffset, yOffset);
+    NSLog(@"scrollView:%@", scrollView);
+    self.pageControl.currentPage = (int)roundf(self.questionScrollView.contentOffset.x/frame_width);
 
+    // load page
+    [self.currentQC.tableView reloadData];
+    [self load_category:self.pageControl.currentPage];
+    
     // TODO
     // // vertical scroll
     // // when reach the top
@@ -899,9 +907,9 @@
     [appearance setTitleTextAttributes:navbarTitleTextAttributes];
     NSString* category = nil;
     if([self.questionCategories count] != 0) {
-      category = self.currentQC.category;
+        category = self.currentQC.category;
     }
-
+    
     NSLog(@"addComponents self.category:%@", category);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (!category) {
@@ -936,7 +944,7 @@
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
     [btn addTarget:self action:@selector(showMenuViewController:)
-         forControlEvents:UIControlEventTouchUpInside];
+  forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
@@ -947,7 +955,7 @@
 {
     NSLog(@"configureNavigationTitle self.navigationItem.title: %@", self.navigationItem.title);
     if (![self isQuestionChannel])
-        return;    
+        return;
 }
 
 #pragma mark - private functions
