@@ -30,6 +30,7 @@
              dbPath:(NSString *) dbPath
 {
     [questionCategory.tableView reloadData];
+
     // return if already loaded
     if(questionCategory.isloaded) {
         NSLog(@"no need to load again");

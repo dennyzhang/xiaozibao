@@ -21,6 +21,7 @@
     int bottom_num;
     UIView* footerView;
     UIView* headerView;
+    int currentIndex;
 }
 
 @property (nonatomic, retain) NSString* username;
@@ -48,13 +49,14 @@
         return nil;
     }
     //NSLog(@"currentQC self.pageControl.currentPage:%d", self.pageControl.currentPage);
-    return [self.questionCategories objectAtIndex:self.pageControl.currentPage];
+    return [self.questionCategories objectAtIndex:currentIndex];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     NSLog(@"MasterViewController load");
+    currentIndex = 0;
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
     //init db connection
@@ -70,10 +72,13 @@
     // components
     [self addComponents];
     
-    // load default category
-    QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:0];
-    [QuestionCategory load_category:questionCategory postsDB:postsDB dbPath:dbPath];
-    [self updateCategory:questionCategory.category];
+    // load all default category from db
+    for(int i= [self.questionCategories count] -1; i>0; i--) {
+      currentIndex = i;
+      [QuestionCategory load_category:[self.questionCategories objectAtIndex:currentIndex]
+                            postsDB:postsDB dbPath:dbPath];
+    }
+    [self updateCategory:self.currentQC.category];
 
     // init table indicator
     // [self initTableIndicatorView]; // TODO
@@ -824,6 +829,21 @@
 
 #pragma mark - guesture
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // int nextIndex;
+    // QuestionCategory* nextQC;
+    // nextIndex = (int)roundf(self.questionScrollView.contentOffset.x/self.view.frame.size.width) + 1;
+    // nextQC = [self.questionCategories objectAtIndex:nextIndex];
+    // NSLog(@"scrollViewDidScroll nextIndex:%d, scrollView:%@", nextIndex, scrollView);
+    // if(!nextQC.isloaded) {
+    //   currentIndex = nextIndex;
+    //   [QuestionCategory load_category:nextQC postsDB:postsDB dbPath:dbPath];
+    //   currentIndex = currentIndex -1;
+    //   [self.currentQC.tableView reloadData];
+    // }
+
+    //QuestionCategory* qc1 = [self.questionCategories objectAtIndex:1];
+    //NSLog(@"first QuestionCategory.questions: %@", qc0.questions);
+    //NSLog(@"second QuestionCategory.questions: %@", qc1.questions);
     // if (![self isQuestionChannel])
     //     return;
     // // when reach the top
@@ -847,17 +867,13 @@
     CGFloat xOffset = scrollView.contentOffset.x;
     CGFloat yOffset = scrollView.contentOffset.y;
     CGFloat frame_width = self.view.frame.size.width;
-    NSLog(@"scrollViewDidEndDecelerating xOffset:%f, yOffset:%f", 
-          xOffset, yOffset);
-    NSLog(@"scrollView:%@", scrollView);
+    // NSLog(@"scrollViewDidEndDecelerating xOffset:%f, yOffset:%f", xOffset, yOffset);
+    // NSLog(@"scrollView:%@", scrollView);
     self.pageControl.currentPage = (int)roundf(self.questionScrollView.contentOffset.x/frame_width);
+    currentIndex = self.pageControl.currentPage;
 
     // load page
-    //[self.currentQC.tableView reloadData];
-    QuestionCategory* questionCategory = [self.questionCategories objectAtIndex:self.pageControl.currentPage];
-    [QuestionCategory load_category:questionCategory 
-                            postsDB:postsDB dbPath:dbPath];
-    [self updateCategory:questionCategory.category];
+    [self.currentQC.tableView reloadData];
 
     // TODO
     // // vertical scroll
