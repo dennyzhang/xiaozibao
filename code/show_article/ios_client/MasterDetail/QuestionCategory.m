@@ -35,6 +35,8 @@
         return;
     }
 
+    [questionCategory.tableView reloadData];
+    
     [PostsSqlite loadPosts:postsDB dbPath:dbPath category:questionCategory.category
                    objects:questionCategory.questions
              hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]

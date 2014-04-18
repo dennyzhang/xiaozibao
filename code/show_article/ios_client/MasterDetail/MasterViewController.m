@@ -73,7 +73,8 @@
     [self addComponents];
     
     // load all default category from db
-    for(int i=0; i< [self.questionCategories count]; i++) {
+    for(int i=[self.questionCategories count] -1; i>=0; i--) {
+      currentIndex =i;
       [QuestionCategory load_category:[self.questionCategories objectAtIndex:i]
                             postsDB:postsDB dbPath:dbPath];
     }
