@@ -18,9 +18,9 @@
 @interface MasterViewController () {
     sqlite3 *postsDB;
     NSString *dbPath;
-    int bottom_num;
     UIView* footerView;
     UIView* headerView;
+    int bottom_num;
     int currentIndex;
 }
 
@@ -54,34 +54,34 @@
 
 - (void) updateCategory
 {
-  NSLog(@"updateCategory navigationTitle:%@", self.navigationTitle);
+    NSLog(@"updateCategory navigationTitle:%@", self.navigationTitle);
     if ([self isQuestionChannel]) {
         self.navigationItem.title = @"";
         // caculate index by category
         NSString* category = [self.navigationTitle lowercaseString];
         int i, count = [self.questionCategories count];
         currentIndex = 0; // default value
-
+        
         for(i=0; i<count; i++) {
-          QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
-          if([category isEqualToString:qc.category]) {
-            currentIndex = i;
-            break;
-          }
+            QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
+            if([category isEqualToString:qc.category]) {
+                currentIndex = i;
+                break;
+            }
         }
         // refresh gui
         self.pageControl.currentPage = currentIndex;
         [self.currentQC.tableView reloadData];
         [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
-        self.questionScrollView.contentOffset = 
-            CGPointMake(self.pageControl.currentPage*self.view.frame.size.width, 0);
+        self.questionScrollView.contentOffset =
+        CGPointMake(self.pageControl.currentPage*self.view.frame.size.width, 0);
     }
     else {
         self.navigationItem.title = self.navigationTitle;
         // refresh gui
         currentIndex = 0; // TODO
         [self.currentQC.tableView reloadData];
-        [self.pageControl setHidden:YES];
+        //[self.pageControl setHidden:YES]; // TODO
     }
 }
 
@@ -811,6 +811,49 @@
     }
 }
 
+- (void)configureNavigationBar
+{
+    UIButton* btn;
+    // set header of navigation bar
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    UINavigationBar* appearance = self.navigationController.navigationBar;
+    
+    appearance.tintColor = [UIColor whiteColor];
+    [appearance setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor whiteColor],
+                                               NSForegroundColorAttributeName,
+                                               [UIFont fontWithName:FONT_NAME1 size:FONT_BIG],
+                                               NSFontAttributeName,
+                                               nil];
+    [appearance setTitleTextAttributes:navbarTitleTextAttributes];
+    // configure leftBarButton
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
+    [btn addTarget:self action:@selector(showMenuViewController:)
+  forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.leftBarButtonItem = settingButton;
+    
+    // configure rightBarButton
+    if ([self isQuestionChannel]) {
+        btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+        [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = TAG_BUTTON_COIN;
+        [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+        self.coinButton = btn;
+        NSInteger score = [UserProfile scoreByCategory:self.currentQC.category];
+        [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
+                              fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
+        UIBarButtonItem *coinButtonBarItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButtonBarItem, nil];
+    }
+}
+
 - (void) hideSwitchChanged:(id)sender {
     if ([sender isKindOfClass:[UISwitch class]]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -863,78 +906,37 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (![self isQuestionChannel])
-        return;
-    
-    // horizon scroll
-    //CGFloat xOffset = scrollView.contentOffset.x;
-    //CGFloat yOffset = scrollView.contentOffset.y;
-    CGFloat frame_width = self.view.frame.size.width;
-    // NSLog(@"scrollViewDidEndDecelerating xOffset:%f, yOffset:%f", xOffset, yOffset);
-    // NSLog(@"scrollView:%@", scrollView);
-    self.pageControl.currentPage = (int)roundf(self.questionScrollView.contentOffset.x/frame_width);
-    currentIndex = self.pageControl.currentPage;
-    
-    // load page
-    [self.currentQC.tableView reloadData];
-    
-    // TODO
-    // // vertical scroll
-    // // when reach the top
-    // if (scrollView.contentOffset.y <= 0)
-    // {
-    //     [self refreshTableHead];
-    // }
-    
-    // // when reaching the bottom
-    // if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
-    // {
-    //     [self refreshTableTail];
-    // }
-}
+    if ([self isQuestionChannel])
+    {
+        // horizon scroll
+        //CGFloat xOffset = scrollView.contentOffset.x;
+        //CGFloat yOffset = scrollView.contentOffset.y;
+        // NSLog(@"scrollViewDidEndDecelerating xOffset:%f, yOffset:%f", xOffset, yOffset);
+        // NSLog(@"scrollView:%@", scrollView);
 
-- (void)configureNavigationBar
-{
-    UIButton* btn;
-    // set header of navigation bar
-    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    UINavigationBar* appearance = self.navigationController.navigationBar;
-    
-    appearance.tintColor = [UIColor whiteColor];
-    [appearance setBackgroundImage:[UIImage imageNamed:@"navigation_header.png"] forBarMetrics:UIBarMetricsDefault];
-    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               [UIColor whiteColor],
-                                               NSForegroundColorAttributeName,
-                                               [UIFont fontWithName:FONT_NAME1 size:FONT_BIG],
-                                               NSFontAttributeName,
-                                               nil];
-    [appearance setTitleTextAttributes:navbarTitleTextAttributes];
-    // configure leftBarButton
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
-    [btn addTarget:self action:@selector(showMenuViewController:)
-  forControlEvents:UIControlEventTouchUpInside];
-    [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.leftBarButtonItem = settingButton;
-    
-    // configure rightBarButton
-    if ([self isQuestionChannel]) {
-        btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-        [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-        btn.tag = TAG_BUTTON_COIN;
-        [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
-        self.coinButton = btn;
-        NSInteger score = [UserProfile scoreByCategory:self.currentQC.category];
-        [ComponentUtil addTextToButton:btn text:[NSString stringWithFormat: @"%d", (int)score]
-                              fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
-        UIBarButtonItem *coinButtonBarItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        CGFloat frame_width = self.view.frame.size.width;
+        self.pageControl.currentPage = (int)roundf(self.questionScrollView.contentOffset.x/frame_width);
+        currentIndex = self.pageControl.currentPage;
         
-        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButtonBarItem, nil];
+        // load page
+        [self.currentQC.tableView reloadData];
+        
+        // TODO
+        // // vertical scroll
+        // // when reach the top
+        // if (scrollView.contentOffset.y <= 0)
+        // {
+        //     [self refreshTableHead];
+        // }
+        
+        // // when reaching the bottom
+        // if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+        // {
+        //     [self refreshTableTail];
+        // }
     }
 }
+
 
 #pragma mark - private functions
 - (BOOL) isQuestionChannel
