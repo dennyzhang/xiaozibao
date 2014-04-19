@@ -141,7 +141,9 @@
       self.navigationItem.title = self.navigationTitle;
     }
     // ToolTip
-    [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click the coin to see the learning stastics."];
+    if ([self isQuestionChannel]) {
+      [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click the coin to see the learning stastics."];
+    }
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
                                   msg:@"Click or swipe to change the question channel."];
     [[MyToolTip singleton] showToolTip];
