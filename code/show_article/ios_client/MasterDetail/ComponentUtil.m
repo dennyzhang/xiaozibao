@@ -286,15 +286,27 @@
 
 + (void)configureVerticalAlign:(UITextView*) tv
 {
+    // NOTICE: set contentOffset doesn't work before viewDidAppear
     //center vertical alignment
     CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
     topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+   // NSLog(@"configureVerticalAlign bounds height:%f, contentSize height:%f, topCorrect:%f",
+   //       [tv bounds].size.height, [tv contentSize].height, topCorrect);
+
     tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
 
    // //Bottom vertical alignment  
    // CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height);  
    //  topCorrect = (topCorrect <0.0 ? 0.0 : topCorrect);  
    //  tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};  
+}
+
++ (CGFloat) yoffsetVerticalAlign:(UITextView*) tv
+{
+    //center vertical alignment
+    CGFloat topCorrect = ([tv bounds].size.height - [ComponentUtil measureHeightOfUITextView:tv] * [tv zoomScale])/2.0;
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    return topCorrect;
 }
 
 @end

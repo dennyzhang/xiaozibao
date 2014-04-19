@@ -264,14 +264,12 @@
     imageView.userInteractionEnabled = TRUE;
     [scrollView addSubview:imageView];
     
-    self.questionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 5.0f,
+    self.questionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 0.0f,
                                                                          imageView.frame.size.width - 20.0f,
                                                                          imageView.frame.size.height - 10.0f)];
     questionTextView.editable = NO;
     questionTextView.backgroundColor = [UIColor clearColor];
     [questionTextView setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SIZE_TITLE]];
-    [ComponentUtil configureVerticalAlign:self.questionTextView];
-
     [imageView addSubview:questionTextView];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -368,7 +366,12 @@
 {
     // configure data
     self.questionTextView.text = [self getQuestion:self.detailItem.content];
-    [ComponentUtil configureVerticalAlign:self.questionTextView];
+    // align for center
+    self.questionTextView.frame = CGRectMake(self.questionTextView.frame.origin.x,
+                                            [ComponentUtil yoffsetVerticalAlign:self.questionTextView],
+                                            self.questionTextView.frame.size.width,
+                                           self.questionTextView.frame.size.height);
+
     self.detailUITextView.text = [self getContent:self.detailItem.content];
     // refresh layout
 

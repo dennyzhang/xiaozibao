@@ -48,4 +48,5 @@
 + (NSString *) caculateKey:(id)withObject msg:(NSString*) msg;
 + (NSString *) md5:(NSString *)str;
 + (void)configureVerticalAlign:(UITextView*) tv;
++ (CGFloat) yoffsetVerticalAlign:(UITextView*) tv;
 @end
