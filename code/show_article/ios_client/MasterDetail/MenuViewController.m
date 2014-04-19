@@ -78,6 +78,7 @@
           // load view
             MasterViewController* dstViewController = segue.destinationViewController;
             dstViewController.navigationTitle = c.textLabel.text;
+            //dstViewController.questionScrollView.scrollEnabled  = YES;
             [dstViewController view];
         }
         else { // disable actions

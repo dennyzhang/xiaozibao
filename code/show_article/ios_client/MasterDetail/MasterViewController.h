@@ -47,5 +47,6 @@
 #define ROW_HEIGHT 160.0f
 
 @property (nonatomic, retain) NSString* navigationTitle;
+@property (nonatomic, strong) UIScrollView *questionScrollView;
 
 @end

@@ -27,7 +27,6 @@
 @property (nonatomic, retain) NSMutableArray *questionCategories;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 
-@property (nonatomic, strong) UIScrollView *questionScrollView;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIView *navbarView;
 
@@ -36,7 +35,7 @@
 
 @implementation MasterViewController
 
-@synthesize navigationTitle;
+@synthesize navigationTitle, questionScrollView;
 @synthesize currentQC = _currentQC;
 - (void) setCurrentQC:(QuestionCategory *)qc {
     NSLog(@"setCurrentQC ERROR: should not call here: %@", qc);
@@ -134,8 +133,6 @@
         
         // configure tooltip
         [self updateCategory];
-        NSLog(@"after load self.pageControl.currentPage: %d, self.pageControl.numberOfPages:%d",
-              self.pageControl.currentPage, self.self.pageControl.numberOfPages);
     }
     else {
       self.navigationItem.title = self.navigationTitle;
@@ -147,7 +144,8 @@
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
                                   msg:@"Click or swipe to change the question channel."];
     [[MyToolTip singleton] showToolTip];
-    
+
+    NSLog(@"after load");
 }
 
 - (void) configureScrollView {
@@ -177,6 +175,7 @@
         QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
         UITableView* questionTableView = qc.tableView;
         questionTableView.delegate = self;
+        questionTableView.scrollEnabled = NO;
         [questionTableView setRowHeight:ROW_HEIGHT];
         questionTableView.dataSource = self;
         [questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
@@ -478,7 +477,8 @@
 
 - (void) showMenuViewController:(id)sender
 {
-    [self showMenuView:TRUE];
+    NSLog(@"showMenuViewController");
+    [self showMenuView:![self isMenuShown]];
 }
 
 - (void) showMenuView:(BOOL)shouldShow
@@ -486,9 +486,11 @@
     SWRevealViewController* rvc = self.revealViewController;
     if (shouldShow) {
         [rvc revealToggleAnimated:YES];
+        //self.questionScrollView.scrollEnabled  = NO;
     }
     else {
         [rvc rightRevealToggleAnimated:YES];
+        //self.questionScrollView.scrollEnabled  = YES;
     }
 }
 
@@ -502,21 +504,16 @@
     [super awakeFromNib];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     // update score
-    //self.navigationController.navigationBarHidden = NO;
-    [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
-    //[self.navbarView setHidden:NO];
+    if ([self isQuestionChannel]) {
+      [ComponentUtil updateScoreText:self.currentQC.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
-    
     [super viewWillDisappear:animated];
     //[self.navbarView setHidden:YES];
 }
@@ -747,7 +744,7 @@
     if ([self isMenuShown])
         return nil;
     
-    UITableViewCell *cell = [self.currentQC.tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite questions?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
@@ -859,8 +856,7 @@
     // configure leftBarButton
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH_SMALL, ICON_HEIGHT_SMALL)];
-    [btn addTarget:self action:@selector(showMenuViewController:)
-  forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(showMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
@@ -978,8 +974,25 @@
     // }
 }
 
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+  NSLog(@"scrollViewWillBeginDecelerating contentOffset.x:%f, contentOffset.y:%f",
+        scrollView.contentOffset.x, scrollView.contentOffset.y);
+  NSLog(@"scrollView:%@, [self isMenuShown]:%d", scrollView, [self isMenuShown]);
+
+  // scroll to show 
+  if (scrollView.contentOffset.x == 0.0 && scrollView.contentOffset.y == 0.0)
+    {
+      if (![self isMenuShown]) {
+        [self showMenuView:YES];
+      }
+    }
+}
+
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+  NSLog(@"scrollViewDidEndDecelerating contentOffset.x:%f, contentOffset.y:%f", scrollView.contentOffset.x, scrollView.contentOffset.y);
+  NSLog(@"[self isMenuShown]:%d", [self isMenuShown]);
     if ([self isQuestionChannel])
     {
         // horizon scroll
@@ -1012,7 +1025,6 @@
         // }
     }
 }
-
 
 #pragma mark - private functions
 - (BOOL) isQuestionChannel
