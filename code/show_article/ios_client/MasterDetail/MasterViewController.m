@@ -91,7 +91,7 @@
 {
     [super viewDidLoad];
     NSLog(@"MasterViewController load");
-
+    
     currentIndex = 0;
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -100,46 +100,52 @@
     self->dbPath = [PostsSqlite getDBPath];
     
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
-    
-    [self configureScrollView];
+
     [self configureNavigationBar];
-    
-    // init data
-    self.questionCategories = [[QuestionCategory singleton] getAllCategories];
-    [self layoutCategoryList];
-    
-    // load all default category from db
-    for(int i=[self.questionCategories count] -1; i>=0; i--) {
-        currentIndex =i;
-        [QuestionCategory load_category:[self.questionCategories objectAtIndex:i]
-                                postsDB:postsDB dbPath:dbPath];
+
+    if ([self isQuestionChannel]) {
+        [self configureScrollView];
+        // init data
+        self.questionCategories = [[QuestionCategory singleton] getAllCategories];
+        [self layoutCategoryList];
+        
+        // load all default category from db
+        for(int i=[self.questionCategories count] -1; i>=0; i--) {
+            currentIndex =i;
+            [QuestionCategory load_category:[self.questionCategories objectAtIndex:i]
+                                    postsDB:postsDB dbPath:dbPath];
+        }
+        
+        // init table indicator
+        // [self initTableIndicatorView]; // TODO
+        
+        //self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+        
+        NSLog(@"before guesture");
+        // //swipe guesture
+        // UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe:)];
+        // [self.currentQC.tableView addGestureRecognizer:swipe];
+        // swipe.delegate = self;
+        // //swipe guesture
+        // UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
+        // leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
+        // [self.currentQC.tableView addGestureRecognizer:leftswipe];
+        // leftswipe.delegate = self;
+        
+        // configure tooltip
+        [self updateCategory];
+        NSLog(@"after load self.pageControl.currentPage: %d, self.pageControl.numberOfPages:%d",
+              self.pageControl.currentPage, self.self.pageControl.numberOfPages);
     }
-    
-    // init table indicator
-    // [self initTableIndicatorView]; // TODO
-    
-    //self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-    
-    NSLog(@"before guesture");
-    // //swipe guesture
-    // UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe:)];
-    // [self.currentQC.tableView addGestureRecognizer:swipe];
-    // swipe.delegate = self;
-    // //swipe guesture
-    // UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
-    // leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
-    // [self.currentQC.tableView addGestureRecognizer:leftswipe];
-    // leftswipe.delegate = self;
-    
-    // configure tooltip
+    else {
+      self.navigationItem.title = self.navigationTitle;
+    }
+    // ToolTip
     [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click the coin to see the learning stastics."];
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
                                   msg:@"Click or swipe to change the question channel."];
     [[MyToolTip singleton] showToolTip];
     
-    [self updateCategory];
-    NSLog(@"after load self.pageControl.currentPage: %d, self.pageControl.numberOfPages:%d",
-          self.pageControl.currentPage, self.self.pageControl.numberOfPages);
 }
 
 - (void) configureScrollView {
@@ -172,7 +178,7 @@
         [questionTableView setRowHeight:ROW_HEIGHT];
         questionTableView.dataSource = self;
         [questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-
+        
         UIView *pageView = [UIView new];
         [self.questionScrollView addSubview:pageView];
         pageView.backgroundColor = [UIColor colorWithWhite:0.5 * i alpha:1.0];
@@ -189,22 +195,22 @@
     self.pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
     self.pageControl.pageIndicatorTintColor = [UIColor grayColor];
     [self.navbarView addSubview:self.pageControl];
-
+    
     // Note: self.navigationController may not be set before viewDidLoad
     // [self.navigationController.navigationBar addSubview:self.navbarView];
-
+    
     self.navigationItem.titleView = self.navbarView;
     self.navbarView.frame = (CGRect){40, 0, self.view.frame.size.width - 80, 64};
     self.pageControl.frame = (CGRect){self.navbarView.frame.size.width/2,
-                                      self.navbarView.frame.size.height - 20, 0, 0};
-
+        self.navbarView.frame.size.height - 20, 0, 0};
+    
     // set frame
     for (i = 0; i < count; i ++) {
         // set table frame
         QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
         [qc.tableView setFrame:CGRectMake(0, 0,
-                                            self.questionScrollView.frame.size.width,
-                                            self.questionScrollView.frame.size.height)];
+                                          self.questionScrollView.frame.size.width,
+                                          self.questionScrollView.frame.size.height)];
         // set label frame
         CGFloat navbar_width = self.navbarView.frame.size.width;
         qc.titleLabel.frame = (CGRect){navbar_width*(i + 0.5) - 40, 5, 100, 40};
@@ -508,7 +514,7 @@
 
 - (void) viewWillDisappear:(BOOL)animated
 {
-
+    
     [super viewWillDisappear:animated];
     //[self.navbarView setHidden:YES];
 }
@@ -917,24 +923,24 @@
     //int index = (int)roundf(xOffset/frame_width);
     
     int i, count = [self.questionCategories count];
-
+    
     QuestionCategory* qc;
-
+    
     qc = [self.questionCategories objectAtIndex:0];
     // NSLog(@"before qc[0] x:%f", qc.titleLabel.frame.origin.x);
-
+    
     labelxOffset = (-xOffset * navbar_width) /frame_width + 0.5*navbar_width;
     labelxOffset = labelxOffset - 20; // align better
     
     // NSLog(@"scrollViewDidScroll. xOffset:%f, navbar_width:%f, labelxOffset:%f",
     //       xOffset, navbar_width, labelxOffset);
-
+    
     for(i=0; i<count; i++) {
         qc = [self.questionCategories objectAtIndex:i];
-
+        
         qc.titleLabel.frame = CGRectMake(labelxOffset,
                                          qc.titleLabel.frame.origin.y,
-                                         qc.titleLabel.frame.size.width, 
+                                         qc.titleLabel.frame.size.width,
                                          qc.titleLabel.frame.size.height);
         
         labelxOffset = labelxOffset + navbar_width;
@@ -944,7 +950,7 @@
         //       qc.titleLabel.frame.size.height,
         //       qc.titleLabel.text);
     }
-
+    
     // change color when scroll
     
     // self.navTitleLabel1.alpha = 1 - xOffset / 320;
@@ -954,8 +960,8 @@
     //     self.navTitleLabel2.alpha = 1 - (xOffset - 320) / 320;
     // }
     // self.navTitleLabel3.alpha = (xOffset - 320) / 320;
-
-
+    
+    
     // if (![self isQuestionChannel])
     //     return;
     // // when reach the top
