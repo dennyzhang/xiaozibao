@@ -102,4 +102,14 @@
     questionCategory.isloaded = YES;
 }
 
++(void)clearIsLoaded
+{
+  NSMutableArray *questionCategories = [[QuestionCategory singleton] getAllCategories];
+  int i, count = [questionCategories count];
+  for(i=0; i<count; i++) {
+    QuestionCategory* qc = [questionCategories objectAtIndex:i];
+    qc.isloaded = NO;
+  }
+}
+
 @end

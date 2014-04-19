@@ -883,6 +883,7 @@
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         UISwitch* switchControl = sender;
         if (switchControl.tag == TAG_SWITCH_HIDE_READ_POST) {
+            [QuestionCategory clearIsLoaded];
             if (switchControl.on == true) {
                 [userDefaults setInteger:1 forKey:@"HideReadPosts"];
             }

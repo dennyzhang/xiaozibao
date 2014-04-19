@@ -19,9 +19,7 @@
 @property (nonatomic, retain) NSMutableArray *allCategories;
 
 +(QuestionCategory *)singleton;
-
-- (void)initialize:(UITableView*)tableView_t
-        titleLabel:(UILabel*)titleLabel_t;
++(void)clearIsLoaded;
 
 - (NSMutableArray*) getAllCategories;
 
