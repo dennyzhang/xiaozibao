@@ -563,7 +563,7 @@
 {
     if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
         if (section == 0) {
-            return 4;
+            return 5;
         }
         if (section == 1) {
             return 2;
@@ -624,6 +624,24 @@
             cell.textLabel.text = CLEAN_CACHE;
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
+
+        if (indexPath.row == 4) {
+            cell.textLabel.text = USER_ID;
+            CGFloat field_width = 225;
+            CGFloat frame_width = self.view.frame.size.width;
+            UITextField *playerTextField = [[UITextField alloc] 
+                                            initWithFrame:CGRectMake(frame_width - field_width,
+                                                                     10, field_width, 30)];
+            playerTextField.text = [ComponentUtil getUserId];
+            playerTextField.font = [UIFont systemFontOfSize:FONT_TINY];
+            playerTextField.textAlignment = NSTextAlignmentRight;
+            playerTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            playerTextField.returnKeyType = UIReturnKeyDone;
+            playerTextField.borderStyle = UITextBorderStyleNone;
+            playerTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+            playerTextField.delegate = self;
+            cell.accessoryView = playerTextField;
+        }
     }
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -634,6 +652,12 @@
             cell.textLabel.text = FOLLOW_MAILTO;
         }
     }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"Userid"];
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

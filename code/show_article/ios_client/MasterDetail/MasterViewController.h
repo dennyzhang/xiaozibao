@@ -21,8 +21,10 @@
 
 @class DetailViewController;
 
-@interface MasterViewController : UIViewController <UIGestureRecognizerDelegate, UIScrollViewDelegate,
-                                                    UITableViewDelegate, UITableViewDataSource>
+@interface MasterViewController : UIViewController <
+                UIGestureRecognizerDelegate, UIScrollViewDelegate,
+                UITableViewDelegate, UITableViewDataSource,
+                                UITextFieldDelegate>
 
 #define TAG_BUTTON_COIN 4001
 #define TAG_TEXTVIEW_IN_CELL 1001
@@ -39,6 +41,7 @@
 #define TAG_TABLE_FOOTER_INDIACTOR 1011
 
 #define CLEAN_CACHE @"Clean cache"
+#define USER_ID @"User id"
 #define FOLLOW_TWITTER @"Follow us on Twitter"
 #define FOLLOW_WEIBO @"Follow us on Weibo"
 #define FOLLOW_MAILTO @"Mail to us"

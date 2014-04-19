@@ -244,8 +244,10 @@
 
 + (BOOL)shouldMixpanel
 {
-    if ([[ComponentUtil getUserId] isEqualToString:@"AA6B312A-E380-477A-A593-3F9484C39E59"])
-        return NO;
+  NSRange range = [[[ComponentUtil getUserId] lowercaseString] rangeOfString:@"test"];
+  if (range.location != NSNotFound) {
+    return NO;
+  }
 
     return ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] != 1);
 }
