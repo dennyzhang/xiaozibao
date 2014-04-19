@@ -921,13 +921,13 @@
     QuestionCategory* qc;
 
     qc = [self.questionCategories objectAtIndex:0];
-    NSLog(@"before qc[0] x:%f", qc.titleLabel.frame.origin.x);
+    // NSLog(@"before qc[0] x:%f", qc.titleLabel.frame.origin.x);
 
     labelxOffset = (-xOffset * navbar_width) /frame_width + 0.5*navbar_width;
     labelxOffset = labelxOffset - 20; // align better
     
-    NSLog(@"scrollViewDidScroll. xOffset:%f, navbar_width:%f, labelxOffset:%f",
-          xOffset, navbar_width, labelxOffset);
+    // NSLog(@"scrollViewDidScroll. xOffset:%f, navbar_width:%f, labelxOffset:%f",
+    //       xOffset, navbar_width, labelxOffset);
 
     for(i=0; i<count; i++) {
         qc = [self.questionCategories objectAtIndex:i];
