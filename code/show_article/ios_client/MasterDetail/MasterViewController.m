@@ -193,7 +193,6 @@
     // Note: self.navigationController may not be set before viewDidLoad
     // [self.navigationController.navigationBar addSubview:self.navbarView];
 
-    NSLog(@"self.navigationItem.titleView:%@", self.navigationItem.titleView);
     self.navigationItem.titleView = self.navbarView;
     self.navbarView.frame = (CGRect){40, 0, self.view.frame.size.width - 80, 64};
     self.pageControl.frame = (CGRect){self.navbarView.frame.size.width/2,

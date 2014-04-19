@@ -19,7 +19,7 @@
   self.questions = [[NSMutableArray alloc] init];
   self.tableView = tableView_t;
   self.titleLabel = titleLabel_t;
-  self.category = self.titleLabel.text;
+  self.category = [self.titleLabel.text lowercaseString];
   self.isloaded = NO;
   // NSLog(@"initalize self.tableView:%@", self.tableView); //TODO
 }
