@@ -45,12 +45,12 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="pGg-6v-bdr" id="0ne-17-eZr"/>
+                            <outlet property="dataSource" destination="pGg-6v-bdr" id="iKC-6w-Qtc"/>
                             <outlet property="delegate" destination="pGg-6v-bdr" id="Uwf-8e-F12"/>
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Master" id="tQt-TN-PWz"/>
+                    <navigationItem key="navigationItem" title="Master" id="3be-5W-OJB"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>

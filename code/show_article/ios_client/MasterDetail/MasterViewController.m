@@ -908,31 +908,16 @@
         UISwitch* switchControl = sender;
         if (switchControl.tag == TAG_SWITCH_HIDE_READ_POST) {
             [QuestionCategory clearIsLoaded];
-            if (switchControl.on == true) {
-                [userDefaults setInteger:1 forKey:@"HideReadPosts"];
-            }
-            else {
-                [userDefaults setInteger:0 forKey:@"HideReadPosts"];
-            }
+            [userDefaults setInteger:(int)switchControl.on forKey:@"HideReadPosts"];
             [userDefaults synchronize];
         }
         if (switchControl.tag == TAG_SWITCH_EDITOR_MODE) {
-            if (switchControl.on == true) {
-                [userDefaults setInteger:1 forKey:@"IsEditorMode"];
-            }
-            else {
-                [userDefaults setInteger:0 forKey:@"IsEditorMode"];
-            }
+            [userDefaults setInteger:(int)switchControl.on forKey:@"IsEditorMode"];
             [userDefaults synchronize];
         }
         if (switchControl.tag == TAG_SWITCH_DEBUG_MODE) {
-            if (switchControl.on == true) {
-                [userDefaults setInteger:1 forKey:@"IsDebugMode"];
-            }
-            else {
-                [userDefaults setInteger:0 forKey:@"IsDebugMode"];
-            }
-            [userDefaults synchronize];
+          [userDefaults setInteger:(int)switchControl.on forKey:@"IsDebugMode"];
+          [userDefaults synchronize];
         }
     }
 }

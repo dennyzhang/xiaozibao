@@ -448,7 +448,7 @@
 
 -(void) bannerViewDidLoadAd:(ADBannerView *)banner
 {
-  NSLog(@"bannerViewDidLoadAd");
+  NSLog(@"DetailViewController bannerViewDidLoadAd");
   if(!self.bannerIsVisible)
   {
     [self displayBanner:banner isDisplay:YES];
@@ -458,7 +458,7 @@
  
 -(void) bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-  NSLog(@"didFailToReceiveAdWithError");
+  NSLog(@"DetailViewController didFailToReceiveAdWithError");
   if(self.bannerIsVisible)
   {
     [self displayBanner:banner isDisplay:NO];
@@ -521,7 +521,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"viewWillAppear");
+    NSLog(@"DetailViewController viewWillAppear");
     [self.navigationController setToolbarHidden:YES animated:YES];
 
     self.navigationItem.title = @"Question";
@@ -542,7 +542,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear");
+    NSLog(@"DetailViewController viewWillDisappear");
     
     int seconds = (int)ceilf([NSDate timeIntervalSinceReferenceDate] - startTime);
     
