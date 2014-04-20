@@ -101,7 +101,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Ah7-4n-0Wa" kind="custom" identifier="showDetail" customClass="SWRevealViewControllerSegue" id="Osl-jG-Nta"/>
+                                            <segue destination="Ah7-4n-0Wa" kind="push" identifier="showDetail" customClass="SWRevealViewControllerSegue" id="Osl-jG-Nta"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -197,7 +197,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-446" y="-320"/>
+            <point key="canvasLocation" x="6" y="-252"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
