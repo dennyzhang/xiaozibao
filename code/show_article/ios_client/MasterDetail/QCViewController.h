@@ -36,4 +36,5 @@
 #define ROW_HEIGHT 160.0f
 
 @property (atomic, retain) QuestionCategory *currentQC;
+
 @end

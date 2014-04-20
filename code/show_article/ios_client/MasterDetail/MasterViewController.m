@@ -7,14 +7,6 @@
 //
 
 #import "MasterViewController.h"
-#import "QuestionCategory.h"
-
-#import "DetailViewController.h"
-#import "AFJSONRequestOperation.h"
-#import "SWRevealViewController.h"
-#import "QuestionCategory.h"
-
-#import <CoreFoundation/CFUUID.h>
 
 @interface MasterViewController ()
 
