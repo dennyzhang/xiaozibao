@@ -182,15 +182,13 @@ NSLock *lock;
     return post;
 }
 
-+ (bool)loadPosts: (sqlite3 *)postsDB
++ (void)getDefaultPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
             category:(NSString *)category
           objects:(NSMutableArray *) objects
     hideReadPosts:(BOOL) hideReadPosts
-        tableview:(UITableView *)tableview
 {
     NSLog(@"loadposts, category:%@, hideReadPosts:%d",category, hideReadPosts);
-    bool ret = NO;
     NSString *querySQL;
     if ([category isEqualToString:SAVED_QUESTIONS]) {
       querySQL = @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10";
@@ -208,11 +206,7 @@ NSLock *lock;
 
     for(int i=[posts count] - 1; i>=0; i--) {
       [objects insertObject:posts[i] atIndex:0];                
-      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-      [tableview insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-      ret = YES;
     }
-    return ret;
 }
 
 + (bool)loadRecommendPosts: (sqlite3 *)postsDB
@@ -228,7 +222,6 @@ NSLock *lock;
     NSLog(@"sql: %@", querySQL);
 
     NSMutableArray* posts = [PostsSqlite getPostsBySql:postsDB dbPath:dbPath querySQL:querySQL];
-
     for(int i=[posts count] - 1; i>=0; i--) {
       [objects insertObject:posts[i] atIndex:0];
                 

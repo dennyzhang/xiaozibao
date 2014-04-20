@@ -105,6 +105,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="lcO-WH-N81" id="MOr-62-hd6"/>
+                                    <outlet property="delegate" destination="lcO-WH-N81" id="7i4-qG-MEe"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

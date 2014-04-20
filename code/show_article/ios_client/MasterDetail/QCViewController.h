@@ -13,7 +13,7 @@
 @interface QCViewController : UIViewController <
   UITableViewDelegate, UITableViewDataSource,
   UITextFieldDelegate>
-#define TAG_BUTTON_COIN 4001
+
 #define TAG_TEXTVIEW_IN_CELL 1001
 #define TAG_METADATA_IN_CELL 1002
 #define TAG_ICON_IN_CELL 1003
@@ -22,7 +22,6 @@
 #define TAG_SWITCH_EDITOR_MODE 1006
 #define TAG_SWITCH_DEBUG_MODE 1007
 #define TAG_VOTEUP_TEXT 1008
-#define TAG_MASTERVIEW_SCORE_TEXT 1009
 
 #define TAG_TABLE_HEADER_INDIACTOR 1010
 #define TAG_TABLE_FOOTER_INDIACTOR 1011

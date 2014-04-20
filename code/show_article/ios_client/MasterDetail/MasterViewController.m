@@ -170,6 +170,9 @@
         return nil;
     }else{
         QCViewController *contentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"qcViewController"];
+        contentVC.currentQC = [self.questionCategories objectAtIndex:index];
+        NSLog(@"index:%d, contentVC.currentQC:%@, category:%@", index, contentVC.currentQC, contentVC.currentQC.category);
+
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *guideImg;
             
@@ -185,7 +188,6 @@
               UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.frame];
               [contentVC.view addSubview:imgView];
               NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, index+1];
-              NSLog(@"imgName:%@", imgName);
               imgView.image = [UIImage imageNamed:imgName];
             }
             contentVC.view.tag = index;

@@ -15,13 +15,30 @@
 
 - (void)initialize:(UITableView*)tableView_t
         titleLabel:(UILabel*)titleLabel_t
+          category:(NSString*)category_t
 {
   self.questions = [[NSMutableArray alloc] init];
   self.tableView = tableView_t;
   self.titleLabel = titleLabel_t;
-  self.category = [self.titleLabel.text lowercaseString];
+  self.category = category_t;
   self.isloaded = NO;
   // NSLog(@"initalize self.tableView:%@", self.tableView); //TODO
+}
+
+-(void) loadPosts:(sqlite3 *)postsDB
+           dbPath:(NSString *)dbPath
+{
+  if(self.isloaded) {
+    NSLog(@"loadPosts: no need to load again");
+    return;
+  }
+  [PostsSqlite getDefaultPosts:postsDB
+                        dbPath:dbPath
+                      category:self.category
+                       objects:self.questions
+                 hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]];
+
+  self.isloaded = YES;
 }
 
 // TODO: memory leak
@@ -51,7 +68,7 @@
     NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
     
     count = [stringArray count];
-    NSLog(@"update_category_list count:%d", count);
+    //NSLog(@"update_category_list count:%d", count);
     
     for (i = 0; i < count; i ++) {
         // init tableView
@@ -63,7 +80,9 @@
         titleLabel_t.textColor = [UIColor whiteColor];
         
         QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
-        [questionCategory initialize:questionTableView titleLabel:titleLabel_t];
+        [questionCategory initialize:questionTableView
+                          titleLabel:titleLabel_t
+                            category:[titleLabel_t.text lowercaseString]];
         [self.allCategories addObject:questionCategory];
     }
   return allCategories;
@@ -83,25 +102,6 @@
   return (![oldCategoryList isEqualToString:[NSString stringWithFormat:@"%@,", categoryList]]);
 }
 
-+ (void) load_category:(QuestionCategory*) questionCategory
-               postsDB:(sqlite3 *)postsDB
-             dbPath:(NSString *) dbPath
-{
-    // return if already loaded
-    if(questionCategory.isloaded) {
-        NSLog(@"no need to load again");
-        return;
-    }
-
-    [questionCategory.tableView reloadData];
-    
-    [PostsSqlite loadPosts:postsDB dbPath:dbPath category:questionCategory.category
-                   objects:questionCategory.questions
-             hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]
-                 tableview:questionCategory.tableView];
-    questionCategory.isloaded = YES;
-}
-
 +(void)clearIsLoaded
 {
   NSMutableArray *questionCategories = [[QuestionCategory singleton] getAllCategories];
@@ -111,6 +111,5 @@
     qc.isloaded = NO;
   }
 }
-
 
 @end

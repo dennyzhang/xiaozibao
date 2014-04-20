@@ -28,7 +28,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    self->postsDB = [PostsSqlite openSqlite:dbPath];
+    self->dbPath = [PostsSqlite getDBPath];
+
+    // self.currentQC.tableView.delegate = self;
+    // [self.currentQC.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.currentQC loadPosts:self->postsDB dbPath:self->dbPath];
+
+    NSLog(@"QCViewController viewDidLoad");
+    NSLog(@"currentQC:%@, current category:%@, currentQC questions count:%d",
+          self.currentQC, self.currentQC.category, [self.currentQC.questions count]);
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,11 +60,6 @@
 */
 
 #pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [self.currentQC.questions count];
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

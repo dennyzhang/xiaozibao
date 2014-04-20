@@ -42,12 +42,11 @@
 + (bool)cleanCache: (sqlite3 *)postsDB
             dbPath:(NSString *)dbPath;
 
-+ (bool)loadPosts: (sqlite3 *)postsDB
++ (void)getDefaultPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
             category:(NSString *)category
           objects:(NSMutableArray *) objects
-    hideReadPosts:(BOOL) hideReadPosts
-        tableview:(UITableView *)tableview;
+      hideReadPosts:(BOOL) hideReadPosts;
 
 + (bool)loadRecommendPosts: (sqlite3 *)postsDB
            dbPath:(NSString *) dbPath
