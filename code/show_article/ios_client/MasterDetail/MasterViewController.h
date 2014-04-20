@@ -51,4 +51,5 @@
 
 @property (nonatomic, retain) NSString* navigationTitle;
 @property (nonatomic, strong) UIScrollView *questionScrollView;
+@property (retain, nonatomic) IBOutlet UIButton *triggerBtn;
 @end

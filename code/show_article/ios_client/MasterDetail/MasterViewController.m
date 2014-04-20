@@ -35,7 +35,7 @@
 
 @implementation MasterViewController
 
-@synthesize navigationTitle, questionScrollView;
+@synthesize navigationTitle, questionScrollView, triggerBtn;
 @synthesize currentQC = _currentQC;
 - (void) setCurrentQC:(QuestionCategory *)qc {
     NSLog(@"setCurrentQC ERROR: should not call here: %@", qc);
@@ -166,7 +166,7 @@
     
     count = [self.questionCategories count];
     float frame_width = self.view.frame.size.width;
-    self.questionScrollView.contentSize = (CGSize){frame_width*count, CGRectGetHeight(self.view.frame)};
+    self.questionScrollView.contentSize = (CGSize){frame_width*count, CGRectGetHeight(self.view.frame)*2};
     self.navbarView = [[UIView alloc] init];
     self.navbarView.tag = TAG_UIVIEW_NAVBAR;
     NSLog(@"layoutCategoryList. self.navigationItem:%@", self.navigationItem);
@@ -175,7 +175,6 @@
         QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
         UITableView* questionTableView = qc.tableView;
         questionTableView.delegate = self;
-        questionTableView.scrollEnabled = NO;
         [questionTableView setRowHeight:ROW_HEIGHT];
         questionTableView.dataSource = self;
         [questionTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
@@ -183,7 +182,8 @@
         UIView *pageView = [UIView new];
         [self.questionScrollView addSubview:pageView];
         pageView.backgroundColor = [UIColor colorWithWhite:0.5 * i alpha:1.0];
-        pageView.frame = (CGRect){frame_width * i, 0, frame_width, CGRectGetHeight(self.view.frame)};
+        pageView.frame = (CGRect){frame_width * i, 0, frame_width, 
+            CGRectGetHeight(self.view.frame)*2};
         
         [pageView addSubview:qc.tableView];
         [self.navbarView addSubview:qc.titleLabel];
@@ -210,12 +210,18 @@
         // set table frame
         QuestionCategory* qc = [self.questionCategories objectAtIndex:i];
         [qc.tableView setFrame:CGRectMake(0, 0,
-                                          self.questionScrollView.frame.size.width,
-                                          self.questionScrollView.frame.size.height)];
+                                          frame_width,
+                                          CGRectGetHeight(self.view.frame)*2)];
+        //qc.tableView.bounces = YES;
+        qc.tableView.alwaysBounceVertical = YES;
+        //qc.tableView.contentMode = UIViewContentModeScaleToFill;
+        qc.tableView.scrollEnabled = YES;
+
         // set label frame
         CGFloat navbar_width = self.navbarView.frame.size.width;
         qc.titleLabel.frame = (CGRect){navbar_width*(i + 0.5) - 40, 5, 100, 40};
     }
+    self.questionScrollView.scrollEnabled = YES;
 }
 
 // - (void)init_data:(NSString*)username_t
@@ -556,7 +562,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"showDetail" sender:self];
+    [self performSegueWithIdentifier:@"showDetail" sender:self.triggerBtn];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -858,6 +864,7 @@
         }
         DetailViewController* dvc = [segue destinationViewController];
         dvc.detailItem = post;
+        //  [dvc view];
     }
 }
 
@@ -924,6 +931,8 @@
 
 #pragma mark - guesture
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  NSLog(@"scrollViewDidScroll scrollView:%@, scrollView.contentOffset.x:%f",
+        scrollView, scrollView.contentOffset.x);
     CGFloat frame_width = self.view.frame.size.width;
     CGFloat navbar_width = self.navbarView.frame.size.width;
     CGFloat xOffset = self.questionScrollView.contentOffset.x;
