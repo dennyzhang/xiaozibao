@@ -38,7 +38,7 @@
     self.mCurrentPage = 0;
     
     // init pageViewController
-    self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"pageViewController"];
+    self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"guidePageViewController"];
     self.mPageViewController.dataSource = self;
     
     UIViewController *startingVC = [self viewControllerAtIndex:0];

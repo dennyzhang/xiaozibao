@@ -118,18 +118,26 @@
             </objects>
             <point key="canvasLocation" x="-446" y="-1015"/>
         </scene>
-        <!--Page View Controller-->
+        <!--Page View Controller - category-->
+        <scene sceneID="4mU-bm-wXI">
+            <objects>
+                <pageViewController storyboardIdentifier="categoryPageViewController" autoresizesArchivedViewToFullSize="NO" title="category" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="3fu-f9-880" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tki-kT-1Ni" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2471" y="-1428"/>
+        </scene>
+        <!--Page View Controller - guide-->
         <scene sceneID="b4b-yi-462">
             <objects>
-                <pageViewController storyboardIdentifier="pageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="c5V-t9-9vn" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="guidePageViewController" autoresizesArchivedViewToFullSize="NO" title="guide" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="c5V-t9-9vn" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2JG-qx-ehb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2170" y="-1427"/>
+            <point key="canvasLocation" x="-2100" y="-1434"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - category-->
         <scene sceneID="jgu-84-cTi">
             <objects>
-                <viewController storyboardIdentifier="pageContentViewController" id="mFw-mA-svF" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pageContentViewController" title="category" id="mFw-mA-svF" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0Hz-rt-yHv"/>
                         <viewControllerLayoutGuide type="bottom" id="7Qu-Cz-3hR"/>

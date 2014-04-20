@@ -31,6 +31,7 @@
     self.questionCategories = [[QuestionCategory singleton] getAllCategories];
 
     self.mPageSize = [self.questionCategories count];
+//    self.mPageSize = 1;//TODO
     if(!self.mCurrentPage)
       self.mCurrentPage = 0;
 
@@ -40,7 +41,7 @@
     [self updateNavigationTitle:self.mCurrentPage];
     
     // init pageViewController
-    self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"pageViewController"];
+    self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoryPageViewController"];
     self.mPageViewController.dataSource = self;
     
     UIViewController *startingVC = [self viewControllerAtIndex:0];
@@ -54,11 +55,12 @@
     [self.mPageViewController didMoveToParentViewController:self];
     
     // TODO
-    UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self.mPageViewController class], nil];
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
-    pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
-
+    // UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self.mPageViewController class], nil];
+    // pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    // pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
+    // pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
+    // //pageControl.hidesForSinglePage = YES;
+    
     // ToolTip
     if (self.navigationItem.rightBarButtonItem) {
       [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click coin to see learning stastics."];
