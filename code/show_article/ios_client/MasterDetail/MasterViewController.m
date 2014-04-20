@@ -7,6 +7,7 @@
 //
 
 #import "MasterViewController.h"
+#import "QuestionCategory.h"
 
 #import "DetailViewController.h"
 #import "AFJSONRequestOperation.h"
@@ -21,6 +22,7 @@
 @property int mPageSize;
 @property (strong, nonatomic) UIPageViewController *mPageViewController;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
+@property (nonatomic, retain) NSMutableArray *questionCategories;
 
 @end
 
@@ -31,14 +33,16 @@
 {
     NSLog(@"MasterViewController load");
     [super viewDidLoad];
-    
+    self.questionCategories = [[QuestionCategory singleton] getAllCategories];
+    //TODO
+    self.mPageSize = [self.questionCategories count];
+    if(!self.mCurrentPage)
+      self.mCurrentPage = 0;
+
     self.view.backgroundColor = [UIColor clearColor];
     
     [self configureNavigationBar];
-    
-    //TODO
-    self.mPageSize = 3;
-    self.mCurrentPage = 0;
+    [self updateNavigationTitle:self.mCurrentPage];
     
     // init pageViewController
     self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"pageViewController"];
@@ -112,18 +116,14 @@
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {
         ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
-        reviewViewController.category = self.navigationTitle;
+        QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
+        reviewViewController.category = qc.category;
         [self.navigationController pushViewController:reviewViewController animated:YES];
     }
 }
 
 - (void)configureNavigationBar
 {
-    // set navigationtitle
-  if(!self.navigationTitle) {
-    self.navigationTitle = @"linux"; // TODO
-  }
-  self.navigationItem.title = self.navigationTitle;
     UIButton* btn;
     // set header of navigation bar
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
@@ -206,7 +206,7 @@
     if (self.mCurrentPage <= 0) {
         return nil;
     }else{
-        self.mCurrentPage = viewController.view.tag -1;
+      [self updateNavigationTitle:(viewController.view.tag - 1)];
         return [self viewControllerAtIndex:self.mCurrentPage];
     }
 }
@@ -216,7 +216,7 @@
     if (self.mCurrentPage >= self.mPageSize - 1) {
         return nil;
     }else{
-        self.mCurrentPage = viewController.view.tag + 1;
+      [self updateNavigationTitle:(viewController.view.tag + 1)];
         return [self viewControllerAtIndex:self.mCurrentPage];
     }
 }
@@ -229,6 +229,15 @@
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
     return 0;
+}
+
+- (void) updateNavigationTitle:(int) index
+{
+  self.mCurrentPage = index;
+  if (self.questionCategories) {
+    QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
+    self.navigationItem.title = [qc.category capitalizedString];
+  }
 }
 
 @end

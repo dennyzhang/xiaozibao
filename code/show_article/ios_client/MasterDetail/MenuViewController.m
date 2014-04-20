@@ -77,8 +77,8 @@
         if (c.textLabel.isEnabled == true) {
           // load view
             MasterViewController* dstViewController = segue.destinationViewController;
-            dstViewController.navigationTitle = c.textLabel.text;
-            //dstViewController.questionScrollView.scrollEnabled  = YES;
+            int index = [ComponentUtil getIndexByCategory:[c.textLabel.text lowercaseString]];
+            [dstViewController updateNavigationTitle:index];
             [dstViewController view];
         }
         else { // disable actions

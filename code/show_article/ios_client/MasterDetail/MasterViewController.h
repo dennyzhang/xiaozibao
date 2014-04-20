@@ -25,6 +25,6 @@
 
 #define TAG_BUTTON_COIN 1000
 #define TAG_MASTERVIEW_SCORE_TEXT 1001
-@property (nonatomic, retain) NSString* navigationTitle;
 
+- (void) updateNavigationTitle:(int) index;
 @end
