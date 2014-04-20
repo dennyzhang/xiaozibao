@@ -18,7 +18,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    //[self performSegueWithIdentifier:@"enterMain" sender:self];
+    // show tutorial for only once in each version
+    if (![ComponentUtil shouldShowTutorial]) {
+       [self performSegueWithIdentifier:@"enterMain" sender:self];
+    }
+    else {
+      [[NSUserDefaults standardUserDefaults] setObject:@"tutorialVersion"
+                                                forKey:[ComponentUtil currentTutorialVersion]];
+    }
 }
 
 - (void)viewDidLoad

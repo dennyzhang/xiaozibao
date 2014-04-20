@@ -135,6 +135,10 @@
       [userDefaults setObject:@"concept,linux,algorithm,cloud,security" forKey:@"CategoryList"];
     }
 
+    if (![userDefaults objectForKey:@"tutorialVersion"]) {
+      [userDefaults setObject:@"tutorialVersion" forKey:@""];
+    }
+
     if (![userDefaults stringForKey:@"Userid"]) {
       CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
       NSString* uuidString = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL,uuidRef));
@@ -307,6 +311,18 @@
     CGFloat topCorrect = ([tv bounds].size.height - [ComponentUtil measureHeightOfUITextView:tv] * [tv zoomScale])/2.0;
     topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
     return topCorrect;
+}
+
++ (NSString*) currentTutorialVersion
+{
+  return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+}
+
++ (BOOL) shouldShowTutorial
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString* tutorialVersion = [userDefaults objectForKey:@"tutorialVersion"];
+    return [tutorialVersion isEqualToString:[ComponentUtil currentTutorialVersion]];
 }
 
 @end

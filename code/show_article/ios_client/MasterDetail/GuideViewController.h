@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "global.h"
 @interface GuideViewController : UIViewController<UIPageViewControllerDataSource>
 
 @end

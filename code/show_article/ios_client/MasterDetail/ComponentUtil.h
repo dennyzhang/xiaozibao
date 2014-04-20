@@ -49,4 +49,6 @@
 + (NSString *) md5:(NSString *)str;
 + (void)configureVerticalAlign:(UITextView*) tv;
 + (CGFloat) yoffsetVerticalAlign:(UITextView*) tv;
++ (NSString*) currentTutorialVersion;
++ (BOOL) shouldShowTutorial;
 @end
