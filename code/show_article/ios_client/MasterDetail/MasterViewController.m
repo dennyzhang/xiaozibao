@@ -169,7 +169,7 @@
     if (self.mPageSize == 0) {
         return nil;
     }else{
-        UIViewController *contentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"qcViewController"];
+        QCViewController *contentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"qcViewController"];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *guideImg;
             
@@ -181,7 +181,7 @@
                 // 3.5 inch
                 guideImg = @"960_guide";
             }
-            if(index <3){
+            if(index ==2){
               UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.frame];
               [contentVC.view addSubview:imgView];
               NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, index+1];
