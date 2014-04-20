@@ -141,8 +141,8 @@
 
 -(void)actionEnter:(id)sender
 {
+  NSLog(@"actionEnter");
     [self performSegueWithIdentifier:@"enterMain" sender:self];
 }
-
 
 @end
