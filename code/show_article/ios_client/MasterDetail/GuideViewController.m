@@ -16,11 +16,17 @@
 
 @implementation GuideViewController
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    //[self performSegueWithIdentifier:@"enterMain" sender:self];
+}
+
 - (void)viewDidLoad
 {    
     [super viewDidLoad];
     NSLog(@"viewDidLoad");
     
+    //return;
     self.mPageSize = 3;
     self.mCurrentPage = 0;
     
