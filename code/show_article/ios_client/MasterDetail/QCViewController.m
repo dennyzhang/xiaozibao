@@ -47,7 +47,7 @@
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
 
-    if (currentQC) {
+    if (self.currentQC) {
       [self.currentQC loadPosts:self->postsDB dbPath:self->dbPath];
     }
 
