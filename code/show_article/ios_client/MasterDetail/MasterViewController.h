@@ -31,5 +31,5 @@
 #define TAG_BUTTON_COIN 1000
 #define TAG_MASTERVIEW_SCORE_TEXT 1001
 
-- (void) updateNavigationTitle:(int) index;
+- (void) updateNavigationTitle:(NSString*) navigationTitle;
 @end

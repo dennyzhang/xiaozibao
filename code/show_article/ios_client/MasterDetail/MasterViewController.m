@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIPageViewController *mPageViewController;
 @property (retain, nonatomic) IBOutlet UIButton *coinButton;
 @property (nonatomic, retain) NSMutableArray *questionCategories;
+@property (nonatomic, retain) NSString* currentNavigationTitle;
 
 @end
 
@@ -28,17 +29,22 @@
 
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
 
+  if([self.currentNavigationTitle isEqualToString:APP_SETTING] ||
+     [self.currentNavigationTitle isEqualToString:SAVED_QUESTIONS]) {
+    self.mPageSize = 1;
+  }
+  else {
     self.questionCategories = [[QuestionCategory singleton] getAllCategories];
 
     self.mPageSize = [self.questionCategories count];
-//    self.mPageSize = 1;//TODO
+  }
     if(!self.mCurrentPage)
       self.mCurrentPage = 0;
 
     self.view.backgroundColor = [UIColor clearColor];
     
     [self configureNavigationBar];
-    [self updateNavigationTitle:self.mCurrentPage];
+    [self updateNavigationIndex:self.mCurrentPage];
     
     // init pageViewController
     self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoryPageViewController"];
@@ -175,9 +181,14 @@
         return nil;
     }else{
         QCViewController *contentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"qcViewController"];
-        QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
-        [contentVC init_data:qc navigationTitle:qc.category];
-
+        if([self.currentNavigationTitle isEqualToString:APP_SETTING] ||
+           [self.currentNavigationTitle isEqualToString:SAVED_QUESTIONS]) {
+          [contentVC init_data:nil navigationTitle:self.currentNavigationTitle];
+        }
+        else {
+          QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
+          [contentVC init_data:qc navigationTitle:qc.category];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             contentVC.view.tag = index;
         });
@@ -198,7 +209,7 @@
     if (self.mCurrentPage <= 0) {
         return nil;
     }else{
-        [self updateNavigationTitle:(viewController.view.tag - 1)];
+        [self updateNavigationIndex:(viewController.view.tag - 1)];
         return [self viewControllerAtIndex:self.mCurrentPage];
     }
 }
@@ -208,7 +219,7 @@
     if (self.mCurrentPage >= self.mPageSize - 1) {
         return nil;
     }else{
-      [self updateNavigationTitle:(viewController.view.tag + 1)];
+      [self updateNavigationIndex:(viewController.view.tag + 1)];
         return [self viewControllerAtIndex:self.mCurrentPage];
     }
 }
@@ -223,7 +234,22 @@
     return 0;
 }
 
-- (void) updateNavigationTitle:(int) index
+- (void) updateNavigationTitle:(NSString*) navigationTitle
+{
+
+  if([navigationTitle isEqualToString:APP_SETTING] ||
+     [navigationTitle isEqualToString:SAVED_QUESTIONS]) {
+    self.currentNavigationTitle = navigationTitle;
+    self.navigationItem.title = self.currentNavigationTitle;
+  }
+  else {
+    self.currentNavigationTitle = [navigationTitle lowercaseString];
+    int index = [ComponentUtil getIndexByCategory:self.currentNavigationTitle];
+    [self updateNavigationIndex:index];
+  }
+}
+
+- (void) updateNavigationIndex:(int) index
 {
   NSLog(@"updateNavigationTitle index:%d", index);
   // TODO index = (index+count) mod index

@@ -23,6 +23,7 @@
 - (void) init_data:(QuestionCategory *)qc
    navigationTitle:(NSString*)navigationTitle_t
 {
+   NSLog(@"QCViewController init_data");
   self.currentQC = qc;
   self.navigationTitle = navigationTitle_t;
 }
@@ -38,6 +39,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"QCViewController viewDidLoad");
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor clearColor];
@@ -45,7 +47,9 @@
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
 
-    [self.currentQC loadPosts:self->postsDB dbPath:self->dbPath];
+    if (currentQC) {
+      [self.currentQC loadPosts:self->postsDB dbPath:self->dbPath];
+    }
 
     NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
           self.currentQC.category, [self.currentQC.questions count]);
@@ -70,10 +74,36 @@
 */
 
 #pragma mark - Table View
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if ([self.navigationTitle isEqualToString:APP_SETTING]) {
+        return 2;
+    }
+    
+    return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if ([self.navigationTitle isEqualToString:APP_SETTING]) {
+        return @" ";
+    }
+    else
+        return nil;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.currentQC.questions count];
+    if ([self.navigationTitle isEqualToString:APP_SETTING]) {
+        if (section == 0) {
+            return 5;
+        }
+        if (section == 1) {
+            return 2;
+        }
+        return 0;
+    }
+    else
+      return [self.currentQC.questions count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -77,8 +77,7 @@
         if (c.textLabel.isEnabled == true) {
           // load view
             MasterViewController* dstViewController = segue.destinationViewController;
-            int index = [ComponentUtil getIndexByCategory:[c.textLabel.text lowercaseString]];
-            [dstViewController updateNavigationTitle:index];
+            [dstViewController updateNavigationTitle:c.textLabel.text];
             [dstViewController view];
         }
         else { // disable actions
