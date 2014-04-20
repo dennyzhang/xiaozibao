@@ -31,7 +31,7 @@
 - (void)viewDidLoad
 {    
     [super viewDidLoad];
-    NSLog(@"viewDidLoad");
+    //NSLog(@"viewDidLoad");
     
     //return;
     self.mPageSize = 3;
@@ -118,7 +118,7 @@
 
 -(UIViewController *)viewControllerAtIndex:(NSUInteger )index
 {
-    NSLog(@"%d", index);
+  //NSLog(@"%d", index);
     if (self.mPageSize == 0) {
         return nil;
     }else{
@@ -138,7 +138,7 @@
             UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.frame];
             [contentVC.view addSubview:imgView];
             NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, index+1];
-            NSLog(@"imgName:%@", imgName);
+            //NSLog(@"imgName:%@", imgName);
             imgView.image = [UIImage imageNamed:imgName];
             contentVC.view.tag = index;
         });
@@ -148,7 +148,7 @@
 
 -(void)actionEnter:(id)sender
 {
-  NSLog(@"actionEnter");
+  //  NSLog(@"actionEnter");
     [self performSegueWithIdentifier:@"enterMain" sender:self];
 }
 

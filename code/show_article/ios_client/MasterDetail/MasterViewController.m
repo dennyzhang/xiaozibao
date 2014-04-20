@@ -165,7 +165,7 @@
 
 -(UIViewController *)viewControllerAtIndex:(NSUInteger )index
 {
-    NSLog(@"%d", index);
+    NSLog(@"viewControllerAtIndex index:%d", index);
     if (self.mPageSize == 0) {
         return nil;
     }else{
@@ -181,12 +181,13 @@
                 // 3.5 inch
                 guideImg = @"960_guide";
             }
-            
-            UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.frame];
-            [contentVC.view addSubview:imgView];
-            NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, index+1];
-            NSLog(@"imgName:%@", imgName);
-            imgView.image = [UIImage imageNamed:imgName];
+            if(index <3){
+              UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.frame];
+              [contentVC.view addSubview:imgView];
+              NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, index+1];
+              NSLog(@"imgName:%@", imgName);
+              imgView.image = [UIImage imageNamed:imgName];
+            }
             contentVC.view.tag = index;
         });
         return contentVC;
@@ -206,7 +207,7 @@
     if (self.mCurrentPage <= 0) {
         return nil;
     }else{
-      [self updateNavigationTitle:(viewController.view.tag - 1)];
+        [self updateNavigationTitle:(viewController.view.tag - 1)];
         return [self viewControllerAtIndex:self.mCurrentPage];
     }
 }
@@ -233,10 +234,18 @@
 
 - (void) updateNavigationTitle:(int) index
 {
+  NSLog(@"updateNavigationTitle index:%d", index);
   self.mCurrentPage = index;
+
+  if(index<0 || index>=[self.questionCategories count]) {
+    NSLog(@"errror, invalid index:%d", index);
+    return;
+  }
+
   if (self.questionCategories) {
-    QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
+    QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
     self.navigationItem.title = [qc.category capitalizedString];
+    [ComponentUtil updateScoreText:qc.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
   }
 }
 
