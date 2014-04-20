@@ -17,7 +17,6 @@
 		040E856518DF776000FD3E56 /* stackoverflow.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856118DF776000FD3E56 /* stackoverflow.com.png */; };
 		040E856618DF776000FD3E56 /* www.careercup.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856218DF776000FD3E56 /* www.careercup.com.png */; };
 		040E856718DF776000FD3E56 /* www.v2ex.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 040E856318DF776000FD3E56 /* www.v2ex.com.png */; };
-		0411B24E18E2F98600428AB1 /* ComponentUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0411B24D18E2F98600428AB1 /* ComponentUtil.m */; };
 		0411B25218E364EC00428AB1 /* news.ycombinator.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B24F18E364EC00428AB1 /* news.ycombinator.com.png */; };
 		0411B25318E364EC00428AB1 /* www.quora.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B25018E364EC00428AB1 /* www.quora.com.png */; };
 		0411B25418E364EC00428AB1 /* www.reddit.com.png in Resources */ = {isa = PBXBuildFile; fileRef = 0411B25118E364EC00428AB1 /* www.reddit.com.png */; };
@@ -76,19 +75,21 @@
 		0463535619038C19008266AF /* enter_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0463534E19038C19008266AF /* enter_highlighted@2x.png */; };
 		0463535719038C19008266AF /* enter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0463534F19038C19008266AF /* enter@2x.png */; };
 		0463535A19040692008266AF /* QCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0463535919040692008266AF /* QCViewController.m */; };
+		0463536019047FA2008266AF /* ComponentUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0463535D19047FA2008266AF /* ComponentUtil.m */; };
+		0463536119047FA2008266AF /* PostsSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 0463535F19047FA2008266AF /* PostsSqlite.m */; };
+		0463536619047FD6008266AF /* Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 0463536319047FD6008266AF /* Posts.m */; };
+		0463536719047FD6008266AF /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0463536519047FD6008266AF /* UserProfile.m */; };
+		0463536B19048019008266AF /* MyToolTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 0463536A19048019008266AF /* MyToolTip.m */; };
 		046E471118E0BFF900ACC618 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 046E471018E0BFF900ACC618 /* coin.png */; };
 		0473C99818DCE1B800AC4DCD /* navigation_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 0473C99718DCE1B800AC4DCD /* navigation_header.png */; };
 		047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A7BDEC179EA84700E9D0BC /* MenuViewController.m */; };
-		049B22F7179D7D3000F82187 /* Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 049B22F6179D7D2800F82187 /* Posts.m */; };
 		049FE34C18E0C252009FDB39 /* ReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FE34B18E0C252009FDB39 /* ReviewViewController.m */; };
 		049FE34E18E1168D009FDB39 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FE34D18E1168D009FDB39 /* share.png */; };
-		049FE35118E12CFF009FDB39 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FE35018E12CFF009FDB39 /* UserProfile.m */; };
 		04BF8F8B18F2FE4A00D0A2CB /* dot1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8918F2FE4A00D0A2CB /* dot1.png */; };
 		04BF8F8F18F3170200D0A2CB /* dot2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8C18F3170200D0A2CB /* dot2.png */; };
 		04BF8F9018F3170200D0A2CB /* dot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8D18F3170200D0A2CB /* dot3.png */; };
 		04BF8F9118F3170200D0A2CB /* dot4.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8E18F3170200D0A2CB /* dot4.png */; };
 		04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FA8F27179BE08200D28058 /* libsqlite3.dylib */; };
-		04E47F7218FAFB93001E09EE /* MyToolTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E47F7118FAFB93001E09EE /* MyToolTip.m */; };
 		04E893DB179130C400E9573C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DA179130C400E9573C /* Foundation.framework */; };
 		04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DC179130C400E9573C /* CoreGraphics.framework */; };
 		04E893DF179130C400E9573C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E893DE179130C400E9573C /* UIKit.framework */; };
@@ -110,7 +111,6 @@
 		04EA66EA18FEF2B900621ECE /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04EA66E918FEF2B900621ECE /* Images-2.xcassets */; };
 		04EA66F018FF772C00621ECE /* QuestionCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA66EF18FF772C00621ECE /* QuestionCategory.m */; };
 		04EE1B5018F79161007AEE0A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EE1B4F18F79161007AEE0A /* StoreKit.framework */; };
-		04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FA8F2C179BE20300D28058 /* PostsSqlite.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,8 +134,6 @@
 		040E856118DF776000FD3E56 /* stackoverflow.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stackoverflow.com.png; sourceTree = "<group>"; };
 		040E856218DF776000FD3E56 /* www.careercup.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.careercup.com.png; sourceTree = "<group>"; };
 		040E856318DF776000FD3E56 /* www.v2ex.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.v2ex.com.png; sourceTree = "<group>"; };
-		0411B24C18E2F98600428AB1 /* ComponentUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentUtil.h; sourceTree = "<group>"; };
-		0411B24D18E2F98600428AB1 /* ComponentUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentUtil.m; sourceTree = "<group>"; };
 		0411B24F18E364EC00428AB1 /* news.ycombinator.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = news.ycombinator.com.png; sourceTree = "<group>"; };
 		0411B25018E364EC00428AB1 /* www.quora.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.quora.com.png; sourceTree = "<group>"; };
 		0411B25118E364EC00428AB1 /* www.reddit.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = www.reddit.com.png; sourceTree = "<group>"; };
@@ -197,15 +195,22 @@
 		0463534F19038C19008266AF /* enter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "enter@2x.png"; sourceTree = "<group>"; };
 		0463535819040692008266AF /* QCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCViewController.h; sourceTree = "<group>"; };
 		0463535919040692008266AF /* QCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCViewController.m; sourceTree = "<group>"; };
+		0463535C19047FA2008266AF /* ComponentUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentUtil.h; sourceTree = "<group>"; };
+		0463535D19047FA2008266AF /* ComponentUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentUtil.m; sourceTree = "<group>"; };
+		0463535E19047FA2008266AF /* PostsSqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsSqlite.h; sourceTree = "<group>"; };
+		0463535F19047FA2008266AF /* PostsSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsSqlite.m; sourceTree = "<group>"; };
+		0463536219047FD6008266AF /* posts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = posts.h; sourceTree = "<group>"; };
+		0463536319047FD6008266AF /* Posts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Posts.m; sourceTree = "<group>"; };
+		0463536419047FD6008266AF /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
+		0463536519047FD6008266AF /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
+		0463536819048019008266AF /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		0463536919048019008266AF /* MyToolTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyToolTip.h; sourceTree = "<group>"; };
+		0463536A19048019008266AF /* MyToolTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyToolTip.m; sourceTree = "<group>"; };
 		046E471018E0BFF900ACC618 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
 		0473C99718DCE1B800AC4DCD /* navigation_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_header.png; sourceTree = "<group>"; };
-		049B22F5179D7D2800F82187 /* Posts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Posts.h; sourceTree = "<group>"; };
-		049B22F6179D7D2800F82187 /* Posts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Posts.m; sourceTree = "<group>"; };
 		049FE34A18E0C252009FDB39 /* ReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewViewController.h; sourceTree = "<group>"; };
 		049FE34B18E0C252009FDB39 /* ReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewViewController.m; sourceTree = "<group>"; };
 		049FE34D18E1168D009FDB39 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
-		049FE34F18E12CFF009FDB39 /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
-		049FE35018E12CFF009FDB39 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
 		04A7BDEB179EA84700E9D0BC /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		04A7BDEC179EA84700E9D0BC /* MenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		04BF8F8918F2FE4A00D0A2CB /* dot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot1.png; sourceTree = "<group>"; };
@@ -216,9 +221,6 @@
 		04C24E811867FF8100184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		04C24E831867FFB200184A3E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = "../../../../../../../../../../../Applications/Xcode5-DP2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libsqlite3.dylib"; sourceTree = "<group>"; };
 		04C2689B1868118E004C46BC /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		04D77FCC18B4636300643F3C /* global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
-		04E47F7018FAFB93001E09EE /* MyToolTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyToolTip.h; sourceTree = "<group>"; };
-		04E47F7118FAFB93001E09EE /* MyToolTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyToolTip.m; sourceTree = "<group>"; };
 		04E893D7179130C400E9573C /* MasterDetail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterDetail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E893DA179130C400E9573C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04E893DC179130C400E9573C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -248,8 +250,6 @@
 		04EA66EF18FF772C00621ECE /* QuestionCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionCategory.m; sourceTree = "<group>"; };
 		04EE1B4F18F79161007AEE0A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04FA8F27179BE08200D28058 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		04FA8F2B179BE1F800D28058 /* PostsSqlite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostsSqlite.h; sourceTree = "<group>"; };
-		04FA8F2C179BE20300D28058 /* PostsSqlite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostsSqlite.m; sourceTree = "<group>"; };
 		CE556945BD3D45F797C729C0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -345,6 +345,24 @@
 			path = guide;
 			sourceTree = "<group>";
 		};
+		0463535B19047FA2008266AF /* library */ = {
+			isa = PBXGroup;
+			children = (
+				0463535C19047FA2008266AF /* ComponentUtil.h */,
+				0463536219047FD6008266AF /* posts.h */,
+				0463536819048019008266AF /* global.h */,
+				0463536919048019008266AF /* MyToolTip.h */,
+				0463536A19048019008266AF /* MyToolTip.m */,
+				0463536319047FD6008266AF /* Posts.m */,
+				0463536419047FD6008266AF /* UserProfile.h */,
+				0463536519047FD6008266AF /* UserProfile.m */,
+				0463535D19047FA2008266AF /* ComponentUtil.m */,
+				0463535E19047FA2008266AF /* PostsSqlite.h */,
+				0463535F19047FA2008266AF /* PostsSqlite.m */,
+			);
+			path = library;
+			sourceTree = "<group>";
+		};
 		04BF8F8718F2FE4A00D0A2CB /* dots */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,14 +456,10 @@
 			isa = PBXGroup;
 			children = (
 				049FE34A18E0C252009FDB39 /* ReviewViewController.h */,
+				0463535B19047FA2008266AF /* library */,
 				049FE34B18E0C252009FDB39 /* ReviewViewController.m */,
-				04D77FCC18B4636300643F3C /* global.h */,
-				0411B24C18E2F98600428AB1 /* ComponentUtil.h */,
-				04E47F7018FAFB93001E09EE /* MyToolTip.h */,
-				04E47F7118FAFB93001E09EE /* MyToolTip.m */,
 				04EA66EE18FF772C00621ECE /* QuestionCategory.h */,
 				04EA66EF18FF772C00621ECE /* QuestionCategory.m */,
-				0411B24D18E2F98600428AB1 /* ComponentUtil.m */,
 				04D0427D17A360C300593E18 /* Images */,
 				04E893E9179130C400E9573C /* AppDelegate.h */,
 				04E893EA179130C400E9573C /* AppDelegate.m */,
@@ -456,12 +470,6 @@
 				0463535919040692008266AF /* QCViewController.m */,
 				04A7BDEB179EA84700E9D0BC /* MenuViewController.h */,
 				04A7BDEC179EA84700E9D0BC /* MenuViewController.m */,
-				049B22F5179D7D2800F82187 /* Posts.h */,
-				049B22F6179D7D2800F82187 /* Posts.m */,
-				04FA8F2C179BE20300D28058 /* PostsSqlite.m */,
-				049FE34F18E12CFF009FDB39 /* UserProfile.h */,
-				049FE35018E12CFF009FDB39 /* UserProfile.m */,
-				04FA8F2B179BE1F800D28058 /* PostsSqlite.h */,
 				04E893EF179130C400E9573C /* Main_iPad.storyboard */,
 				04E893F2179130C400E9573C /* MasterViewController.h */,
 				04E893F3179130C400E9573C /* MasterViewController.m */,
@@ -713,19 +721,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */,
-				049B22F7179D7D3000F82187 /* Posts.m in Sources */,
-				049FE35118E12CFF009FDB39 /* UserProfile.m in Sources */,
+				0463536119047FA2008266AF /* PostsSqlite.m in Sources */,
 				049FE34C18E0C252009FDB39 /* ReviewViewController.m in Sources */,
 				0463535A19040692008266AF /* QCViewController.m in Sources */,
-				04FA8F2E179BE8FB00D28058 /* PostsSqlite.m in Sources */,
+				0463536719047FD6008266AF /* UserProfile.m in Sources */,
+				0463536B19048019008266AF /* MyToolTip.m in Sources */,
+				0463536019047FA2008266AF /* ComponentUtil.m in Sources */,
 				04E893EB179130C400E9573C /* AppDelegate.m in Sources */,
+				0463536619047FD6008266AF /* Posts.m in Sources */,
 				04E893F4179130C400E9573C /* MasterViewController.m in Sources */,
 				04EA66F018FF772C00621ECE /* QuestionCategory.m in Sources */,
-				0411B24E18E2F98600428AB1 /* ComponentUtil.m in Sources */,
 				04E893E7179130C400E9573C /* main.m in Sources */,
 				04635336190374AF008266AF /* GuideViewController.m in Sources */,
 				04E893F7179130C400E9573C /* DetailViewController.m in Sources */,
-				04E47F7218FAFB93001E09EE /* MyToolTip.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,23 +14,19 @@
 #import "global.h"
 
 @interface ComponentUtil : NSObject
-+ (void) addTextToButton:(UIButton*) btn text:(NSString*)text
-                 fontSize:(int)fontSize
-               chWidth:(float)chWidth
-               chHeight:(float)chHeight
-                 tag:(int)tag;
-+ (void)updateScoreText:(NSString*) category
-                    btn:(UIButton*) btn
-                    tag:(NSInteger) tag;
++ (void) addTextToButton:(UIButton*) btn text:(NSString*)text fontSize:(int)fontSize
+               chWidth:(float)chWidth chHeight:(float)chHeight tag:(int)tag;
 
-+(void)infoMessage:(NSString *) title 
-               msg:(NSString *) msg
++ (void)updateScoreText:(NSString*) category btn:(UIButton*) btn tag:(NSInteger) tag;
+
++(void)infoMessage:(NSString *) title msg:(NSString *) msg
       enforceMsgBox:(BOOL)enforceMsgBox;
 
 +(void)timedAlert:(UIAlertView *) alertView;
 +(void)dismissAlert:(UIAlertView *) alertView;
 +(UIImage *) resizeImage:(UIImage *)orginalImage scale:(CGFloat)scale;
-+(void) setDefaultConf;
+
++(void)setDefaultConf;
 +(NSString*) getLogoIcon:(NSString* )url;
 +(NSString*) getPostHeaderImg;
 +(NSMutableArray*) getCategoryList;
