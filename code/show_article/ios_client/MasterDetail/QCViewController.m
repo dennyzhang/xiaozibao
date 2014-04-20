@@ -29,6 +29,8 @@
 {
     [super viewDidLoad];
 
+    self.view.backgroundColor = [UIColor clearColor];
+
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
 
@@ -242,18 +244,16 @@
         Posts *post = self.currentQC.questions[indexPath.row];
         
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
-        [self markCellAsRead:cell post:post];
-
-        // if ([self.currentQC.category isEqualToString:SAVED_QUESTIONS]) {
-        //     [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:0]];
-        // }
-        // else {
-        //     [[segue destinationViewController] setShouldShowCoin:[NSNumber numberWithInt:1]];
-        // }
 
         DetailViewController* dvc = [segue destinationViewController];
+        if ([self.currentQC.category isEqualToString:SAVED_QUESTIONS]) {
+            [dvc setShouldShowCoin:[NSNumber numberWithInt:0]];
+        }
+        else {
+            [dvc setShouldShowCoin:[NSNumber numberWithInt:1]];
+        }
         dvc.detailItem = post;
-        //  [dvc view];
+        [self markCellAsRead:cell post:post];
     }
 }
 

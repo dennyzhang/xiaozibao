@@ -33,8 +33,11 @@
 {
     NSLog(@"MasterViewController load");
     [super viewDidLoad];
+
+    [[MyToolTip singleton] reset:self.view]; // reset popTipView
+
     self.questionCategories = [[QuestionCategory singleton] getAllCategories];
-    //TODO
+
     self.mPageSize = [self.questionCategories count];
     if(!self.mCurrentPage)
       self.mCurrentPage = 0;
@@ -63,6 +66,15 @@
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
     pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
     pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
+
+    // ToolTip
+    if (self.navigationItem.rightBarButtonItem) {
+      [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click coin to see learning stastics."];
+    }
+    [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
+                                  msg:@"Click to see more."];
+    [[MyToolTip singleton] showToolTip];
+
 }
 
 - (void)awakeFromNib

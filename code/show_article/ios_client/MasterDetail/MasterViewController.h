@@ -15,7 +15,6 @@
 #import "global.h"
 #import "Posts.h"
 #import "PostsSqlite.h"
-#import "UserProfile.h"
 #import "MenuViewController.h"
 #import "QCViewController.h"
 
