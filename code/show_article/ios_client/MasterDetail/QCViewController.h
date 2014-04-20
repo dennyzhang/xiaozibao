@@ -35,6 +35,7 @@
 #define PAGE_COUNT 10
 #define ROW_HEIGHT 160.0f
 
-@property (atomic, retain) QuestionCategory *currentQC;
+- (void) init_data:(QuestionCategory *)qc
+   navigationTitle:(NSString*)navigationTitle;
 
 @end

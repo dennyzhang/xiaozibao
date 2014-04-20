@@ -12,9 +12,20 @@
     sqlite3 *postsDB;
     NSString *dbPath;
 }
+
+@property (atomic, retain) QuestionCategory *currentQC;
+@property (nonatomic, retain) NSString* navigationTitle;
+
 @end
 
 @implementation QCViewController
+
+- (void) init_data:(QuestionCategory *)qc
+   navigationTitle:(NSString*)navigationTitle_t
+{
+  self.currentQC = qc;
+  self.navigationTitle = navigationTitle_t;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -70,7 +81,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     cell.textLabel.font = [UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL];
-    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
+    if ([self.navigationTitle isEqualToString:APP_SETTING]) {
         [self appSettingRows:cell indexPath:indexPath];
         return cell;
     }
@@ -141,7 +152,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
+    if ([self.navigationTitle isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
     return ROW_HEIGHT;
@@ -166,7 +177,7 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([self.navigationItem.title isEqualToString:APP_SETTING]) {
+    if ([self.navigationTitle isEqualToString:APP_SETTING]) {
         if([cell.textLabel.text isEqualToString:CLEAN_CACHE]) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Clean cache Confirmation" message: @"Are you sure to clean all cache, except favorite questions?" delegate:self  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
             
@@ -226,8 +237,9 @@
     // Return NO if you do not want the specified item to be editable.
     return NO;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if ([self.navigationItem.title isEqualToString:APP_SETTING])
+    if ([self.navigationTitle isEqualToString:APP_SETTING])
         return 30;
     return 0;
 }

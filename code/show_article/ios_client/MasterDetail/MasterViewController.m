@@ -54,12 +54,11 @@
     [self.view addSubview:_mPageViewController.view];
     [self.mPageViewController didMoveToParentViewController:self];
     
-    // TODO
-    // UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self.mPageViewController class], nil];
-    // pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    // pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
-    // pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
-    // //pageControl.hidesForSinglePage = YES;
+    UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self.mPageViewController class], nil];
+    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
+    pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
+    //pageControl.hidesForSinglePage = YES;
     
     // ToolTip
     if (self.navigationItem.rightBarButtonItem) {
@@ -176,26 +175,10 @@
         return nil;
     }else{
         QCViewController *contentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"qcViewController"];
-        contentVC.currentQC = [self.questionCategories objectAtIndex:index];
-        NSLog(@"index:%d, contentVC.currentQC:%@, category:%@", index, contentVC.currentQC, contentVC.currentQC.category);
+        QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
+        [contentVC init_data:qc navigationTitle:qc.category];
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *guideImg;
-            
-            float screenHeight = [UIScreen mainScreen].bounds.size.height;
-            if (screenHeight >= 568.0f) {
-                // 4 inch
-                guideImg = @"1136_guide";
-            }else{
-                // 3.5 inch
-                guideImg = @"960_guide";
-            }
-            if(index ==2){
-              UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.frame];
-              [contentVC.view addSubview:imgView];
-              NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, index+1];
-              imgView.image = [UIImage imageNamed:imgName];
-            }
             contentVC.view.tag = index;
         });
         return contentVC;
