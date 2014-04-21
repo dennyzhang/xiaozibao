@@ -16,11 +16,8 @@
 - (void)initialize:(NSString*)category_t
 {
   self.questions = [[NSMutableArray alloc] init];
-  // self.tableView = tableView_t;
-  // self.titleLabel = titleLabel_t;
   self.category = category_t;
   self.isloaded = NO;
-  // NSLog(@"initalize self.tableView:%@", self.tableView); //TODO
 }
 
 -(void) loadPosts:(sqlite3 *)postsDB

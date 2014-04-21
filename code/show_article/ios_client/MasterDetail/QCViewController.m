@@ -480,7 +480,6 @@
 - (bool)addToTableView:(int)index
                   post:(Posts*)post
 {
-    return YES; // TODO
     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"] == 1) {
         if (post.readcount.intValue !=0 )
             return YES;
