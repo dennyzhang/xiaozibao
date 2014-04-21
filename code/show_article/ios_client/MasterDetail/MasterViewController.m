@@ -105,6 +105,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    //NSLog(@"MasterViewController will appear");
+    [self refreshScore];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -211,7 +213,7 @@
 
     CGFloat navbar_width = self.navbarView.frame.size.width;
     self.titleLabel.frame = (CGRect){navbar_width/2, 5, 100, 40};
-    self.titleLabel.textColor = [UIFont whiteColor];
+    self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
     
     self.pageControl.frame = (CGRect){navbar_width/2,
@@ -316,9 +318,16 @@
         //self.navigationItem.title = [qc.category capitalizedString];
         self.titleLabel.text = [qc.category capitalizedString];
         self.pageControl.currentPage = self.mCurrentPage;
+    }
+    [self refreshScore];
+}
+
+-(void)refreshScore
+{
+    if (self.questionCategories) {
+        QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
         [ComponentUtil updateScoreText:qc.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
     }
 }
-
 
 @end
