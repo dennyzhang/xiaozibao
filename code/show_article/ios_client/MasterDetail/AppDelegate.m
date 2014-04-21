@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "PostsSqlite.h"
 
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -32,7 +33,15 @@
     NSLog(@"basePath:%@", basePath);
     
     self.window.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    
+
+    // init db
+    sqlite3* postsDB = NULL;
+    NSString* dbPath = [PostsSqlite getDBPath];
+    if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
+        NSLog(@"Error: Failed to open/create database");
+    }
+    NSLog(@"openSqlite postsDB:%@", postsDB);
+
     return YES;
 }
 

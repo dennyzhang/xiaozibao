@@ -150,9 +150,15 @@ NSLock *lock;
         sqlite3_prepare_v2(postsDB, insert_stmt, -1, &statement, NULL);
         
         if (sqlite3_step(statement) != SQLITE_DONE) {
-            NSLog(@"%@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)]);
-            NSLog(@"insertSQL:%@",insertSQL);
-            ret = NO;
+            NSString* errmsg = [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)];
+            if ([errmsg isEqualToString:@"column POSTID is not unique"]) {
+              ret = YES;
+            }
+            else {
+              NSLog(@"error: %@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)]);
+              NSLog(@"insertSQL:%@",insertSQL);
+              ret = NO;
+            }
         }
         else
             ret = YES;

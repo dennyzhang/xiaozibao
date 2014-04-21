@@ -49,9 +49,8 @@
 
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
-    self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
-    NSLog(@"self->postsDB:%@, self->dbPath:%@", self->postsDB, self->dbPath);
+    //NSLog(@"self->postsDB:%@, self->dbPath:%@", self->postsDB, self->dbPath);
 
     if (self.currentQC) {
       [self.currentQC loadPosts:self->postsDB dbPath:self->dbPath];
@@ -489,7 +488,7 @@
     [self.currentQC.questions insertObject:post atIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    NSLog(@"after addToTableView currentQuestions.count:%d", [self.currentQC.questions count]);
+    //NSLog(@"after addToTableView currentQuestions.count:%d", [self.currentQC.questions count]);
     return ret;
 }
 
