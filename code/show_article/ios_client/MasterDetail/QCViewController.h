@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionCategory.h"
-#import "DetailViewController.h"
 
 @interface QCViewController : UIViewController <
   UITableViewDelegate, UITableViewDataSource,

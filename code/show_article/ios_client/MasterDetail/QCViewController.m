@@ -7,6 +7,8 @@
 //
 
 #import "QCViewController.h"
+#import "AFJSONRequestOperation.h"
+#import "DetailViewController.h"
 
 @interface QCViewController () {
     sqlite3 *postsDB;
