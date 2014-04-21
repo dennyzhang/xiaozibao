@@ -105,7 +105,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //NSLog(@"MasterViewController will appear");
+    NSLog(@"MasterViewController will appear");
     [self refreshScore];
 }
 
@@ -209,16 +209,32 @@
     [self.navbarView addSubview:self.pageControl];
 
     self.navigationItem.titleView = self.navbarView;
-    self.navbarView.frame = (CGRect){40, 0, self.view.frame.size.width - 80, 64};
 
-    CGFloat navbar_width = self.navbarView.frame.size.width;
-    self.titleLabel.frame = (CGRect){navbar_width/2, 5, 100, 40};
+    // set subview width and height
+    self.navbarView.frame = (CGRect){40, 0, self.view.frame.size.width - 80, 64};
+    self.titleLabel.frame = (CGRect){0, 0, 100, 40};
+
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    self.pageControl.frame = (CGRect){navbar_width/2,
-                                      self.navbarView.frame.size.height - 20, 0, 0};
+    self.pageControl.frame = (CGRect){0, 0, 0, 0};
+    
+    // place subview in center
+    CGPoint navbarCenter = [self.navbarView convertPoint:self.navbarView.center
+                                                fromView:self.navbarView.superview];
+    self.titleLabel.center = navbarCenter;
+    self.pageControl.center = navbarCenter;
 
+    //align vertical
+    self.titleLabel.frame =  (CGRect){self.titleLabel.frame.origin.x, 4,
+                self.titleLabel.frame.size.width, 
+                self.titleLabel.frame.size.height};
+    
+    self.pageControl.frame =  (CGRect){self.pageControl.frame.origin.x,
+                self.navbarView.frame.size.height - 19,
+                self.pageControl.frame.size.width, 
+                self.pageControl.frame.size.height};
 }
 
 -(UIViewController *)viewControllerAtIndex:(NSUInteger )index
