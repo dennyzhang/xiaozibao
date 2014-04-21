@@ -13,7 +13,6 @@
 @interface QCViewController () {
     sqlite3 *postsDB;
     NSString *dbPath;
-
     UIView* footerView;
     UIView* headerView;
     int bottom_num;
@@ -52,6 +51,7 @@
 
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
+    NSLog(@"self->postsDB:%@, self->dbPath:%@", self->postsDB, self->dbPath);
 
     if (self.currentQC) {
       [self.currentQC loadPosts:self->postsDB dbPath:self->dbPath];
@@ -207,7 +207,7 @@
         self->dbPath = [PostsSqlite getDBPath]; // TODO why we need this?
         [PostsSqlite openSqlite:dbPath];
         
-        [PostsSqlite cleanCache:postsDB dbPath:dbPath];
+        [PostsSqlite cleanCache:self->postsDB dbPath:self->dbPath];
         if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 1) {
             [UserProfile cleanAllCategoryKey];
         }
@@ -526,7 +526,7 @@
         Posts *post = nil;
         int i, count = [idList count];
         
-        NSLog(@"merge result dbPath: %@", dbPath);
+        NSLog(@"count:%d, merge result dbPath: %@, postsDB:%@", count, self->dbPath, self->postsDB);
         
         // bypass sqlite lock problem
         if (shouldAppendHead) {
@@ -534,7 +534,7 @@
             for(i=count-1; i>=0; i--) {
                 //NSLog(@"fetchArticleList i:%d, id:%@, metadata:%@", i, idList[i], metadataList[i]);
                 if ([Posts containId:self.currentQC.questions postId:idList[i]] == NO) {
-                    post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
+                    post = [PostsSqlite getPost:self->postsDB dbPath:self->dbPath postId:idList[i]];
                     if (post == nil) {
                         [self fetchJson:self.currentQC.questions
                                  urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
@@ -553,7 +553,7 @@
         else{
             for(i=0; i<count; i++) {
                 if ([Posts containId:self.currentQC.questions postId:idList[i]] == NO) {
-                    post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
+                    post = [PostsSqlite getPost:self->postsDB dbPath:self->dbPath postId:idList[i]];
                     if (post == nil) {
                         [self fetchJson:self.currentQC.questions
                                  urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
@@ -570,7 +570,7 @@
             }
         }
         for(i=0; i<count; i++) {
-            [PostsSqlite updatePostMetadata:postsDB dbPath:dbPath
+            [PostsSqlite updatePostMetadata:self->postsDB dbPath:self->dbPath
                                      postId:idList[i] metadata:metadataList[i]
                                    category:self.currentQC.category];
             
@@ -607,7 +607,7 @@
         [post set_metadata:[JSON valueForKeyPath:@"metadata"]];
         [post setReadcount:[NSNumber numberWithInt:0]];
         
-        if ([PostsSqlite savePost:postsDB dbPath:dbPath
+        if ([PostsSqlite savePost:self->postsDB dbPath:self->dbPath
                            postId:post.postid summary:post.summary category:post.category
                             title:post.title source:post.source content:post.content
                          metadata:post.metadata] == NO) {

@@ -18,8 +18,7 @@ NSLock *lock;
     
     char *errMsg;
     const char *dbpath = [dbPath UTF8String];
-    //NSLog(@"initDB");
-    //drop table posts;
+    NSLog(@"initDB");
     const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, METADATA TEXT, SOURCE TEXT, READCOUNT INT DEFAULT 0, ISFAVORITE INT DEFAULT 0, ISVOTEUP INT DEFAULT 0, ISVOTEDOWN INT DEFAULT 0)";
     //const char *sql_stmt = "drop table posts";
     if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
@@ -368,6 +367,7 @@ NSLock *lock;
     if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
         NSLog(@"Error: Failed to open/create database");
     }
+    NSLog(@"openSqlite postsDB:%@", postsDB);
     return postsDB;
 }
 @end
