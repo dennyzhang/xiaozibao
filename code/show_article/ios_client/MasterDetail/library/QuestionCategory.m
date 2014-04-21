@@ -20,17 +20,13 @@
   self.isloaded = NO;
 }
 
--(void) loadPosts:(sqlite3 *)postsDB
-           dbPath:(NSString *)dbPath
+-(void) loadPosts
 {
   if(self.isloaded) {
     NSLog(@"loadPosts: no need to load again");
     return;
   }
-  [PostsSqlite getDefaultPosts:postsDB
-                        dbPath:dbPath
-                      category:self.category
-                       objects:self.questions
+  [PostsSqlite getDefaultPosts:self.category objects:self.questions
                  hideReadPosts:[[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"]];
 
   self.isloaded = YES;
@@ -66,16 +62,13 @@
     //NSLog(@"update_category_list count:%d", count);
     
     for (i = 0; i < count; i ++) {
-        // init tableView
-        UITableView* questionTableView = [[UITableView alloc] init];
-        
-        UILabel* titleLabel_t = [UILabel new];
-        titleLabel_t.text = [stringArray[i] capitalizedString];
-        titleLabel_t.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
-        titleLabel_t.textColor = [UIColor whiteColor];
-        
+//        UILabel* titleLabel_t = [UILabel new];
+//        titleLabel_t.text = [stringArray[i] capitalizedString];
+//        titleLabel_t.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
+//        titleLabel_t.textColor = [UIColor whiteColor];
+
         QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
-        [questionCategory initialize:[titleLabel_t.text lowercaseString]];
+        [questionCategory initialize:stringArray[i]];
         [self.allCategories addObject:questionCategory];
     }
   return allCategories;

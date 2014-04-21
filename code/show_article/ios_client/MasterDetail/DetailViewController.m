@@ -12,8 +12,6 @@
 
 @interface DetailViewController () {
     NSTimeInterval startTime;
-    sqlite3 *postsDB;
-    NSString *dbPath;
     UIActivityIndicatorView *activityIndicator;
 }
 @end
@@ -29,8 +27,6 @@
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
 
     self.view.backgroundColor = [UIColor whiteColor];
-    dbPath = [MyGlobal singleton].dbPath;
-    postsDB = [PostsSqlite openSqlite:dbPath];
     
     //NSLog(@"self.detailItem.readcount: %d", [self.detailItem.readcount intValue]);
     if ([self.detailItem.readcount intValue] == 1){
@@ -39,8 +35,7 @@
     // update readcount
     self.detailItem.readcount = [NSNumber numberWithInt:(1+[self.detailItem.readcount intValue])];
     
-    [PostsSqlite addPostReadCount:postsDB dbPath:dbPath
-                           postId:self.detailItem.postid category:self.detailItem.category];
+    [PostsSqlite addPostReadCount:self.detailItem.postid category:self.detailItem.category];
     
     // hide navigationbar
     [self.navigationController setToolbarHidden:YES animated:YES];
@@ -144,8 +139,7 @@
             }
         }
         
-        [PostsSqlite updatePostBoolField:postsDB dbPath:dbPath
-                                  postId:detailItem.postid boolValue:boolValue
+        [PostsSqlite updatePostBoolField:detailItem.postid boolValue:boolValue
                                fieldName:fieldName category:detailItem.category];
         [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
         
@@ -153,8 +147,7 @@
         NSLog(@"userid:%@", userid);
         [self feedbackPost:userid
                     postid:detailItem.postid
-                  category:detailItem.category btn:btn
-                   postsDB:postsDB dbPath:dbPath];
+                  category:detailItem.category btn:btn];
         
         // tell client where to find favorite questions
         if (btn.tag == TAG_BUTTON_FAVORITE) {
@@ -172,8 +165,6 @@
                postid:(NSString*) postid
              category:(NSString*) category
                   btn:(UIButton *) btn
-              postsDB:(sqlite3 *)postsDB
-               dbPath:(NSString *) dbPath
 {
     NSString *urlStr=SERVERURL;
     NSURL *url = [NSURL URLWithString:urlStr];

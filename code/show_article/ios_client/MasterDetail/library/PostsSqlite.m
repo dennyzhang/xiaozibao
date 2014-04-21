@@ -11,13 +11,14 @@
 @implementation PostsSqlite
 NSLock *lock;
 
-+ (bool)initDB: (sqlite3 *)postsDB
-        dbPath:(NSString *) dbPath
++ (bool)initDB
 {
     bool ret = NO;
-    
     char *errMsg;
-    const char *dbpath = [dbPath UTF8String];
+
+    sqlite3* postsDB = NULL;
+    const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
+
     NSLog(@"initDB");
     const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, METADATA TEXT, SOURCE TEXT, READCOUNT INT DEFAULT 0, ISFAVORITE INT DEFAULT 0, ISVOTEUP INT DEFAULT 0, ISVOTEDOWN INT DEFAULT 0)";
     //const char *sql_stmt = "drop table posts";
@@ -36,11 +37,13 @@ NSLock *lock;
     return ret;
 }
 
-+ (bool)cleanCache: (sqlite3 *)postsDB
-            dbPath:(NSString *)dbPath
++ (bool)cleanCache
 {
     bool ret;
-    const char *dbpath = [dbPath UTF8String];
+
+    sqlite3* postsDB = NULL;
+    const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
+
     sqlite3_stmt *statement = NULL;
     NSString *deleteSQL = @"DELETE FROM POSTS WHERE isfavorite=0;";
     NSLog(@"cleanCache deleteSQL:%@", deleteSQL);
@@ -68,12 +71,13 @@ NSLock *lock;
     return ret;
 }
 
-+ (NSMutableArray*)getPostsBySql: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-           querySQL:(NSString *)querySQL
++ (NSMutableArray*)getPostsBySql:(NSString *)querySQL
 {
     NSMutableArray* posts = [[NSMutableArray alloc] init];
-    const char *dbpath = [dbPath UTF8String];
+
+    sqlite3* postsDB = NULL;
+    const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
+
     sqlite3_stmt *statement;
     //NSLog(@"getPostsBySql querySQL: %@", querySQL);
     const char *query_stmt = [querySQL UTF8String];
@@ -123,9 +127,7 @@ NSLock *lock;
 
 }
 
-+ (bool)savePost: (sqlite3 *)postsDB
-          dbPath:(NSString *) dbPath
-          postId:(NSString *)postId
++ (bool)savePost:(NSString *)postId
          summary:(NSString *)summary
         category:(NSString *)category
            title:(NSString *)title
@@ -134,7 +136,9 @@ NSLock *lock;
         metadata:(NSString*)metadata
 {
     bool ret;
-    const char *dbpath = [dbPath UTF8String];
+    sqlite3* postsDB = NULL;
+    const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
+
     NSLog(@"savePost. id:%@, metadata:%@, title:%@", postId, metadata, title);
     sqlite3_stmt *statement = NULL;
     content = [content stringByReplacingOccurrencesOfString: @"\"" withString:DB_SEPERATOR];
@@ -174,22 +178,18 @@ NSLock *lock;
 }
 
 
-+ (Posts*)getPost: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-           postId:(NSString *)postId
++ (Posts*)getPost:(NSString *)postId
 {
     Posts* post = nil;
     NSString *querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE POSTID=\"%@\"", postId];
-    NSMutableArray* posts = [PostsSqlite getPostsBySql:postsDB dbPath:dbPath querySQL:querySQL];
+    NSMutableArray* posts = [PostsSqlite getPostsBySql:querySQL];
     if ([posts count] == 1) {
       post = posts[0];
     }
     return post;
 }
 
-+ (void)getDefaultPosts: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-            category:(NSString *)category
++ (void)getDefaultPosts:(NSString *)category
           objects:(NSMutableArray *) objects
     hideReadPosts:(BOOL) hideReadPosts
 {
@@ -207,16 +207,14 @@ NSLock *lock;
       }
     }
     NSLog(@"sql: %@", querySQL);
-    NSMutableArray* posts = [PostsSqlite getPostsBySql:postsDB dbPath:dbPath querySQL:querySQL];
+    NSMutableArray* posts = [PostsSqlite getPostsBySql:querySQL];
 
     for(int i=[posts count] - 1; i>=0; i--) {
       [objects insertObject:posts[i] atIndex:0];                
     }
 }
 
-+ (bool)loadRecommendPosts: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-            category:(NSString *)category
++ (bool)loadRecommendPosts:(NSString *)category
           objects:(NSMutableArray *) objects
         tableview:(UITableView *)tableview
 {
@@ -226,7 +224,7 @@ NSLock *lock;
 
     NSLog(@"sql: %@", querySQL);
 
-    NSMutableArray* posts = [PostsSqlite getPostsBySql:postsDB dbPath:dbPath querySQL:querySQL];
+    NSMutableArray* posts = [PostsSqlite getPostsBySql:querySQL];
     for(int i=[posts count] - 1; i>=0; i--) {
       [objects insertObject:posts[i] atIndex:0];
                 
@@ -237,13 +235,13 @@ NSLock *lock;
     return ret;
 }
 
-+ (bool)addPostReadCount: (sqlite3 *)postsDB
-                  dbPath:(NSString *) dbPath
-                  postId:(NSString *)postId
++ (bool)addPostReadCount:(NSString *)postId
                    category:(NSString *)category
 {
     bool ret;
-    const char *dbpath = [dbPath UTF8String];
+    sqlite3* postsDB = NULL;
+    const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
+
     NSLog(@"addPostReadCount. id:%@, category:%@", postId, category);
     sqlite3_stmt *statement = NULL;
     NSString *updateSql = [NSString
@@ -274,14 +272,14 @@ NSLock *lock;
     return ret;
 }
 
-+ (bool)updatePostMetadata:(sqlite3 *)postsDB
-                    dbPath:(NSString *) dbPath
-                    postId:(NSString *)postId
++ (bool)updatePostMetadata:(NSString *)postId
                   metadata:(NSString*)metadata
                   category:(NSString *)category
 {
     bool ret;
-    const char *dbpath = [dbPath UTF8String];
+    sqlite3* postsDB = NULL;
+    const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
+
     sqlite3_stmt *statement = NULL;
     NSString *updateSql = [NSString
                            stringWithFormat:
@@ -311,15 +309,15 @@ NSLock *lock;
     return ret;
 }
 
-+ (bool)updatePostBoolField: (sqlite3 *)postsDB
-                  dbPath:(NSString *) dbPath
-                  postId:(NSString *)postId
++ (bool)updatePostBoolField:(NSString *)postId
                   boolValue:(BOOL)boolValue
                   fieldName:(NSString*)fieldName
                    category:(NSString *)category
 {
     bool ret;
-    const char *dbpath = [dbPath UTF8String];
+    sqlite3* postsDB = NULL;
+    const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
+
     NSLog(@"updatePostBoolField. id:%@, category:%@", postId, category);
     sqlite3_stmt *statement = NULL;
     NSString *updateSql = [NSString
@@ -348,17 +346,5 @@ NSLock *lock;
     sqlite3_close(postsDB);
     [lock unlock];
     return ret;
-}
-
-+ (sqlite3 *)openSqlite:(NSString*) dbPath
-{
-    sqlite3* postsDB = NULL;
-
-    //if ([filemgr fileExistsAtPath: dbPath ] == NO)
-    if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
-        NSLog(@"Error: Failed to open/create database");
-    }
-    NSLog(@"openSqlite postsDB:%@", postsDB);
-    return postsDB;
 }
 @end

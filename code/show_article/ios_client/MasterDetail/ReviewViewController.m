@@ -10,10 +10,8 @@
 
 #import <Twitter/Twitter.h>
 
-@interface ReviewViewController () {
-    sqlite3 *postsDB;
-    NSString *dbPath;
-}
+@interface ReviewViewController ()
+
 @end
 
 @implementation ReviewViewController
@@ -32,11 +30,8 @@
     [self addMenuCompoents];
     self.questions = [[NSMutableArray alloc] init];
 
-    dbPath = [MyGlobal singleton].dbPath;
-    postsDB = [PostsSqlite openSqlite:dbPath];
-
     // load data
-    [PostsSqlite loadRecommendPosts:postsDB dbPath:dbPath category:self.category
+    [PostsSqlite loadRecommendPosts:self.category
                    objects:self.questions tableview:self.tableView];
 
     // configure tooltip

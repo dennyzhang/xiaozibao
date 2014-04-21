@@ -18,20 +18,13 @@
     sqlite3 *postsDB;
 }
 
-+ (bool)initDB: (sqlite3 *)postsDB
-        dbPath:(NSString *) dbPath;
++ (bool)initDB;
 
-+ (NSMutableArray*)getPostsBySql: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-           querySQL:(NSString *)querySQL;
++ (NSMutableArray*)getPostsBySql:(NSString *)querySQL;
 
-+ (Posts*)getPost: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-           postId:(NSString *)postId;
++ (Posts*)getPost:(NSString *)postId;
 
-+ (bool)savePost: (sqlite3 *)postsDB
-          dbPath:(NSString *) dbPath
-          postId:(NSString *)postId
++ (bool)savePost:(NSString *)postId
          summary:(NSString *)summary
         category:(NSString *)category
            title:(NSString *)title
@@ -39,38 +32,25 @@
          content:(NSString *)content
         metadata:(NSString*)metadata;
 
-+ (bool)cleanCache: (sqlite3 *)postsDB
-            dbPath:(NSString *)dbPath;
++ (bool)cleanCache;
 
-+ (void)getDefaultPosts: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-            category:(NSString *)category
++ (void)getDefaultPosts:(NSString *)category
           objects:(NSMutableArray *) objects
       hideReadPosts:(BOOL) hideReadPosts;
 
-+ (bool)loadRecommendPosts: (sqlite3 *)postsDB
-           dbPath:(NSString *) dbPath
-            category:(NSString *)category
++ (bool)loadRecommendPosts:(NSString *)category
           objects:(NSMutableArray *) objects
         tableview:(UITableView *)tableview;
 
-+ (bool)addPostReadCount: (sqlite3 *)postsDB
-                  dbPath:(NSString *) dbPath
-                  postId:(NSString *)postId
++ (bool)addPostReadCount:(NSString *)postId
                    category:(NSString *)category;
 
-+ (bool)updatePostBoolField: (sqlite3 *)postsDB
-                  dbPath:(NSString *) dbPath
-                  postId:(NSString *)postId
++ (bool)updatePostBoolField:(NSString *)postId
                   boolValue:(BOOL)boolValue
                   fieldName:(NSString*)fieldName
                    category:(NSString *)category;
 
-+ (bool)updatePostMetadata:(sqlite3 *)postsDB
-                    dbPath:(NSString *) dbPath
-                    postId:(NSString *)postId
++ (bool)updatePostMetadata:(NSString *)postId
                   metadata:(NSString*)metadata
                   category:(NSString *)category;
-
-+ (sqlite3 *)openSqlite:(NSString*) dbPath;
 @end

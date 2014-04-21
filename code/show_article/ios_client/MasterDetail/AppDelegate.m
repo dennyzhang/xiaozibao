@@ -35,12 +35,9 @@
     self.window.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
     // init db
-    sqlite3* postsDB = NULL;
-    NSString* dbPath = [MyGlobal singleton].dbPath;
-    if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
+    if ([PostsSqlite initDB] == NO) {
         NSLog(@"Error: Failed to open/create database");
     }
-    NSLog(@"openSqlite postsDB:%@", postsDB);
 
     return YES;
 }

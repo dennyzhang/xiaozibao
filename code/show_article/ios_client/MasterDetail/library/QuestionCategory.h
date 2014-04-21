@@ -20,8 +20,7 @@
 
 +(QuestionCategory *)singleton;
 +(void)clearIsLoaded;
--(void)loadPosts:(sqlite3 *)postsDB
-          dbPath:(NSString *)dbPath;
+-(void)loadPosts;
 
 - (NSMutableArray*) getAllCategories;
 @end
