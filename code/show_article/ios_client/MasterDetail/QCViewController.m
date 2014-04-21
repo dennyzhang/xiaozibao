@@ -43,12 +43,19 @@
     [super viewDidLoad];
 
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    self.tableView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    
     if (self.currentQC) {
       [self.currentQC loadPosts];
 
       // init table indicator
       [self initTableIndicatorView];
 
+    }
+    else {
+        // if([self.navigationTitle isEqualToString:APP_SETTING]) {
+        //     self.tableView.scrollEnabled = NO;
+        // }
     }
 
     NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
