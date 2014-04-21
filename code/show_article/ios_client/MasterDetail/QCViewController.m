@@ -541,10 +541,12 @@
                 //NSLog(@"fetchArticleList i:%d, id:%@, metadata:%@", i, idList[i], metadataList[i]);
                 if ([Posts containId:self.currentQC.questions postId:idList[i]] == NO) {
                     post = [PostsSqlite getPost:idList[i]];
-                    if (post == nil) {
+                    if (!post || [post isPostStale:metadataList[i]]) {
+                        BOOL isUpdated = (post)?YES:NO;
                         [self fetchJson:self.currentQC.questions
                                  urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
-                       shouldAppendHead:shouldAppendHead];
+                       shouldAppendHead:shouldAppendHead
+                              isUpdated:isUpdated];
                     }
                     else {
                         int index = 0;
@@ -560,10 +562,12 @@
             for(i=0; i<count; i++) {
                 if ([Posts containId:self.currentQC.questions postId:idList[i]] == NO) {
                     post = [PostsSqlite getPost:idList[i]];
-                    if (post == nil) {
+                    if (!post || [post isPostStale:metadataList[i]]) {
+                        BOOL isUpdated = (post)?YES:NO;
                         [self fetchJson:self.currentQC.questions
                                  urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
-                       shouldAppendHead:shouldAppendHead];
+                       shouldAppendHead:shouldAppendHead
+                              isUpdated:isUpdated];
                     }
                     else {
                         int index = 0;
@@ -575,6 +579,7 @@
                 }
             }
         }
+
         for(i=0; i<count; i++) {
             [PostsSqlite updatePostMetadata:idList[i] metadata:metadataList[i]
                                    category:self.currentQC.category];
@@ -583,6 +588,7 @@
         if (shouldAppendHead == NO) {
             self.bottom_num = 1 + self.bottom_num;
         }
+
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         [self stopActivityIndicator:shouldAppendHead];
         [ComponentUtil infoMessage:@"Error to get specific post list"
@@ -596,6 +602,7 @@
 - (void)fetchJson:(NSMutableArray*) listObject
            urlStr:(NSString*)urlStr
  shouldAppendHead:(bool)shouldAppendHead
+        isUpdated:(bool)isUpdated
 {
     
     NSURL *url = [NSURL URLWithString:urlStr];
@@ -611,13 +618,24 @@
         [post setSource:[JSON valueForKeyPath:@"source"]];
         [post set_metadata:[JSON valueForKeyPath:@"metadata"]];
         [post setReadcount:[NSNumber numberWithInt:0]];
-        
+
+        if (isUpdated) {
+        if ([PostsSqlite updatePost:post.postid summary:post.summary category:post.category
+                            title:post.title source:post.source content:post.content
+                         metadata:post.metadata] == NO) {
+            [ComponentUtil infoMessage:@"Error to update post"
+                                   msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
+                         enforceMsgBox:FALSE];
+        }
+        }
+        else {
         if ([PostsSqlite savePost:post.postid summary:post.summary category:post.category
                             title:post.title source:post.source content:post.content
                          metadata:post.metadata] == NO) {
             [ComponentUtil infoMessage:@"Error to insert post"
                                    msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
                          enforceMsgBox:FALSE];
+        }
         }
         
         int index = 0;

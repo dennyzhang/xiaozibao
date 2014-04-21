@@ -29,5 +29,7 @@
 + (bool)containId:(NSMutableArray*) objects
            postId:(NSString*)postId;
 
+- (bool)isPostStale:(NSString*)newMetadata;
 + (void)updateCategoryList:(NSUserDefaults *)userDefaults;
+
 @end

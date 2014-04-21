@@ -178,6 +178,51 @@ NSLock *lock;
 }
 
 
++ (bool)updatePost:(NSString *)postId
+         summary:(NSString *)summary
+        category:(NSString *)category
+           title:(NSString *)title
+           source:(NSString *)source
+         content:(NSString *)content
+        metadata:(NSString*)metadata
+{
+    bool ret;
+    sqlite3* postsDB = NULL;
+    const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
+
+    NSLog(@"updatePost. id:%@, metadata:%@, title:%@", postId, metadata, title);
+    sqlite3_stmt *statement = NULL;
+    content = [content stringByReplacingOccurrencesOfString: @"\"" withString:DB_SEPERATOR];
+    NSString *insertSQL = [NSString
+                           stringWithFormat:
+                           @"UPDATE POSTS set POSTID=\"%@\", CATEGORY=\"%@\", SUMMARY=\"%@\", TITLE=\"%@\", SOURCE=\"%@\", CONTENT=\"%@\", METADATA=\"%@\" WHERE POSTID=\"%@\"",
+                            postId, category, summary, title, source, content, metadata, postId];
+    const char *insert_stmt = [insertSQL UTF8String];
+    
+    [lock lock];
+    if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
+    {
+        sqlite3_prepare_v2(postsDB, insert_stmt, -1, &statement, NULL);
+        
+        if (sqlite3_step(statement) != SQLITE_DONE) {
+          NSLog(@"error: %@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(postsDB)]);
+          NSLog(@"insertSQL:%@",insertSQL);
+          ret = NO;
+        }
+        else
+            ret = YES;
+    }
+    else {
+        ret = NO;
+    }
+    
+    sqlite3_finalize(statement);
+    sqlite3_close(postsDB);
+    [lock unlock];
+    return ret;
+}
+
+
 + (Posts*)getPost:(NSString *)postId
 {
     Posts* post = nil;

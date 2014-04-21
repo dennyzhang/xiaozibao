@@ -168,6 +168,7 @@
 		043AF3231904D27D001E4F0D /* QuestionCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionCategory.m; sourceTree = "<group>"; };
 		043AF3281905693D001E4F0D /* MyGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGlobal.h; sourceTree = "<group>"; };
 		043AF3291905693D001E4F0D /* MyGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGlobal.m; sourceTree = "<group>"; };
+		043AF32B1905B0DF001E4F0D /* Posts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Posts.h; sourceTree = "<group>"; };
 		04409A4E18DB69670021F9C3 /* comments-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments-512.png"; sourceTree = "<group>"; };
 		04409A4F18DB69670021F9C3 /* hearts-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hearts-512.png"; sourceTree = "<group>"; };
 		04409A5018DB69670021F9C3 /* more-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-512.png"; sourceTree = "<group>"; };
@@ -204,7 +205,6 @@
 		0463535D19047FA2008266AF /* ComponentUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentUtil.m; sourceTree = "<group>"; };
 		0463535E19047FA2008266AF /* PostsSqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsSqlite.h; sourceTree = "<group>"; };
 		0463535F19047FA2008266AF /* PostsSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsSqlite.m; sourceTree = "<group>"; };
-		0463536219047FD6008266AF /* posts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = posts.h; sourceTree = "<group>"; };
 		0463536319047FD6008266AF /* Posts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Posts.m; sourceTree = "<group>"; };
 		0463536419047FD6008266AF /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
 		0463536519047FD6008266AF /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
@@ -351,10 +351,10 @@
 			isa = PBXGroup;
 			children = (
 				0463535C19047FA2008266AF /* ComponentUtil.h */,
-				0463536219047FD6008266AF /* posts.h */,
 				043AF3221904D27D001E4F0D /* QuestionCategory.h */,
 				043AF3231904D27D001E4F0D /* QuestionCategory.m */,
 				043AF3281905693D001E4F0D /* MyGlobal.h */,
+				043AF32B1905B0DF001E4F0D /* Posts.h */,
 				043AF3291905693D001E4F0D /* MyGlobal.m */,
 				0463536919048019008266AF /* MyToolTip.h */,
 				0463536A19048019008266AF /* MyToolTip.m */,

@@ -32,6 +32,14 @@
          content:(NSString *)content
         metadata:(NSString*)metadata;
 
++ (bool)updatePost:(NSString *)postId
+         summary:(NSString *)summary
+        category:(NSString *)category
+           title:(NSString *)title
+           source:(NSString *)source
+         content:(NSString *)content
+        metadata:(NSString*)metadata;
+
 + (bool)cleanCache;
 
 + (void)getDefaultPosts:(NSString *)category

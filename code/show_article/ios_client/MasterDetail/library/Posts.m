@@ -96,4 +96,13 @@
    return ret;
 }
 
+- (bool)isPostStale:(NSString*)newMetadata
+{
+  NSString* modifytime = [self.metadataDictionary objectForKey:@"modifytime"];
+  if(!modifytime)
+    return YES;
+  NSRange range = [newMetadata rangeOfString:[NSString stringWithFormat:@"modifytime=%@", modifytime]];
+  return (range.location == NSNotFound);
+}
+
 @end
