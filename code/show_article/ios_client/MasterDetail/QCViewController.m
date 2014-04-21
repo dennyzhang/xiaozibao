@@ -47,7 +47,7 @@
     NSLog(@"QCViewController viewDidLoad");
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
     self->postsDB = [PostsSqlite openSqlite:dbPath];
     self->dbPath = [PostsSqlite getDBPath];
@@ -411,7 +411,9 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"Userid"];
+    NSString* uid = textField.text;
+    uid = [uid stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    [[NSUserDefaults standardUserDefaults] setObject:uid forKey:@"Userid"];
     [textField resignFirstResponder];
     return YES;
 }
