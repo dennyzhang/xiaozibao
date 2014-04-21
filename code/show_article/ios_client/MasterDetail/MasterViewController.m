@@ -331,7 +331,7 @@
     
     if (self.questionCategories) {
         QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
-        //self.navigationItem.title = [qc.category capitalizedString];
+        self.navigationItem.title = [qc.category capitalizedString];
         self.titleLabel.text = [qc.category capitalizedString];
         self.pageControl.currentPage = self.mCurrentPage;
     }
