@@ -5,7 +5,7 @@
 // Created by mac on 13-7-22.
 // Copyright (c) 2013年 mac. All rights reserved.
 //
-#import "myGlobal.h"
+#import "MyGlobal.h"
 #import "Posts.h"
 
 @implementation Posts

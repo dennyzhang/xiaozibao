@@ -18,7 +18,7 @@
 #import "QCViewController.h"
 #import "QuestionCategory.h"
 #import "SWRevealViewController.h"
-#import "myGlobal.h"
+#import "MyGlobal.h"
 
 @interface MasterViewController ()
 

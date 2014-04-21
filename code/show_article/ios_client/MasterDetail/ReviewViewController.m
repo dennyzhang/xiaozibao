@@ -304,7 +304,7 @@
     [feedbackTextView setFrame:CGRectMake(x, y + imageHeight, 
                                           self.view.frame.size.width, textHeight)];
     feedbackTextView.userInteractionEnabled = NO;
-    
+
     float summaryTextViewHeight = y + imageHeight + textHeight;
     
     summaryTextViewHeight += imageHeight; // TODO, workaround here

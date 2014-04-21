@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "myGlobal.h"
+#import "MyGlobal.h"
 #import "posts.h"
 #import "ComponentUtil.h"
 
