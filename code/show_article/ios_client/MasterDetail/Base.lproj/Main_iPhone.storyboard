@@ -124,7 +124,7 @@
         <!--Page View Controller - category-->
         <scene sceneID="4mU-bm-wXI">
             <objects>
-                <pageViewController storyboardIdentifier="categoryPageViewController" autoresizesArchivedViewToFullSize="NO" title="category" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="3fu-f9-880" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="categoryPageViewController" autoresizesArchivedViewToFullSize="NO" title="category" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="3fu-f9-880" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tki-kT-1Ni" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2471" y="-1428"/>
