@@ -8,7 +8,7 @@
 
 #import "MenuViewController.h"
 #import "MasterViewController.h"
-#import "global.h"
+#import "myGlobal.h"
 #import "posts.h"
 
 @interface MenuViewController ()

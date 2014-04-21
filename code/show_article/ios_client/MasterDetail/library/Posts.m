@@ -5,8 +5,8 @@
 // Created by mac on 13-7-22.
 // Copyright (c) 2013年 mac. All rights reserved.
 //
+#import "myGlobal.h"
 #import "Posts.h"
-#import "global.h"
 
 @implementation Posts
 @synthesize postid, title, summary, category, content, source, readcount;

@@ -1,3 +1,11 @@
+//
+//  myGlobal.h
+//  MasterDetail
+//
+//  Created by mac on 14-4-21.
+//  Copyright (c) 2014年 mac. All rights reserved.
+//
+
 #import "Mixpanel.h"
 #import "ComponentUtil.h"
 #import "MyToolTip.h"
@@ -45,3 +53,9 @@
 #define MAX_SECONDS_FOR_VALID_STAY 120
 #define MIXPANEL_TOKEN @"788d5bfa071188e96a45a2ae30bbbebe"
 #define TAG_UIVIEW_NAVBAR 4000
+
+#import <Foundation/Foundation.h>
+
+@interface myGlobal : NSObject
+
+@end

@@ -10,8 +10,8 @@
 
 //#import "/usr/include/sqlite3.h"
 #import "/usr/local/opt/sqlite/include/sqlite3.h"
+#import "myGlobal.h"
 #import "Posts.h"
-#import "global.h"
 
 #define DB_SEPERATOR @"someseperator"
 @interface PostsSqlite : NSObject {

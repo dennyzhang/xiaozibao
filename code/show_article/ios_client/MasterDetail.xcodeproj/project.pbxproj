@@ -47,6 +47,7 @@
 		0436CDE818E9EB5300130F79 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0436CDE718E9EB5300130F79 /* Twitter.framework */; };
 		0436CDEB18EB131600130F79 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0436CDE918EB127D00130F79 /* libPods.a */; };
 		043AF3241904D27D001E4F0D /* QuestionCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 043AF3231904D27D001E4F0D /* QuestionCategory.m */; };
+		043AF327190567CC001E4F0D /* myGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 043AF326190567CC001E4F0D /* myGlobal.m */; };
 		04409A5318DB69670021F9C3 /* comments-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4E18DB69670021F9C3 /* comments-512.png */; };
 		04409A5418DB69670021F9C3 /* hearts-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A4F18DB69670021F9C3 /* hearts-512.png */; };
 		04409A5518DB69670021F9C3 /* more-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 04409A5018DB69670021F9C3 /* more-512.png */; };
@@ -165,6 +166,8 @@
 		0436CDE918EB127D00130F79 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../../../../../../../Library/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		043AF3221904D27D001E4F0D /* QuestionCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionCategory.h; sourceTree = "<group>"; };
 		043AF3231904D27D001E4F0D /* QuestionCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionCategory.m; sourceTree = "<group>"; };
+		043AF325190567CC001E4F0D /* myGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myGlobal.h; sourceTree = "<group>"; };
+		043AF326190567CC001E4F0D /* myGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myGlobal.m; sourceTree = "<group>"; };
 		04409A4E18DB69670021F9C3 /* comments-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments-512.png"; sourceTree = "<group>"; };
 		04409A4F18DB69670021F9C3 /* hearts-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hearts-512.png"; sourceTree = "<group>"; };
 		04409A5018DB69670021F9C3 /* more-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-512.png"; sourceTree = "<group>"; };
@@ -205,7 +208,6 @@
 		0463536319047FD6008266AF /* Posts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Posts.m; sourceTree = "<group>"; };
 		0463536419047FD6008266AF /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
 		0463536519047FD6008266AF /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
-		0463536819048019008266AF /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
 		0463536919048019008266AF /* MyToolTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyToolTip.h; sourceTree = "<group>"; };
 		0463536A19048019008266AF /* MyToolTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyToolTip.m; sourceTree = "<group>"; };
 		046E471018E0BFF900ACC618 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
@@ -350,9 +352,10 @@
 			children = (
 				0463535C19047FA2008266AF /* ComponentUtil.h */,
 				0463536219047FD6008266AF /* posts.h */,
+				043AF325190567CC001E4F0D /* myGlobal.h */,
+				043AF326190567CC001E4F0D /* myGlobal.m */,
 				043AF3221904D27D001E4F0D /* QuestionCategory.h */,
 				043AF3231904D27D001E4F0D /* QuestionCategory.m */,
-				0463536819048019008266AF /* global.h */,
 				0463536919048019008266AF /* MyToolTip.h */,
 				0463536A19048019008266AF /* MyToolTip.m */,
 				0463536319047FD6008266AF /* Posts.m */,
@@ -721,6 +724,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */,
+				043AF327190567CC001E4F0D /* myGlobal.m in Sources */,
 				0463536119047FA2008266AF /* PostsSqlite.m in Sources */,
 				049FE34C18E0C252009FDB39 /* ReviewViewController.m in Sources */,
 				0463535A19040692008266AF /* QCViewController.m in Sources */,

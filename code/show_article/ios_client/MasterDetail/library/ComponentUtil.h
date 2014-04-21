@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 #import "UserProfile.h"
-#import "global.h"
+#import "myGlobal.h"
 
 @interface ComponentUtil : NSObject
 + (void) addTextToButton:(UIButton*) btn text:(NSString*)text fontSize:(int)fontSize
