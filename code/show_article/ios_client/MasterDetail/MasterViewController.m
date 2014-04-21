@@ -38,7 +38,7 @@
 {
     NSLog(@"MasterViewController load");
     [super viewDidLoad];
-    
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
     
     if([self.currentNavigationTitle isEqualToString:APP_SETTING] ||

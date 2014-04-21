@@ -10,15 +10,12 @@
 #import "AFJSONRequestOperation.h"
 #import "DetailViewController.h"
 
-@interface QCViewController () {
-    UIView* footerView;
-    UIView* headerView;
-    int bottom_num;
-}
-
+@interface QCViewController ()
 @property (atomic, retain) QuestionCategory *currentQC;
 @property (nonatomic, retain) NSString* navigationTitle;
-
+@property (retain, nonatomic) IBOutlet UIView *footerView;
+@property (retain, nonatomic) IBOutlet UIView *headerView;
+@property (assign, nonatomic) int bottom_num;
 @end
 
 @implementation QCViewController
@@ -411,17 +408,18 @@
 #pragma mark - refresh
 - (void)stopActivityIndicator:(bool)shouldAppendHead {
     if (shouldAppendHead == TRUE) {
-        [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] stopAnimating];
+        [(UIActivityIndicatorView *)[self.headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] stopAnimating];
     }
     else {
-        [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] stopAnimating];
+        [(UIActivityIndicatorView *)[self.footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] stopAnimating];
     }
 }
 
 -(void)initTableIndicatorView
 {
     // headerView
-    headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)];
+    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)];
+    self.headerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     actIndHeader.tag = TAG_TABLE_HEADER_INDIACTOR;
@@ -429,13 +427,13 @@
     
     actIndHeader.hidesWhenStopped = YES;
     
-    [headerView addSubview:actIndHeader];
+    [self.headerView addSubview:actIndHeader];
     
-    self.tableView.tableHeaderView = headerView;
+    self.tableView.tableHeaderView = self.headerView;
     
     // footerView
-    footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
-    
+    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
+    self.footerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndFooter = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     actIndFooter.tag = TAG_TABLE_FOOTER_INDIACTOR;
@@ -443,15 +441,15 @@
     
     actIndFooter.hidesWhenStopped = YES;
     
-    [footerView addSubview:actIndFooter];
+    [self.footerView addSubview:actIndFooter];
     
-    self.tableView.tableFooterView = footerView;
+    self.tableView.tableFooterView = self.footerView;
 }
 
 - (void) refreshTableHead
 {
     NSLog(@"refreshTableHead");
-    [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+    [(UIActivityIndicatorView *)[self.headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
     [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
                start_num_t:0
           shouldAppendHead:YES];
@@ -460,9 +458,9 @@
 - (void) refreshTableTail
 {
     NSLog(@"refreshTableTail");
-    [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+    [(UIActivityIndicatorView *)[self.footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
     [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
-               start_num_t:self->bottom_num * PAGE_COUNT
+               start_num_t:self.bottom_num * PAGE_COUNT
           shouldAppendHead:NO];
 }
 
@@ -566,7 +564,7 @@
             
         }
         if (shouldAppendHead == NO) {
-            self->bottom_num = 1 + self->bottom_num;
+            self.bottom_num = 1 + self.bottom_num;
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         [self stopActivityIndicator:shouldAppendHead];
@@ -629,12 +627,12 @@
     // when reach the top
     if (scrollView.contentOffset.y <= 0)
     {
-        [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+        [(UIActivityIndicatorView *)[self.headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
     }
     
     if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
     {
-        [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+        [(UIActivityIndicatorView *)[self.footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
     }
 }
 

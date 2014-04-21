@@ -33,6 +33,7 @@
 
 #define PAGE_COUNT 10
 #define ROW_HEIGHT 160.0f
+
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 
 - (void) init_data:(QuestionCategory *)qc
