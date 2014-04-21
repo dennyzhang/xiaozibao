@@ -377,11 +377,6 @@
             }
         }
         if (indexPath.row == 3) {
-            cell.textLabel.text = CLEAN_CACHE;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-
-        if (indexPath.row == 4) {
             cell.textLabel.text = USER_ID;
             CGFloat field_width = 225;
             CGFloat frame_width = self.view.frame.size.width;
@@ -398,6 +393,12 @@
             playerTextField.delegate = self;
             cell.accessoryView = playerTextField;
         }
+
+        if (indexPath.row == 4) {
+            cell.textLabel.text = CLEAN_CACHE;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+
     }
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -409,6 +410,14 @@
         }
     }
 }
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"Userid"];
+    [textField resignFirstResponder];
+    return YES;
+}
+ 
 #pragma mark - refresh
 - (void)stopActivityIndicator:(bool)shouldAppendHead {
     if (shouldAppendHead == TRUE) {
