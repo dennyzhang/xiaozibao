@@ -176,9 +176,10 @@
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.leftBarButtonItem = settingButton;
-    
-    // configure rightBarButton
+
     if(self.questionCategories) {
+        [self addPageControl];
+        // configure rightBarButton
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
         [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -193,7 +194,6 @@
         
         [self updateNavigationIndex:self.mCurrentPage];
     }
-    [self addPageControl];
 }
 
 - (void)addPageControl
@@ -331,11 +331,11 @@
     
     if (self.questionCategories) {
         QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
+        self.pageControl.currentPage = self.mCurrentPage;
         self.navigationItem.title = [qc.category capitalizedString];
         self.titleLabel.text = [qc.category capitalizedString];
-        self.pageControl.currentPage = self.mCurrentPage;
+        [self refreshScore];
     }
-    [self refreshScore];
 }
 
 -(void)refreshScore
