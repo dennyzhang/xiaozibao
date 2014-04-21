@@ -29,6 +29,9 @@
 @property (nonatomic, retain) NSMutableArray *questionCategories;
 @property (nonatomic, retain) NSString* currentNavigationTitle;
 
+@property (nonatomic, strong) UIPageControl *pageControl;
+@property (nonatomic, strong) UIView *navbarView;
+@property (nonatomic, strong) UILabel *titleLabel;
 @end
 
 @implementation MasterViewController
@@ -72,13 +75,13 @@
     [self.view addSubview:_mPageViewController.view];
     [self.mPageViewController didMoveToParentViewController:self];
     
-    UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self.mPageViewController class], nil];
-    //pageControl.frame = CGRectMake(100, 0, 200, 40);
+    // UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self.mPageViewController class], nil];
+    // //pageControl.frame = CGRectMake(100, 0, 200, 40);
 
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
-    pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
-    //pageControl.hidesForSinglePage = YES;
+    // pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    // pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
+    // pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
+    // //pageControl.hidesForSinglePage = YES;
     
     // ToolTip
     if (self.navigationItem.rightBarButtonItem) {
@@ -188,6 +191,32 @@
         
         [self updateNavigationIndex:self.mCurrentPage];
     }
+    [self addPageControl];
+}
+
+- (void)addPageControl
+{
+    self.titleLabel = [[UILabel alloc] init]; 
+    self.navbarView = [[UIView alloc] init];
+    self.pageControl = [[UIPageControl alloc] init];
+    self.pageControl.numberOfPages = self.mPageSize;
+    self.pageControl.currentPage = 0;
+    self.pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
+    self.pageControl.pageIndicatorTintColor = [UIColor grayColor];
+    [self.navbarView addSubview:self.titleLabel];
+    [self.navbarView addSubview:self.pageControl];
+
+    self.navigationItem.titleView = self.navbarView;
+    self.navbarView.frame = (CGRect){40, 0, self.view.frame.size.width - 80, 64};
+
+    CGFloat navbar_width = self.navbarView.frame.size.width;
+    self.titleLabel.frame = (CGRect){navbar_width/2, 5, 100, 40};
+    self.titleLabel.textColor = [UIFont whiteColor];
+    self.titleLabel.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
+    
+    self.pageControl.frame = (CGRect){navbar_width/2,
+                                      self.navbarView.frame.size.height - 20, 0, 0};
+
 }
 
 -(UIViewController *)viewControllerAtIndex:(NSUInteger )index
@@ -284,9 +313,12 @@
     
     if (self.questionCategories) {
         QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
-        self.navigationItem.title = [qc.category capitalizedString];
+        //self.navigationItem.title = [qc.category capitalizedString];
+        self.titleLabel.text = [qc.category capitalizedString];
+        self.pageControl.currentPage = self.mCurrentPage;
         [ComponentUtil updateScoreText:qc.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
     }
 }
+
 
 @end
