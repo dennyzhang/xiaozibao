@@ -16,6 +16,8 @@
 @property (retain, nonatomic) IBOutlet UIView *footerView;
 @property (retain, nonatomic) IBOutlet UIView *headerView;
 @property (assign, nonatomic) int bottom_num;
+
+@property (nonatomic, retain) NSMutableArray *savedQuestions;
 @end
 
 @implementation QCViewController
@@ -23,9 +25,9 @@
 - (void) init_data:(QuestionCategory *)qc
    navigationTitle:(NSString*)navigationTitle_t
 {
-   NSLog(@"QCViewController init_data");
-  self.currentQC = qc;
-  self.navigationTitle = navigationTitle_t;
+    NSLog(@"QCViewController init_data");
+    self.currentQC = qc;
+    self.navigationTitle = navigationTitle_t;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -41,26 +43,30 @@
 {
     NSLog(@"QCViewController viewDidLoad");
     [super viewDidLoad];
-
+    
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.tableView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
     if (self.currentQC) {
-      [self.currentQC loadPosts];
-
-      // init table indicator
-      [self initTableIndicatorView];
-
+        [self.currentQC loadPosts];
+        
+        // init table indicator
+        [self initTableIndicatorView];
+        
     }
     else {
+        if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
+            self.savedQuestions = [[NSMutableArray alloc] init];
+            [PostsSqlite loadSavedPosts:self.savedQuestions];
+        }
         // if([self.navigationTitle isEqualToString:APP_SETTING]) {
         //     self.tableView.scrollEnabled = NO;
         // }
     }
-
+    
     NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
           self.currentQC.category, [self.currentQC.questions count]);
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,15 +81,15 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 #pragma mark - Table View
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -105,7 +111,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -119,8 +125,11 @@
         }
         return 0;
     }
-    else
-      return [self.currentQC.questions count];
+    if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
+        return [self.savedQuestions count];
+    }
+    
+    return [self.currentQC.questions count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -133,12 +142,13 @@
         return cell;
     }
     else {
-        if (indexPath.row> [self.currentQC.questions count]) { // TODO
-            NSLog(@"Error cellForRowAtIndexPath. indexPath.row:%d, questions count:%d",
-                  indexPath.row, [self.currentQC.questions count]);
-            return nil;
+        Posts *post;
+        if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
+            post = self.savedQuestions[indexPath.row];
         }
-        Posts *post = self.currentQC.questions[indexPath.row];
+        else {
+            post = self.currentQC.questions[indexPath.row];
+        }
         [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
         [[cell.contentView viewWithTag:TAG_METADATA_IN_CELL]removeFromSuperview];
         [[cell.contentView viewWithTag:TAG_ICON_IN_CELL]removeFromSuperview];
@@ -300,7 +310,7 @@
         Posts *post = self.currentQC.questions[indexPath.row];
         
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
-
+        
         DetailViewController* dvc = [segue destinationViewController];
         if ([self.currentQC.category isEqualToString:SAVED_QUESTIONS]) {
             [dvc setShouldShowCoin:[NSNumber numberWithInt:0]];
@@ -327,8 +337,8 @@
             [userDefaults synchronize];
         }
         if (switchControl.tag == TAG_SWITCH_DEBUG_MODE) {
-          [userDefaults setInteger:(int)switchControl.on forKey:@"IsDebugMode"];
-          [userDefaults synchronize];
+            [userDefaults setInteger:(int)switchControl.on forKey:@"IsDebugMode"];
+            [userDefaults synchronize];
         }
     }
 }
@@ -374,7 +384,7 @@
             cell.textLabel.text = USER_ID;
             CGFloat field_width = 225;
             CGFloat frame_width = self.view.frame.size.width;
-            UITextField *playerTextField = [[UITextField alloc] 
+            UITextField *playerTextField = [[UITextField alloc]
                                             initWithFrame:CGRectMake(frame_width - field_width,
                                                                      10, field_width, 30)];
             playerTextField.text = [ComponentUtil getUserId];
@@ -421,7 +431,7 @@
     [textField resignFirstResponder];
     return YES;
 }
- 
+
 #pragma mark - refresh
 - (void)stopActivityIndicator:(bool)shouldAppendHead {
     if (shouldAppendHead == TRUE) {
@@ -579,7 +589,7 @@
                 }
             }
         }
-
+        
         for(i=0; i<count; i++) {
             [PostsSqlite updatePostMetadata:idList[i] metadata:metadataList[i]
                                    category:self.currentQC.category];
@@ -588,7 +598,7 @@
         if (shouldAppendHead == NO) {
             self.bottom_num = 1 + self.bottom_num;
         }
-
+        
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         [self stopActivityIndicator:shouldAppendHead];
         [ComponentUtil infoMessage:@"Error to get specific post list"
@@ -618,24 +628,24 @@
         [post setSource:[JSON valueForKeyPath:@"source"]];
         [post set_metadata:[JSON valueForKeyPath:@"metadata"]];
         [post setReadcount:[NSNumber numberWithInt:0]];
-
+        
         if (isUpdated) {
-        if ([PostsSqlite updatePost:post.postid summary:post.summary category:post.category
-                            title:post.title source:post.source content:post.content
-                         metadata:post.metadata] == NO) {
-            [ComponentUtil infoMessage:@"Error to update post"
-                                   msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
-                         enforceMsgBox:FALSE];
-        }
+            if ([PostsSqlite updatePost:post.postid summary:post.summary category:post.category
+                                  title:post.title source:post.source content:post.content
+                               metadata:post.metadata] == NO) {
+                [ComponentUtil infoMessage:@"Error to update post"
+                                       msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
+                             enforceMsgBox:FALSE];
+            }
         }
         else {
-        if ([PostsSqlite savePost:post.postid summary:post.summary category:post.category
-                            title:post.title source:post.source content:post.content
-                         metadata:post.metadata] == NO) {
-            [ComponentUtil infoMessage:@"Error to insert post"
-                                   msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
-                         enforceMsgBox:FALSE];
-        }
+            if ([PostsSqlite savePost:post.postid summary:post.summary category:post.category
+                                title:post.title source:post.source content:post.content
+                             metadata:post.metadata] == NO) {
+                [ComponentUtil infoMessage:@"Error to insert post"
+                                       msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
+                             enforceMsgBox:FALSE];
+            }
         }
         
         int index = 0;
@@ -656,7 +666,7 @@
 
 #pragma mark - scroll
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//NSLog(@"scrollViewDidScroll, scrollView:%@", scrollView);
+    //NSLog(@"scrollViewDidScroll, scrollView:%@", scrollView);
     if (![self isQuestionChannel])
         return;
     // when reach the top
@@ -673,7 +683,7 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-  //NSLog(@"scrollViewDidEndDecelerating, scrollView:%@", scrollView);
+    //NSLog(@"scrollViewDidEndDecelerating, scrollView:%@", scrollView);
     if (![self isQuestionChannel])
         return;
     

@@ -99,6 +99,7 @@
 - (bool)isPostStale:(NSString*)newMetadata
 {
   NSString* modifytime = [self.metadataDictionary objectForKey:@"modifytime"];
+  //NSLog(@"isPostStale id:%@, newMetadata:%@, old modifytime:%@", self.postid, newMetadata, modifytime);
   if(!modifytime)
     return YES;
   NSRange range = [newMetadata rangeOfString:[NSString stringWithFormat:@"modifytime=%@", modifytime]];

@@ -50,6 +50,8 @@
           objects:(NSMutableArray *) objects
         tableview:(UITableView *)tableview;
 
++ (bool)loadSavedPosts:(NSMutableArray *) objects;
+
 + (bool)addPostReadCount:(NSString *)postId
                    category:(NSString *)category;
 

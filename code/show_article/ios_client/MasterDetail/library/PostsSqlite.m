@@ -234,22 +234,30 @@ NSLock *lock;
     return post;
 }
 
++ (bool)loadSavedPosts:(NSMutableArray *) objects
+{
+    NSString *querySQL;
+    querySQL = @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE isfavorite=1 ORDER BY READCOUNT DESC, ID DESC LIMIT 50";
+    NSLog(@"sql: %@", querySQL);
+    NSMutableArray* posts = [PostsSqlite getPostsBySql:querySQL];
+
+    for(int i=[posts count] - 1; i>=0; i--) {
+      [objects insertObject:posts[i] atIndex:0];                
+    }
+    return YES;
+}
+
 + (void)getDefaultPosts:(NSString *)category
           objects:(NSMutableArray *) objects
     hideReadPosts:(BOOL) hideReadPosts
 {
     NSLog(@"loadposts, category:%@, hideReadPosts:%d",category, hideReadPosts);
     NSString *querySQL;
-    if ([category isEqualToString:SAVED_QUESTIONS]) {
-      querySQL = @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE isfavorite=1 ORDER BY ID DESC LIMIT 10";
+    if (hideReadPosts == TRUE) {
+      querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE CATEGORY =\"%@\" and READCOUNT=0 ORDER BY ID DESC LIMIT 10", category];
     }
     else {
-      if (hideReadPosts == TRUE) {
-        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE CATEGORY =\"%@\" and READCOUNT=0 ORDER BY ID DESC LIMIT 10", category];
-      }
-      else {
-        querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE CATEGORY =\"%@\" ORDER BY ID DESC LIMIT 10", category];
-      }
+      querySQL = [NSString stringWithFormat: @"SELECT POSTID, SUMMARY, CATEGORY, TITLE, CONTENT, SOURCE, READCOUNT, ISFAVORITE, ISVOTEUP, ISVOTEDOWN, METADATA FROM POSTS WHERE CATEGORY =\"%@\" ORDER BY ID DESC LIMIT 10", category];
     }
     NSLog(@"sql: %@", querySQL);
     NSMutableArray* posts = [PostsSqlite getPostsBySql:querySQL];
