@@ -49,7 +49,7 @@
 
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
-    self->dbPath = [PostsSqlite getDBPath];
+    self->dbPath = [MyGlobal singleton].dbPath;
     //NSLog(@"self->postsDB:%@, self->dbPath:%@", self->postsDB, self->dbPath);
 
     if (self.currentQC) {
@@ -203,7 +203,7 @@
     }
     else {
         NSLog(@"clean cache, dbPath:%@", dbPath);
-        self->dbPath = [PostsSqlite getDBPath]; // TODO why we need this?
+        self->dbPath = [MyGlobal singleton].dbPath; // TODO why we need this?
         [PostsSqlite openSqlite:dbPath];
         
         [PostsSqlite cleanCache:self->postsDB dbPath:self->dbPath];

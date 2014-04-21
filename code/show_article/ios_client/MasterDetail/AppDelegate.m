@@ -36,7 +36,7 @@
 
     // init db
     sqlite3* postsDB = NULL;
-    NSString* dbPath = [PostsSqlite getDBPath];
+    NSString* dbPath = [MyGlobal singleton].dbPath;
     if ([PostsSqlite initDB:postsDB dbPath:dbPath] == NO) {
         NSLog(@"Error: Failed to open/create database");
     }

@@ -29,7 +29,7 @@
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
 
     self.view.backgroundColor = [UIColor whiteColor];
-    dbPath = [PostsSqlite getDBPath];
+    dbPath = [MyGlobal singleton].dbPath;
     postsDB = [PostsSqlite openSqlite:dbPath];
     
     //NSLog(@"self.detailItem.readcount: %d", [self.detailItem.readcount intValue]);

@@ -57,5 +57,8 @@
 #import <Foundation/Foundation.h>
 
 @interface MyGlobal : NSObject
+@property (nonatomic, retain) NSString* dbPath;
+
 +(MyGlobal *)singleton;
+
 @end

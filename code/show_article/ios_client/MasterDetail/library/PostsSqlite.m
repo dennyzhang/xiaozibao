@@ -350,21 +350,6 @@ NSLock *lock;
     return ret;
 }
 
-+ (NSString *)getDBPath
-{
-    NSArray* dirPaths;
-    NSString* docsDir;
-    NSString* dbPath;
-    // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    docsDir = [dirPaths objectAtIndex:0];
-    
-    // Build the path to the database file
-    dbPath = [[NSString alloc]
-                    initWithString: [docsDir stringByAppendingPathComponent: @"posts.db"]];  
-    return dbPath;
-}
-
 + (sqlite3 *)openSqlite:(NSString*) dbPath
 {
     sqlite3* postsDB = NULL;

@@ -32,7 +32,7 @@
     [self addMenuCompoents];
     self.questions = [[NSMutableArray alloc] init];
 
-    dbPath = [PostsSqlite getDBPath];
+    dbPath = [MyGlobal singleton].dbPath;
     postsDB = [PostsSqlite openSqlite:dbPath];
 
     // load data
