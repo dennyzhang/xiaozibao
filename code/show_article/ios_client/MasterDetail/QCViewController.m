@@ -13,6 +13,10 @@
 @interface QCViewController () {
     sqlite3 *postsDB;
     NSString *dbPath;
+
+    UIView* footerView;
+    UIView* headerView;
+    int bottom_num;
 }
 
 @property (atomic, retain) QuestionCategory *currentQC;
@@ -51,6 +55,10 @@
 
     if (self.currentQC) {
       [self.currentQC loadPosts:self->postsDB dbPath:self->dbPath];
+
+      // init table indicator
+      [self initTableIndicatorView];
+
     }
 
     NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
@@ -279,8 +287,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSLog(@"MasterViewController segue identifier: %@", [segue identifier]);
-    NSIndexPath *indexPath = [self.currentQC.tableView indexPathForSelectedRow];
-    UITableViewCell *cell = [self.currentQC.tableView cellForRowAtIndexPath:indexPath];
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSLog(@"increate visit count, for category:%@. previous key:%d", self.currentQC.category,
@@ -400,6 +408,268 @@
             cell.textLabel.text = FOLLOW_MAILTO;
         }
     }
+}
+#pragma mark - refresh
+- (void)stopActivityIndicator:(bool)shouldAppendHead {
+    if (shouldAppendHead == TRUE) {
+        [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] stopAnimating];
+    }
+    else {
+        [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] stopAnimating];
+    }
+}
+
+-(void)initTableIndicatorView
+{
+    // headerView
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)];
+    UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
+                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    actIndHeader.tag = TAG_TABLE_HEADER_INDIACTOR;
+    actIndHeader.frame = CGRectMake(150.0, 5.0, 20.0, 20.0);
+    
+    actIndHeader.hidesWhenStopped = YES;
+    
+    [headerView addSubview:actIndHeader];
+    
+    self.tableView.tableHeaderView = headerView;
+    
+    // footerView
+    footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
+    
+    UIActivityIndicatorView * actIndFooter = [[UIActivityIndicatorView alloc]
+                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    actIndFooter.tag = TAG_TABLE_FOOTER_INDIACTOR;
+    actIndFooter.frame = CGRectMake(150.0, 5.0, 20.0, 20.0);
+    
+    actIndFooter.hidesWhenStopped = YES;
+    
+    [footerView addSubview:actIndFooter];
+    
+    self.tableView.tableFooterView = footerView;
+}
+
+- (void) refreshTableHead
+{
+    NSLog(@"refreshTableHead");
+    [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+    [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
+               start_num_t:0
+          shouldAppendHead:YES];
+}
+
+- (void) refreshTableTail
+{
+    NSLog(@"refreshTableTail");
+    [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+    [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
+               start_num_t:self->bottom_num * PAGE_COUNT
+          shouldAppendHead:NO];
+}
+
+#pragma mark - load data
+- (bool)addToTableView:(int)index
+                  post:(Posts*)post
+{
+    return YES; // TODO
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"] == 1) {
+        if (post.readcount.intValue !=0 )
+            return YES;
+    }
+    
+    bool ret = YES;
+    [self.currentQC.questions insertObject:post atIndex:index];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //NSLog(@"after addToTableView currentQuestions.count:%d", [self.currentQC.questions count]);
+    return ret;
+}
+
+- (void)fetchArticleList:(NSString*)userid
+              category_t:(NSString*)category_t
+             start_num_t:(int)start_num_t
+        shouldAppendHead:(bool)shouldAppendHead
+{
+    if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
+        return;
+    
+    NSLog(@"fetchArticleList category_t:%@, start_num_t:%d, shouldAppendHead:%d",
+          category_t, start_num_t, shouldAppendHead);
+    NSString *urlPrefix=SERVERURL;
+    // TODO: voteup defined by users
+    NSString *sortMethod;
+    NSString *urlStr;
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"IsEditorMode"] == 0) {
+        // If anyone votedown, it's not shown
+        sortMethod = @"hotest";
+        urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@&votedown=0",
+                 urlPrefix, userid, category_t, start_num_t, PAGE_COUNT, sortMethod];
+    }
+    else {
+        sortMethod = @"latest";
+        urlStr= [NSString stringWithFormat: @"%@api_list_posts_in_topic?uid=%@&topic=%@&start_num=%d&count=%d&sort_method=%@",
+                 urlPrefix, userid, category_t, start_num_t, PAGE_COUNT, sortMethod];
+    }
+    
+    NSLog(@"fetchArticleList, url:%@", urlStr);
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        [self stopActivityIndicator:shouldAppendHead];
+        NSArray *idList = [JSON valueForKeyPath:@"postid"];
+        NSArray *metadataList = [JSON valueForKeyPath:@"metadata"];
+        Posts *post = nil;
+        int i, count = [idList count];
+        
+        NSLog(@"merge result dbPath: %@", dbPath);
+        
+        //NSLog(@"merge result");
+        // bypass sqlite lock problem
+        if (shouldAppendHead) {
+            // TODO remove code duplication
+            for(i=count-1; i>=0; i--) {
+                //NSLog(@"fetchArticleList i:%d, id:%@, metadata:%@", i, idList[i], metadataList[i]);
+                if ([Posts containId:self.currentQC.questions postId:idList[i]] == NO) {
+                    post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
+                    if (post == nil) {
+                        [self fetchJson:self.currentQC.questions
+                                 urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
+                       shouldAppendHead:shouldAppendHead];
+                    }
+                    else {
+                        int index = 0;
+                        if (shouldAppendHead != YES){
+                            index = [self.currentQC.questions count];
+                        }
+                        [self addToTableView:index post:post];
+                    }
+                }
+            }
+        }
+        else{
+            for(i=0; i<count; i++) {
+                if ([Posts containId:self.currentQC.questions postId:idList[i]] == NO) {
+                    post = [PostsSqlite getPost:postsDB dbPath:dbPath postId:idList[i]];
+                    if (post == nil) {
+                        [self fetchJson:self.currentQC.questions
+                                 urlStr:[[urlPrefix stringByAppendingString:@"api_get_post?postid="] stringByAppendingString:idList[i]]
+                       shouldAppendHead:shouldAppendHead];
+                    }
+                    else {
+                        int index = 0;
+                        if (shouldAppendHead != YES){
+                            index = [self.currentQC.questions count];
+                        }
+                        [self addToTableView:index post:post];
+                    }
+                }
+            }
+        }
+        for(i=0; i<count; i++) {
+            [PostsSqlite updatePostMetadata:postsDB dbPath:dbPath
+                                     postId:idList[i] metadata:metadataList[i]
+                                   category:self.currentQC.category];
+            
+        }
+        if (shouldAppendHead == NO) {
+            self->bottom_num = 1 + self->bottom_num;
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [self stopActivityIndicator:shouldAppendHead];
+        [ComponentUtil infoMessage:@"Error to get specific post list"
+                               msg:[NSString stringWithFormat:@"url:%@, error:%@", urlStr, error]
+                     enforceMsgBox:FALSE];
+    }];
+    
+    [operation start];
+}
+
+- (void)fetchJson:(NSMutableArray*) listObject
+           urlStr:(NSString*)urlStr
+ shouldAppendHead:(bool)shouldAppendHead
+{
+    
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        Posts* post = [[Posts alloc] init];
+        [post setPostid:[JSON valueForKeyPath:@"id"]];
+        [post setTitle:[JSON valueForKeyPath:@"title"]];
+        [post setSummary:[JSON valueForKeyPath:@"summary"]];
+        [post setCategory:[JSON valueForKeyPath:@"category"]];
+        [post setContent:[JSON valueForKeyPath:@"content"]];
+        [post setSource:[JSON valueForKeyPath:@"source"]];
+        [post set_metadata:[JSON valueForKeyPath:@"metadata"]];
+        [post setReadcount:[NSNumber numberWithInt:0]];
+        
+        if ([PostsSqlite savePost:postsDB dbPath:dbPath
+                           postId:post.postid summary:post.summary category:post.category
+                            title:post.title source:post.source content:post.content
+                         metadata:post.metadata] == NO) {
+            [ComponentUtil infoMessage:@"Error to insert post"
+                                   msg:[NSString stringWithFormat:@"postid:%@, title:%@", post.postid, post.title]
+                         enforceMsgBox:FALSE];
+        }
+        
+        int index = 0;
+        if (shouldAppendHead != YES){
+            index = [listObject count];
+        }
+        [self addToTableView:index post:post];
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [ComponentUtil infoMessage:@"Error to get specific post"
+                               msg:[NSString stringWithFormat:@"url:%@, error:%@", urlStr, error]
+                     enforceMsgBox:FALSE];
+        
+    }];
+    
+    [operation start];
+}
+
+#pragma mark - scroll
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"scrollViewDidScroll, scrollView:%@", scrollView);
+    if (![self isQuestionChannel])
+        return;
+    // when reach the top
+    if (scrollView.contentOffset.y <= 0)
+    {
+        [(UIActivityIndicatorView *)[headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+    }
+    
+    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+    {
+        [(UIActivityIndicatorView *)[footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+    }
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"scrollViewDidEndDecelerating, scrollView:%@", scrollView);
+    if (![self isQuestionChannel])
+        return;
+    
+    // when reach the top
+    if (scrollView.contentOffset.y <= 0)
+    {
+        [self refreshTableHead];
+    }
+    
+    // when reaching the bottom
+    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+    {
+        [self refreshTableTail];
+    }
+}
+
+#pragma mark - private functions
+- (BOOL) isQuestionChannel
+{
+    return (![self.navigationTitle isEqualToString:SAVED_QUESTIONS] &&
+            ![self.navigationTitle isEqualToString:APP_SETTING]);
 }
 
 @end

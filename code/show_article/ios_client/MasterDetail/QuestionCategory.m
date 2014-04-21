@@ -10,16 +10,14 @@
 
 @implementation QuestionCategory
 
-@synthesize category, questions, tableView, titleLabel, isloaded;
+@synthesize category, questions, isloaded;
 @synthesize allCategories;
 
-- (void)initialize:(UITableView*)tableView_t
-        titleLabel:(UILabel*)titleLabel_t
-          category:(NSString*)category_t
+- (void)initialize:(NSString*)category_t
 {
   self.questions = [[NSMutableArray alloc] init];
-  self.tableView = tableView_t;
-  self.titleLabel = titleLabel_t;
+  // self.tableView = tableView_t;
+  // self.titleLabel = titleLabel_t;
   self.category = category_t;
   self.isloaded = NO;
   // NSLog(@"initalize self.tableView:%@", self.tableView); //TODO
@@ -80,9 +78,7 @@
         titleLabel_t.textColor = [UIColor whiteColor];
         
         QuestionCategory* questionCategory = [[QuestionCategory alloc] init];
-        [questionCategory initialize:questionTableView
-                          titleLabel:titleLabel_t
-                            category:[titleLabel_t.text lowercaseString]];
+        [questionCategory initialize:[titleLabel_t.text lowercaseString]];
         [self.allCategories addObject:questionCategory];
     }
   return allCategories;
