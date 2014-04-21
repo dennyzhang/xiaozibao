@@ -38,21 +38,21 @@
 {
     NSLog(@"MasterViewController load");
     [super viewDidLoad];
-
+    
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
-
-  if([self.currentNavigationTitle isEqualToString:APP_SETTING] ||
-     [self.currentNavigationTitle isEqualToString:SAVED_QUESTIONS]) {
-    self.mPageSize = 1;
-  }
-  else {
-    self.questionCategories = [[QuestionCategory singleton] getAllCategories];
-
-    self.mPageSize = [self.questionCategories count];
-  }
+    
+    if([self.currentNavigationTitle isEqualToString:APP_SETTING] ||
+       [self.currentNavigationTitle isEqualToString:SAVED_QUESTIONS]) {
+        self.mPageSize = 1;
+    }
+    else {
+        self.questionCategories = [[QuestionCategory singleton] getAllCategories];
+        
+        self.mPageSize = [self.questionCategories count];
+    }
     if(!self.mCurrentPage)
-      self.mCurrentPage = 0;
-
+        self.mCurrentPage = 0;
+    
     self.view.backgroundColor = [UIColor clearColor];
     
     [self configureNavigationBar];
@@ -80,12 +80,12 @@
     
     // ToolTip
     if (self.navigationItem.rightBarButtonItem) {
-      [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click coin to see learning stastics."];
+        [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click coin to see learning stastics."];
     }
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
                                   msg:@"Click to see more."];
     [[MyToolTip singleton] showToolTip];
-
+    
 }
 
 - (void)awakeFromNib
@@ -171,19 +171,21 @@
     self.navigationItem.leftBarButtonItem = settingButton;
     
     // configure rightBarButton
-    //if ([self isQuestionChannel]) { // TODO
-    btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-    [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = TAG_BUTTON_COIN;
-    [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
-    self.coinButton = btn;
-    [ComponentUtil addTextToButton:btn text:@"0"
-                          fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
-    UIBarButtonItem *coinButtonBarItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButtonBarItem, nil];
-    //    }
+    if(self.questionCategories) {
+        btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+        [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = TAG_BUTTON_COIN;
+        [btn setImage:[UIImage imageNamed:@"coin.png"] forState:UIControlStateNormal];
+        self.coinButton = btn;
+        [ComponentUtil addTextToButton:btn text:@"0"
+                              fontSize:FONT_TINY2 chWidth:ICON_CHWIDTH chHeight:ICON_CHHEIGHT tag:TAG_MASTERVIEW_SCORE_TEXT];
+        UIBarButtonItem *coinButtonBarItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:coinButtonBarItem, nil];
+        
+        [self updateNavigationIndex:self.mCurrentPage];
+    }
 }
 
 -(UIViewController *)viewControllerAtIndex:(NSUInteger )index
@@ -195,11 +197,11 @@
         QCViewController *contentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"qcViewController"];
         if([self.currentNavigationTitle isEqualToString:APP_SETTING] ||
            [self.currentNavigationTitle isEqualToString:SAVED_QUESTIONS]) {
-          [contentVC init_data:nil navigationTitle:self.currentNavigationTitle];
+            [contentVC init_data:nil navigationTitle:self.currentNavigationTitle];
         }
         else {
-          QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
-          [contentVC init_data:qc navigationTitle:qc.category];
+            QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
+            [contentVC init_data:qc navigationTitle:qc.category];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             contentVC.view.tag = index;
@@ -231,7 +233,7 @@
     if (self.mCurrentPage >= self.mPageSize - 1) {
         return nil;
     }else{
-      [self updateNavigationIndex:(viewController.view.tag + 1)];
+        [self updateNavigationIndex:(viewController.view.tag + 1)];
         return [self viewControllerAtIndex:self.mCurrentPage];
     }
 }
@@ -248,41 +250,41 @@
 
 - (void) updateNavigationTitle:(NSString*) navigationTitle
 {
-
-  if([navigationTitle isEqualToString:APP_SETTING] ||
-     [navigationTitle isEqualToString:SAVED_QUESTIONS]) {
-    self.currentNavigationTitle = navigationTitle;
-    self.navigationItem.title = self.currentNavigationTitle;
-  }
-  else {
-    self.currentNavigationTitle = [navigationTitle lowercaseString];
-    int index = [ComponentUtil getIndexByCategory:self.currentNavigationTitle];
-    [self updateNavigationIndex:index];
-  }
+    
+    if([navigationTitle isEqualToString:APP_SETTING] ||
+       [navigationTitle isEqualToString:SAVED_QUESTIONS]) {
+        self.currentNavigationTitle = navigationTitle;
+        self.navigationItem.title = self.currentNavigationTitle;
+    }
+    else {
+        self.currentNavigationTitle = [navigationTitle lowercaseString];
+        int index = [ComponentUtil getIndexByCategory:self.currentNavigationTitle];
+        [self updateNavigationIndex:index];
+    }
 }
 
 - (void) updateNavigationIndex:(int) index
 {
-  NSLog(@"updateNavigationTitle index:%d", index);
-  // TODO index = (index+count) mod index
-  int count = [self.questionCategories count];
-  if(index<0)
-    index = index + count;
-  if(index>=count)
-    index = index -count;
-
-  self.mCurrentPage = index;
-
-  if(index<0 || index>=[self.questionCategories count]) {
-    NSLog(@"errror, invalid index:%d", index);
-    return;
-  }
-
-  if (self.questionCategories) {
-    QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
-    self.navigationItem.title = [qc.category capitalizedString];
-    [ComponentUtil updateScoreText:qc.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
-  }
+    NSLog(@"updateNavigationTitle index:%d", index);
+    // TODO index = (index+count) mod index
+    int count = [self.questionCategories count];
+    if(index<0)
+        index = index + count;
+    if(index>=count)
+        index = index -count;
+    
+    self.mCurrentPage = index;
+    
+    if(index<0 || index>=[self.questionCategories count]) {
+        NSLog(@"errror, invalid index:%d", index);
+        return;
+    }
+    
+    if (self.questionCategories) {
+        QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
+        self.navigationItem.title = [qc.category capitalizedString];
+        [ComponentUtil updateScoreText:qc.category btn:self.coinButton tag:TAG_MASTERVIEW_SCORE_TEXT];
+    }
 }
 
 @end
