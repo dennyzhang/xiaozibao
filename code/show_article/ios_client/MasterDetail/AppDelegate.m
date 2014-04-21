@@ -60,10 +60,27 @@
     if ([ComponentUtil shouldMixpanel]) {
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
         Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        
+      // track open count
         [mixpanel track:@"open_count" properties:@{
                                                    @"userid": [ComponentUtil getUserId]
                                                    }];
+      NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+      NSString* lastOpenDate = [userDefaults stringForKey:@"LastOpenDate"];
+      // get current date
+      NSDate * date=[NSDate date];
+      NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+      [dateformatter setDateFormat:@"YYYY-MM-dd"];
+      NSString * currentDate = [dateformatter stringFromDate:date];
+      //NSLog(@"LastOpenDate lastOpenDate:%@, currentDate:%@", lastOpenDate, currentDate);
+      if (!lastOpenDate || ![lastOpenDate isEqualToString:currentDate]) {
+        //NSLog(@"update LastOpenDate");
+      // track daily users
+        [mixpanel track:@"daily_users" properties:@{
+            @"userid": [ComponentUtil getUserId]
+              }];
+        [userDefaults setObject:currentDate forKey:@"LastOpenDate"];
+        //[userDefaults synchronize];
+      }
     }
 }
 
