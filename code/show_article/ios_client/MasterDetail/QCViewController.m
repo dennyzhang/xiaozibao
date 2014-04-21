@@ -363,18 +363,8 @@
             }
         }
         if (indexPath.row == 2) {
-            UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-            aSwitch.on = YES;
-            aSwitch.tag = TAG_SWITCH_DEBUG_MODE;
-            [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            cell.textLabel.text = @"Show verbose errmsg";
-            cell.accessoryView = aSwitch;
-            if ([userDefaults integerForKey:@"IsDebugMode"] == 0) {
-                aSwitch.on = false;
-            }
-            else {
-                aSwitch.on = true;
-            }
+            cell.textLabel.text = CLEAN_CACHE;
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
         if (indexPath.row == 3) {
             cell.textLabel.text = USER_ID;
@@ -393,12 +383,20 @@
             playerTextField.delegate = self;
             cell.accessoryView = playerTextField;
         }
-
         if (indexPath.row == 4) {
-            cell.textLabel.text = CLEAN_CACHE;
-            cell.accessoryType = UITableViewCellAccessoryNone;
+            UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            aSwitch.on = YES;
+            aSwitch.tag = TAG_SWITCH_DEBUG_MODE;
+            [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.textLabel.text = @"Show verbose errmsg";
+            cell.accessoryView = aSwitch;
+            if ([userDefaults integerForKey:@"IsDebugMode"] == 0) {
+                aSwitch.on = false;
+            }
+            else {
+                aSwitch.on = true;
+            }
         }
-
     }
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -490,7 +488,7 @@
     [self.currentQC.questions insertObject:post atIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    //NSLog(@"after addToTableView currentQuestions.count:%d", [self.currentQC.questions count]);
+    NSLog(@"after addToTableView currentQuestions.count:%d", [self.currentQC.questions count]);
     return ret;
 }
 
@@ -501,9 +499,6 @@
 {
     if ([self.navigationItem.title isEqualToString:SAVED_QUESTIONS])
         return;
-    
-    NSLog(@"fetchArticleList category_t:%@, start_num_t:%d, shouldAppendHead:%d",
-          category_t, start_num_t, shouldAppendHead);
     NSString *urlPrefix=SERVERURL;
     // TODO: voteup defined by users
     NSString *sortMethod;
@@ -533,7 +528,6 @@
         
         NSLog(@"merge result dbPath: %@", dbPath);
         
-        //NSLog(@"merge result");
         // bypass sqlite lock problem
         if (shouldAppendHead) {
             // TODO remove code duplication
@@ -640,7 +634,7 @@
 
 #pragma mark - scroll
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"scrollViewDidScroll, scrollView:%@", scrollView);
+//NSLog(@"scrollViewDidScroll, scrollView:%@", scrollView);
     if (![self isQuestionChannel])
         return;
     // when reach the top
@@ -657,7 +651,7 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollViewDidEndDecelerating, scrollView:%@", scrollView);
+  //NSLog(@"scrollViewDidEndDecelerating, scrollView:%@", scrollView);
     if (![self isQuestionChannel])
         return;
     
