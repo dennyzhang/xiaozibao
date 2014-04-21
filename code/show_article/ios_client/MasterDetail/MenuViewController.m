@@ -42,10 +42,15 @@
     self.category_list = [ComponentUtil getCategoryList];
 
     //swipe guesture
-    UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe:)];
+    UISwipeGestureRecognizer *leftswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHideMenu:)];
     leftswipe.direction=UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:leftswipe];
     leftswipe.delegate = self;
+
+    UISwipeGestureRecognizer *rightswipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHideMenu:)];
+    rightswipe.direction=UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:rightswipe];
+    rightswipe.delegate = self;
     
     // when tap on empty area, hide menu
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
@@ -193,7 +198,7 @@
    return [text capitalizedString];
 }
 
--(void) leftSwipe:(UISwipeGestureRecognizer*)recognizer {
+-(void) swipeHideMenu:(UISwipeGestureRecognizer*)recognizer {
     SWRevealViewController* rvc = self.revealViewController;
     [rvc rightRevealToggleAnimated:YES];
 }
@@ -203,6 +208,5 @@
     self.category_list = [ComponentUtil getCategoryList];
     [self.tableView reloadData];
 }
-
 
 @end
