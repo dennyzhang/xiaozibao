@@ -52,6 +52,7 @@
         
         // init table indicator
         [self initTableIndicatorView];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
     }
     else {
@@ -151,6 +152,8 @@
     if ([self.navigationTitle isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
+
+    // configure dynamic cell height
     Posts *post;
     if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
         post = self.savedQuestions[indexPath.row];
@@ -165,8 +168,6 @@
     textView.text = post.title;
 
     textHeight = [ComponentUtil measureHeightOfUITextView:textView];
-
-    //NSLog(@"heightForRowAtIndexPath height:%f, textHeight:%f", textHeight + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER, textHeight);
     return textHeight + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER;
 }
 
@@ -682,9 +683,13 @@
     else {
         post = self.currentQC.questions[index];
     }
-    [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
-    [[cell.contentView viewWithTag:TAG_METADATA_IN_CELL]removeFromSuperview];
-    [[cell.contentView viewWithTag:TAG_ICON_IN_CELL]removeFromSuperview];
+
+    UIView* view = [[UIView alloc] init];
+    view.tag = TAG_CELL_VIEW;
+    [[cell.contentView viewWithTag:TAG_CELL_VIEW]removeFromSuperview];
+    [[cell contentView] addSubview:view];
+    
+    view.backgroundColor = [UIColor whiteColor];
     
     cell.textLabel.text = @"";
     
@@ -695,7 +700,7 @@
    
     [imageView setTag:TAG_ICON_IN_CELL];
     imageView.userInteractionEnabled = NO;
-    [[cell contentView] addSubview:imageView];
+    [view addSubview:imageView];
     
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
     [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
@@ -703,7 +708,7 @@
     [textView setBackgroundColor:[UIColor clearColor]];
     [textView setTag:TAG_TEXTVIEW_IN_CELL];
     textView.userInteractionEnabled = NO;
-    [[cell contentView] addSubview:textView];
+    [view addSubview:textView];
     [textView setText:post.title];
     
     UITextView *metadataTextView = [[UITextView alloc] initWithFrame:CGRectZero];
@@ -712,7 +717,7 @@
     [metadataTextView setBackgroundColor:[UIColor clearColor]];
     [metadataTextView setTag:TAG_METADATA_IN_CELL];
     metadataTextView.userInteractionEnabled = NO;
-    [[cell contentView] addSubview:metadataTextView];
+    [view addSubview:metadataTextView];
     //[metadataTextView setText:post.metadata];
     NSString* voteupStr = [post.metadataDictionary objectForKey:@"voteup"];
     NSInteger voteup = [voteupStr intValue];
@@ -733,6 +738,7 @@
     // configure frame
     textHeight = [ComponentUtil measureHeightOfUITextView:textView];
     [cell setFrame:CGRectMake(0, 0, self.view.frame.size.width, textHeight + HEIGHT_IN_CELL_OFFSET+ HEIGHT_CELL_BANNER)];
+    [view setFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height - 5)];
     [textView setFrame:CGRectMake(10, 5, textWidth, textHeight)];
     CGFloat imageWidth = 63, imageHeight = 33;
     [imageView setFrame:CGRectMake(cell.frame.size.width - imageWidth - 5,
