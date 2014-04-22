@@ -96,11 +96,11 @@
 
 - (void)awakeFromNib
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        //self.clearsSelectionOnViewWillAppear = NO; // TODO
-        self.preferredContentSize= CGSizeMake(320.0, 600.0);
-        //self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
-    }
+    // if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    //     //self.clearsSelectionOnViewWillAppear = NO; // TODO
+    //     self.preferredContentSize= CGSizeMake(320.0, 600.0);
+    //     //self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+    // }
     [super awakeFromNib];
 }
 

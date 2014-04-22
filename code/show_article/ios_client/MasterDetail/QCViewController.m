@@ -390,19 +390,45 @@
 }
 
 #pragma mark - refresh
-- (void)stopActivityIndicator:(bool)shouldAppendHead {
-    if (shouldAppendHead == TRUE) {
-        [(UIActivityIndicatorView *)[self.headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] stopAnimating];
+- (void)toggleActivityIndicator:(bool)isHeader isStartAnimation:(bool)isStartAnimation {
+    UIView* tableIndicatorView;
+    UIActivityIndicatorView * tableActivityIndicator;
+    if(isHeader) {
+      tableIndicatorView = self.headerView;
+      tableActivityIndicator = (UIActivityIndicatorView *)[tableIndicatorView viewWithTag:TAG_TABLE_HEADER_INDIACTOR];
     }
     else {
-        [(UIActivityIndicatorView *)[self.footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] stopAnimating];
+      tableIndicatorView = self.footerView;
+      tableActivityIndicator = (UIActivityIndicatorView *)[tableIndicatorView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR];
+    }
+
+    CGFloat indicatorHeight = 40.0f;
+    if (isStartAnimation) {
+      // start animation
+      if (![tableActivityIndicator isAnimating]) {
+        [tableActivityIndicator startAnimating];
+      }
+      [tableIndicatorView setFrame:CGRectMake(tableIndicatorView.frame.origin.x,
+                                                   tableIndicatorView.frame.origin.y,
+                                                   tableIndicatorView.frame.size.width,
+                                                   indicatorHeight)];
+    }
+    else {
+      if ([tableActivityIndicator isAnimating]) {
+        [tableActivityIndicator stopAnimating];
+      }
+      [tableIndicatorView setFrame:CGRectMake(tableIndicatorView.frame.origin.x,
+                                                   tableIndicatorView.frame.origin.y,
+                                                   tableIndicatorView.frame.size.width,
+                                                   0)];
     }
 }
 
 -(void)initTableIndicatorView
 {
     // headerView
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
+    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 
+                                                self.view.frame.size.width, 0.0)];
     self.headerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -416,7 +442,8 @@
     self.tableView.tableHeaderView = self.headerView;
     
     // footerView
-    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
+    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0,
+                                                self.view.frame.size.width, 0.0)];
     self.footerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndFooter = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -433,7 +460,7 @@
 - (void) refreshTableHead
 {
     NSLog(@"refreshTableHead");
-    [(UIActivityIndicatorView *)[self.headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+    [self toggleActivityIndicator:YES isStartAnimation:YES];
     [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
                start_num_t:0
           shouldAppendHead:YES];
@@ -442,7 +469,7 @@
 - (void) refreshTableTail
 {
     NSLog(@"refreshTableTail");
-    [(UIActivityIndicatorView *)[self.footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+    [self toggleActivityIndicator:NO isStartAnimation:YES];
     [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
                start_num_t:self.bottom_num * PAGE_COUNT
           shouldAppendHead:NO];
@@ -493,7 +520,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        [self stopActivityIndicator:shouldAppendHead];
+        [self toggleActivityIndicator:shouldAppendHead isStartAnimation:NO];
         NSArray *idList = [JSON valueForKeyPath:@"postid"];
         NSArray *metadataList = [JSON valueForKeyPath:@"metadata"];
         Posts *post = nil;
@@ -557,7 +584,7 @@
         }
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [self stopActivityIndicator:shouldAppendHead];
+        [self toggleActivityIndicator:shouldAppendHead isStartAnimation:NO];
         [ComponentUtil infoMessage:@"Error to get specific post list"
                                msg:[NSString stringWithFormat:@"url:%@, error:%@", urlStr, error]
                      enforceMsgBox:FALSE];
@@ -631,16 +658,12 @@
     // when reach the top
     if (scrollView.contentOffset.y <= 0)
     {
-        UIActivityIndicatorView *activityIndicator = (UIActivityIndicatorView *)[self.headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR];
-        if (![activityIndicator isAnimating])
-            [activityIndicator startAnimating];
+      [self toggleActivityIndicator:YES isStartAnimation:YES];
     }
     else {
         if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
         {
-            UIActivityIndicatorView *activityIndicator = (UIActivityIndicatorView *)[self.footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR];
-            if (![activityIndicator isAnimating])
-                [activityIndicator startAnimating];
+          [self toggleActivityIndicator:NO isStartAnimation:YES];
         }
     }
 }
