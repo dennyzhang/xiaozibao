@@ -339,5 +339,15 @@
     return [tutorialVersion isEqualToString:[ComponentUtil currentTutorialVersion]];
 }
 
++ (int) modAdd:(int)startVal offset:(int)offset modCount:(int)modCount
+{
+  int ret = startVal + offset;
+  while(ret <modCount) {
+    ret = ret + modCount;
+  }
+  int num = (int)floorf(ret*1.0f/modCount);
+  ret = ret - modCount * num;
+  //NSLog(@"modAdd startVal:%d, offset:%d, modCount:%d, ret:%d", startVal, offset, modCount, ret);
+  return ret;
+}
 @end
-

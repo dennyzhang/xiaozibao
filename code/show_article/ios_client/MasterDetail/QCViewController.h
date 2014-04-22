@@ -36,6 +36,7 @@
 #define HEIGHT_IN_CELL_OFFSET 10
 #define HEIGHT_CELL_BANNER 50
 
+@property (assign, nonatomic) int viewId;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 
 - (void) init_data:(QuestionCategory *)qc

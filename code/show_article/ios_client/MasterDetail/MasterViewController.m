@@ -32,6 +32,7 @@
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIView *navbarView;
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (assign, nonatomic) bool isForward;
 @end
 
 @implementation MasterViewController
@@ -55,9 +56,9 @@
     }
     NSLog(@"self.mCurrentPage:%d", self.mCurrentPage);
     if(!self.mCurrentPage) { // TODO can't tell whether mCurrentPage is undefined or 0
-      self.mCurrentPage = 0;
+        self.mCurrentPage = 0;
     }
-    
+    self.isForward = YES;
     self.view.backgroundColor = [UIColor clearColor];
     
     [self configureNavigationBar];
@@ -66,7 +67,8 @@
     // init pageViewController
     self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoryPageViewController"];
     self.mPageViewController.dataSource = self;
-
+    self.mPageViewController.delegate = self;
+    
     UIViewController *startingVC = [self viewControllerAtIndex:self.mCurrentPage];
     NSArray *viewControllers = @[startingVC];
     [self.mPageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -77,17 +79,17 @@
     [self.view addSubview:_mPageViewController.view];
     [self.mPageViewController didMoveToParentViewController:self];
     
-    // ToolTip    
+    // ToolTip
     UIButton *tooltipSwipeBtn = [[UIButton alloc] initWithFrame:CGRectZero];
     tooltipSwipeBtn.center = self.view.center;
     [self.view addSubview:tooltipSwipeBtn];
-
+    
     [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Swipe to change channels."];
     if (self.navigationItem.rightBarButtonItem) {
         [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click coin to see learning stastics."];
     }
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem msg:@"Click to see more."];
-
+    
     [[MyToolTip singleton] showToolTip];
     
 }
@@ -175,7 +177,7 @@
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.leftBarButtonItem = settingButton;
-
+    
     if(self.questionCategories) {
         [self addPageControl];
         // configure rightBarButton
@@ -197,7 +199,7 @@
 
 - (void)addPageControl
 {
-    self.titleLabel = [[UILabel alloc] init]; 
+    self.titleLabel = [[UILabel alloc] init];
     self.navbarView = [[UIView alloc] init];
     self.pageControl = [[UIPageControl alloc] init];
     self.pageControl.numberOfPages = self.mPageSize;
@@ -206,13 +208,13 @@
     self.pageControl.pageIndicatorTintColor = [UIColor grayColor];
     [self.navbarView addSubview:self.titleLabel];
     [self.navbarView addSubview:self.pageControl];
-
+    
     self.navigationItem.titleView = self.navbarView;
-
+    
     // set subview width and height
     self.navbarView.frame = (CGRect){40, 0, self.view.frame.size.width - 80, 64};
     self.titleLabel.frame = (CGRect){0, 0, 100, 40};
-
+    
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -224,21 +226,29 @@
     //NSLog(@"addPageControl. navbarCenter x:%f, y:%f", navbarCenter.x, navbarCenter.y);
     self.titleLabel.center = center;
     self.pageControl.center = center;
-
+    
     //align vertical
     self.titleLabel.frame =  (CGRect){self.titleLabel.frame.origin.x, 4,
-                self.titleLabel.frame.size.width, 
-                self.titleLabel.frame.size.height};
+        self.titleLabel.frame.size.width,
+        self.titleLabel.frame.size.height};
     
     self.pageControl.frame =  (CGRect){self.pageControl.frame.origin.x,
-                self.navbarView.frame.size.height - 19,
-                self.pageControl.frame.size.width, 
-                self.pageControl.frame.size.height};
+        self.navbarView.frame.size.height - 19,
+        self.pageControl.frame.size.width,
+        self.pageControl.frame.size.height};
 }
+
+- (BOOL) isMenuShown
+{
+    SWRevealViewController* rvc = self.revealViewController;
+    return (rvc.frontViewPosition == FrontViewPositionRight);
+}
+
+#pragma mark - pageViewController delegates
 
 -(UIViewController *)viewControllerAtIndex:(NSUInteger )index
 {
-    NSLog(@"viewControllerAtIndex index:%d", index);
+    //NSLog(@"viewControllerAtIndex index:%d", index);
     if (self.mPageSize == 0) {
         return nil;
     }else{
@@ -251,40 +261,64 @@
             QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
             [contentVC init_data:qc navigationTitle:qc.category];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            contentVC.view.tag = index;
-        });
+        contentVC.viewId = index;
         return contentVC;
     }
 }
 
-- (BOOL) isMenuShown
-{
-    SWRevealViewController* rvc = self.revealViewController;
-    return (rvc.frontViewPosition == FrontViewPositionRight);
-}
-
-#pragma mark - pageViewController delegates
-
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    if (self.mCurrentPage <= 0) {
-        return nil;
-    }else{
-        [self updateNavigationIndex:(viewController.view.tag - 1)];
-        return [self viewControllerAtIndex:self.mCurrentPage];
-    }
+    int oldViewId, newViewId;
+    QCViewController* qcViewController = (QCViewController*)viewController;
+    oldViewId = qcViewController.viewId;
+    newViewId = [ComponentUtil modAdd:oldViewId offset:-1 modCount:self.mPageSize];
+    return [self viewControllerAtIndex:newViewId];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    if (self.mCurrentPage >= self.mPageSize - 1) {
-        return nil;
-    }else{
-        [self updateNavigationIndex:(viewController.view.tag + 1)];
-        return [self viewControllerAtIndex:self.mCurrentPage];
+    int oldViewId, newViewId;
+    QCViewController* qcViewController = (QCViewController*)viewController;
+    oldViewId = qcViewController.viewId;
+    newViewId = [ComponentUtil modAdd:oldViewId offset:1 modCount:self.mPageSize];
+    return [self viewControllerAtIndex:newViewId];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    // NSLog(@"didFinishAnimating finished:%d, complelted:%d, previousViewControllers:%@",
+    //       finished, completed, previousViewControllers);
+    int oldViewId, newViewId;
+    QCViewController* qcViewController = (QCViewController*)[previousViewControllers objectAtIndex:0];
+    // NSLog(@"qcViewController.viewId:%d, self.mCurrentPage:%d",
+    //       qcViewController.viewId, self.mCurrentPage);
+    oldViewId = qcViewController.viewId;
+    if (completed) {
+        int offset = (self.isForward)?1:-1;
+        newViewId = [ComponentUtil modAdd:oldViewId offset:offset modCount:self.mPageSize];
+        [self updateNavigationIndex:newViewId];
     }
 }
+
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+{
+    // NSLog(@"willTransitionToViewControllers, pendingViewControllers:%@",
+    //       pendingViewControllers);
+    QCViewController* qcViewController = (QCViewController*)[pendingViewControllers objectAtIndex:0];
+    int newViewId = qcViewController.viewId;
+    
+    if([ComponentUtil modAdd:self.mCurrentPage
+                      offset:1 modCount:self.mPageSize]
+       == newViewId) {
+        self.isForward = YES;
+    }
+    else {
+        self.isForward = NO;
+    }
+    // NSLog(@"qcViewController.viewId:%d, self.mCurrentPage:%d, self.isForward:%d",
+    //       qcViewController.viewId, self.mCurrentPage, self.isForward);
+}
+
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
@@ -293,12 +327,12 @@
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
-    return 0;
+    return self.mCurrentPage;
 }
 
 - (void) updateNavigationTitle:(NSString*) navigationTitle
 {
-    
+    NSLog(@"updateNavigationTitle navigationTitle:%@", navigationTitle);
     if([navigationTitle isEqualToString:APP_SETTING] ||
        [navigationTitle isEqualToString:SAVED_QUESTIONS]) {
         self.currentNavigationTitle = navigationTitle;
@@ -313,7 +347,7 @@
 
 - (void) updateNavigationIndex:(int) index
 {
-    NSLog(@"updateNavigationTitle index:%d", index);
+    NSLog(@"updateNavigationIndex index:%d", index);
     // // TODO index = (index+count) mod index
     int count = [self.questionCategories count];
     if(index<0)
@@ -322,18 +356,18 @@
         index = index -count;
     
     self.mCurrentPage = index;
-
-    if (self.questionCategories) {    
-      if(index<0 || index>=[self.questionCategories count]) {
-        NSLog(@"errror, invalid index:%d", index);
-        return;
-      }
     
-      QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
-      self.pageControl.currentPage = self.mCurrentPage;
-      self.navigationItem.title = [qc.category capitalizedString];
-      self.titleLabel.text = [qc.category capitalizedString];
-      [self refreshScore];
+    if (self.questionCategories) {
+        if(index<0 || index>=[self.questionCategories count]) {
+            NSLog(@"errror, invalid index:%d", index);
+            return;
+        }
+        //NSLog(@"updateNavigationIndex self.mCurrentPage:%d", self.mCurrentPage);
+        QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
+        self.pageControl.currentPage = self.mCurrentPage;
+        self.navigationItem.title = [qc.category capitalizedString];
+        self.titleLabel.text = [qc.category capitalizedString];
+        [self refreshScore];
     }
 }
 

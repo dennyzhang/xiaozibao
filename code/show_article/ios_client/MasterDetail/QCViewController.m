@@ -70,9 +70,8 @@
         // }
     }
     
-    NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
-          self.currentQC.category, [self.currentQC.questions count]);
-    
+    NSLog(@"QCViewController viewDidLoad. viewId:%d, current category:%@, currentQC questions count:%d",
+          self.viewId, self.currentQC.category, [self.currentQC.questions count]);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
