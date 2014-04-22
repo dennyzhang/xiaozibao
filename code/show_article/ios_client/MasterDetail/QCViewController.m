@@ -69,9 +69,8 @@
         //     self.tableView.scrollEnabled = NO;
         // }
     }
-    
-    NSLog(@"QCViewController viewDidLoad. viewId:%d, current category:%@, currentQC questions count:%d",
-          self.viewId, self.currentQC.category, [self.currentQC.questions count]);
+    NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
+          self.currentQC.category, [self.currentQC.questions count]);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -402,16 +401,16 @@
       tableActivityIndicator = (UIActivityIndicatorView *)[tableIndicatorView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR];
     }
 
-    CGFloat indicatorHeight = 40.0f;
+    CGFloat indicatorHeight = 20.0f;
     if (isStartAnimation) {
       // start animation
       if (![tableActivityIndicator isAnimating]) {
         [tableActivityIndicator startAnimating];
       }
       [tableIndicatorView setFrame:CGRectMake(tableIndicatorView.frame.origin.x,
-                                                   tableIndicatorView.frame.origin.y,
-                                                   tableIndicatorView.frame.size.width,
-                                                   indicatorHeight)];
+                                              tableIndicatorView.frame.origin.y,
+                                              tableIndicatorView.frame.size.width,
+                                              indicatorHeight)];
     }
     else {
       if ([tableActivityIndicator isAnimating]) {
@@ -427,34 +426,36 @@
 -(void)initTableIndicatorView
 {
     // headerView
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 
-                                                self.view.frame.size.width, 0.0)];
+    self.headerView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableHeaderView = self.headerView;
+
     self.headerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.headerView addSubview:actIndHeader];
+
     actIndHeader.tag = TAG_TABLE_HEADER_INDIACTOR;
-    actIndHeader.frame = CGRectMake(150.0, 5.0, 20.0, 20.0);
-    
     actIndHeader.hidesWhenStopped = YES;
     
-    [self.headerView addSubview:actIndHeader];
-    
-    self.tableView.tableHeaderView = self.headerView;
-    
     // footerView
-    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0,
-                                                self.view.frame.size.width, 0.0)];
+    self.footerView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = self.footerView;
     self.footerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndFooter = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    actIndFooter.tag = TAG_TABLE_FOOTER_INDIACTOR;
-    actIndFooter.frame = CGRectMake(150.0, 5.0, 20.0, 20.0);
-    
-    actIndFooter.hidesWhenStopped = YES;
-    
     [self.footerView addSubview:actIndFooter];
-    
-    self.tableView.tableFooterView = self.footerView;
+
+    actIndFooter.tag = TAG_TABLE_FOOTER_INDIACTOR;
+    actIndFooter.hidesWhenStopped = YES;
+
+    // configure frame
+    [self.headerView setFrame:CGRectMake(0.0, 0.0, 
+                                         self.view.frame.size.width, 20.0)];
+    actIndHeader.frame = CGRectMake(150.0, 0, 20.0, 20.0);
+
+    [self.footerView setFrame:CGRectMake(0.0, 0.0,
+                                         self.view.frame.size.width, 20.0)];
+    actIndFooter.frame = CGRectMake(150.0, 0, 20.0, 20.0);
 }
 
 - (void) refreshTableHead
