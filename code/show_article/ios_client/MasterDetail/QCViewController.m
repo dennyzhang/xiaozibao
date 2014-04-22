@@ -234,12 +234,12 @@
 
 - (void)markCellAsRead:(UITableViewCell *)cell post:(Posts *)post
 {
-    UITextView *textView = (UITextView *)[cell viewWithTag:TAG_TEXTVIEW_IN_CELL];
+    UIView *view = (UIView *)[cell viewWithTag:TAG_CELL_VIEW];
     if ([post.readcount intValue] !=0) {
-        textView.textColor = [UIColor grayColor];
+        view.alpha = 0.3f;
     }
     else {
-        textView.textColor = [UIColor blackColor];
+      view.alpha = 1.0;
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -719,18 +719,25 @@
     metadataTextView.userInteractionEnabled = NO;
     [view addSubview:metadataTextView];
     //[metadataTextView setText:post.metadata];
+    CGFloat voteIconWidth = 20.0f;
+    CGFloat voteIconHeight = 20.0f;
     NSString* voteupStr = [post.metadataDictionary objectForKey:@"voteup"];
     NSInteger voteup = [voteupStr intValue];
     if (voteup > 0) {
         UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
         btn.tag = TAG_VOTEUP_IN_CELL;
         [btn setImage:[UIImage imageNamed:@"thumbs_up2.png"] forState:UIControlStateNormal];
-        NSString* text = voteupStr;
-        [ComponentUtil addTextToButton:btn text:text
-                              fontSize:FONT_TINY2 chWidth:9 chHeight:17 tag:TAG_VOTEUP_TEXT];
-        
+
+        UITextView* voteTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+        [metadataTextView addSubview:voteTextView];
         [metadataTextView addSubview:btn];
+
+        [btn setFrame:CGRectMake(0.0f, 0.0f, voteIconWidth, voteIconHeight)];
+
+        [voteTextView setFrame:CGRectMake(voteIconWidth, 0, FONT_TINY, 17)];
+        voteTextView.text = voteupStr;
+        voteTextView.textAlignment = NSTextAlignmentLeft;
+        [voteTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY]];
     }
     [self markCellAsRead:cell post:post];
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -741,11 +748,16 @@
     [view setFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height - 5)];
     [textView setFrame:CGRectMake(10, 5, textWidth, textHeight)];
     CGFloat imageWidth = 63, imageHeight = 33;
-    [imageView setFrame:CGRectMake(cell.frame.size.width - imageWidth - 5,
-                                   cell.frame.size.height - imageHeight - 5,
+    [imageView setFrame:CGRectMake(10, cell.frame.size.height - imageHeight - 10, 
                                    imageWidth, imageHeight)];
-    CGFloat metaWidth = 100, metaHeight = 33;
-    [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - metaHeight - 5, metaWidth, metaHeight)];
+
+    CGFloat metaWidth = voteIconWidth + FONT_TINY, metaHeight = 33;
+    [metadataTextView setFrame:CGRectMake(cell.frame.size.width - metaWidth - 10,
+                                          cell.frame.size.height - metaHeight,
+                                          metaWidth, metaHeight)];
+    // set alpha
+    imageView.alpha = 0.5f;
+    metadataTextView.alpha = 0.5f;
     //NSLog(@"configQuestionCell, height:%f, textHeight:%f", cell.frame.size.height, textHeight);
 }
 
