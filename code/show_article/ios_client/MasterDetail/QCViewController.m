@@ -721,8 +721,8 @@
     metadataTextView.userInteractionEnabled = NO;
     [view addSubview:metadataTextView];
     //[metadataTextView setText:post.metadata];
-    CGFloat voteIconWidth = 20.0f;
-    CGFloat voteIconHeight = 20.0f;
+    CGFloat voteIconWidth = 18.0f;
+    CGFloat voteIconHeight = 18.0f;
     NSString* voteupStr = [post.metadataDictionary objectForKey:@"voteup"];
     NSInteger voteup = [voteupStr intValue];
     if (voteup > 0) {
@@ -734,9 +734,9 @@
         [metadataTextView addSubview:voteTextView];
         [metadataTextView addSubview:btn];
 
-        [btn setFrame:CGRectMake(0.0f, 0.0f, voteIconWidth, voteIconHeight)];
+        [btn setFrame:CGRectMake(0.0f, 3.0f, voteIconWidth, voteIconHeight)];
 
-        [voteTextView setFrame:CGRectMake(voteIconWidth, 0, FONT_TINY, 17)];
+        [voteTextView setFrame:CGRectMake(voteIconWidth, 0, FONT_TINY, 18)];
         voteTextView.text = voteupStr;
         voteTextView.textAlignment = NSTextAlignmentLeft;
         [voteTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY]];
@@ -754,7 +754,7 @@
                                    imageWidth, imageHeight)];
 
     CGFloat metaWidth = voteIconWidth + FONT_TINY, metaHeight = 33;
-    [metadataTextView setFrame:CGRectMake(cell.frame.size.width - metaWidth - 10,
+    [metadataTextView setFrame:CGRectMake(cell.frame.size.width - metaWidth - 15,
                                           cell.frame.size.height - metaHeight,
                                           metaWidth, metaHeight)];
     // set alpha
