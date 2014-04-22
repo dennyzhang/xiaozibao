@@ -229,10 +229,10 @@
     self.pageControl.frame = (CGRect){0, 0, 0, 0};
     
     // place subview in center
-    CGPoint navbarCenter = [self.navbarView convertPoint:self.navbarView.center
-                                                fromView:self.navbarView.superview];
-    self.titleLabel.center = navbarCenter;
-    self.pageControl.center = navbarCenter;
+    CGPoint center = (CGPoint){self.view.frame.size.width/2 - 40, 0};
+    //NSLog(@"addPageControl. navbarCenter x:%f, y:%f", navbarCenter.x, navbarCenter.y);
+    self.titleLabel.center = center;
+    self.pageControl.center = center;
 
     //align vertical
     self.titleLabel.frame =  (CGRect){self.titleLabel.frame.origin.x, 4,
