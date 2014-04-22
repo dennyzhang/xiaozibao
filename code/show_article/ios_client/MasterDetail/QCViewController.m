@@ -151,29 +151,23 @@
     if ([self.navigationTitle isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
-    int index = indexPath.row;
     Posts *post;
     if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
-        post = self.savedQuestions[index];
+        post = self.savedQuestions[indexPath.row];
     }
     else {
-        post = self.currentQC.questions[index];
+        post = self.currentQC.questions[indexPath.row];
     }
 
-    CGFloat textHeight, bannerHeight, offsetHeight;
-    offsetHeight = 10;
-    bannerHeight = 50;
+    CGFloat textHeight, textWidth = self.view.frame.size.width - 20;
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
+    [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
+    textView.text = post.title;
 
-    CGSize size = [post.title
-                   sizeWithFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]
-                   constrainedToSize:CGSizeMake(self.view.frame.size.width, CGFLOAT_MAX)];
-    textHeight = size.height;
-    return textHeight+ offsetHeight + bannerHeight;
-    // UITableViewCell *prototypeCell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    textHeight = [ComponentUtil measureHeightOfUITextView:textView];
 
-    // [prototypeCell layoutIfNeeded];
-    // CGSize size = [prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    // return size.height+1;
+    //NSLog(@"heightForRowAtIndexPath height:%f, textHeight:%f", textHeight + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER, textHeight);
+    return textHeight + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -694,10 +688,7 @@
     
     cell.textLabel.text = @"";
     
-    CGFloat textWidth = self.view.frame.size.width - 20;
-    CGFloat textHeight, bannerHeight, offsetHeight;
-    offsetHeight = 10;
-    bannerHeight = 50;
+    CGFloat textHeight, textWidth = self.view.frame.size.width - 20;
 
     NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
@@ -741,14 +732,15 @@
 
     // configure frame
     textHeight = [ComponentUtil measureHeightOfUITextView:textView];
-    [cell setFrame:CGRectMake(0, 0, self.view.frame.size.width, textHeight + offsetHeight+ bannerHeight)];
-    [textView setFrame:CGRectMake(10, 10, textWidth, textHeight)];
-    [imageView setFrame:CGRectMake(cell.frame.size.width - 75,
-                                   cell.frame.size.height - 45,
-                                   63.0f, 33.0f)];
-    [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - bannerHeight, 100, bannerHeight)];
-    NSLog(@"configQuestionCell, height:%f, textHeight:%f",
-          cell.frame.size.height, textHeight);
+    [cell setFrame:CGRectMake(0, 0, self.view.frame.size.width, textHeight + HEIGHT_IN_CELL_OFFSET+ HEIGHT_CELL_BANNER)];
+    [textView setFrame:CGRectMake(10, 5, textWidth, textHeight)];
+    CGFloat imageWidth = 63, imageHeight = 33;
+    [imageView setFrame:CGRectMake(cell.frame.size.width - imageWidth - 5,
+                                   cell.frame.size.height - imageHeight - 5,
+                                   imageWidth, imageHeight)];
+    CGFloat metaWidth = 100, metaHeight = 33;
+    [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - metaHeight - 5, metaWidth, metaHeight)];
+    //NSLog(@"configQuestionCell, height:%f, textHeight:%f", cell.frame.size.height, textHeight);
 }
 
 @end

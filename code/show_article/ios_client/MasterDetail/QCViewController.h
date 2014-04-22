@@ -32,7 +32,8 @@
 #define FOLLOW_MAILTO @"Mail to us"
 
 #define PAGE_COUNT 10
-#define ROW_HEIGHT 160.0f
+#define HEIGHT_IN_CELL_OFFSET 10
+#define HEIGHT_CELL_BANNER 50
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 
