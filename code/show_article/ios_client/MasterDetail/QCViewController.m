@@ -54,7 +54,7 @@
         // init table indicator
         [self initTableIndicatorView];
         self.refreshControl = [[UIRefreshControl alloc] init];
-        //self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
+        self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
         [self.refreshControl addTarget:self action:@selector(refreshTableHead) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:self.refreshControl];
 
@@ -724,6 +724,7 @@
 
     NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
+    
    
     [imageView setTag:TAG_ICON_IN_CELL];
     imageView.userInteractionEnabled = NO;
@@ -774,7 +775,8 @@
     [cell setFrame:CGRectMake(0, 0, self.view.frame.size.width, textHeight + HEIGHT_IN_CELL_OFFSET+ HEIGHT_CELL_BANNER)];
     [view setFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height - 5)];
     [textView setFrame:CGRectMake(10, 5, textWidth, textHeight)];
-    CGFloat imageWidth = 63, imageHeight = 33;
+    CGFloat imageHeight = 25, imageWidth;
+    imageWidth = imageHeight*imageView.image.size.width/imageView.image.size.height;
     [imageView setFrame:CGRectMake(10, cell.frame.size.height - imageHeight - 10, 
                                    imageWidth, imageHeight)];
 
