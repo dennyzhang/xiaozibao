@@ -83,12 +83,20 @@
     // pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
     // //pageControl.hidesForSinglePage = YES;
     
+    UIButton *tooltipSwipeBtn = [[UIButton alloc] initWithFrame:CGRectZero];
+    tooltipSwipeBtn.center = self.view.center;
+    [self.view addSubview:tooltipSwipeBtn];
+    
     // ToolTip
+    [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Swipe to change channels."];
+
     if (self.navigationItem.rightBarButtonItem) {
         [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click coin to see learning stastics."];
     }
+
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
                                   msg:@"Click to see more."];
+
     [[MyToolTip singleton] showToolTip];
     
 }
