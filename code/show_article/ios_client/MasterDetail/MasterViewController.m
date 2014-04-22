@@ -53,8 +53,10 @@
         
         self.mPageSize = [self.questionCategories count];
     }
-    if(!self.mCurrentPage)
-        self.mCurrentPage = 0;
+
+    if(!self.mCurrentPage) {
+      self.mCurrentPage = (int)ceilf(self.mPageSize/2);
+    }
     
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -312,26 +314,26 @@
 - (void) updateNavigationIndex:(int) index
 {
     NSLog(@"updateNavigationTitle index:%d", index);
-    // TODO index = (index+count) mod index
-    int count = [self.questionCategories count];
-    if(index<0)
-        index = index + count;
-    if(index>=count)
-        index = index -count;
+    // // TODO index = (index+count) mod index
+    // int count = [self.questionCategories count];
+    // if(index<0)
+    //     index = index + count;
+    // if(index>=count)
+    //     index = index -count;
     
     self.mCurrentPage = index;
-    
-    if(index<0 || index>=[self.questionCategories count]) {
+
+    if (self.questionCategories) {    
+      if(index<0 || index>=[self.questionCategories count]) {
         NSLog(@"errror, invalid index:%d", index);
         return;
-    }
+      }
     
-    if (self.questionCategories) {
-        QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
-        self.pageControl.currentPage = self.mCurrentPage;
-        self.navigationItem.title = [qc.category capitalizedString];
-        self.titleLabel.text = [qc.category capitalizedString];
-        [self refreshScore];
+      QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
+      self.pageControl.currentPage = self.mCurrentPage;
+      self.navigationItem.title = [qc.category capitalizedString];
+      self.titleLabel.text = [qc.category capitalizedString];
+      [self refreshScore];
     }
 }
 
