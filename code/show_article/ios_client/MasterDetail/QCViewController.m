@@ -162,7 +162,7 @@
         post = self.currentQC.questions[indexPath.row];
     }
 
-    CGFloat textHeight, textWidth = self.view.frame.size.width - 20;
+    CGFloat textHeight, textWidth = self.view.frame.size.width - 15;
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
     [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     textView.text = post.title;
@@ -693,7 +693,7 @@
     
     cell.textLabel.text = @"";
     
-    CGFloat textHeight, textWidth = self.view.frame.size.width - 20;
+    CGFloat textHeight, textWidth = self.view.frame.size.width - 15;
 
     NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
