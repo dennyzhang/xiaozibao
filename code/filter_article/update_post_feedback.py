@@ -7,7 +7,7 @@
 ## Description :
 ## --
 ## Created : <2014-03-12>
-## Updated: Time-stamp: <2014-04-14 13:35:44>
+## Updated: Time-stamp: <2014-04-22 10:41:35>
 ##-------------------------------------------------------------------
 import sys
 from sqlalchemy import create_engine
@@ -49,7 +49,7 @@ FEEDBACK_DEVOTEDOWN="tag devotedown"
 FEEDBACK_DEFAVORITE="tag defavorite"
 META_LEADING_STRING="meta:"
 
-FLAGFILE="flagfile_modifytime"
+FLAGFILE="flagfile_meatamodifytime"
 
 def get_post_filename_byid(postid, category):
     global conn
@@ -170,13 +170,13 @@ def update_feedback_by_logfile(logfile):
         update_post_metadata_db(postid, category, dict_db)
 
 def caculate_meta(dict_file, dict_log):
-    global modifytime
+    global meatamodifytime
     # TODO: better way
     dict_new = {}
     for key in dict_file.keys():
         dict_new[key] = dict_file[key]
         # regenerate dict
-        if (dict_file.has_key('modifytime') is False) or modifytime > (int)(dict_file["modifytime"]):
+        if (dict_file.has_key('meatamodifytime') is False) or meatamodifytime > (int)(dict_file["meatamodifytime"]):
             dict_new["voteup"] = 0
             dict_new["votedown"] = 0
             dict_new["favorite"] = 0
@@ -193,7 +193,7 @@ def caculate_meta(dict_file, dict_log):
     postid = dict_log["postid"]
     category = dict_log["category"]
     
-    dict_new["modifytime"] = modifytime
+    dict_new["meatamodifytime"] = meatamodifytime
     if dict_new.has_key("voteup") is False:
         dict_new["voteup"] = 0
     else:
@@ -228,8 +228,8 @@ def caculate_meta(dict_file, dict_log):
 
 if __name__=='__main__':
 
-    global modifytime
-    modifytime = int(round(time.time()))
+    global meatamodifytime
+    meatamodifytime = int(round(time.time()))
     engine_str = "mysql://%s:%s@%s/%s" % (DB_USERNAME, DB_PWD, DB_HOST, DB_NAME)
     db = create_engine(engine_str)
     global conn
@@ -238,8 +238,8 @@ if __name__=='__main__':
     command = sys.argv[1]
     # print "command:%s" % (command)
     if command == "generate_flagfile":
-        print "generage %s with %d" %(FLAGFILE, modifytime)
-        open(FLAGFILE, "wab").write(str(modifytime))
+        print "generage %s with %d" %(FLAGFILE, meatamodifytime)
+        open(FLAGFILE, "wab").write(str(meatamodifytime))
 
     if command == "clean_flagfile":
         if os.path.exists(FLAGFILE):
@@ -249,8 +249,8 @@ if __name__=='__main__':
         if os.path.exists(FLAGFILE):
             with open(FLAGFILE,'r') as f:
                 content = f.readlines()
-                modifytime = int(content[0])
-                #print modifytime
+                meatamodifytime = int(content[0])
+                #print meatamodifytime
                 update_feedback_by_logfile(sys.argv[2])
     conn.close()
 

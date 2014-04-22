@@ -46,6 +46,6 @@
 + (void)configureVerticalAlign:(UITextView*) tv;
 + (CGFloat) yoffsetVerticalAlign:(UITextView*) tv;
 + (NSString*) currentTutorialVersion;
-+ (BOOL) shouldShowTutorial;
++ (BOOL)shouldShowTutorial;
 + (int) getIndexByCategory:(NSString*) category;
 @end
