@@ -49,6 +49,14 @@
     [self configureLayout];
 
     // configure tooltip
+    // ToolTip    
+    UIButton *tooltipSwipeBtn = [[UIButton alloc]
+                                  initWithFrame:CGRectMake(90.0f, self.detailUITextView.frame.origin.y + 5, 0, 0)];
+    [self.view addSubview:tooltipSwipeBtn];
+
+    [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Swipe right to go back."];
+    [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem msg:@"Click to see more."];
+
     [[MyToolTip singleton] addToolTip:(UIButton *)[self.view viewWithTag:TAG_BUTTON_VOTEDOWN]
                                   msg:@"Click to voteup, votedown, or save to local."];
 

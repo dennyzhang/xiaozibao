@@ -666,7 +666,9 @@
 
 #pragma mark - scroll
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    //NSLog(@"scrollViewDidScroll, scrollView:%@", scrollView);
+    NSLog(@"scrollViewDidScroll, scrollView:%@, x:%f, y:%f",
+          scrollView, scrollView.contentOffset.x, scrollView.contentOffset.y);
+
     if (![self isQuestionChannel])
         return;
     // when reach the top
@@ -683,7 +685,9 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    //NSLog(@"scrollViewDidEndDecelerating, scrollView:%@", scrollView);
+    NSLog(@"scrollViewDidEndDecelerating, scrollView:%@, x:%f, y:%f",
+          scrollView, scrollView.contentOffset.x, scrollView.contentOffset.y);
+
     if (![self isQuestionChannel])
         return;
     
@@ -692,11 +696,12 @@
     {
         [self refreshTableHead];
     }
-    
-    // when reaching the bottom
-    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
-    {
-        [self refreshTableTail];
+    else {
+      // when reaching the bottom
+      if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+        {
+          [self refreshTableTail];
+        }
     }
 }
 
