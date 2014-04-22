@@ -445,7 +445,7 @@
 -(void)initTableIndicatorView
 {
     // headerView
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)];
+    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 40.0)];
     self.headerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -668,18 +668,23 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSLog(@"scrollViewDidScroll, scrollView:%@, x:%f, y:%f",
           scrollView, scrollView.contentOffset.x, scrollView.contentOffset.y);
-
+    
     if (![self isQuestionChannel])
         return;
     // when reach the top
     if (scrollView.contentOffset.y <= 0)
     {
-        [(UIActivityIndicatorView *)[self.headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR] startAnimating];
+        UIActivityIndicatorView *activityIndicator = (UIActivityIndicatorView *)[self.headerView viewWithTag:TAG_TABLE_HEADER_INDIACTOR];
+        if (![activityIndicator isAnimating])
+            [activityIndicator startAnimating];
     }
-    
-    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
-    {
-        [(UIActivityIndicatorView *)[self.footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR] startAnimating];
+    else {
+        if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+        {
+            UIActivityIndicatorView *activityIndicator = (UIActivityIndicatorView *)[self.footerView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR];
+            if (![activityIndicator isAnimating])
+                [activityIndicator startAnimating];
+        }
     }
 }
 
@@ -687,7 +692,7 @@
 {
     NSLog(@"scrollViewDidEndDecelerating, scrollView:%@, x:%f, y:%f",
           scrollView, scrollView.contentOffset.x, scrollView.contentOffset.y);
-
+    
     if (![self isQuestionChannel])
         return;
     
@@ -697,10 +702,10 @@
         [self refreshTableHead];
     }
     else {
-      // when reaching the bottom
-      if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
+        // when reaching the bottom
+        if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
         {
-          [self refreshTableTail];
+            [self refreshTableTail];
         }
     }
 }
