@@ -65,7 +65,7 @@
     self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"categoryPageViewController"];
     self.mPageViewController.dataSource = self;
 
-    UIViewController *startingVC = [self viewControllerAtIndex:0];
+    UIViewController *startingVC = [self viewControllerAtIndex:self.mCurrentPage];
     NSArray *viewControllers = @[startingVC];
     [self.mPageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
@@ -75,27 +75,16 @@
     [self.view addSubview:_mPageViewController.view];
     [self.mPageViewController didMoveToParentViewController:self];
     
-    // UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self.mPageViewController class], nil];
-    // //pageControl.frame = CGRectMake(100, 0, 200, 40);
-
-    // pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    // pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
-    // pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
-    // //pageControl.hidesForSinglePage = YES;
-    
+    // ToolTip    
     UIButton *tooltipSwipeBtn = [[UIButton alloc] initWithFrame:CGRectZero];
     tooltipSwipeBtn.center = self.view.center;
     [self.view addSubview:tooltipSwipeBtn];
-    
-    // ToolTip
-    [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Swipe to change channels."];
 
+    [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Swipe to change channels."];
     if (self.navigationItem.rightBarButtonItem) {
         [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click coin to see learning stastics."];
     }
-
-    [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem
-                                  msg:@"Click to see more."];
+    [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem msg:@"Click to see more."];
 
     [[MyToolTip singleton] showToolTip];
     
