@@ -18,6 +18,7 @@
 @property (assign, nonatomic) int bottom_num;
 
 @property (nonatomic, retain) NSMutableArray *savedQuestions;
+@property (retain, nonatomic) IBOutlet UITextView *stubTextView;
 @end
 
 @implementation QCViewController
@@ -53,7 +54,11 @@
         // init table indicator
         [self initTableIndicatorView];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
+
+        // stub TextView to caculate dynamic cell height
+        CGFloat textWidth = self.view.frame.size.width - 15;
+        self.stubTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
+        [self.stubTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     }
     else {
         if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
@@ -162,13 +167,10 @@
         post = self.currentQC.questions[indexPath.row];
     }
 
-    CGFloat textHeight, textWidth = self.view.frame.size.width - 15;
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
-    [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
-    textView.text = post.title;
+    self.stubTextView.text = post.title;
 
-    textHeight = [ComponentUtil measureHeightOfUITextView:textView];
-    return textHeight + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER;
+    return [ComponentUtil measureHeightOfUITextView:self.stubTextView]
+      + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
