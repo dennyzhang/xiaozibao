@@ -139,72 +139,11 @@
     cell.textLabel.font = [UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL];
     if ([self.navigationTitle isEqualToString:APP_SETTING]) {
         [self appSettingRows:cell indexPath:indexPath];
-        return cell;
     }
     else {
-        Posts *post;
-        if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
-            post = self.savedQuestions[indexPath.row];
-        }
-        else {
-            post = self.currentQC.questions[indexPath.row];
-        }
-        [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
-        [[cell.contentView viewWithTag:TAG_METADATA_IN_CELL]removeFromSuperview];
-        [[cell.contentView viewWithTag:TAG_ICON_IN_CELL]removeFromSuperview];
-        
-        cell.textLabel.text = @"";
-        
-        NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
-        
-        [imageView setFrame:CGRectMake(cell.frame.size.width - 75,
-                                       cell.frame.size.height - 45,
-                                       63.0f, 33.0f)];
-        
-        [imageView setTag:TAG_ICON_IN_CELL];
-        imageView.userInteractionEnabled = NO;
-        [[cell contentView] addSubview:imageView];
-        
-        UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
-        [textView setTextColor:[UIColor blackColor]];
-        [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
-        [textView setBackgroundColor:[UIColor clearColor]];
-        [textView setTag:TAG_TEXTVIEW_IN_CELL];
-        textView.userInteractionEnabled = NO;
-        [[cell contentView] addSubview:textView];
-        [textView setText:post.title];
-        [textView setFrame:CGRectMake(10, 10, cell.frame.size.width - 20, cell.frame.size.height - 10)];
-        
-        UITextView *metadataTextView = [[UITextView alloc] initWithFrame:CGRectZero];
-        [metadataTextView setTextColor:[UIColor blackColor]];
-        [metadataTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY]];
-        [metadataTextView setBackgroundColor:[UIColor clearColor]];
-        [metadataTextView setTag:TAG_METADATA_IN_CELL];
-        metadataTextView.userInteractionEnabled = NO;
-        [[cell contentView] addSubview:metadataTextView];
-        //[metadataTextView setText:post.metadata];
-        [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - 50, 100, 50)];
-        
-        NSString* voteupStr = [post.metadataDictionary objectForKey:@"voteup"];
-        NSInteger voteup = [voteupStr intValue];
-        if (voteup > 0) {
-            UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
-            btn.tag = TAG_VOTEUP_IN_CELL;
-            [btn setImage:[UIImage imageNamed:@"thumbs_up2.png"] forState:UIControlStateNormal];
-            NSString* text = voteupStr;
-            [ComponentUtil addTextToButton:btn text:text
-                                  fontSize:FONT_TINY2 chWidth:9 chHeight:17 tag:TAG_VOTEUP_TEXT];
-            
-            [metadataTextView addSubview:btn];
-        }
-        
-        [self markCellAsRead:cell post:post];
-        
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        return cell;
+        [self configQuestionCell:cell index:indexPath.row];
     }
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -666,8 +605,8 @@
 
 #pragma mark - scroll
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"scrollViewDidScroll, scrollView:%@, x:%f, y:%f",
-          scrollView, scrollView.contentOffset.x, scrollView.contentOffset.y);
+    // NSLog(@"scrollViewDidScroll, scrollView:%@, x:%f, y:%f",
+    //       scrollView, scrollView.contentOffset.x, scrollView.contentOffset.y);
     
     if (![self isQuestionChannel])
         return;
@@ -690,8 +629,8 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollViewDidEndDecelerating, scrollView:%@, x:%f, y:%f",
-          scrollView, scrollView.contentOffset.x, scrollView.contentOffset.y);
+    // NSLog(@"scrollViewDidEndDecelerating, scrollView:%@, x:%f, y:%f",
+    //       scrollView, scrollView.contentOffset.x, scrollView.contentOffset.y);
     
     if (![self isQuestionChannel])
         return;
@@ -715,6 +654,72 @@
 {
     return (![self.navigationTitle isEqualToString:SAVED_QUESTIONS] &&
             ![self.navigationTitle isEqualToString:APP_SETTING]);
+}
+
+- (void) configQuestionCell:(UITableViewCell *)cell
+                      index:(int)index
+{
+    Posts *post;
+    if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
+        post = self.savedQuestions[index];
+    }
+    else {
+        post = self.currentQC.questions[index];
+    }
+    [[cell.contentView viewWithTag:TAG_TEXTVIEW_IN_CELL]removeFromSuperview];
+    [[cell.contentView viewWithTag:TAG_METADATA_IN_CELL]removeFromSuperview];
+    [[cell.contentView viewWithTag:TAG_ICON_IN_CELL]removeFromSuperview];
+    
+    cell.textLabel.text = @"";
+    
+    NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
+    
+    [imageView setFrame:CGRectMake(cell.frame.size.width - 75,
+                                   cell.frame.size.height - 45,
+                                   63.0f, 33.0f)];
+    
+    [imageView setTag:TAG_ICON_IN_CELL];
+    imageView.userInteractionEnabled = NO;
+    [[cell contentView] addSubview:imageView];
+    
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero];
+    [textView setTextColor:[UIColor blackColor]];
+    [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
+    [textView setBackgroundColor:[UIColor clearColor]];
+    [textView setTag:TAG_TEXTVIEW_IN_CELL];
+    textView.userInteractionEnabled = NO;
+    [[cell contentView] addSubview:textView];
+    [textView setText:post.title];
+    [textView setFrame:CGRectMake(10, 10, cell.frame.size.width - 20, cell.frame.size.height - 10)];
+    
+    UITextView *metadataTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    [metadataTextView setTextColor:[UIColor blackColor]];
+    [metadataTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_TINY]];
+    [metadataTextView setBackgroundColor:[UIColor clearColor]];
+    [metadataTextView setTag:TAG_METADATA_IN_CELL];
+    metadataTextView.userInteractionEnabled = NO;
+    [[cell contentView] addSubview:metadataTextView];
+    //[metadataTextView setText:post.metadata];
+    [metadataTextView setFrame:CGRectMake(10, cell.frame.size.height - 50, 100, 50)];
+    
+    NSString* voteupStr = [post.metadataDictionary objectForKey:@"voteup"];
+    NSInteger voteup = [voteupStr intValue];
+    if (voteup > 0) {
+        UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(0.0f, 0.0f, ICON_WIDTH, ICON_HEIGHT)];
+        btn.tag = TAG_VOTEUP_IN_CELL;
+        [btn setImage:[UIImage imageNamed:@"thumbs_up2.png"] forState:UIControlStateNormal];
+        NSString* text = voteupStr;
+        [ComponentUtil addTextToButton:btn text:text
+                              fontSize:FONT_TINY2 chWidth:9 chHeight:17 tag:TAG_VOTEUP_TEXT];
+        
+        [metadataTextView addSubview:btn];
+    }
+    
+    [self markCellAsRead:cell post:post];
+    
+    cell.accessoryType = UITableViewCellAccessoryNone;
 }
 
 @end
