@@ -315,11 +315,11 @@
 {
     NSLog(@"updateNavigationTitle index:%d", index);
     // // TODO index = (index+count) mod index
-    // int count = [self.questionCategories count];
-    // if(index<0)
-    //     index = index + count;
-    // if(index>=count)
-    //     index = index -count;
+    int count = [self.questionCategories count];
+    if(index<0)
+        index = index + count;
+    if(index>=count)
+        index = index -count;
     
     self.mCurrentPage = index;
 
