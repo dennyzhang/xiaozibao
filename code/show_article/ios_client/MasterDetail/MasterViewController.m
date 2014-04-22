@@ -53,9 +53,9 @@
         
         self.mPageSize = [self.questionCategories count];
     }
-
-    if(!self.mCurrentPage) {
-      self.mCurrentPage = (int)ceilf(self.mPageSize/2);
+    NSLog(@"self.mCurrentPage:%d", self.mCurrentPage);
+    if(!self.mCurrentPage) { // TODO can't tell whether mCurrentPage is undefined or 0
+      self.mCurrentPage = 0;
     }
     
     self.view.backgroundColor = [UIColor clearColor];
