@@ -14,11 +14,11 @@
 @property (atomic, retain) QuestionCategory *currentQC;
 @property (nonatomic, retain) NSString* navigationTitle;
 @property (retain, nonatomic) IBOutlet UIView *footerView;
-@property (retain, nonatomic) IBOutlet UIView *headerView;
 @property (assign, nonatomic) int bottom_num;
 
 @property (nonatomic, retain) NSMutableArray *savedQuestions;
 @property (retain, nonatomic) IBOutlet UITextView *stubTextView;
+@property (nonatomic,strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation QCViewController
@@ -53,6 +53,11 @@
         
         // init table indicator
         [self initTableIndicatorView];
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        //self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
+        [self.refreshControl addTarget:self action:@selector(refreshTableHead) forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:self.refreshControl];
+
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
         // stub TextView to caculate dynamic cell height
@@ -76,6 +81,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSLog(@"QCViewController will appear");
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    NSLog(@"QCViewController did appear");
 }
 
 - (void)didReceiveMemoryWarning
@@ -251,6 +261,8 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if ([self.navigationTitle isEqualToString:APP_SETTING])
         return 30;
+    if ([self isQuestionChannel])
+      return 10;
     return 0;
 }
 
@@ -388,18 +400,23 @@
     return YES;
 }
 
+// - (void) stopRefreshControl
+// {
+//   [self.refreshControl endRefreshing];
+// }
+
 #pragma mark - refresh
 - (void)toggleActivityIndicator:(bool)isHeader isStartAnimation:(bool)isStartAnimation {
     UIView* tableIndicatorView;
     UIActivityIndicatorView * tableActivityIndicator;
-    if(isHeader) {
-      tableIndicatorView = self.headerView;
-      tableActivityIndicator = (UIActivityIndicatorView *)[tableIndicatorView viewWithTag:TAG_TABLE_HEADER_INDIACTOR];
+    if(isHeader && !isStartAnimation) {
+      [self.refreshControl endRefreshing];
+      //[self performSelector:@selector(stopRefreshControl) withObject:self afterDelay:1.0f];
     }
     else {
+      // footer indicator
       tableIndicatorView = self.footerView;
       tableActivityIndicator = (UIActivityIndicatorView *)[tableIndicatorView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR];
-    }
 
     CGFloat indicatorHeight = 20.0f;
     if (isStartAnimation) {
@@ -416,30 +433,22 @@
       if ([tableActivityIndicator isAnimating]) {
         [tableActivityIndicator stopAnimating];
       }
+
       [tableIndicatorView setFrame:CGRectMake(tableIndicatorView.frame.origin.x,
                                                    tableIndicatorView.frame.origin.y,
                                                    tableIndicatorView.frame.size.width,
                                                    0)];
     }
 }
+}
 
 -(void)initTableIndicatorView
 {
-    // headerView
-    self.headerView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.tableHeaderView = self.headerView;
-
-    self.headerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    UIActivityIndicatorView * actIndHeader = [[UIActivityIndicatorView alloc]
-                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [self.headerView addSubview:actIndHeader];
-
-    actIndHeader.tag = TAG_TABLE_HEADER_INDIACTOR;
-    actIndHeader.hidesWhenStopped = YES;
-    
     // footerView
-    self.footerView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 
+                                         self.view.frame.size.width, 20.0)];
     self.tableView.tableFooterView = self.footerView;
+
     self.footerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndFooter = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -447,12 +456,6 @@
 
     actIndFooter.tag = TAG_TABLE_FOOTER_INDIACTOR;
     actIndFooter.hidesWhenStopped = YES;
-
-    // configure frame
-    [self.headerView setFrame:CGRectMake(0.0, 0.0, 
-                                         self.view.frame.size.width, 20.0)];
-    actIndHeader.frame = CGRectMake(150.0, 0, 20.0, 20.0);
-
     [self.footerView setFrame:CGRectMake(0.0, 0.0,
                                          self.view.frame.size.width, 20.0)];
     actIndFooter.frame = CGRectMake(150.0, 0, 20.0, 20.0);
@@ -461,7 +464,6 @@
 - (void) refreshTableHead
 {
     NSLog(@"refreshTableHead");
-    [self toggleActivityIndicator:YES isStartAnimation:YES];
     [self fetchArticleList:[ComponentUtil getUserId] category_t:self.currentQC.category
                start_num_t:0
           shouldAppendHead:YES];

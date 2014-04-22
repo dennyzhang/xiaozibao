@@ -84,7 +84,7 @@
     tooltipSwipeBtn.center = self.view.center;
     [self.view addSubview:tooltipSwipeBtn];
     
-    [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Swipe to change channels."];
+    [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Pull to update data.\nSwipe to change channels."];
     if (self.navigationItem.rightBarButtonItem) {
         [[MyToolTip singleton] addToolTip:self.navigationItem.rightBarButtonItem msg:@"Click coin to see learning stastics."];
     }
