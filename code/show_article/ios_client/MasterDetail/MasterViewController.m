@@ -269,6 +269,8 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
+    if (self.mPageSize == 1) // prevent animation, when single page
+      return nil;
     int oldViewId, newViewId;
     QCViewController* qcViewController = (QCViewController*)viewController;
     oldViewId = qcViewController.viewId;
@@ -278,6 +280,9 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
+    if (self.mPageSize == 1) // prevent animation, when single page
+      return nil;
+
     int oldViewId, newViewId;
     QCViewController* qcViewController = (QCViewController*)viewController;
     oldViewId = qcViewController.viewId;
