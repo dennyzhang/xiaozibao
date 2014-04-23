@@ -47,7 +47,7 @@
     
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.tableView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    
+    self.tableView.rowHeight = 80.0f;
     if (self.currentQC) {
         [self.currentQC loadPosts];
         
@@ -70,9 +70,6 @@
             self.savedQuestions = [[NSMutableArray alloc] init];
             [PostsSqlite loadSavedPosts:self.savedQuestions];
         }
-        // if([self.navigationTitle isEqualToString:APP_SETTING]) {
-        //     self.tableView.scrollEnabled = NO;
-        // }
     }
     NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
           self.currentQC.category, [self.currentQC.questions count]);
@@ -162,6 +159,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  NSLog(@"heightForRowAtIndexPath, indexPath: %@, indexPath.row:%d", indexPath, indexPath.row);
     if ([self.navigationTitle isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
@@ -400,18 +398,12 @@
     return YES;
 }
 
-// - (void) stopRefreshControl
-// {
-//   [self.refreshControl endRefreshing];
-// }
-
 #pragma mark - refresh
 - (void)toggleActivityIndicator:(bool)isHeader isStartAnimation:(bool)isStartAnimation {
     UIView* tableIndicatorView;
     UIActivityIndicatorView * tableActivityIndicator;
     if(isHeader && !isStartAnimation) {
       [self.refreshControl endRefreshing];
-      //[self performSelector:@selector(stopRefreshControl) withObject:self afterDelay:1.0f];
     }
     else {
       // footer indicator
