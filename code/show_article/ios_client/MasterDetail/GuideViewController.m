@@ -19,7 +19,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    //return; // TODO
+    return; // TODO
     // show tutorial for only once in each version
     if (![ComponentUtil shouldShowTutorial]) {
        [self performSegueWithIdentifier:@"enterMain" sender:self];
@@ -62,17 +62,17 @@
     pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
     
     int offsetX, offsetY;
-    offsetX = 320 - 45;
+    offsetX = 320 - 55;
     float screenHeight = [UIScreen mainScreen].bounds.size.height;
     if (screenHeight >= 568.0f) {
         // 4 inches
-        offsetY = 568 - 28;
+        offsetY = 568 - 30;
     }else{
         // 3.5 inches
-        offsetY = 480 - 28;
+        offsetY = 480 - 30;
     }
     
-    UIButton *btnEnter = [[UIButton alloc] initWithFrame:CGRectMake(offsetX, offsetY, 28, 16)];
+    UIButton *btnEnter = [[UIButton alloc] initWithFrame:CGRectMake(offsetX, offsetY, 40, 30)];
     [btnEnter setImage:[UIImage imageNamed:@"enter.png" ] forState:UIControlStateNormal];
     [btnEnter setImage:[UIImage imageNamed:@"enter_highlighted.png"] forState:UIControlStateHighlighted];
     [btnEnter addTarget:self action:@selector(actionEnter:) forControlEvents:UIControlEventTouchUpInside];
