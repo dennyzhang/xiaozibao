@@ -255,6 +255,7 @@
 - (void)addPostComponents
 {
     UIButton *btn;
+    NSString* imgName;
     float frame_width = self.view.frame.size.width;
     
     // post header
@@ -307,21 +308,24 @@
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(frame_width/2 - icon2_width/2 - icon1_width, 0.0f, 100.0f, 100.0f)];
-    [btn setImage:[UIImage imageNamed:@"thumb_down-512.png"] forState:UIControlStateNormal];
+    imgName = (detailItem.isvotedown == YES)?@"thumbs_down-512.png":@"thumb_down-512.png";
+    [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_VOTEDOWN;
     [buttonsView addSubview:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(frame_width/2 - icon2_width/2, 30.0f, 35.0f, 35.0f)];
-    [btn setImage:[UIImage imageNamed:@"heart-512.png"] forState:UIControlStateNormal];
+    imgName = (detailItem.isfavorite == YES)?@"hearts-512.png":@"heart-512.png";
+    [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_FAVORITE;
     [buttonsView addSubview:btn];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(frame_width/2 + icon2_width/2, 0.0f, 100.0f, 100.0f)];
-    [btn setImage:[UIImage imageNamed:@"thumb_up-512.png"] forState:UIControlStateNormal];
+    imgName = (detailItem.isvoteup == YES)?@"thumbs_up-512.png":@"thumb_up-512.png";
+    [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(barButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag = TAG_BUTTON_VOTEUP;
     [buttonsView addSubview:btn];
