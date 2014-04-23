@@ -35,8 +35,11 @@
                    objects:self.questions tableview:self.tableView];
 
     // configure tooltip
-    // TODO workaround, due to fail to show hint on self.shareButton
-    [[MyToolTip singleton] addToolTip:self.coinButton
+    UIButton *tooltipForwardBtn = [[UIButton alloc] initWithFrame:CGRectZero];
+    tooltipForwardBtn.center = (CGPoint){self.view.frame.size.width - 10, 60};
+    [self.view addSubview:tooltipForwardBtn];
+
+    [[MyToolTip singleton] addToolTip:tooltipForwardBtn
                                   msg:@"Forward to friends, twitter, facebook, etc."];
 
     [[MyToolTip singleton] showToolTip];
