@@ -46,8 +46,6 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    self.tableView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    self.tableView.rowHeight = 80.0f;
     if (self.currentQC) {
         [self.currentQC loadPosts];
         
@@ -57,9 +55,9 @@
         self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
         [self.refreshControl addTarget:self action:@selector(refreshTableHead) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:self.refreshControl];
-
+        
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+        
         // stub TextView to caculate dynamic cell height
         CGFloat textWidth = self.view.frame.size.width - 15;
         self.stubTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
@@ -67,6 +65,10 @@
     }
     else {
         if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
+            
+            self.tableView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+            self.tableView.rowHeight = 80.0f;
+            
             self.savedQuestions = [[NSMutableArray alloc] init];
             [PostsSqlite loadSavedPosts:self.savedQuestions];
         }
@@ -75,15 +77,15 @@
           self.currentQC.category, [self.currentQC.questions count]);
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    NSLog(@"QCViewController will appear");
-}
+// - (void)viewWillAppear:(BOOL)animated {
+//     [super viewWillAppear:animated];
+//     NSLog(@"QCViewController will appear");
+// }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    NSLog(@"QCViewController did appear");
-}
+// - (void)viewDidAppear:(BOOL)animated {
+//     [super viewDidAppear:animated];
+//     NSLog(@"QCViewController did appear");
+// }
 
 - (void)didReceiveMemoryWarning
 {
@@ -159,24 +161,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"heightForRowAtIndexPath, indexPath: %@, indexPath.row:%d", indexPath, indexPath.row);
     if ([self.navigationTitle isEqualToString:APP_SETTING]) {
         return 50.0f;
     }
-
+    
     // configure dynamic cell height
-    Posts *post;
-    if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
-        post = self.savedQuestions[indexPath.row];
-    }
-    else {
-        post = self.currentQC.questions[indexPath.row];
-    }
-
+    Posts *post = [self getPostByIndex:indexPath.row];
+    
     self.stubTextView.text = post.title;
-
+    
+    // NSLog(@"heightForRowAtIndexPath return height: %f", [ComponentUtil measureHeightOfUITextView:self.stubTextView]
+    //       + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER);
+    
     return [ComponentUtil measureHeightOfUITextView:self.stubTextView]
-      + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER;
+    + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -247,7 +245,7 @@
         view.alpha = 0.3f;
     }
     else {
-      view.alpha = 1.0;
+        view.alpha = 1.0;
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -259,9 +257,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if ([self.navigationTitle isEqualToString:APP_SETTING])
         return 30;
-    if ([self isQuestionChannel])
-      return 10;
-    return 0;
+    return 10;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -273,8 +269,8 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSLog(@"increate visit count, for category:%@. previous key:%d", self.currentQC.category,
               [UserProfile integerForKey:self.currentQC.category key:POST_VISIT_KEY]);
-        Posts *post = self.currentQC.questions[indexPath.row];
         
+        Posts *post = [self getPostByIndex:indexPath.row];
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         
         DetailViewController* dvc = [segue destinationViewController];
@@ -403,49 +399,49 @@
     UIView* tableIndicatorView;
     UIActivityIndicatorView * tableActivityIndicator;
     if(isHeader && !isStartAnimation) {
-      [self.refreshControl endRefreshing];
+        [self.refreshControl endRefreshing];
     }
     else {
-      // footer indicator
-      tableIndicatorView = self.footerView;
-      tableActivityIndicator = (UIActivityIndicatorView *)[tableIndicatorView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR];
-
-    CGFloat indicatorHeight = 20.0f;
-    if (isStartAnimation) {
-      // start animation
-      if (![tableActivityIndicator isAnimating]) {
-        [tableActivityIndicator startAnimating];
-      }
-      [tableIndicatorView setFrame:CGRectMake(tableIndicatorView.frame.origin.x,
-                                              tableIndicatorView.frame.origin.y,
-                                              tableIndicatorView.frame.size.width,
-                                              indicatorHeight)];
+        // footer indicator
+        tableIndicatorView = self.footerView;
+        tableActivityIndicator = (UIActivityIndicatorView *)[tableIndicatorView viewWithTag:TAG_TABLE_FOOTER_INDIACTOR];
+        
+        CGFloat indicatorHeight = 20.0f;
+        if (isStartAnimation) {
+            // start animation
+            if (![tableActivityIndicator isAnimating]) {
+                [tableActivityIndicator startAnimating];
+            }
+            [tableIndicatorView setFrame:CGRectMake(tableIndicatorView.frame.origin.x,
+                                                    tableIndicatorView.frame.origin.y,
+                                                    tableIndicatorView.frame.size.width,
+                                                    indicatorHeight)];
+        }
+        else {
+            if ([tableActivityIndicator isAnimating]) {
+                [tableActivityIndicator stopAnimating];
+            }
+            
+            [tableIndicatorView setFrame:CGRectMake(tableIndicatorView.frame.origin.x,
+                                                    tableIndicatorView.frame.origin.y,
+                                                    tableIndicatorView.frame.size.width,
+                                                    0)];
+        }
     }
-    else {
-      if ([tableActivityIndicator isAnimating]) {
-        [tableActivityIndicator stopAnimating];
-      }
-
-      [tableIndicatorView setFrame:CGRectMake(tableIndicatorView.frame.origin.x,
-                                                   tableIndicatorView.frame.origin.y,
-                                                   tableIndicatorView.frame.size.width,
-                                                   0)];
-    }
-}
 }
 
 -(void)initTableIndicatorView
 {
     // footerView
-    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 
-                                         self.view.frame.size.width, 20.0)];
+    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0,
+                                                               self.view.frame.size.width, 20.0)];
     self.tableView.tableFooterView = self.footerView;
-
+    
     self.footerView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     UIActivityIndicatorView * actIndFooter = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [self.footerView addSubview:actIndFooter];
-
+    
     actIndFooter.tag = TAG_TABLE_FOOTER_INDIACTOR;
     actIndFooter.hidesWhenStopped = YES;
     [self.footerView setFrame:CGRectMake(0.0, 0.0,
@@ -653,12 +649,12 @@
     // when reach the top
     if (scrollView.contentOffset.y <= 0)
     {
-      [self toggleActivityIndicator:YES isStartAnimation:YES];
+        [self toggleActivityIndicator:YES isStartAnimation:YES];
     }
     else {
         if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height)
         {
-          [self toggleActivityIndicator:NO isStartAnimation:YES];
+            [self toggleActivityIndicator:NO isStartAnimation:YES];
         }
     }
 }
@@ -695,17 +691,11 @@
 - (void) configQuestionCell:(UITableViewCell *)cell
                       index:(int)index
 {
-    Posts *post;
-    if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
-        post = self.savedQuestions[index];
-    }
-    else {
-        post = self.currentQC.questions[index];
-    }
-
+    Posts *post = [self getPostByIndex:index];
+    
     UIView* view = [[UIView alloc] init];
     view.tag = TAG_CELL_VIEW;
-    [[cell.contentView viewWithTag:TAG_CELL_VIEW]removeFromSuperview];
+    [[cell.contentView viewWithTag:TAG_CELL_VIEW] removeFromSuperview];
     [[cell contentView] addSubview:view];
     
     view.backgroundColor = [UIColor whiteColor];
@@ -713,11 +703,11 @@
     cell.textLabel.text = @"";
     
     CGFloat textHeight, textWidth = self.view.frame.size.width - 15;
-
+    
     NSString* iconPath = [ComponentUtil getLogoIcon:post.source];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconPath]];
     
-   
+    
     [imageView setTag:TAG_ICON_IN_CELL];
     imageView.userInteractionEnabled = NO;
     [view addSubview:imageView];
@@ -747,13 +737,13 @@
         UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag = TAG_VOTEUP_IN_CELL;
         [btn setImage:[UIImage imageNamed:@"thumbs_up2.png"] forState:UIControlStateNormal];
-
+        
         UITextView* voteTextView = [[UITextView alloc] initWithFrame:CGRectZero];
         [metadataTextView addSubview:voteTextView];
         [metadataTextView addSubview:btn];
-
+        
         [btn setFrame:CGRectMake(0.0f, 3.0f, voteIconWidth, voteIconHeight)];
-
+        
         [voteTextView setFrame:CGRectMake(voteIconWidth, 0, FONT_TINY, 18)];
         voteTextView.text = voteupStr;
         voteTextView.textAlignment = NSTextAlignmentLeft;
@@ -761,7 +751,7 @@
     }
     [self markCellAsRead:cell post:post];
     cell.accessoryType = UITableViewCellAccessoryNone;
-
+    
     // configure frame
     textHeight = [ComponentUtil measureHeightOfUITextView:textView];
     [cell setFrame:CGRectMake(0, 0, self.view.frame.size.width, textHeight + HEIGHT_IN_CELL_OFFSET+ HEIGHT_CELL_BANNER)];
@@ -769,9 +759,9 @@
     [textView setFrame:CGRectMake(10, 5, textWidth, textHeight)];
     CGFloat imageHeight = 25, imageWidth;
     imageWidth = imageHeight*imageView.image.size.width/imageView.image.size.height;
-    [imageView setFrame:CGRectMake(10, cell.frame.size.height - imageHeight - 10, 
+    [imageView setFrame:CGRectMake(10, cell.frame.size.height - imageHeight - 10,
                                    imageWidth, imageHeight)];
-
+    
     CGFloat metaWidth = voteIconWidth + FONT_TINY, metaHeight = 33;
     [metadataTextView setFrame:CGRectMake(cell.frame.size.width - metaWidth - 15,
                                           cell.frame.size.height - metaHeight,
@@ -782,4 +772,15 @@
     //NSLog(@"configQuestionCell, height:%f, textHeight:%f", cell.frame.size.height, textHeight);
 }
 
+- (Posts*) getPostByIndex:(int)index
+{
+    Posts *post;
+    if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
+        post = self.savedQuestions[index];
+    }
+    else {
+        post = self.currentQC.questions[index];
+    }
+    return post;
+}
 @end
