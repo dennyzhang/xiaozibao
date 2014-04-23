@@ -18,7 +18,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    
+    return; // TODO
     // show tutorial for only once in each version
     if (![ComponentUtil shouldShowTutorial]) {
        [self performSegueWithIdentifier:@"enterMain" sender:self];

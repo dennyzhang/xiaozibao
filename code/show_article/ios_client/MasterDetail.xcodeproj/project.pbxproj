@@ -44,6 +44,7 @@
 		0416B6A418F0AB0000397C7D /* header_22.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416B69D18F0AB0000397C7D /* header_22.png */; };
 		0416B6A618F0AE8500397C7D /* header_21.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416B6A518F0AE8500397C7D /* header_21.png */; };
 		0416B6A818F0B14F00397C7D /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 0416B6A718F0B14F00397C7D /* info.png */; };
+		04286A3C1907FA5C000AB6C1 /* init.sql in Resources */ = {isa = PBXBuildFile; fileRef = 04286A3B1907FA5C000AB6C1 /* init.sql */; };
 		0436CDE818E9EB5300130F79 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0436CDE718E9EB5300130F79 /* Twitter.framework */; };
 		0436CDEB18EB131600130F79 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0436CDE918EB127D00130F79 /* libPods.a */; };
 		043AF3241904D27D001E4F0D /* QuestionCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 043AF3231904D27D001E4F0D /* QuestionCategory.m */; };
@@ -162,6 +163,7 @@
 		0416B69D18F0AB0000397C7D /* header_22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_22.png; sourceTree = "<group>"; };
 		0416B6A518F0AE8500397C7D /* header_21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header_21.png; sourceTree = "<group>"; };
 		0416B6A718F0B14F00397C7D /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		04286A3B1907FA5C000AB6C1 /* init.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = init.sql; sourceTree = "<group>"; };
 		0436CDE718E9EB5300130F79 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		0436CDE918EB127D00130F79 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../../../../../../../Library/Developer/Xcode/DerivedData/MasterDetail-apjbzzvtgthvysgkfdmzvmqvednm/Build/Products/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		043AF3221904D27D001E4F0D /* QuestionCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionCategory.h; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				043AF3221904D27D001E4F0D /* QuestionCategory.h */,
 				043AF3231904D27D001E4F0D /* QuestionCategory.m */,
 				043AF3281905693D001E4F0D /* MyGlobal.h */,
+				04286A3B1907FA5C000AB6C1 /* init.sql */,
 				043AF32B1905B0DF001E4F0D /* Posts.h */,
 				043AF3291905693D001E4F0D /* MyGlobal.m */,
 				0463536919048019008266AF /* MyToolTip.h */,
@@ -595,6 +598,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04286A3C1907FA5C000AB6C1 /* init.sql in Resources */,
 				0455B41818F73F3700A178D9 /* feedback_highlighted.png in Resources */,
 				04409A5318DB69670021F9C3 /* comments-512.png in Resources */,
 				04409A6218DB6A8B0021F9C3 /* thumbs_down-512.png in Resources */,

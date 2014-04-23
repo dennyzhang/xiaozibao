@@ -19,9 +19,35 @@ NSLock *lock;
     sqlite3* postsDB = NULL;
     const char *dbpath = [[MyGlobal singleton].dbPath UTF8String];
 
-    NSLog(@"initDB");
-    const char *sql_stmt = "CREATE TABLE IF NOT EXISTS POSTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, POSTID TEXT UNIQUE, SUMMARY TEXT, CATEGORY TEXT, TITLE TEXT, CONTENT TEXT, METADATA TEXT, SOURCE TEXT, READCOUNT INT DEFAULT 0, ISFAVORITE INT DEFAULT 0, ISVOTEUP INT DEFAULT 0, ISVOTEDOWN INT DEFAULT 0)";
-    //const char *sql_stmt = "drop table posts";
+    NSString* querySQL = @"SELECT name FROM sqlite_master WHERE type='table' AND name='POSTS';";
+    const char *query_stmt = [querySQL UTF8String];
+    sqlite3_stmt *statement;
+    // check if table exists
+    if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
+    {
+        if (sqlite3_prepare_v2(postsDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_ROW)
+              {
+                NSLog(@"initDB, table already exists");
+                return YES;
+              }
+        }
+    }
+
+    // run sql file to create table and init data
+    NSError* error;
+    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"init" ofType:@"sql"];
+    NSLog(@"initDB, with sqlfile:%@", filepath);
+
+    NSString* content = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
+    if(error)
+    {
+      NSLog(@"Error to run sqlfile:%@, error:%@", filepath, error);
+      return NO;
+    }
+
+    const char *sql_stmt = [content UTF8String];
     if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
         if (sqlite3_exec(postsDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
@@ -146,6 +172,7 @@ NSLock *lock;
                            stringWithFormat:
                            @"INSERT INTO POSTS (POSTID, CATEGORY, SUMMARY, TITLE, SOURCE, CONTENT, METADATA) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",
                             postId, category, summary, title, source, content, metadata];
+    //NSLog(@"%@", insertSQL);
     const char *insert_stmt = [insertSQL UTF8String];
     
     [lock lock];
