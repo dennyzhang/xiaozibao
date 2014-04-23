@@ -46,6 +46,12 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+
+    // stub TextView to caculate dynamic cell height
+    CGFloat textWidth = self.view.frame.size.width - 15;
+    self.stubTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
+    [self.stubTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
+
     if (self.currentQC) {
         [self.currentQC loadPosts];
         
@@ -56,12 +62,7 @@
         [self.refreshControl addTarget:self action:@selector(refreshTableHead) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:self.refreshControl];
         
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-        // stub TextView to caculate dynamic cell height
-        CGFloat textWidth = self.view.frame.size.width - 15;
-        self.stubTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
-        [self.stubTextView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;       
     }
     else {
         if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
@@ -76,16 +77,6 @@
     NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
           self.currentQC.category, [self.currentQC.questions count]);
 }
-
-// - (void)viewWillAppear:(BOOL)animated {
-//     [super viewWillAppear:animated];
-//     NSLog(@"QCViewController will appear");
-// }
-
-// - (void)viewDidAppear:(BOOL)animated {
-//     [super viewDidAppear:animated];
-//     NSLog(@"QCViewController did appear");
-// }
 
 - (void)didReceiveMemoryWarning
 {
@@ -167,11 +158,10 @@
     
     // configure dynamic cell height
     Posts *post = [self getPostByIndex:indexPath.row];
-    
     self.stubTextView.text = post.title;
     
-    // NSLog(@"heightForRowAtIndexPath return height: %f", [ComponentUtil measureHeightOfUITextView:self.stubTextView]
-    //       + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER);
+    // NSLog(@"heightForRowAtIndexPath return height: %f. self.stubTextView:%@", [ComponentUtil measureHeightOfUITextView:self.stubTextView]
+    //       + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER, self.stubTextView);
     
     return [ComponentUtil measureHeightOfUITextView:self.stubTextView]
     + HEIGHT_IN_CELL_OFFSET + HEIGHT_CELL_BANNER;
@@ -695,11 +685,10 @@
     
     UIView* view = [[UIView alloc] init];
     view.tag = TAG_CELL_VIEW;
+    view.backgroundColor = [UIColor whiteColor];
+
     [[cell.contentView viewWithTag:TAG_CELL_VIEW] removeFromSuperview];
     [[cell contentView] addSubview:view];
-    
-    view.backgroundColor = [UIColor whiteColor];
-    
     cell.textLabel.text = @"";
     
     CGFloat textHeight, textWidth = self.view.frame.size.width - 15;
@@ -769,7 +758,7 @@
     // set alpha
     imageView.alpha = 0.5f;
     metadataTextView.alpha = 0.5f;
-    //NSLog(@"configQuestionCell, height:%f, textHeight:%f", cell.frame.size.height, textHeight);
+    // NSLog(@"configQuestionCell, height:%f, textHeight:%f", cell.frame.size.height, textHeight);
 }
 
 - (Posts*) getPostByIndex:(int)index
