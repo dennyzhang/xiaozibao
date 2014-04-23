@@ -30,10 +30,14 @@ NSLock *lock;
             if (sqlite3_step(statement) == SQLITE_ROW)
               {
                 NSLog(@"initDB, table already exists");
+                sqlite3_finalize(statement);
+                sqlite3_close(postsDB);
                 return YES;
               }
         }
     }
+    sqlite3_finalize(statement);
+    sqlite3_close(postsDB);
 
     // run sql file to create table and init data
     NSError* error;
