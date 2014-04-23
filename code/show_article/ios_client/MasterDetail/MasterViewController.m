@@ -348,7 +348,6 @@
 - (void) updateNavigationIndex:(int) index
 {
   //NSLog(@"updateNavigationIndex index:%d", index);
-    int count = [self.questionCategories count];
     self.mCurrentPage = index;
     
     if (self.questionCategories) {

@@ -21,7 +21,7 @@ NSLock *lock;
 
     NSString* querySQL = @"SELECT name FROM sqlite_master WHERE type='table' AND name='POSTS';";
     const char *query_stmt = [querySQL UTF8String];
-    sqlite3_stmt *statement;
+    sqlite3_stmt *statement = NULL;
     // check if table exists
     if (sqlite3_open(dbpath, &postsDB) == SQLITE_OK)
     {
