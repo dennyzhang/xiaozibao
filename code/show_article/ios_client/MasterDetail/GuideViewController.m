@@ -9,9 +9,9 @@
 #import "GuideViewController.h"
 
 @interface GuideViewController ()
-@property int mCurrentPage;
 @property int mPageSize;
 @property (strong, nonatomic) UIPageViewController *mPageViewController;
+@property (strong, nonatomic) UIButton *btnEnter;
 @end
 
 @implementation GuideViewController
@@ -22,24 +22,22 @@
     return; // TODO
     // show tutorial for only once in each version
     if (![ComponentUtil shouldShowTutorial]) {
-       [self performSegueWithIdentifier:@"enterMain" sender:self];
+        [self performSegueWithIdentifier:@"enterMain" sender:self];
     }
     else {
-      //NSLog(@"set currentTutorialVersion: %@", [ComponentUtil currentTutorialVersion]);
-      [[NSUserDefaults standardUserDefaults] 
-                setObject:[ComponentUtil currentTutorialVersion]
-                forKey:@"tutorialVersion"];
+        //NSLog(@"set currentTutorialVersion: %@", [ComponentUtil currentTutorialVersion]);
+        [[NSUserDefaults standardUserDefaults]
+         setObject:[ComponentUtil currentTutorialVersion]
+         forKey:@"tutorialVersion"];
     }
 }
 
 - (void)viewDidLoad
-{    
+{
     [super viewDidLoad];
     //NSLog(@"viewDidLoad");
     
-    //return;
     self.mPageSize = 3;
-    self.mCurrentPage = 0;
     
     // init pageViewController
     self.mPageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"guidePageViewController"];
@@ -66,47 +64,18 @@
     float screenHeight = [UIScreen mainScreen].bounds.size.height;
     if (screenHeight >= 568.0f) {
         // 4 inches
-        offsetY = 568 - 30;
+        offsetY = 568 - 35;
     }else{
         // 3.5 inches
-        offsetY = 480 - 30;
+        offsetY = 480 - 35;
     }
     
-    UIButton *btnEnter = [[UIButton alloc] initWithFrame:CGRectMake(offsetX, offsetY, 40, 30)];
-    [btnEnter setImage:[UIImage imageNamed:@"enter.png" ] forState:UIControlStateNormal];
-    [btnEnter setImage:[UIImage imageNamed:@"enter_highlighted.png"] forState:UIControlStateHighlighted];
-    [btnEnter addTarget:self action:@selector(actionEnter:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btnEnter];
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
-{
-    if (self.mCurrentPage <= 0) {
-        return nil;
-    }else{
-        self.mCurrentPage = viewController.view.tag -1;
-        return [self viewControllerAtIndex:self.mCurrentPage];
-    }
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
-{
-    if (self.mCurrentPage >= self.mPageSize - 1) {
-        return nil;
-    }else{
-        self.mCurrentPage = viewController.view.tag + 1;
-        return [self viewControllerAtIndex:self.mCurrentPage];
-    }
-}
-
-- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
-{
-    return self.mPageSize;
-}
-
-- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
-{
-    return 0;
+    self.btnEnter = [[UIButton alloc] initWithFrame:CGRectMake(offsetX, offsetY, 40, 30)];
+    [self.btnEnter setImage:[UIImage imageNamed:@"enter.png" ] forState:UIControlStateNormal];
+    [self.btnEnter setImage:[UIImage imageNamed:@"enter_highlighted.png"] forState:UIControlStateHighlighted];
+    [self.btnEnter addTarget:self action:@selector(actionEnter:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.btnEnter];
+    self.btnEnter.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -115,12 +84,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Utilities
-
-
+#pragma mark - PageViewController
 -(UIViewController *)viewControllerAtIndex:(NSUInteger )index
 {
-  //NSLog(@"%d", index);
+    // NSLog(@"viewControllerAtIndex: %d", index);
     if (self.mPageSize == 0) {
         return nil;
     }else{
@@ -148,9 +115,54 @@
     }
 }
 
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    self.btnEnter.hidden = YES;
+    int oldViewId;
+    UIViewController* uiViewController = (UIViewController*)viewController;
+    oldViewId = uiViewController.view.tag;
+    if (oldViewId<=0)
+        return nil;
+    return [self viewControllerAtIndex:oldViewId-1];
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    
+    int oldViewId;
+    UIViewController* uiViewController = (UIViewController*)viewController;
+    oldViewId = uiViewController.view.tag;
+    //NSLog(@"viewControllerAfterViewController: oldViewId: %d", oldViewId);
+    
+    if (oldViewId == self.mPageSize -1)
+    {
+        self.btnEnter.hidden = NO;
+    }
+    else
+    {
+        self.btnEnter.hidden = YES;
+    }
+
+    if (oldViewId >= self.mPageSize -1)
+        return nil;
+
+    return [self viewControllerAtIndex:oldViewId+1];
+}
+
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+{
+    return self.mPageSize;
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+{
+    return 0;
+}
+
+#pragma mark - event handler
 -(void)actionEnter:(id)sender
 {
-  //  NSLog(@"actionEnter");
+    //  NSLog(@"actionEnter");
     [self performSegueWithIdentifier:@"enterMain" sender:self];
 }
 

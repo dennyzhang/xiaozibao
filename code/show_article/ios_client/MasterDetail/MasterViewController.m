@@ -122,6 +122,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - PageViewController
+
 #pragma mark - private functions
 - (void) showMenuViewController:(id)sender
 {
@@ -244,8 +246,7 @@
     return (rvc.frontViewPosition == FrontViewPositionRight);
 }
 
-#pragma mark - pageViewController delegates
-
+#pragma mark - PageViewController
 -(UIViewController *)viewControllerAtIndex:(NSUInteger )index
 {
     //NSLog(@"viewControllerAtIndex index:%d", index);
