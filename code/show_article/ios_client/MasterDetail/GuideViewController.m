@@ -19,14 +19,16 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    return; // TODO
+    //return; // TODO
     // show tutorial for only once in each version
     if (![ComponentUtil shouldShowTutorial]) {
        [self performSegueWithIdentifier:@"enterMain" sender:self];
     }
     else {
-      [[NSUserDefaults standardUserDefaults] setObject:@"tutorialVersion"
-                                                forKey:[ComponentUtil currentTutorialVersion]];
+      //NSLog(@"set currentTutorialVersion: %@", [ComponentUtil currentTutorialVersion]);
+      [[NSUserDefaults standardUserDefaults] 
+                setObject:[ComponentUtil currentTutorialVersion]
+                forKey:@"tutorialVersion"];
     }
 }
 
@@ -75,9 +77,7 @@
     [btnEnter setImage:[UIImage imageNamed:@"enter_highlighted.png"] forState:UIControlStateHighlighted];
     [btnEnter addTarget:self action:@selector(actionEnter:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btnEnter];
-
 }
-
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {

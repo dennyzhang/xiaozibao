@@ -336,7 +336,8 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString* tutorialVersion = [userDefaults objectForKey:@"tutorialVersion"];
-    return [tutorialVersion isEqualToString:[ComponentUtil currentTutorialVersion]];
+    //NSLog(@"shouldShowTutorial. current tutorialVersion:%@", tutorialVersion);
+    return ![tutorialVersion isEqualToString:[ComponentUtil currentTutorialVersion]];
 }
 
 + (int) modAdd:(int)startVal offset:(int)offset modCount:(int)modCount
