@@ -48,7 +48,7 @@
 
 -(void)toolTipAction:(id)sender msg:(NSString*)msg
 {
-    NSLog(@"sender:%@", sender);
+  //NSLog(@"sender:%@", sender);
     if (sender == self.currentPopTipViewTarget) {
         // Dismiss the popTipView and that is all
         self.currentPopTipViewTarget = nil;

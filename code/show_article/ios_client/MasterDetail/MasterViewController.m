@@ -332,7 +332,7 @@
 
 - (void) updateNavigationTitle:(NSString*) navigationTitle
 {
-    NSLog(@"updateNavigationTitle navigationTitle:%@", navigationTitle);
+  //NSLog(@"updateNavigationTitle navigationTitle:%@", navigationTitle);
     if([navigationTitle isEqualToString:APP_SETTING] ||
        [navigationTitle isEqualToString:SAVED_QUESTIONS]) {
         self.currentNavigationTitle = navigationTitle;
@@ -347,14 +347,8 @@
 
 - (void) updateNavigationIndex:(int) index
 {
-    NSLog(@"updateNavigationIndex index:%d", index);
-    // // TODO index = (index+count) mod index
+  //NSLog(@"updateNavigationIndex index:%d", index);
     int count = [self.questionCategories count];
-    if(index<0)
-        index = index + count;
-    if(index>=count)
-        index = index -count;
-    
     self.mCurrentPage = index;
     
     if (self.questionCategories) {
