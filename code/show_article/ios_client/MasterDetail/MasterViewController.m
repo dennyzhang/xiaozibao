@@ -113,7 +113,6 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //[self.navbarView setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,8 +120,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - PageViewController
 
 #pragma mark - private functions
 - (void) showMenuViewController:(id)sender

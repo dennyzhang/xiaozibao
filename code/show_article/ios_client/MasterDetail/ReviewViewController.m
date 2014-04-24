@@ -141,14 +141,14 @@
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-        
-    UIImage *small=[ComponentUtil resizeImage:image scale:1.0f];
 
+    //    UIImage *small=[ComponentUtil resizeImage:image scale:1.0f];
+    UIImage *small = image;
     //TODO crop UIImage as a workaround
-    float offset = 45.0f;
+    //float offset = 45.0f;
+    float offset = 0.0f;
     CGRect rect = CGRectMake(0, offset,
-                             self.view.bounds.size.width, 
-                             self.view.bounds.size.height - offset);
+                             self.view.bounds.size.width, self.view.bounds.size.height - offset);
     CGImageRef imageRef = CGImageCreateWithImageInRect([small CGImage], rect);
     UIImage *newImg = [UIImage imageWithCGImage:imageRef];
     
@@ -165,7 +165,7 @@
     // set activity indicator to workaround for the first slow start of UIActivityViewController
     UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    activityView.center = self.view.center;
     [self.view addSubview: activityView];
     
     [activityView startAnimating];
