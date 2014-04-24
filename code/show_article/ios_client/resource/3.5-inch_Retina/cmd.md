@@ -1,0 +1,10 @@
+convert -resize 640x960 -extent 640x960 1.png pic1.png
+convert -resize 640x960 -extent 640x960 2.png pic2.png
+convert -resize 640x960 -extent 640x960 3.png pic3.png
+convert -resize 640x960 -extent 640x960 4.png pic4.png
+convert -resize 640x960 -extent 640x960 5.png pic5.png
+convert -resize 640x960 -extent 640x960 1.png pic1.png
+convert -resize 640x960 -extent 640x960 2.png pic2.png
+convert -resize 640x960 -extent 640x960 3.png pic3.png
+convert -resize 640x960 -extent 640x960 4.png pic4.png
+convert -resize 640x960 -extent 640x960 5.png pic5.png
