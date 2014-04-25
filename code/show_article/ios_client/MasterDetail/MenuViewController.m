@@ -184,6 +184,7 @@
     UILabel *customLabel = [[UILabel alloc] init];
     customLabel.text = [self tableView:tableView titleForHeaderInSection:section];
     customLabel.textColor = [UIColor whiteColor];
+    customLabel.backgroundColor = [UIColor clearColor];
     return customLabel;
 }
 

@@ -51,7 +51,6 @@
     }
     else {
         self.questionCategories = [[QuestionCategory singleton] getAllCategories];
-        
         self.mPageSize = [self.questionCategories count];
     }
     NSLog(@"self.mCurrentPage:%d", self.mCurrentPage);
@@ -215,6 +214,7 @@
     self.titleLabel.frame = (CGRect){0, 0, 100, 40};
     
     self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.font = [UIFont systemFontOfSize:FONT_NAVIGATIONBAR];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     
