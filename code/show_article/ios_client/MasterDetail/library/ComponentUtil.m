@@ -166,7 +166,7 @@
 {
     NSMutableArray* categoryList = [ComponentUtil getCategoryList];
     int index = -1;
-    int i, count = [categoryList count];
+    int i, count = (int)[categoryList count];
     for (i =0; i<count; i++) {
         if([category isEqualToString:[categoryList objectAtIndex:i]]){
             index = i;
@@ -209,6 +209,10 @@
 
 + (CGFloat)measureHeightOfUITextView:(UITextView *)textView
 {
+#if defined(__IPHONE_6_0) || defined(__MAC_10_8)
+  // TODO
+  return textView.frame.size.height;
+#else
     if (![textView.text isEqualToString:@""] && [textView respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
     {
         // This is the code for iOS 7. contentSize no longer returns the correct value, so
@@ -253,6 +257,7 @@
     {
         return textView.contentSize.height;
     }
+#endif
 }
 
 + (NSString*)getUserId

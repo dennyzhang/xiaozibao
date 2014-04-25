@@ -133,59 +133,60 @@
 #pragma mark - user defined event selectors
 -(IBAction) barButtonEvent:(id)sender
 {
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
-        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
-    else
-        UIGraphicsBeginImageContext(self.view.bounds.size);
-
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    //    UIImage *small=[ComponentUtil resizeImage:image scale:1.0f];
-    UIImage *small = image;
-    //TODO crop UIImage as a workaround
-    //float offset = 45.0f;
-    float offset = 0.0f;
-    CGRect rect = CGRectMake(0, offset,
-                             self.view.bounds.size.width, self.view.bounds.size.height - offset);
-    CGImageRef imageRef = CGImageCreateWithImageInRect([small CGImage], rect);
-    UIImage *newImg = [UIImage imageWithCGImage:imageRef];
-    
-    NSData * data = UIImagePNGRepresentation(newImg);
-
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,
-                                                         YES);
-    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"foo.png"];
-    NSLog(@"uniquePath:%@", uniquePath);
-    if ([data writeToFile:uniquePath atomically:YES]) {
-        NSLog(@"write %@ successfully", uniquePath);
-    }
-
-    // set activity indicator to workaround for the first slow start of UIActivityViewController
-    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]
-                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityView.center = self.view.center;
-    [self.view addSubview: activityView];
-    
-    [activityView startAnimating];
-    
-    // create new dispatch queue in background
-    dispatch_queue_t queue = dispatch_queue_create("openActivityIndicatorQueue", NULL);
-    
-    // send initialization of UIActivityViewController in background
-    dispatch_async(queue, ^{
-        NSArray *dataToShare =  @[[NSURL fileURLWithPath:uniquePath]];
-
-        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare
-                                                                                             applicationActivities:nil];
-        // when UIActivityViewController is finally initialized,
-        // hide indicator and present it on main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [activityView stopAnimating];
-            [self presentViewController:activityViewController animated:YES completion:nil];
-        });
-    });
+    // TODO
+//    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+//        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+//    else
+//        UIGraphicsBeginImageContext(self.view.bounds.size);
+//
+//    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//
+//    //    UIImage *small=[ComponentUtil resizeImage:image scale:1.0f];
+//    UIImage *small = image;
+//    //TODO crop UIImage as a workaround
+//    //float offset = 45.0f;
+//    float offset = 0.0f;
+//    CGRect rect = CGRectMake(0, offset,
+//                             self.view.bounds.size.width, self.view.bounds.size.height - offset);
+//    CGImageRef imageRef = CGImageCreateWithImageInRect([small CGImage], rect);
+//    UIImage *newImg = [UIImage imageWithCGImage:imageRef];
+//    
+//    NSData * data = UIImagePNGRepresentation(newImg);
+//
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,
+//                                                         YES);
+//    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"foo.png"];
+//    NSLog(@"uniquePath:%@", uniquePath);
+//    if ([data writeToFile:uniquePath atomically:YES]) {
+//        NSLog(@"write %@ successfully", uniquePath);
+//    }
+//
+//    // set activity indicator to workaround for the first slow start of UIActivityViewController
+//    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]
+//                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    activityView.center = self.view.center;
+//    [self.view addSubview: activityView];
+//    
+//    [activityView startAnimating];
+//    
+//    // create new dispatch queue in background
+//    dispatch_queue_t queue = dispatch_queue_create("openActivityIndicatorQueue", NULL);
+//    
+//    // send initialization of UIActivityViewController in background
+//    dispatch_async(queue, ^{
+//        NSArray *dataToShare =  @[[NSURL fileURLWithPath:uniquePath]];
+//
+//        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare
+//                                                                                             applicationActivities:nil];
+//        // when UIActivityViewController is finally initialized,
+//        // hide indicator and present it on main thread
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [activityView stopAnimating];
+//            [self presentViewController:activityViewController animated:YES completion:nil];
+//        });
+//    });
 }
 
 #pragma mark - private function
@@ -195,7 +196,7 @@
      // add summaryTextView
     summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
-    self.summaryTextView.selectable = NO;
+    self.summaryTextView.editable = NO;
     self.summaryTextView.scrollEnabled = NO;
     
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
@@ -376,7 +377,7 @@
     NSString *text2;
 
     // clock
-    int seconds = [UserProfile integerForKey:self.category key:POST_STAY_SECONDS_KEY];
+    int seconds = (int)[UserProfile integerForKey:self.category key:POST_STAY_SECONDS_KEY];
     if (seconds < 100) {
         text1 = [NSString stringWithFormat: @"%d", seconds];
         text2 = @" sec spent";
@@ -395,15 +396,15 @@
 
     // questions
     text1 = [NSString stringWithFormat: @"%d",
-                      [UserProfile integerForKey:self.category key:POST_VISIT_KEY]];
+                      (int)[UserProfile integerForKey:self.category key:POST_VISIT_KEY]];
     text2 = @" questions learned";
     questionsTextView.attributedText = [self buildAttributedText:text1 text2:text2];
 
     // feedback
     text1 = [NSString stringWithFormat: @"%d",
-                      [UserProfile integerForKey:self.category key:POST_VOTEUP_KEY]
+                      (int)([UserProfile integerForKey:self.category key:POST_VOTEUP_KEY]
                      +[UserProfile integerForKey:self.category key:POST_VOTEDOWN_KEY]
-                     +[UserProfile integerForKey:self.category key:POST_FAVORITE_KEY]
+                     +[UserProfile integerForKey:self.category key:POST_FAVORITE_KEY])
              ];
     text2 = @" feedback contributed";
     feedbackTextView.attributedText = [self buildAttributedText:text1 text2:text2];
