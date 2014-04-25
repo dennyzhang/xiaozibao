@@ -209,10 +209,9 @@
 
 + (CGFloat)measureHeightOfUITextView:(UITextView *)textView
 {
-#if defined(__IPHONE_6_0) || defined(__MAC_10_8)
+#if defined(__IPHONE_7_0)
   // TODO
-  return textView.frame.size.height;
-#else
+  NSLog(@"measureHeightOfUITextView other");
     if (![textView.text isEqualToString:@""] && [textView respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
     {
         // This is the code for iOS 7. contentSize no longer returns the correct value, so
@@ -257,6 +256,9 @@
     {
         return textView.contentSize.height;
     }
+#else
+  NSLog(@"measureHeightOfUITextView 6.0");
+  return textView.frame.size.height;
 #endif
 }
 

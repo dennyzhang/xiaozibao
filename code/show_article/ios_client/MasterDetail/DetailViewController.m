@@ -344,12 +344,11 @@
                                                buttonsView.frame.size.height,
                                                frame_width,
                                                100)];
-
-#if defined(__IPHONE_6_0) || defined(__MAC_10_8)
-    self.detailUITextView.contentInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
-#else
+#if defined(__IPHONE_7_0)
     self.detailUITextView.textContainerInset = 
       UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
+#else
+    self.detailUITextView.contentInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
 #endif
     
     [scrollView addSubview:self.detailUITextView];
