@@ -75,7 +75,7 @@
         }
     }
     NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
-          self.currentQC.category, [self.currentQC.questions count]);
+          self.currentQC.category, (int)[self.currentQC.questions count]);
 }
 
 - (void)didReceiveMemoryWarning
@@ -145,7 +145,7 @@
         [self appSettingRows:cell indexPath:indexPath];
     }
     else {
-        [self configQuestionCell:cell index:indexPath.row];
+        [self configQuestionCell:cell index:(int)indexPath.row];
     }
     return cell;
 }
@@ -157,7 +157,7 @@
     }
     
     // configure dynamic cell height
-    Posts *post = [self getPostByIndex:indexPath.row];
+    Posts *post = [self getPostByIndex:(int)indexPath.row];
     self.stubTextView.text = post.title;
     
     // NSLog(@"heightForRowAtIndexPath return height: %f. self.stubTextView:%@", [ComponentUtil measureHeightOfUITextView:self.stubTextView]
@@ -258,9 +258,9 @@
     
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSLog(@"increate visit count, for category:%@. previous key:%d", self.currentQC.category,
-              [UserProfile integerForKey:self.currentQC.category key:POST_VISIT_KEY]);
+              (int)[UserProfile integerForKey:self.currentQC.category key:POST_VISIT_KEY]);
         
-        Posts *post = [self getPostByIndex:indexPath.row];
+        Posts *post = [self getPostByIndex:(int)indexPath.row];
         post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
         
         DetailViewController* dvc = [segue destinationViewController];
@@ -505,7 +505,7 @@
         NSArray *idList = [JSON valueForKeyPath:@"postid"];
         NSArray *metadataList = [JSON valueForKeyPath:@"metadata"];
         Posts *post = nil;
-        int i, count = [idList count];
+        int i, count = (int)[idList count];
         
         NSLog(@"merge result. count:%d", count);
         
@@ -526,7 +526,7 @@
                     else {
                         int index = 0;
                         if (shouldAppendHead != YES){
-                            index = [self.currentQC.questions count];
+                            index = (int)[self.currentQC.questions count];
                         }
                         [self addToTableView:index post:post];
                     }
@@ -547,7 +547,7 @@
                     else {
                         int index = 0;
                         if (shouldAppendHead != YES){
-                            index = [self.currentQC.questions count];
+                            index = (int)[self.currentQC.questions count];
                         }
                         [self addToTableView:index post:post];
                     }
@@ -615,7 +615,7 @@
         
         int index = 0;
         if (shouldAppendHead != YES){
-            index = [listObject count];
+            index = (int)[listObject count];
         }
         [self addToTableView:index post:post];
         

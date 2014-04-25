@@ -198,7 +198,7 @@
     }
     
     comment = [NSString stringWithFormat:@"%@%@score=%d", comment, FIELD_SEPARATOR,
-               [UserProfile scoreByCategory:self.detailItem.category]];
+               (int)[UserProfile scoreByCategory:self.detailItem.category]];
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             userid, @"uid", postid, @"postid",
@@ -497,7 +497,7 @@
     NSRange range = [content rangeOfString:@"\n-"];
     if (range.location == NSNotFound) {
         [ComponentUtil infoMessage:@"Error to find question/answer seperator"
-                               msg:[NSString stringWithFormat:@"range.location:%d", range.location]
+                               msg:[NSString stringWithFormat:@"range.location:%d", (int)range.location]
                      enforceMsgBox:FALSE];
         ret = content;
     }
@@ -513,7 +513,7 @@
     NSRange range = [content rangeOfString:@"\n-"];
     if (range.location == NSNotFound) {
         [ComponentUtil infoMessage:@"Error to find question/answer seperator"
-                               msg:[NSString stringWithFormat:@"range.location:%d", range.location]
+                               msg:[NSString stringWithFormat:@"range.location:%d", (int)range.location]
                      enforceMsgBox:FALSE];
     }
     else {

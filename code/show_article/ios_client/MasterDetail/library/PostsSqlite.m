@@ -272,7 +272,7 @@ NSLock *lock;
     NSLog(@"sql: %@", querySQL);
     NSMutableArray* posts = [PostsSqlite getPostsBySql:querySQL];
 
-    for(int i=[posts count] - 1; i>=0; i--) {
+    for(int i=(int)[posts count] - 1; i>=0; i--) {
       [objects insertObject:posts[i] atIndex:0];                
     }
     return YES;
@@ -293,7 +293,7 @@ NSLock *lock;
     NSLog(@"sql: %@", querySQL);
     NSMutableArray* posts = [PostsSqlite getPostsBySql:querySQL];
 
-    for(int i=[posts count] - 1; i>=0; i--) {
+    for(int i=(int)[posts count] - 1; i>=0; i--) {
       [objects insertObject:posts[i] atIndex:0];                
     }
 }
@@ -309,7 +309,7 @@ NSLock *lock;
     NSLog(@"sql: %@", querySQL);
 
     NSMutableArray* posts = [PostsSqlite getPostsBySql:querySQL];
-    for(int i=[posts count] - 1; i>=0; i--) {
+    for(int i=(int)[posts count] - 1; i>=0; i--) {
       [objects insertObject:posts[i] atIndex:0];
                 
       NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];

@@ -106,7 +106,8 @@
             
             UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.frame];
             [contentVC.view addSubview:imgView];
-            NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, index+1];
+            NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, 
+                                 (int)(index+1)];
             //NSLog(@"imgName:%@", imgName);
             imgView.image = [UIImage imageNamed:imgName];
             contentVC.view.tag = index;
@@ -120,7 +121,7 @@
     self.btnEnter.hidden = YES;
     int oldViewId;
     UIViewController* uiViewController = (UIViewController*)viewController;
-    oldViewId = uiViewController.view.tag;
+    oldViewId = (int)uiViewController.view.tag;
     if (oldViewId<=0)
         return nil;
     return [self viewControllerAtIndex:oldViewId-1];
@@ -131,7 +132,7 @@
     
     int oldViewId;
     UIViewController* uiViewController = (UIViewController*)viewController;
-    oldViewId = uiViewController.view.tag;
+    oldViewId = (int)uiViewController.view.tag;
     //NSLog(@"viewControllerAfterViewController: oldViewId: %d", oldViewId);
     
     if (oldViewId == self.mPageSize -1)

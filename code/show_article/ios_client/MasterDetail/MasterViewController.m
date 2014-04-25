@@ -51,7 +51,7 @@
     }
     else {
         self.questionCategories = [[QuestionCategory singleton] getAllCategories];
-        self.mPageSize = [self.questionCategories count];
+        self.mPageSize = (int)[self.questionCategories count];
     }
     NSLog(@"self.mCurrentPage:%d", self.mCurrentPage);
     if(!self.mCurrentPage) { // TODO can't tell whether mCurrentPage is undefined or 0
@@ -259,7 +259,7 @@
             QuestionCategory* qc = [self.questionCategories objectAtIndex:index];
             [contentVC init_data:qc navigationTitle:qc.category];
         }
-        contentVC.viewId = index;
+        contentVC.viewId = (int)index;
         return contentVC;
     }
 }

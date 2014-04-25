@@ -58,7 +58,7 @@
     NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
     NSArray *stringArray = [categoryList componentsSeparatedByString: @","];
     
-    count = [stringArray count];
+    count = (int)[stringArray count];
     //NSLog(@"update_category_list count:%d", count);
     
     for (i = 0; i < count; i ++) {
@@ -79,7 +79,7 @@
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
   NSString* categoryList = [userDefaults stringForKey:@"CategoryList"];
   NSString* oldCategoryList = @"";
-  int i, count = [self.allCategories count];
+  int i, count = (int)[self.allCategories count];
   for(i=0; i<count; i++) {
     QuestionCategory *qc = [self.allCategories objectAtIndex:i];
     oldCategoryList = [NSString stringWithFormat:@"%@%@,", oldCategoryList, qc.category];
@@ -91,7 +91,7 @@
 +(void)clearIsLoaded
 {
   NSMutableArray *questionCategories = [[QuestionCategory singleton] getAllCategories];
-  int i, count = [questionCategories count];
+  int i, count = (int)[questionCategories count];
   for(i=0; i<count; i++) {
     QuestionCategory* qc = [questionCategories objectAtIndex:i];
     qc.isloaded = NO;
