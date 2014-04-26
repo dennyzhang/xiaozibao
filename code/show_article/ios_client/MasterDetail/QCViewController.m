@@ -62,7 +62,8 @@
         [self.refreshControl addTarget:self action:@selector(refreshTableHead) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:self.refreshControl];
         
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;       
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.tableView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     }
     else {
         if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
