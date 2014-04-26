@@ -59,15 +59,15 @@
     pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:53.0/255 green:171.0/255 blue:1.0 alpha:1.0];
     pageControl.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
     
-    int offsetX, offsetY;
-    offsetX = 320 - 55;
-    float screenHeight = [UIScreen mainScreen].bounds.size.height;
+    float offsetX, offsetY;
+    offsetX = self.view.frame.size.width - 55;
+    float screenHeight = self.view.frame.size.height;
     if (screenHeight >= 568.0f) {
         // 4 inches
-        offsetY = 568 - 35;
+        offsetY = screenHeight - 35;
     }else{
         // 3.5 inches
-        offsetY = 480 - 35;
+        offsetY = screenHeight - 35;
     }
     
     self.btnEnter = [[UIButton alloc] initWithFrame:CGRectMake(offsetX, offsetY, 40, 30)];
@@ -104,8 +104,12 @@
                 guideImg = @"960_guide";
             }
             
-            UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.frame];
+            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectZero];
             [contentVC.view addSubview:imgView];
+            // iOS 6.1 self.view.frame.origin.y is 20, instead of 0
+            imgView.frame = (CGRect){0.f,0.f,self.view.frame.size.width,
+                                     self.view.frame.size.height - self.view.frame.origin.y};
+
             NSString *imgName = [NSString stringWithFormat:@"%@%d.png", guideImg, 
                                  (int)(index+1)];
             //NSLog(@"imgName:%@", imgName);
