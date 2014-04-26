@@ -24,6 +24,11 @@
 {
     [super viewDidLoad];
     NSLog(@"DetailViewController load");
+    if (floor(NSFoundationVersionNumber) == NSFoundationVersionNumber_iOS_6_1) {
+      [self.navigationController.navigationBar setTintColor:
+                                      [UIColor colorWithRed:40.0/255.0 green:108.0/255.0 blue:179.0/255.0 alpha:1.0f]];
+    }
+
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
     
     self.view.backgroundColor = [UIColor whiteColor];
