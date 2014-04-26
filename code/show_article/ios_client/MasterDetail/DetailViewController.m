@@ -375,10 +375,17 @@
     // configure data
     self.questionTextView.text = [self getQuestion:self.detailItem.content];
     // align for center
+if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+  {
+
     self.questionTextView.frame = CGRectMake(self.questionTextView.frame.origin.x,
                                              [ComponentUtil yoffsetVerticalAlign:self.questionTextView],
                                              self.questionTextView.frame.size.width,
                                              self.questionTextView.frame.size.height);
+  }
+ else {
+   [ComponentUtil configureVerticalAlign:self.questionTextView];
+ }
     
     self.detailUITextView.text = [self getContent:self.detailItem.content];
     // refresh layout
