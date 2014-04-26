@@ -49,4 +49,5 @@
 + (BOOL)shouldShowTutorial;
 + (int) getIndexByCategory:(NSString*) category;
 + (int) modAdd:(int)startVal offset:(int)offset modCount:(int)modCount;
++ (void) printFrame:(CGRect) frame leadingMsg:(NSString*)leadingMsg;
 @end

@@ -358,4 +358,10 @@
     //NSLog(@"modAdd startVal:%d, offset:%d, modCount:%d, ret:%d", startVal, offset, modCount, ret);
     return ret;
 }
+
++ (void) printFrame:(CGRect) frame leadingMsg:(NSString*)leadingMsg
+{
+  NSLog(@"%@frame x:%f, y:%f, width:%f, height:%f",
+        leadingMsg, frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+}
 @end
