@@ -209,57 +209,57 @@
 
 + (CGFloat)measureHeightOfUITextView:(UITextView *)textView
 {
-#if defined(__IPHONE_7_0)
-  // TODO
-  NSLog(@"measureHeightOfUITextView other");
-    if (![textView.text isEqualToString:@""] && [textView respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
     {
-        // This is the code for iOS 7. contentSize no longer returns the correct value, so
-        // we have to calculate it.
-        //
-        // This is partly borrowed from HPGrowingTextView, but I've replaced the
-        // magic fudge factors with the calculated values (having worked out where
-        // they came from)
-        
-        CGRect frame = textView.bounds;
-        // Take account of the padding added around the text.
-        
-        UIEdgeInsets textContainerInsets = textView.textContainerInset;
-        UIEdgeInsets contentInsets = textView.contentInset;
-        
-        CGFloat leftRightPadding = textContainerInsets.left + textContainerInsets.right + textView.textContainer.lineFragmentPadding * 2 + contentInsets.left + contentInsets.right;
-        CGFloat topBottomPadding = textContainerInsets.top + textContainerInsets.bottom + contentInsets.top + contentInsets.bottom;
-        
-        frame.size.width -= leftRightPadding;
-        frame.size.height -= topBottomPadding;
-        NSString *textToMeasure = textView.text;
-        if ([textToMeasure hasSuffix:@"\n"])
+        if (![textView.text isEqualToString:@""] && [textView respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
         {
-            textToMeasure = [NSString stringWithFormat:@"%@-", textView.text];
+            // This is the code for iOS 7. contentSize no longer returns the correct value, so
+            // we have to calculate it.
+            //
+            // This is partly borrowed from HPGrowingTextView, but I've replaced the
+            // magic fudge factors with the calculated values (having worked out where
+            // they came from)
+            
+            CGRect frame = textView.bounds;
+            // Take account of the padding added around the text.
+            
+            UIEdgeInsets textContainerInsets = textView.textContainerInset;
+            UIEdgeInsets contentInsets = textView.contentInset;
+            
+            CGFloat leftRightPadding = textContainerInsets.left + textContainerInsets.right + textView.textContainer.lineFragmentPadding * 2 + contentInsets.left + contentInsets.right;
+            CGFloat topBottomPadding = textContainerInsets.top + textContainerInsets.bottom + contentInsets.top + contentInsets.bottom;
+            
+            frame.size.width -= leftRightPadding;
+            frame.size.height -= topBottomPadding;
+            NSString *textToMeasure = textView.text;
+            if ([textToMeasure hasSuffix:@"\n"])
+            {
+                textToMeasure = [NSString stringWithFormat:@"%@-", textView.text];
+            }
+            
+            // NSString class method: boundingRectWithSize:options:attributes:context is
+            // available only on ios7.0 sdk.
+            
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+            NSDictionary *attributes = @{ NSFontAttributeName: textView.font, NSParagraphStyleAttributeName: paragraphStyle };
+            CGRect size = [textToMeasure boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), MAXFLOAT)
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                   attributes:attributes
+                                                      context:nil];
+            
+            CGFloat measuredHeight = ceilf(CGRectGetHeight(size) + topBottomPadding);
+            return measuredHeight;
         }
-        
-        // NSString class method: boundingRectWithSize:options:attributes:context is
-        // available only on ios7.0 sdk.
-        
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
-        NSDictionary *attributes = @{ NSFontAttributeName: textView.font, NSParagraphStyleAttributeName: paragraphStyle };
-        CGRect size = [textToMeasure boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), MAXFLOAT)
-                                                  options:NSStringDrawingUsesLineFragmentOrigin
-                                               attributes:attributes
-                                                  context:nil];
-        
-        CGFloat measuredHeight = ceilf(CGRectGetHeight(size) + topBottomPadding);
-        return measuredHeight;
+        else
+        {
+            return textView.contentSize.height;
+        }
     }
-    else
-    {
+    else {
+        [textView sizeToFit];
         return textView.contentSize.height;
     }
-#else
-  NSLog(@"measureHeightOfUITextView 6.0");
-  return textView.frame.size.height;
-#endif
 }
 
 + (NSString*)getUserId
@@ -349,13 +349,13 @@
 
 + (int) modAdd:(int)startVal offset:(int)offset modCount:(int)modCount
 {
-  int ret = startVal + offset;
-  while(ret <modCount) {
-    ret = ret + modCount;
-  }
-  int num = (int)floorf(ret*1.0f/modCount);
-  ret = ret - modCount * num;
-  //NSLog(@"modAdd startVal:%d, offset:%d, modCount:%d, ret:%d", startVal, offset, modCount, ret);
-  return ret;
+    int ret = startVal + offset;
+    while(ret <modCount) {
+        ret = ret + modCount;
+    }
+    int num = (int)floorf(ret*1.0f/modCount);
+    ret = ret - modCount * num;
+    //NSLog(@"modAdd startVal:%d, offset:%d, modCount:%d, ret:%d", startVal, offset, modCount, ret);
+    return ret;
 }
 @end

@@ -25,7 +25,7 @@
     [super viewDidLoad];
     NSLog(@"DetailViewController load");
     [[MyToolTip singleton] reset:self.view]; // reset popTipView
-
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     //NSLog(@"self.detailItem.readcount: %d", [self.detailItem.readcount intValue]);
@@ -47,22 +47,22 @@
     [self addMenuCompoents];
     [self addPostComponents];
     [self configureLayout];
-
+    
     // configure tooltip
-    // ToolTip    
+    // ToolTip
     UIButton *tooltipSwipeBtn = [[UIButton alloc]
-                                  initWithFrame:CGRectMake(90.0f, self.detailUITextView.frame.origin.y + 5, 0, 0)];
+                                 initWithFrame:CGRectMake(90.0f, self.detailUITextView.frame.origin.y + 5, 0, 0)];
     [self.view addSubview:tooltipSwipeBtn];
-
+    
     [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Swipe right to go back."];
     [[MyToolTip singleton] addToolTip:self.navigationItem.leftBarButtonItem msg:@"Click to see more."];
-
+    
     [[MyToolTip singleton] addToolTip:(UIButton *)[self.view viewWithTag:TAG_BUTTON_VOTEDOWN]
                                   msg:@"Click to voteup, votedown, or save to local."];
-
+    
     [[MyToolTip singleton] addToolTip:(UIButton *)[self.view viewWithTag:TAG_BUTTON_INFO]
                                   msg:@"Click to see the original web page link."];
-
+    
     [[MyToolTip singleton] showToolTip];
 }
 
@@ -283,7 +283,7 @@
     [btn setFrame:CGRectMake(imageView.frame.size.width - icon_width - 10,
                              imageView.frame.size.height - icon_height - 10,
                              icon_width, icon_height)];
-
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
                                          initWithTarget:self action:@selector(linkTextSingleTapRecognized:)];
     singleTap.numberOfTapsRequired = 1;
@@ -344,12 +344,13 @@
                                                buttonsView.frame.size.height,
                                                frame_width,
                                                100)];
-#if defined(__IPHONE_7_0)
-    self.detailUITextView.textContainerInset = 
-      UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
-#else
-    self.detailUITextView.contentInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
-#endif
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+        self.detailUITextView.textContainerInset =
+        UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
+    }
+    else {
+        self.detailUITextView.contentInset = UIEdgeInsetsMake(0, CONTENT_MARGIN_OFFSET, 0, CONTENT_MARGIN_OFFSET);
+    }
     
     [scrollView addSubview:self.detailUITextView];
     
@@ -360,7 +361,7 @@
                                               self.detailUITextView.frame.size.height,
                                               frame_width - 20, 80)];
     [scrollView addSubview:self.adContainerView];
-
+    
     ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
     [adView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     adView.delegate = self;
@@ -375,13 +376,13 @@
     self.questionTextView.text = [self getQuestion:self.detailItem.content];
     // align for center
     self.questionTextView.frame = CGRectMake(self.questionTextView.frame.origin.x,
-                                            [ComponentUtil yoffsetVerticalAlign:self.questionTextView],
-                                            self.questionTextView.frame.size.width,
-                                           self.questionTextView.frame.size.height);
-
+                                             [ComponentUtil yoffsetVerticalAlign:self.questionTextView],
+                                             self.questionTextView.frame.size.width,
+                                             self.questionTextView.frame.size.height);
+    
     self.detailUITextView.text = [self getContent:self.detailItem.content];
     // refresh layout
-
+    
     CGFloat textViewContentHeight = [ComponentUtil measureHeightOfUITextView:self.detailUITextView];
     // NSLog(@"textViewContentHeight: %f, self.detailUITextView.contentSize.height: %f, self.detailUITextView.frame.size.height:%f",
     //       textViewContentHeight, self.detailUITextView.contentSize.height, self.detailUITextView.frame.size.height);
@@ -409,7 +410,7 @@
                                                                     self.view.frame.size.width,
                                                                     self.view.frame.size.height
                                                                     + self.navigationController.navigationBar.frame.size.height
-                                                                    + 20)];    
+                                                                    + 20)];
     // show activity indicator
     activityIndicator = [[UIActivityIndicatorView alloc]
                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -432,14 +433,14 @@
     // enable swipe right
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(textWithSwipe:)];
     [webView addGestureRecognizer:swipe];
-
-   [self.navigationController pushViewController:webViewController animated:YES];
+    
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     [activityIndicator startAnimating];
-
+    
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
@@ -455,38 +456,38 @@
 
 -(void) bannerViewDidLoadAd:(ADBannerView *)banner
 {
-  NSLog(@"DetailViewController bannerViewDidLoadAd");
-  if(!self.bannerIsVisible)
-  {
-    [self displayBanner:banner isDisplay:YES];
-    self.bannerIsVisible = YES;
-  }
+    NSLog(@"DetailViewController bannerViewDidLoadAd");
+    if(!self.bannerIsVisible)
+    {
+        [self displayBanner:banner isDisplay:YES];
+        self.bannerIsVisible = YES;
+    }
 }
- 
+
 -(void) bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-  NSLog(@"DetailViewController didFailToReceiveAdWithError");
-  if(self.bannerIsVisible)
-  {
-    [self displayBanner:banner isDisplay:NO];
-  }
-  self.bannerIsVisible = NO;
+    NSLog(@"DetailViewController didFailToReceiveAdWithError");
+    if(self.bannerIsVisible)
+    {
+        [self displayBanner:banner isDisplay:NO];
+    }
+    self.bannerIsVisible = NO;
 }
 
 -(void)displayBanner:(ADBannerView *)banner isDisplay:(BOOL)isDisplay
 {
-  if(isDisplay) {
-    [self.adContainerView setFrame:CGRectMake(0.0f,
-                                              self.detailUITextView.frame.origin.y +
-                                              self.detailUITextView.frame.size.height,
-                                              self.view.frame.size.width - 20, 80)];
-    [banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-  }
-  else {
-    banner.frame = CGRectZero;
-    self.adContainerView.frame = CGRectZero;
-  }
-  [self configureLayout];
+    if(isDisplay) {
+        [self.adContainerView setFrame:CGRectMake(0.0f,
+                                                  self.detailUITextView.frame.origin.y +
+                                                  self.detailUITextView.frame.size.height,
+                                                  self.view.frame.size.width - 20, 80)];
+        [banner setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    }
+    else {
+        banner.frame = CGRectZero;
+        self.adContainerView.frame = CGRectZero;
+    }
+    [self configureLayout];
 }
 
 #pragma mark - private functions
@@ -530,7 +531,7 @@
     [super viewWillAppear:animated];
     NSLog(@"DetailViewController viewWillAppear");
     [self.navigationController setToolbarHidden:YES animated:YES];
-
+    
     self.navigationItem.title = @"Question";
     
     [ComponentUtil updateScoreText:self.detailItem.category
