@@ -177,6 +177,7 @@
     cell.textLabel.text = [self valueToText:value];
     //cell.textColor = [UIColor colorWithRed:136/255 green:136/255 blue:136/255 alpha:1.0];
     cell.backgroundColor = [UIColor clearColor];
+    [cell setFont:[UIFont fontWithName:FONT_NAME_TITLE size:FONT_SMALL]];
     return cell;
 }
 
