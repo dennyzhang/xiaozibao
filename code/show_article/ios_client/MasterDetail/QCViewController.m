@@ -9,8 +9,12 @@
 #import "QCViewController.h"
 #import "AFJSONRequestOperation.h"
 #import "DetailViewController.h"
+#import "CQIAPHelper.h"
+#import <StoreKit/StoreKit.h>
 
-@interface QCViewController ()
+@interface QCViewController () {
+    NSArray *_products;
+}
 @property (atomic, retain) QuestionCategory *currentQC;
 @property (nonatomic, retain) NSString* navigationTitle;
 @property (retain, nonatomic) IBOutlet UIView *footerView;
@@ -45,6 +49,18 @@
     NSLog(@"QCViewController viewDidLoad");
     [super viewDidLoad];
     
+    // IAP
+    _products = nil;
+//   TODO
+//    [[RageIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+//        if (success) {
+//            _products = products;
+//            [self.tableView reloadData];
+//        }
+//        [self.refreshControl endRefreshing];
+//    }];
+//
+
     self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
     // stub TextView to caculate dynamic cell height

@@ -88,6 +88,8 @@
 		047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A7BDEC179EA84700E9D0BC /* MenuViewController.m */; };
 		049FE34C18E0C252009FDB39 /* ReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FE34B18E0C252009FDB39 /* ReviewViewController.m */; };
 		049FE34E18E1168D009FDB39 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FE34D18E1168D009FDB39 /* share.png */; };
+		04A97B1E190CC55400F19E04 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A97B1D190CC55400F19E04 /* IAPHelper.m */; };
+		04A97B21190CC6A000F19E04 /* CQIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A97B20190CC6A000F19E04 /* CQIAPHelper.m */; };
 		04BF8F8B18F2FE4A00D0A2CB /* dot1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8918F2FE4A00D0A2CB /* dot1.png */; };
 		04BF8F8F18F3170200D0A2CB /* dot2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8C18F3170200D0A2CB /* dot2.png */; };
 		04BF8F9018F3170200D0A2CB /* dot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8D18F3170200D0A2CB /* dot3.png */; };
@@ -219,6 +221,10 @@
 		049FE34D18E1168D009FDB39 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		04A7BDEB179EA84700E9D0BC /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		04A7BDEC179EA84700E9D0BC /* MenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		04A97B1C190CC55400F19E04 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
+		04A97B1D190CC55400F19E04 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		04A97B1F190CC6A000F19E04 /* CQIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CQIAPHelper.h; sourceTree = "<group>"; };
+		04A97B20190CC6A000F19E04 /* CQIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CQIAPHelper.m; sourceTree = "<group>"; };
 		04BF8F8918F2FE4A00D0A2CB /* dot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot1.png; sourceTree = "<group>"; };
 		04BF8F8C18F3170200D0A2CB /* dot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot2.png; sourceTree = "<group>"; };
 		04BF8F8D18F3170200D0A2CB /* dot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot3.png; sourceTree = "<group>"; };
@@ -468,6 +474,10 @@
 				049FE34A18E0C252009FDB39 /* ReviewViewController.h */,
 				049FE34B18E0C252009FDB39 /* ReviewViewController.m */,
 				04E893E9179130C400E9573C /* AppDelegate.h */,
+				04A97B1C190CC55400F19E04 /* IAPHelper.h */,
+				04A97B1D190CC55400F19E04 /* IAPHelper.m */,
+				04A97B1F190CC6A000F19E04 /* CQIAPHelper.h */,
+				04A97B20190CC6A000F19E04 /* CQIAPHelper.m */,
 				04E893EA179130C400E9573C /* AppDelegate.m */,
 				04635334190374AF008266AF /* GuideViewController.h */,
 				04635335190374AF008266AF /* GuideViewController.m */,
@@ -727,6 +737,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04A97B1E190CC55400F19E04 /* IAPHelper.m in Sources */,
+				04A97B21190CC6A000F19E04 /* CQIAPHelper.m in Sources */,
 				047B9BDF179EC19B00DADB55 /* MenuViewController.m in Sources */,
 				0463536119047FA2008266AF /* PostsSqlite.m in Sources */,
 				049FE34C18E0C252009FDB39 /* ReviewViewController.m in Sources */,

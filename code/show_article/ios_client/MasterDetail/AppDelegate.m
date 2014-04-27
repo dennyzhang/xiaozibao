@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "PostsSqlite.h"
 
+#import "CQIAPHelper.h"
+
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -38,6 +40,8 @@
     if ([PostsSqlite initDB] == NO) {
         NSLog(@"Error: Failed to open/create database");
     }
+
+    [CQIAPHelper sharedInstance];
 
     return YES;
 }
