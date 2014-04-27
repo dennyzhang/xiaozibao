@@ -80,6 +80,16 @@
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.tableView.backgroundColor = DEFAULT_BACKGROUND_COLOR;
+
+        // add tooltip if empty
+        [[MyToolTip singleton] reset:self.view]; // reset popTipView
+        UIButton *tooltipSwipeBtn = [[UIButton alloc] initWithFrame:CGRectZero];
+        tooltipSwipeBtn.center = (CGPoint){self.view.frame.size.width/2, 20};
+        [self.view addSubview:tooltipSwipeBtn];
+        if ([self.currentQC.questions count]==0) {
+          [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"Pull to update data.."];
+        }
+        [[MyToolTip singleton] showToolTip];
     }
     else {
         if ([self.navigationTitle isEqualToString:SAVED_QUESTIONS]) {
@@ -89,6 +99,17 @@
             
             self.savedQuestions = [[NSMutableArray alloc] init];
             [PostsSqlite loadSavedPosts:self.savedQuestions];
+
+            // add tooltip if empty
+            [[MyToolTip singleton] reset:self.view]; // reset popTipView
+            UIButton *tooltipSwipeBtn = [[UIButton alloc] initWithFrame:CGRectZero];
+            tooltipSwipeBtn.center = (CGPoint){self.view.frame.size.width/2, 20};
+            [self.view addSubview:tooltipSwipeBtn];
+            if ([self.savedQuestions count]==0) {
+              [[MyToolTip singleton] addToolTip:tooltipSwipeBtn msg:@"So far no questions are saved yet."];
+            }
+            [[MyToolTip singleton] showToolTip];
+
         }
     }
     NSLog(@"QCViewController viewDidLoad. current category:%@, currentQC questions count:%d",
