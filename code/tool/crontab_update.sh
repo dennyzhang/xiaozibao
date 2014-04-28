@@ -6,6 +6,7 @@ git commit -am "schedule commit" && git push || true
 make update_feedback
 
 if [[ "$should_restart" = "yes" ]]; then
+    echo "should restart service"
     pid=$(lsof -i tcp:9180 | grep LISTEN | awk -F' ' '{print $2}')
     [ -n $pid ] && kill -9 $pid
     make start
