@@ -33,7 +33,7 @@
     textTextView.backgroundColor = [UIColor clearColor];
     textTextView.font = [UIFont fontWithName:FONT_NAME1 size:fontSize];
     textTextView.text = text;
-    textTextView.textColor = [UIColor brownColor];
+    textTextView.textColor = [UIColor blueColor];
     textTextView.tag = tag;
     textTextView.textAlignment = NSTextAlignmentCenter;
     [textTextView setUserInteractionEnabled:NO];
