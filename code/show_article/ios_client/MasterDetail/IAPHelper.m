@@ -48,15 +48,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 }
 
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler {
-    
-    // 1
     _completionHandler = [completionHandler copy];
-    
-    // 2
+
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
+    NSLog(@"requestProductsWithCompletionHandler. _productIdentifiers:%@", _productIdentifiers);
     _productsRequest.delegate = self;
     [_productsRequest start];
-    
 }
 
 - (BOOL)productPurchased:(NSString *)productIdentifier {
@@ -64,7 +61,6 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 }
 
 - (void)buyProduct:(SKProduct *)product {
-    
     NSLog(@"Buying %@...", product.productIdentifier);
     
     SKPayment * payment = [SKPayment paymentWithProduct:product];
@@ -73,9 +69,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 #pragma mark - SKProductsRequestDelegate
 
-- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
-    
-    NSLog(@"Loaded list of products...");
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {  
+   NSLog(@"Loaded list of products. response.products:%@", response.products);
     _productsRequest = nil;
     
     NSArray * skProducts = response.products;
