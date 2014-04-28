@@ -16,7 +16,6 @@
 @end
 
 @implementation InPurchaseViewController
-@synthesize tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,7 +58,8 @@
 }
 
 - (void)productPurchased:(NSNotification *)notification {
-    
+    NSLog(@"productPurchased notification:%@", notification);
+
     NSString * productIdentifier = notification.object;
     [_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
         if ([product.productIdentifier isEqualToString:productIdentifier]) {
@@ -91,6 +91,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"numberOfRowsInSection _products.count:%d", _products.count);
     return _products.count;
 }
 
@@ -99,6 +100,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
     SKProduct * product = (SKProduct *) _products[indexPath.row];
+    NSLog(@"cellForRowAtIndexPath product:%@", product);
     cell.textLabel.text = product.localizedTitle;
     [_priceFormatter setLocale:product.priceLocale];
     cell.detailTextLabel.text = [_priceFormatter stringFromNumber:product.price];

@@ -15,7 +15,7 @@
     static CQIAPHelper * sharedInstance;
     dispatch_once(&once, ^{
         NSSet * productIdentifiers = [NSSet setWithObjects:
-                                      @"com.coderpuzzle.MasterDetail.CoderQuiz",
+                                      @"CoderQuiz",
                                       nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });
