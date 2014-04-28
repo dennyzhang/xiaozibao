@@ -19,6 +19,7 @@
 #import "QuestionCategory.h"
 #import "SWRevealViewController.h"
 #import "MyGlobal.h"
+#import "InPurchaseViewController.h"
 
 @interface MasterViewController ()
 
@@ -144,10 +145,15 @@
 {
     UIButton* btn = sender;
     if (btn.tag == TAG_BUTTON_COIN) {
-        ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
-        QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
-        reviewViewController.category = qc.category;
-        [self.navigationController pushViewController:reviewViewController animated:YES];
+        // ReviewViewController *reviewViewController = [[ReviewViewController alloc]init];
+        // QuestionCategory* qc = [self.questionCategories objectAtIndex:self.mCurrentPage];
+        // reviewViewController.category = qc.category;
+        //[self.navigationController pushViewController:reviewViewController animated:YES];
+
+        // TODO
+        InPurchaseViewController *inPurchaseViewController = [[InPurchaseViewController alloc]init];
+        [self.navigationController pushViewController:inPurchaseViewController animated:YES];
+
     }
 }
 

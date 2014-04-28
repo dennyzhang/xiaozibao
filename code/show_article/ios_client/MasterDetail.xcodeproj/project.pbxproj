@@ -90,6 +90,7 @@
 		049FE34E18E1168D009FDB39 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FE34D18E1168D009FDB39 /* share.png */; };
 		04A97B1E190CC55400F19E04 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A97B1D190CC55400F19E04 /* IAPHelper.m */; };
 		04A97B21190CC6A000F19E04 /* CQIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A97B20190CC6A000F19E04 /* CQIAPHelper.m */; };
+		04A97B24190E110D00F19E04 /* InPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A97B23190E110D00F19E04 /* InPurchaseViewController.m */; };
 		04BF8F8B18F2FE4A00D0A2CB /* dot1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8918F2FE4A00D0A2CB /* dot1.png */; };
 		04BF8F8F18F3170200D0A2CB /* dot2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8C18F3170200D0A2CB /* dot2.png */; };
 		04BF8F9018F3170200D0A2CB /* dot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8D18F3170200D0A2CB /* dot3.png */; };
@@ -225,6 +226,8 @@
 		04A97B1D190CC55400F19E04 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 		04A97B1F190CC6A000F19E04 /* CQIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CQIAPHelper.h; sourceTree = "<group>"; };
 		04A97B20190CC6A000F19E04 /* CQIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CQIAPHelper.m; sourceTree = "<group>"; };
+		04A97B22190E110D00F19E04 /* InPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InPurchaseViewController.h; sourceTree = "<group>"; };
+		04A97B23190E110D00F19E04 /* InPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InPurchaseViewController.m; sourceTree = "<group>"; };
 		04BF8F8918F2FE4A00D0A2CB /* dot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot1.png; sourceTree = "<group>"; };
 		04BF8F8C18F3170200D0A2CB /* dot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot2.png; sourceTree = "<group>"; };
 		04BF8F8D18F3170200D0A2CB /* dot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot3.png; sourceTree = "<group>"; };
@@ -480,6 +483,8 @@
 				04A97B20190CC6A000F19E04 /* CQIAPHelper.m */,
 				04E893EA179130C400E9573C /* AppDelegate.m */,
 				04635334190374AF008266AF /* GuideViewController.h */,
+				04A97B22190E110D00F19E04 /* InPurchaseViewController.h */,
+				04A97B23190E110D00F19E04 /* InPurchaseViewController.m */,
 				04635335190374AF008266AF /* GuideViewController.m */,
 				04E893EC179130C400E9573C /* Main_iPhone.storyboard */,
 				0463535819040692008266AF /* QCViewController.h */,
@@ -753,6 +758,7 @@
 				04E893F4179130C400E9573C /* MasterViewController.m in Sources */,
 				04E893E7179130C400E9573C /* main.m in Sources */,
 				04635336190374AF008266AF /* GuideViewController.m in Sources */,
+				04A97B24190E110D00F19E04 /* InPurchaseViewController.m in Sources */,
 				04E893F7179130C400E9573C /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
