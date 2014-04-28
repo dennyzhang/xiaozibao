@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"In-App Purchase";
+    self.title = @"Purchase";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
