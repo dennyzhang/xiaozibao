@@ -1,0 +1,16 @@
+convert -resize 29x29 -extent 29x29 icon_bak.png icon.png
+convert -resize 58x58 -extent 58x58 icon_bak.png icon58.png
+convert -resize 80x80 -extent 80x80 icon_bak.png icon80.png
+convert -resize 57x57 -extent 57x57 icon_bak.png icon57.png
+convert -resize 114x114 -extent 114x114 icon_bak.png icon114.png
+convert -resize 120x120 -extent 120x120 icon_bak.png icon120.png
+convert -resize 29x29 -extent 29x29 icon_bak.png icon29.png
+convert -resize 58x58 -extent 58x58 icon_bak.png icon58-1.png
+convert -resize 40x40 -extent 40x40 icon_bak.png icon40.png
+convert -resize 80x80 -extent 80x80 icon_bak.png icon80-1.png
+convert -resize 50x50 -extent 50x50 icon_bak.png icon50.png
+convert -resize 100x100 -extent 100x100 icon_bak.png icon100.png
+convert -resize 72x72 -extent 72x72 icon_bak.png icon72.png
+convert -resize 144x144 -extent 144x144 icon_bak.png icon144.png
+convert -resize 76x76 -extent 76x76 icon_bak.png icon76.png
+convert -resize 152x152 -extent 152x152 icon_bak.png icon152.png
