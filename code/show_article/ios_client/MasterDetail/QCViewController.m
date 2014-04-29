@@ -743,6 +743,7 @@
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, textWidth, 0)];
     [textView setFont:[UIFont fontWithName:FONT_NAME1 size:FONT_NORMAL]];
     [textView setTextColor:[UIColor blackColor]];
+    //textView.textColor = [UIColor colorWithRed:136.0f/255.0f green:136.0f/255.0f blue:136.0f/255.0f alpha:1.0f];
     [textView setBackgroundColor:[UIColor clearColor]];
     [textView setTag:TAG_TEXTVIEW_IN_CELL];
     textView.userInteractionEnabled = NO;
