@@ -48,7 +48,8 @@
 {
     NSLog(@"QCViewController viewDidLoad");
     [super viewDidLoad];
-    
+    [ComponentUtil printFrame:self.view.frame leadingMsg:@"QCViewController "];
+    [ComponentUtil printFrame:self.tableView.frame leadingMsg:@"QCViewController tableView "];
     // IAP
     _products = nil;
 //   TODO

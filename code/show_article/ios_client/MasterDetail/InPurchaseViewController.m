@@ -49,6 +49,7 @@
 - (void)restoreTapped:(id)sender {
     [[CQIAPHelper sharedInstance] restoreCompletedTransactions];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
 }

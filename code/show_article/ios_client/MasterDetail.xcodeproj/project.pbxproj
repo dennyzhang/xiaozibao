@@ -91,6 +91,7 @@
 		04A97B1E190CC55400F19E04 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A97B1D190CC55400F19E04 /* IAPHelper.m */; };
 		04A97B21190CC6A000F19E04 /* CQIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A97B20190CC6A000F19E04 /* CQIAPHelper.m */; };
 		04A97B24190E110D00F19E04 /* InPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A97B23190E110D00F19E04 /* InPurchaseViewController.m */; };
+		04A97B28190FA79100F19E04 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A97B27190FA79100F19E04 /* StoreKit.framework */; };
 		04BF8F8B18F2FE4A00D0A2CB /* dot1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8918F2FE4A00D0A2CB /* dot1.png */; };
 		04BF8F8F18F3170200D0A2CB /* dot2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8C18F3170200D0A2CB /* dot2.png */; };
 		04BF8F9018F3170200D0A2CB /* dot3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BF8F8D18F3170200D0A2CB /* dot3.png */; };
@@ -115,7 +116,6 @@
 		04EA66E718FED8A000621ECE /* menu-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EA66E518FED8A000621ECE /* menu-background.png */; };
 		04EA66E818FED8A000621ECE /* menu-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EA66E618FED8A000621ECE /* menu-background@2x.png */; };
 		04EA66EA18FEF2B900621ECE /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04EA66E918FEF2B900621ECE /* Images-2.xcassets */; };
-		04EE1B5018F79161007AEE0A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EE1B4F18F79161007AEE0A /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -228,6 +228,7 @@
 		04A97B20190CC6A000F19E04 /* CQIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CQIAPHelper.m; sourceTree = "<group>"; };
 		04A97B22190E110D00F19E04 /* InPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InPurchaseViewController.h; sourceTree = "<group>"; };
 		04A97B23190E110D00F19E04 /* InPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InPurchaseViewController.m; sourceTree = "<group>"; };
+		04A97B27190FA79100F19E04 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04BF8F8918F2FE4A00D0A2CB /* dot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot1.png; sourceTree = "<group>"; };
 		04BF8F8C18F3170200D0A2CB /* dot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot2.png; sourceTree = "<group>"; };
 		04BF8F8D18F3170200D0A2CB /* dot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot3.png; sourceTree = "<group>"; };
@@ -261,7 +262,6 @@
 		04EA66E518FED8A000621ECE /* menu-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-background.png"; sourceTree = "<group>"; };
 		04EA66E618FED8A000621ECE /* menu-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-background@2x.png"; sourceTree = "<group>"; };
 		04EA66E918FEF2B900621ECE /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
-		04EE1B4F18F79161007AEE0A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04FA8F27179BE08200D28058 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CE556945BD3D45F797C729C0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -271,10 +271,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04EE1B5018F79161007AEE0A /* StoreKit.framework in Frameworks */,
 				0455B41318F6EF0A00A178D9 /* iAd.framework in Frameworks */,
 				0436CDEB18EB131600130F79 /* libPods.a in Frameworks */,
 				0436CDE818E9EB5300130F79 /* Twitter.framework in Frameworks */,
+				04A97B28190FA79100F19E04 /* StoreKit.framework in Frameworks */,
 				04D4DB4418681A5900E92845 /* libsqlite3.dylib in Frameworks */,
 				04E893DD179130C400E9573C /* CoreGraphics.framework in Frameworks */,
 				04E893DF179130C400E9573C /* UIKit.framework in Frameworks */,
@@ -451,8 +451,8 @@
 		04E893D9179130C400E9573C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04A97B27190FA79100F19E04 /* StoreKit.framework */,
 				04624AA218FD876F006DF4DF /* libPods-Mixpanel.a */,
-				04EE1B4F18F79161007AEE0A /* StoreKit.framework */,
 				0455B41218F6EF0A00A178D9 /* iAd.framework */,
 				0436CDE918EB127D00130F79 /* libPods.a */,
 				0436CDE718E9EB5300130F79 /* Twitter.framework */,
@@ -583,6 +583,11 @@
 				TargetAttributes = {
 					04E893D6179130C400E9573C = {
 						DevelopmentTeam = NTHK583TF4;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					04E893FD179130C400E9573C = {
 						TestTargetID = 04E893D6179130C400E9573C;
