@@ -155,6 +155,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    Posts *post = [self getPostByIndex:(int)indexPath.row];
+    post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [self markCellAsRead:cell post:post];
+
+    // remove the read post from tableview
+    if ([self isQuestionChannel] && 
+        [[NSUserDefaults standardUserDefaults] integerForKey:@"HideReadPosts"] == 1) {
+        [self.currentQC.questions removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -300,8 +313,7 @@
               (int)[UserProfile integerForKey:self.currentQC.category key:POST_VISIT_KEY]);
         
         Posts *post = [self getPostByIndex:(int)indexPath.row];
-        post.readcount = [NSNumber numberWithInt:(1+[post.readcount intValue])];
-        
+
         DetailViewController* dvc = [segue destinationViewController];
         if ([self.currentQC.category isEqualToString:SAVED_QUESTIONS]) {
             [dvc setShouldShowCoin:[NSNumber numberWithInt:0]];
@@ -310,7 +322,6 @@
             [dvc setShouldShowCoin:[NSNumber numberWithInt:1]];
         }
         dvc.detailItem = post;
-        [self markCellAsRead:cell post:post];
     }
 }
 

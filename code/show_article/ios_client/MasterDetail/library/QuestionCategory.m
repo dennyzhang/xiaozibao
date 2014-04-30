@@ -94,6 +94,7 @@
   int i, count = (int)[questionCategories count];
   for(i=0; i<count; i++) {
     QuestionCategory* qc = [questionCategories objectAtIndex:i];
+    qc.questions = [[NSMutableArray alloc] init];
     qc.isloaded = NO;
   }
 }

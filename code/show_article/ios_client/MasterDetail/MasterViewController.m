@@ -41,6 +41,7 @@
 #pragma mark - override default_events
 - (void)viewDidLoad
 {
+
     NSLog(@"MasterViewController load");
     [ComponentUtil printFrame:self.view.frame leadingMsg:@"MasterViewController "];
 
