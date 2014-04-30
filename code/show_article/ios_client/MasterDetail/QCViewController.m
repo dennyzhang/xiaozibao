@@ -365,24 +365,6 @@
             }
         }
         if (indexPath.row == 1) {
-            UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-            aSwitch.on = YES;
-            aSwitch.tag = TAG_SWITCH_EDITOR_MODE;
-            [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-            cell.textLabel.text = @"Enable editor mode";
-            cell.accessoryView = aSwitch;
-            if ([userDefaults integerForKey:@"IsEditorMode"] == 0) {
-                aSwitch.on = false;
-            }
-            else {
-                aSwitch.on = true;
-            }
-        }
-        if (indexPath.row == 2) {
-            cell.textLabel.text = CLEAN_CACHE;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-        if (indexPath.row == 3) {
             cell.textLabel.text = USER_ID;
             CGFloat field_width = 225;
             CGFloat frame_width = self.view.frame.size.width;
@@ -398,6 +380,24 @@
             playerTextField.autocorrectionType = UITextAutocorrectionTypeNo;
             playerTextField.delegate = self;
             cell.accessoryView = playerTextField;
+        }
+        if (indexPath.row == 2) {
+            cell.textLabel.text = CLEAN_CACHE;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        if (indexPath.row == 3) {
+            UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            aSwitch.on = YES;
+            aSwitch.tag = TAG_SWITCH_EDITOR_MODE;
+            [aSwitch addTarget:self action:@selector(hideSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.textLabel.text = @"Enable editor mode";
+            cell.accessoryView = aSwitch;
+            if ([userDefaults integerForKey:@"IsEditorMode"] == 0) {
+                aSwitch.on = false;
+            }
+            else {
+                aSwitch.on = true;
+            }
         }
         if (indexPath.row == 4) {
             UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
