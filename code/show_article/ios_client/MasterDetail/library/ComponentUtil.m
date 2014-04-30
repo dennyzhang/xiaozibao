@@ -121,7 +121,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     // set default value
     if (![userDefaults objectForKey:@"HideReadPosts"]) {
-        [userDefaults setInteger:1 forKey:@"HideReadPosts"];
+        [userDefaults setInteger:0 forKey:@"HideReadPosts"];
     }
     
     if (![userDefaults objectForKey:@"IsDebugMode"]) {
