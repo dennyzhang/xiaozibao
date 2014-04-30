@@ -14,3 +14,4 @@ convert -resize 72x72 -extent 72x72 icon_bak.png icon72.png
 convert -resize 144x144 -extent 144x144 icon_bak.png icon144.png
 convert -resize 76x76 -extent 76x76 icon_bak.png icon76.png
 convert -resize 152x152 -extent 152x152 icon_bak.png icon152.png
+convert -resize 1024x1024 -extent 1024x1024 icon_bak.png icon1024.png
